@@ -1,0 +1,33 @@
+<?php
+
+ $title = 'Sửa Taxonomy';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <a href="<?php echo $this->url('s3u_taxonomy');?>">Quay lại</a>
+
+ <?php
+ $form = $this->form;
+ $form->setAttribute('action', $this->url(
+     's3u_taxonomy/taxonomys',
+     array(
+         'action' => 'edit',
+         'id'     => $this->id,
+     )
+ ));
+ $form->prepare();
+ $formTerm=$form->get('term');
+ //die(var_dump($formTerm));
+ echo $this->form()->openTag($form);
+ echo $this->formHidden($formTerm->get('termId')); 
+ echo $this->formHidden($formTerm->get('slug')); 
+ echo $this->formRow($formTerm->get('name')); 
+
+ echo $this->formSubmit($form->get('submit'));
+ if($this->coKiemTraTonTai==1)
+ {
+ 	echo '<br>Đã tồn tại';
+ }
+ echo $this->form()->closeTag();
+ 
+ ?>

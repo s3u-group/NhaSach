@@ -1,0 +1,61 @@
+<?php 
+use BaconStringUtils\Slugifier;
+use BaconStringUtils\UniDecoder;
+?>
+<SCRIPT LANGUAGE="JavaScript">
+    function confirmAction() {
+      var xacNhan=confirm("Bạn thật sự muốn xóa Taxonomy này?");
+      if(xacNhan==true)
+      {
+        return true;
+      }
+      return false;
+    }
+</SCRIPT>
+<?php
+
+ $title = 'Quản lý Taxonomy';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ <p>
+     <a href="<?php echo $this->url('s3u_taxonomy/taxonomys', array('action'=>'add'));?>">Thêm Taxonomy</a>
+ </p>
+<form method="post">
+ <table class="table">
+ <tr>
+     
+     <th>Taxonomy</th>
+     <th>Sửa</th>
+     <th>Xóa</th>
+ </tr> 
+
+<?php foreach ($termTaxonomys as $termTaxonomy):?>
+ <tr>     
+     <td>
+        <?php 
+            $slugifier=new Slugifier;
+            $decoder=new UniDecoder; 
+            $term=$termTaxonomy->getTermId(); 
+            //die(var_dump($term->getTermId()));
+            //var_dump($term->getTermId());     
+        ?>
+        <a href="<?php echo $this->url('taxonomy/childTaxonomy',
+             array('tax'=>$term->getSlug(),'id' => $term->getTermId()));?>">
+            <?php echo $this->escapeHtml($term->getName());?>
+        </a>
+
+     </td>
+     <td>
+         <a href="<?php echo $this->url('s3u_taxonomy/taxonomys',
+             array('action'=>'edit', 'id' => $term->getTermId()));?>">Sửa</a>         
+     </td>   
+     <td>
+         
+         <a href="<?php echo $this->url('s3u_taxonomy/taxonomys',
+             array('action'=>'delete','id'=>$term->getTermId()));?>" onclick="return confirmAction()">Xóa</a>
+     </td>    
+ </tr>
+ <?php endforeach; ?> 
+ </table>
+</form>
