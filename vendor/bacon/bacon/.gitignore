@@ -1,6 +1,0 @@
-nbproject
-composer.lock
-.idea
-vendor
-tests/phpunit.xml
-tests/coverage
