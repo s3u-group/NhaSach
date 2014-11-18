@@ -1,0 +1,19 @@
+language: php
+php:
+ - "5.3"
+ - "5.4"
+ - "5.5"
+
+before_install:
+ - composer self-update
+ - composer install
+
+script:
+ - vendor/bin/phpunit -c tests --coverage-clover tests/coverage/clover.xml
+ - vendor/bin/phpcs src tests --standard=PSR2 --report=summary
+
+after_script:
+ - vendor/bin/coveralls -v
+
+notifications:
+   irc: "chat.freenode.net#zftalk.modules"
