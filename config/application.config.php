@@ -11,9 +11,10 @@ return array(
         'ZfcUser',
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
-        'Application',
         'BaconStringUtils',
+        'Application',
         'S3UTaxonomy',
+        
     ),
 
     // These are various options for the listeners attached to the ModuleManager

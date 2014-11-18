@@ -61,7 +61,7 @@
 
 	/**
      * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="DanhMuc\Entity\Role")
+     * @ORM\ManyToMany(targetEntity="Application\Entity\Role")
      * @ORM\JoinTable(name="user_role_linker",
      *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}

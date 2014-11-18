@@ -19,6 +19,22 @@ class Module
         $eventManager        = $e->getApplication()->getEventManager();
         $moduleRouteListener = new ModuleRouteListener();
         $moduleRouteListener->attach($eventManager);
+
+        // khúc này phải có
+
+        $services = $e->getApplication()->getServiceManager();       
+        $zfcServiceEvents = $services->get('zfcuser_user_service')->getEventManager();
+
+
+        // Store the field
+        $zfcServiceEvents->attach('register', function($e) use($services) {
+            $user=$e->getParam('user');//lấy người dùng hiện tại đang đăng ký ở event
+            $em=$services->get('Doctrine\ORM\EntityManager');// lệnh kết nôi doctrine orm
+            $defaultUserRole=$em->getRepository('Application\Entity\Role')// kết nối tới file Role trong danh mục
+                                ->findOneBy(array('roleId'=>'nguoi-dung'));// lấy lấy 1 dòng có roleId có tên là người dùng
+            $user->addRole($defaultUserRole);//
+            
+        });
     }
 
     public function getConfig()
