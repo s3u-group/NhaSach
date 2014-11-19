@@ -8,7 +8,7 @@
  class IndexController extends AbstractActionController
  {
  	private $entityManager;
-
+  
   public function getEntityManager()
   {
      if(!$this->entityManager)
@@ -20,11 +20,27 @@
   
  	public function indexAction()
  	{
-    $this->layout('layout/giaodien');
+    $this->layout('layout/giaodien');    
  	}
 
-  public function uploadFormAction()
-  {        
+  public function bangGiaAction()
+  {
+    $this->layout('layout/giaodien');  
+  }
+
+  public function nhapHangAction()
+  {
+    $this->layout('layout/giaodien');  
+  }
+
+  public function xuatHangAction()
+  {
+    $this->layout('layout/giaodien');  
+  }
+
+  public function themSanPhamAction()
+  {
+    $this->layout('layout/giaodien');  
   }
 
  	public function addAction()

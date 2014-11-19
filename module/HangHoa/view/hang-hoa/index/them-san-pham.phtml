@@ -1,0 +1,149 @@
+<head>
+    <meta charset="UTF-8">    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Thêm sản phẩm</title>
+</head>
+<div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h5a-sidebar affix">
+                    <span class="breadcrumb row">
+                        <a href="#">/ Kho</a>
+                        <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
+                         / Thêm sản phẩm /
+                    </span>
+                    <ul class="nav h5a-sidenav nav-list accordion">
+                        <!-- <li class="sidenav-messages dark">
+                            <span class="pull-right"><i class="fa fa-times"></i></span>
+                            <h4 class="underline red"><i class="fa fa-exclamation-triangle"></i> Warning!</h4>
+                            <p class="black">This can be a perfect place for <strong>important communication</strong>, a response after a form has been sent...or anything else (like buttons, small forms, social sharing widget, etc.)<br></p>
+                        </li> -->
+                        <li>
+                            <a href="<?php echo $this->url('hang_hoa');?>">
+                                <i class="fa fa-cubes"></i> Danh sách hàng
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" role="main">
+                <div class="h5a-docs-section">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h1>Thêm sản phẩm</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="pull-right">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="button" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form>
+                            <h4 class="underline">More Info</h4>
+                            <table class="item">
+                                <tbody>
+                                    <tr>
+                                        <td>Tên sản phẩm</td>
+                                        <td>
+                                            <input type="text" id="form-field-1" placeholder="Username" class="h5a-input form-control input-sm">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Mô tả</td>
+                                        <td>
+                                            <textarea class="form-control h5a" rows="5" id="editor"></textarea>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Hình ảnh</td>
+                                        <td>
+                                            <input type="filepicker" data-fp-button-text="<i class='fa fa-cloud-upload'></i> Files UPLOAD from ANYWERE" data-fp-apikey="fakeAPIkey" name="filePicker" id="filePicker" class="h5a-btn btn btn-primary" style="display: none;">
+                                            <button type="button" class="h5a-btn btn btn-primary"><i class="fa fa-cloud-upload"></i> Files UPLOAD from ANYWERE</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>CompanyCode</td>
+                                        <td><input type="text" class="form-control h5a-input" placeholder="CompanyCode?" value="33223-556H-TT"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Size</td>
+                                        <td class="red"><input type="text" class="form-control h5a-input" placeholder="Size?" value="-556 mm/hh"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Niceness</td>
+                                        <td class="green"><input type="text" class="form-control h5a-input" placeholder="Niceness?" value="Super Kewl"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>TAGS</td>
+                                        <td>
+                                            <span class="tm-tag" id="SCZrC_1"><span>Super</span><a href="#" class="tm-tag-remove" id="SCZrC_Remover_1" tagidtoremove="1">x</a></span> 
+                                            <span class="tm-tag" id="SCZrC_1"><span>Kewl</span><a href="#" class="tm-tag-remove" id="SCZrC_Remover_1" tagidtoremove="1">x</a></span> 
+                                            <span class="tm-tag" id="SCZrC_1"><span>wow</span><a href="#" class="tm-tag-remove" id="SCZrC_Remover_1" tagidtoremove="1">x</a></span>
+                                            <div class="form-group">
+                                                <input type="text" name="display-tfmjW" placeholder="Tags" id="tags-input" class="h5a-input form-control">
+                                                <input type="hidden" name="tags">
+                                                <label for="exampleInputEmail1"><small>Comma Separated tags</small></label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Colors</td>
+                                        <td>
+                                            <select multiple="multiple" id="select-colors" name="my-select[]" style="position: absolute; left: -9999px;">
+                                                <option value="elem_1">blue</option>
+                                                <option value="elem_2">red</option>
+                                                <option value="elem_3">orange</option>
+                                                <option value="elem_4">yellow</option>
+                                                <option value="elem_100">green</option>
+                                            </select>
+                                            <div class="ms-container" id="ms-select-colors">
+                                                <div class="ms-selectable">
+                                                    <ul class="ms-list" tabindex="-1">
+                                                        <li class="ms-elem-selectable" id="elem_1-selectable"><span>blue</span></li>
+                                                        <li class="ms-elem-selectable" id="elem_2-selectable"><span>red</span></li>
+                                                        <li class="ms-elem-selectable" id="elem_3-selectable"><span>orange</span></li>
+                                                        <li class="ms-elem-selectable ms-hover" id="elem_4-selectable"><span>yellow</span></li>
+                                                        <li class="ms-elem-selectable" id="elem_100-selectable"><span>green</span></li>
+                                                    </ul>
+                                                </div>
+                                                <div class="ms-selection">
+                                                    <ul class="ms-list" tabindex="-1">
+                                                        <li class="ms-elem-selection" id="elem_1-selection" style="display: none;"><span>blue</span></li>
+                                                        <li class="ms-elem-selection" id="elem_2-selection" style="display: none;"><span>red</span></li>
+                                                        <li class="ms-elem-selection" id="elem_3-selection" style="display: none;"><span>orange</span></li>
+                                                        <li class="ms-elem-selection" id="elem_4-selection" style="display: none;"><span>yellow</span></li>
+                                                        <li class="ms-elem-selection" id="elem_100-selection" style="display: none;"><span>green</span></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Type</td>
+                                        <td><input type="text" class="form-control h5a-input" placeholder="Type?" value="556H-TT"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="page-footer">
+                        <div class="row bottom20">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <div class="pull-right">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="button" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
