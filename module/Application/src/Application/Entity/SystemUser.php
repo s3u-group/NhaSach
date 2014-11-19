@@ -22,30 +22,37 @@
 		*/
 		private $id;
 
-		/**
-		* @ORM\Column(name="display_name",length=50)
-		*/
-		private $displayName;
 
-		/**
-		* @ORM\Column
-		*/
-		private $city;
-
-
-		/**
-		* @ORM\Column(type="date")
-		*/
-		private $birthday;
 
 		/**
 		* @ORM\Column
 		*/
 		private $username;
+
+
 		/**
 		* @ORM\Column(name="password",length=128)
 		*/
 		private $password;
+
+
+		/**
+		* @ORM\Column(name="display_name",length=50)
+		*/
+		private $displayName;
+
+
+		/**
+		* @ORM\Column(name="ho_ten", length=100)
+		*/
+		private $hoTen;
+
+
+		/**
+		* @ORM\Column(name="dia_chi")
+		*/
+		private $diaChi;
+
 
 		/**
 		* @ORM\Column
@@ -59,15 +66,62 @@
 		private $state;
 
 
-	/**
-     * @var \Doctrine\Common\Collections\Collection
-     * @ORM\ManyToMany(targetEntity="Application\Entity\Role")
-     * @ORM\JoinTable(name="user_role_linker",
-     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
-     * )
-     */
-	private $roles;
+		/**
+		* @ORM\Column(name="mo_ta")
+		*/
+		private $moTa;
+
+
+		/**
+		* @ORM\Column(name="dien_thoai_co_dinh", type="integer")
+		*/
+		private $dienThoaiCoDinh;
+
+
+		/**
+		* @ORM\Column(name="di_dong", type="integer")
+		*/
+		private $diDong;
+
+
+		/**
+		* @ORM\Column(name="hinh_anh")
+		*/
+		private $hinhAnh;
+
+
+		/**
+		* @ORM\Column(name="website")
+		*/
+		private $website;
+
+
+		/**
+		* @ORM\Column(name="twitter")
+		*/
+		private $twitter;
+
+
+
+		// sử dụng hằng cho loại tài khoản,
+		/**
+		* @ORM\Column(name="loai_tai_khoan", type="integer")
+		*/
+		private $loaiTaiKhoan;
+
+		const NHAN_VIEN_CUA_HANG=1;
+		const NHAN_VIEN_DIEM_BAN=2;
+
+
+		/**
+	     * @var \Doctrine\Common\Collections\Collection
+	     * @ORM\ManyToMany(targetEntity="Application\Entity\Role")
+	     * @ORM\JoinTable(name="user_role_linker",
+	     *      joinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="user_id")},
+	     *      inverseJoinColumns={@ORM\JoinColumn(name="role_id", referencedColumnName="id")}
+	     * )
+	     */
+		private $roles;
 		
 		 public function __construct()
 	    {
@@ -85,17 +139,6 @@
 		}
 
 
-		public function setDisplayName($displayName)
-		{
-			$this->displayName=$displayName;
-		}
-
-		public function getDisplayName()
-		{
-			return $this->displayName;
-		}
-
-
 		public function setUsername($username)
 		{
 			$this->username=$username;
@@ -105,6 +148,7 @@
 		{
 			return $this->username;
 		}
+
 
 
 		public function setPassword($password)
@@ -118,14 +162,38 @@
 			return $this->password;
 		}
 
-		public function setCity($city)
+
+
+		public function setDisplayName($displayName)
 		{
-			$this->city=$city;
+			$this->displayName=$displayName;
 		}
 
-		public function getCity()
+		public function getDisplayName()
 		{
-			return $this->city;
+			return $this->displayName;
+		}
+
+
+		
+
+		public function setHoTen($hoTen)
+		{
+			$this->hoTen=$hoTen;
+		}
+		public function getHoTen()
+		{
+			return $this->hoTen;
+		}
+
+
+		public function setDiaChi($diaChi)
+		{
+			$this->diaChi=$diaChi;
+		}
+		public function getDiaChi()
+		{
+			return $this->diaChi;
 		}
 
 
@@ -146,6 +214,77 @@
 		public function getEmail()
 		{
 			return $this->email;
+		}
+
+
+
+		public function setMoTa($moTa)
+		{
+			$this->moTa=$moTa;
+		}
+		public function getMoTa()
+		{
+			return $this->moTa;
+		}
+
+
+		public function setDienThoaiCoDinh($dienThoaiCoDinh)
+		{
+			$this->dienThoaiCoDinh=$dienThoaiCoDinh;
+		}
+		public function getDienThoaiCoDinh()
+		{
+			return $this->dienThoaiCoDinh;
+		}
+
+
+		public function setDiDong($diDong)
+		{
+			$this->diDong=$diDong;
+		}
+		public function getDiDong()
+		{
+			return $this->diDong;
+		}
+
+
+		public function setHinhAnh($hinhAnh)
+		{
+			$this->hinhAnh=$hinhAnh;
+		}
+		public function getHinhAnh()
+		{
+			return $this->hinhAnh;
+		}
+
+
+		public function setWebsite($website)
+		{
+			$this->website=$website;
+		}
+		public function getWebsite()
+		{
+			return $this->website;
+		}
+
+
+		public function setTwitter($twitter)
+		{
+			$this->twitter=$twitter;
+		}
+		public function getTwitter()
+		{
+			return $this->twitter;
+		}
+
+
+		public function setLoaiTaiKhoan($loaiTaiKhoan)
+		{
+			$this->loaiTaiKhoan=$loaiTaiKhoan;
+		}
+		public function getLoaiTaiKhoan()
+		{
+			return $this->loaiTaiKhoan;
 		}
 
 
