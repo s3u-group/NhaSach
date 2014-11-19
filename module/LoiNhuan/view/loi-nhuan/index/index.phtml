@@ -1,0 +1,210 @@
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Doanh thu</title>
+</head>
+<div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h5a-sidebar affix">
+                    <span class="breadcrumb row">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                         / Doanh thu /
+                    </span>
+                    <ul class="nav h5a-sidenav nav-list accordion">                        
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'donHang'));?>">
+                                <i class="fa fa-cubes"></i> Đơn hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'doanhThu'));?>">
+                                <i class="fa fa-flag-checkered"></i> Doanh thu
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" role="main">
+                <div class="h5a-docs-section">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h1>Doanh thu</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="pull-right">
+                                    <div class="btn-group ">
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </button>                                    
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="h5a-btn btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Loại thống kê <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a href="#">Theo tháng</a></li>
+                                            <li><a href="#">Theo quý</a></li>
+                                            <li><a href="#">Theo năm</a></li>
+                                        </ul>
+                                    </div>
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <ul class="nav nav-tabs" role="tablist" id="myTab">
+                            <li role="presentation" class="active">
+                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#1" role="tab" data-toggle="tab">Điểm bán</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#2" role="tab" data-toggle="tab">Cơ quan</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#3" role="tab" data-toggle="tab">Trường học</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#4" role="tab" data-toggle="tab">Bán lẻ</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <div class="container">
+                                    <div class="row">
+                                        <table id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Thời gian</th>
+                                            <th>Số đơn hàng</th>
+                                            <th>Doanh thu</th>
+                                            <th>Lợi nhuận</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tháng 1</td>
+                                            <td>264</td>
+                                            <td>23.000.000</td>
+                                            <td>12.000.000</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="1">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="2">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="3">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="4">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+	<!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+    </script>
