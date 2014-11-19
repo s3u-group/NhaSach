@@ -16,6 +16,8 @@ return array(
         'S3UTaxonomy',
         'HangHoa',
         'KenhPhanPhoi',
+        'CongNo',
+        'LoiNhuan',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
