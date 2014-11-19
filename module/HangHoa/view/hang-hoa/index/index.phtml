@@ -1,119 +1,86 @@
-<?php
-    //die(var_dump());
-?>
 <head>
-   <!--  <meta charset="UTF-8">    
+    <meta charset="UTF-8">    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
-    <meta name="author" content=""> -->
-    <title>Hàng Hóa</title>
+    <meta name="author" content="">
+    <title>Nhà sách</title>
 </head>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="index.html">/ Kho</a>
-                         / Hàng hóa /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>                            
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bangGia'));?>"                                 
-                                <i class="fa fa-list-alt"></i> Bảng giá
-                            </a>
-                        </li>
-                        <li>
-                            <!-- <a href="nhapHang.html"> -->
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>" 
-                                <i class="fa fa-download"></i> Nhập hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
-                                <i class="fa fa-upload"></i> Xuất hàng
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Hàng hóa</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">                                    
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
-                                    </div>
-                                    <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Quản lý tồn kho</button> -->
-                                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'themSanPham'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
-                                </div>
-                            </div>
+<div class="h5a-header" id="content">
+        <div class="container h5a-container">
+            <h1>
+                <span class="breadcrumb">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                     / Tổng hợp /
+                </span> TỔNG HỢP
+            </h1>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="box">
+                        <div class="icon blue">
+                            <i class="fa fa-user"></i>
+                        </div>
+                        <div class="content-right">
+                            <div class="title blue">Doanh thu</div>
+                            <div class="value">594</div>
+                            <div class="title blue">Lợi nhuận</div>
+                            <div class="value">66780</div>
+                            <div class="title blue">Khách hàng</div>
+                            <div class="value">122</div>
+                            <div class="title green">Sản phẩm</div>
+                            <div class="value green">223*</div>
+                            <div class="title red">Deleted</div>
+                            <div class="value red">3</div><br>
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-3">
                     <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row bottom20">
-                                        <div class="input-group has-feedback">
-                                            <div class="input-group-btn">
-                                                <button type="button" class="btn btn-default h5a-btn dropdown-toggle" data-toggle="dropdown">Lọc sản phẩm <span class="caret"></span></button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#">Loại hàng</a></li>
-                                                    <li><a href="#">Nhãn hàng</a></li>
-                                                </ul>
-                                            </div><!-- /btn-group -->
-                                            <input type="text" class="form-control h5a-input"> 
-                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                            <!-- <span class="input-group-btn hide">
-                                                <button class="btn btn-default" type="button">Go!</button>
-                                            </span> -->
-                                        </div><!-- /input-group -->
-                                    </div>
-                                    <div class="row">
-                                        <table id="dataTables-example" class="">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Sản phẩm</th>
-                                                <th>Tồn kho</th>
-                                                <th>Loại</th>
-                                                <th>Nhãn hàng</th>
-                                            </thead>
-                                            <tbody>                                       
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>254</td>
-                                                    <td>Giấy in</td>
-                                                    <td>Lucky</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                        <div class="icon green"><i class="fa fa-edit"></i></div>
+                        <div class="content-right">
+                            <div class="title black">Đơn hàng <a href="#">Tất cả »</a></div>
+                            <div class="value">9564</div>
+                            <div class="title black">Doanh thu <i>(+22.8%)</i></div>
+                            <div class="value green">56.073.500 vnd</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="box">
+                        <div class="icon orange"><i class="fa fa-line-chart"></i></div>
+                        <div class="content-right">
+                            <div class="title black">Thanh toán <a href="#">Tất cả »</a></div>
+                            <div class="value">120</div>
+                            <div class="title black">Lợi nhuận <i>(-13.4%)</i></div>
+                            <div class="value red">5.670.000 vnd</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="box">
+                        <div class="icon red"><i class="fa fa-database"></i></div>
+                        <div class="content-right">
+                            <div class="title black">Ghi công nợ <a href="#">Tất cả »</a></div> 
+                            <!-- moi lan dat hang se co mot hoa don chua thanh toan, khi thanh toan thi gop cac hoa don thanh toan lai thanh phieu ghi no(no cu, no moi, tra) -->
+                            <div class="value black">132</div>
+                            <div class="title black">Công nợ  <i>(-43.2%)</i></div>
+                            <div class="value red">12.500.000 vnd</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="box">
+                        <div class="icon blue"><i class="fa fa-globe"></i></div>
+                        <div class="content-right">
+                            <div class="title blue">Khách hàng</div>
+                            <div class="value">98347</div>
+                            <div class="title black">Danh_Sach.xls</div>
+                            <div class="value">
+                                <a href="#"><i class="fa fa-download"></i> Tải về</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-</div>
+    </div>

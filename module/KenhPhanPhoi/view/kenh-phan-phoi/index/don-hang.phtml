@@ -1,0 +1,239 @@
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Đơn hàng</title>
+</head>
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h5a-sidebar affix">
+                    <span class="breadcrumb row">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
+                        <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
+                         / Đơn hàng /
+                    </span>
+                    <ul class="nav h5a-sidenav nav-list accordion">
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'donHang'));?>">
+                                <i class="fa fa-cubes"></i> Đơn hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'doanhThu'));?>">
+                                <i class="fa fa-flag-checkered"></i> Doanh thu
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" role="main">
+                <div class="h5a-docs-section">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h1>Đơn hàng</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="pull-right">
+                                    <div class="btn-group ">
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </button>                                    
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                     <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box">
+                        <ul class="nav nav-tabs" role="tablist" id="myTab">
+                            <li role="presentation" class="active">
+                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#1" role="tab" data-toggle="tab">Điểm bán</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#2" role="tab" data-toggle="tab">Cơ quan</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#3" role="tab" data-toggle="tab">Trường học</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#4" role="tab" data-toggle="tab">Bán lẻ</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="home">
+                                <div class="container">
+                                    <div class="row">
+                                        <table id="dataTables-example" class="">
+                                            <thead>
+                                                <th><input type="checkbox"/></th>
+                                                <th>Đơn hàng</th>
+                                                <th>Ngày</th>
+                                                <th>Khách hàng</th>
+                                                <th>Thanh toán</th>
+                                                <th>Tổng tiền</th>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-success">Đã thanh toán</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td><a href="khachHang.html">#2-3323</a></td>
+                                                    <td>11/11/2014</td>
+                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
+                                                    <td><span class="label label-warning">Ghi nợ</span></td>
+                                                    <td>230.000</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="1">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="2">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="3">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="4">
+                                <p class="note">Dữ liệu tại đây</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+    </script>
