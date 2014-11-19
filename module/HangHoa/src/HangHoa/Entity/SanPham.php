@@ -23,7 +23,7 @@
 		private $idSanPham;
 
 		/**
-		* @ORM\Column(name="ma_san_pham",type="char", length=255)
+		* @ORM\Column(name="ma_san_pham",type="text", length=255)
 		*/
 		private $maSanPham;
 
@@ -53,14 +53,14 @@
 
 		/**
 		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
-		* @ORM\JoinColumn(name="id_don_vi_tinh", referencedColumnName="zf_term_taxonomy")
+		* @ORM\JoinColumn(name="id_don_vi_tinh", referencedColumnName="term_taxonomy_id")
 		*/
 		private $idDonViTinh;
 
 
 		/**
 		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
-		* @ORM\JoinColumn(name="id_loai", referencedColumnName="zf_term_taxonomy")
+		* @ORM\JoinColumn(name="id_loai", referencedColumnName="term_taxonomy_id")
 		*/
 		private $idLoai;
 
