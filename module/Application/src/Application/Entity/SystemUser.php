@@ -27,16 +27,6 @@
 		*/
 		private $displayName;
 
-		/**
-		* @ORM\Column
-		*/
-		private $city;
-
-
-		/**
-		* @ORM\Column(type="date")
-		*/
-		private $birthday;
 
 		/**
 		* @ORM\Column
@@ -116,16 +106,6 @@
 		public function getPassword()
 		{
 			return $this->password;
-		}
-
-		public function setCity($city)
-		{
-			$this->city=$city;
-		}
-
-		public function getCity()
-		{
-			return $this->city;
 		}
 
 
