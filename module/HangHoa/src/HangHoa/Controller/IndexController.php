@@ -29,7 +29,7 @@
     $entityManager=$this->getEntityManager();
 
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
-    //die(var_dump($sanPhams));
+    die(var_dump($sanPhams));
     return array('sanPhams'=>$sanPhams);
       
   }
