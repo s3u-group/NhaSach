@@ -14,7 +14,7 @@ return array(
         'BaconStringUtils',
         'Application',
         'S3UTaxonomy',
-        
+        'HangHoa',
     ),
 
     // These are various options for the listeners attached to the ModuleManager

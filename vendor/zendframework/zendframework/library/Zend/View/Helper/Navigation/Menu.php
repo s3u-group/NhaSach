@@ -345,22 +345,9 @@ class Menu extends AbstractHelper
                 $liClasses[] = $liActiveClass;
             }
             // Add CSS class from page to <li>
-            /*
             if ($addClassToListItem && $page->getClass()) {
                 $liClasses[] = $page->getClass();
             }
-            */
-
-            // Is page active?
-            if ($isActive) {
-                $liClasses[] = 'active';
-            }
-
-            if($wrapClass = $page->get('wrapClass')){
-                $liClasses[] = $wrapClass;
-            }
-
-            
             $liClass = empty($liClasses) ? '' : ' class="' . $escaper(implode(' ', $liClasses)) . '"';
 
             $html .= $myIndent . '    <li' . $liClass . '>' . PHP_EOL
