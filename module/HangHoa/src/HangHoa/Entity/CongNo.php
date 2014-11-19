@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="cong_no")
 	*/
-	class CongNo implements UserInterface, ProviderInterface {
+	class CongNo {
 		
 
 		/**
@@ -24,8 +24,8 @@
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
-		* @JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
+		* @ORM\JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
 		*/
 		private $idDoiTac;
 

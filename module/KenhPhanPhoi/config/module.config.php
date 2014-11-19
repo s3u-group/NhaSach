@@ -42,18 +42,17 @@ return array(
 
 	/*'doctrine' => array(
         'driver' => array(
-            'hang_hoa_annotation_driver' => array(
+            'kenh_phan_phoi_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    __DIR__.'/../src/HangHoa/Entity',//Edit
+                    __DIR__.'/../src/KenhPhanPhoi/Entity',//Edit
                 ),
             ),
 
             'orm_default' => array(
                 'drivers' => array(
-
-                    'HangHoa\Entity' => 'hang_hoa_annotation_driver'//Edit
+                    'KenhPhanPhoi\Entity' => 'kenh_phan_phoi_annotation_driver',//Edit
                 )
             )
         )

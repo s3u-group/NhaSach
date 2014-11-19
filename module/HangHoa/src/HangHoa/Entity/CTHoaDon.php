@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="ct_hoa_don")
 	*/
-	class CTHoaDon implements UserInterface, ProviderInterface {
+	class CTHoaDon {
 		
 
 		/**
@@ -25,16 +25,16 @@
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\HoaDon")
-		* @JoinColumn(name="id_hoa_don", referencedColumnName="id_hoa_don")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\HoaDon")
+		* @ORM\JoinColumn(name="id_hoa_don", referencedColumnName="id_hoa_don")
 		*/
 		private $idHoaDon;
 
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\SanPham")
-		* @JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
+		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
 		private $idSanPham;
 

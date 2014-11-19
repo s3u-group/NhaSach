@@ -12,11 +12,11 @@
 	* @ORM\Entity
 	* @ORM\Table(name="doi_tac")
 	*/
-	class DoiTac implements UserInterface, ProviderInterface {
+	class DoiTac {
 		
 
 		/**
-		* @ORM\Column(name="id_doi_tac,type="integer")
+		* @ORM\Column(name="id_doi_tac",type="integer")
 		* @ORM\Id
 		* @ORM\GeneratedValue
 		*/

@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="phieu_thu")
 	*/
-	class PhieuThu implements UserInterface, ProviderInterface {
+	class PhieuThu {
 		
 
 		/**
@@ -24,15 +24,15 @@
 
 
 		/**
-		* @OneToOne(targetEntity="HangHoa\Entity\CongNo")
-		* @JoinColumn(name="id_cong_no", referencedColumnName="id_cong_no")
+		* @ORM\OneToOne(targetEntity="HangHoa\Entity\CongNo")
+		* @ORM\JoinColumn(name="id_cong_no", referencedColumnName="id_cong_no")
 		*/
 		private $idCongNo;
 
 
 		/**
-		* @ManyToOne(targetEntity="Application\Entity\User")
-		* @JoinColumn(name="id_user_nv", referencedColumnName="user_id")
+		* @ORM\ManyToOne(targetEntity="Application\Entity\SystemUser")
+		* @ORM\JoinColumn(name="id_user_nv", referencedColumnName="user_id")
 		*/
 		private $idUserNv;
 

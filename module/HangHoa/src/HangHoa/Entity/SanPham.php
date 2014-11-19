@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="san_pham")
 	*/
-	class SanPham implements UserInterface, ProviderInterface {
+	class SanPham {
 		
 
 		/**
@@ -52,15 +52,15 @@
 
 
 		/**
-		* @ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
-		* @JoinColumn(name="don_vi_tinh", referencedColumnName="zf_term_taxonomy")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\JoinColumn(name="id_don_vi_tinh", referencedColumnName="zf_term_taxonomy")
 		*/
-		private $donViTinh;
+		private $idDonViTinh;
 
 
 		/**
-		* @ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
-		* @JoinColumn(name="id_loai", referencedColumnName="zf_term_taxonomy")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\JoinColumn(name="id_loai", referencedColumnName="zf_term_taxonomy")
 		*/
 		private $idLoai;
 
@@ -131,13 +131,13 @@
 		}
 
 
-		public function setDonViTinh($donViTinh)
+		public function setIdDonViTinh($idDonViTinh)
 		{
-			$this->donViTinh=$donViTinh;
+			$this->idDonViTinh=$idDonViTinh;
 		}
-		public function getDonViTinh()
+		public function getIdDonViTinh()
 		{
-			return $this->donViTinh;
+			return $this->idDonViTinh;
 		}
 
 
