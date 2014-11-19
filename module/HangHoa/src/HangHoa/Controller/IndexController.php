@@ -23,6 +23,11 @@
     $this->layout('layout/giaodien');    
  	}
 
+  public function hangHoaAction()
+  {
+    $this->layout('layout/giaodien');    
+  }
+
   public function bangGiaAction()
   {
     $this->layout('layout/giaodien');  
