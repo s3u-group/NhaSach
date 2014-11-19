@@ -37,7 +37,7 @@
     $entityManager=$this->getEntityManager();
 
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
-    die(var_dump($sanPhams));
+    //die(var_dump($sanPhams));
     return array('sanPhams'=>$sanPhams);
       
   }
@@ -57,6 +57,11 @@
     $this->layout('layout/giaodien');  
   }
 
+  public function sanPhamAction()
+  {
+    $this->layout('layout/giaodien');  
+  }
+
   public function themSanPhamAction()
   {
     $this->layout('layout/giaodien'); 
@@ -64,7 +69,7 @@
     $entityManager=$this->getEntityManager();
     $sanPham=new sanPham();
     $form= new CreateSanPhamForm($entityManager);
-    $form->bind($bangTin);
+    $form->bind($sanPham);
 
     $taxonomyLoai=$this->TaxonomyFunction();
     $loais=$taxonomyLoai->getListChildTaxonomy('danh-muc-hang-hoa');// đưa vào taxonomy dạng slug

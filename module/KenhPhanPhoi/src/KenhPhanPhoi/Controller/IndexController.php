@@ -37,5 +37,10 @@
  	{
     	$this->layout('layout/giaodien');
  	}
+
+  public function khachHangAction()
+  {
+      $this->layout('layout/giaodien');
+  }
  }
 ?>

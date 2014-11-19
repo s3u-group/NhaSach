@@ -1,0 +1,222 @@
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Sản phẩm</title>
+</head>
+
+<div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h5a-sidebar affix">
+                    <span class="breadcrumb row">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                        <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
+                         / #xxx /
+                    </span>
+                    <ul class="nav h5a-sidenav nav-list accordion">
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" role="main">
+                <div class="h5a-docs-section">
+                    <!-- <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h2>Chi tiết khách hàng</h2>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="pull-right">
+                                    <div class="btn-group ">
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                            <i class="fa fa-chevron-left"></i>
+                                        </button>                                    
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                            <i class="fa fa-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+</div>
+<!-- /.container -->
+
+<div class="container h5a-container gray">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <h1>
+                <img class="pull-left img-circle" src="http://lorempixel.com/40/40/food/" alt=""> Giấy in Lucky <small>100g</small>
+            </h1>
+            <div class="btn-group pull-right">
+                <a class="btn h5a-btn btn-danger btn-xs"><i class="fa fa-times"></i> Xóa sản phẩm</a>                
+            </div>
+            	<p>Tenderloin pastrami shank filet mignon sirloin jerky leberkas meatball pork tail<br>rump capicolameatball capicola turkey fatback kielbasa brisket.<br><br>
+            	</p>
+            <div class="tabbable">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Xem chi tiết</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#1" role="tab" data-toggle="tab">Cập nhật</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <img class="img-responsive" src="http://lorempixel.com/1650/1400/food/An%20Item/" alt="Whatever Item">
+                                    <div class="caption">
+                                        <h4>Simple Johnx XXL</h4>
+                                        <p>This is a picture caption</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>This can be anything</h4>
+                                <p>Nội dung</p>
+                                <h4 class="underline">More Info</h4>
+                                <table class="item">
+                                    <tbody>
+                                        <tr>
+                                            <td><i class="fa fa-key"></i> ID</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tên sản phẩm</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-arrows"></i> Mã sản phẩm</td>
+                                            <td class="red"></td>
+                                        </tr>                                  
+                                        <tr>
+                                            <td>Mô tả</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-edit"></i>Loại</td>
+                                            <td>         
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-cog"></i> Nhãn</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-globe"></i> Đơn vị tính</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Thông tin khác</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="1">
+                        <div class="row">
+                            <div class="col-md-6">                                
+                                <form>
+                                	<input type="text" class="form-control h5a-input" placeholder="Tiêu đề" value="This can be anything">
+                                    <p>
+                                        <textarea placeholder="Nội dung mô tả" name="longtext" class="form-control h5a-input" rows="6">Nội dung mô tả
+                                            </textarea><br><br>
+                                    </p>
+		                            <h4 class="underline">More Info</h4>
+		                            <table class="item">
+		                                <tbody>
+		                                    <tr>
+		                                        <td>Tên sản phẩm</td>
+		                                        <td>
+		                                            <input type="text" id="txtTenSanPham" placeholder="Tên sản phẩm" class="h5a-input form-control input-sm">
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <td>Mã sản phẩm</td>
+		                                        <td><input type="text" class="form-control h5a-input" placeholder="Mã sản phẩm"></td>
+		                                    </tr>
+		                                    <!-- <tr>
+		                                        <td>Mô tả</td>
+		                                        <td>
+		                                            <textarea class="form-control h5a" rows="5" id="editor"></textarea>
+		                                        </td>
+		                                    </tr> -->
+		                                    <tr>
+		                                        <td>Hình ảnh</td>
+		                                        <td>
+		                                            <input type="filepicker" data-fp-button-text="<i class='fa fa-cloud-upload'></i> Files UPLOAD from ANYWERE" data-fp-apikey="fakeAPIkey" name="filePicker" id="filePicker" class="h5a-btn btn btn-primary" style="display: none;">
+		                                            <button type="button" class="h5a-btn btn btn-primary"><i class="fa fa-cloud-upload"></i>Tải lên</button>
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <td>Loại</td>
+		                                        <td class="green"> 
+		                                            <select class="form-control h5a-input" name="loai">
+		                                            </select>                      
+		                                        </td>
+		                                    </tr>                                      
+		                                    <tr>
+		                                        <td>Nhãn</td>
+		                                        <td class="red">                           
+		                                            <input type="text" class="form-control h5a-input" placeholder="Nhãn">
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+		                                        <td>Đơn vị tính</td>
+		                                        <td>
+		                                            <select class="form-control h5a-input" name="don_vi_tinh">
+		                                            </select>
+		                                        </td>
+		                                    </tr>
+		                                    <tr>
+                                                <td colspan="2"><br><a class="full btn h5a-btn btn-success">LƯU THAY ĐỔI</a></td>
+                                            </tr>
+		                                </tbody>
+		                            </table>
+		                        </form>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+<script>
+$(document).ready(function() {
+    $('#dataTables-example').dataTable({
+        "pagingType": "simple",
+        "bPaginate": true,
+        "bLengthChange": true,
+        "bFilter": true,
+        "bInfo": true,
+        "bAutoWidth": true
+    });
+});
+</script>
