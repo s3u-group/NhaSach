@@ -43,7 +43,7 @@ return array(
         ),
 	),    
 
-	/*'doctrine' => array(
+	'doctrine' => array(
         'driver' => array(
             'hang_hoa_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -60,5 +60,5 @@ return array(
                 )
             )
         )
-    ),*/
+    ),
 );

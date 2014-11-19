@@ -42,18 +42,18 @@ return array(
 
 	/*'doctrine' => array(
         'driver' => array(
-            'hang_hoa_annotation_driver' => array(
+            'loi_nhuan_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => array(
-                    __DIR__.'/../src/HangHoa/Entity',//Edit
+                    __DIR__.'/../src/LoiNhuan/Entity',//Edit
                 ),
             ),
 
             'orm_default' => array(
                 'drivers' => array(
 
-                    'HangHoa\Entity' => 'hang_hoa_annotation_driver'//Edit
+                    'LoiNhuan\Entity' => 'loi_nhuan_annotation_driver',//Edit
                 )
             )
         )

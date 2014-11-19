@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="hoa_don")
 	*/
-	class HoaDon implements UserInterface, ProviderInterface {
+	class HoaDon {
 		
 
 		/**
@@ -36,16 +36,16 @@
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
-		* @JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
+		* @ORM\JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
 		*/
 		private $idDoiTac;
 
 
 
 		/**
-		* @ManyToOne(targetEntity="Application\Entity\User")
-		* @JoinColumn(name="id_user_nv", referencedColumnName="user_id")
+		* @ORM\ManyToOne(targetEntity="Application\Entity\SystemUser")
+		* @ORM\JoinColumn(name="id_user_nv", referencedColumnName="user_id")
 		*/
 		private $idUserNv;
 

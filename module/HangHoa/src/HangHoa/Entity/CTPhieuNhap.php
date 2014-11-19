@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="ct_phieu_nhap")
 	*/
-	class CTPhieuNhap implements UserInterface, ProviderInterface {
+	class CTPhieuNhap {
 		
 
 		/**
@@ -25,16 +25,16 @@
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\PhieuNhap")
-		* @JoinColumn(name="id_phieu_nhap", referencedColumnName="id_phieu_nhap")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\PhieuNhap")
+		* @ORM\JoinColumn(name="id_phieu_nhap", referencedColumnName="id_phieu_nhap")
 		*/
 		private $idPhieuNhap;
 
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\SanPham")
-		* @JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
+		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
 		private $idSanPham;
 

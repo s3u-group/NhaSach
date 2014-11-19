@@ -12,7 +12,7 @@
 	* @ORM\Entity
 	* @ORM\Table(name="gia_xuat")
 	*/
-	class GiaXuat implements UserInterface, ProviderInterface {
+	class GiaXuat {
 		
 
 		/**
@@ -24,8 +24,8 @@
 
 
 		/**
-		* @ManyToOne(targetEntity="HangHoa\Entity\SanPham")
-		* @JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
+		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
 		private $idSanPham;
 
