@@ -41,7 +41,13 @@ return array(
         'template_map'=>array(
             'layout/giaodien'        => __DIR__ . '/../view/layout/giao-dien.phtml',
         ),
-	),    
+	),
+
+    'view_helpers'=>array(
+        'invokables'=>array(
+            'make_array_option_taxonomy'=>'HangHoa\View\Helper\MakeArrayOptionTaxonomy',
+        ),
+    ),    
 
 	'doctrine' => array(
         'driver' => array(

@@ -5,7 +5,7 @@
  use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
  use Zend\ServiceManager\ServiceManager;
  use HangHoa\Entity\SanPham;
- use HangHoa\Form\CreateBangTinForm;
+ use HangHoa\Form\CreateSanPhamForm;
 
  use Zend\Validator\File\Size;
 

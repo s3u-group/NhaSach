@@ -6,6 +6,10 @@
     <meta name="author" content="">
     <title>Thêm sản phẩm</title>
 </head>
+<?php
+ $sanPham=$form->get('san-pham');
+ echo $this->formHidden($sanPham->get('idSanPham'));
+?>
 <div class="container">
         <div class="row">
             <div class="col-md-2">
