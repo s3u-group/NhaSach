@@ -95,14 +95,17 @@
                                                 <th>Loại</th>
                                                 <th>Nhãn hàng</th>
                                             </thead>
-                                            <tbody>                                       
+                                            <tbody> 
+                                            <!-- lấy dữ liệu và xuất ra form  -->
+                                            <?php foreach ($sanPhams as $sanPham) {?>                
                                                 <tr>
                                                     <td><input type="checkbox"/></td>
-                                                    <td><img src="<?php echo $this->basePath();?>/img/brand.png" height="40"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'sanPham'));?>">Giấy in Lucky 100g</a></td>
-                                                    <td>254</td>
-                                                    <td>Giấy in</td>
-                                                    <td>Lucky</td>
+                                                    <td><img src="img/brand.png" height="40"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'chiTietSanPham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
+                                                    <td><?php echo $sanPham->getTonKho(); ?></td>
+                                                    <td><?php echo $sanPham->getIdLoai()->getTermId()->getName(); ?></td>
+                                                    <td><?php echo $sanPham->getNhan(); ?></td>
                                                 </tr>
+                                            <?php } ?>
                                             </tbody>
                                         </table>
                                     </div>

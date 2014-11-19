@@ -35,11 +35,17 @@
   {
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();
-
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
     //die(var_dump($sanPhams));
     return array('sanPhams'=>$sanPhams);
       
+  }
+
+
+  // xem chi tiết sản phẩm
+  public function chiTietSanPhamAction()
+  {
+    $this->layout('layout/giaodien');  
   }
 
   public function bangGiaAction()
