@@ -43,7 +43,7 @@
 
 
   // xem chi tiết sản phẩm
-  public function chiTietSanPhamAction()
+  public function sanPhamAction()
   {
     $this->layout('layout/giaodien');  
   }
@@ -63,10 +63,7 @@
     $this->layout('layout/giaodien');  
   }
 
-  public function sanPhamAction()
-  {
-    $this->layout('layout/giaodien');  
-  }
+  
 
   public function themSanPhamAction()
   {
