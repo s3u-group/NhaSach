@@ -100,6 +100,13 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'type' => 'Hidden',
              'options' => array(                 
              ),             
+         ));
+
+         $this->add(array(
+             'name' => 'giaNhap',
+             'type' => 'Hidden',
+             'options' => array(                 
+             ),             
          ));        
     }
 

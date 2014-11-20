@@ -70,6 +70,10 @@
 		*/
 		private $tonKho;
 
+		/**
+		* @ORM\Column(name="gia_nhap", type="float")
+		*/
+		private $giaNhap;
 
 		public function setIdSanPham($idSanPham)
 		{
@@ -158,6 +162,15 @@
 		public function getTonKho()
 		{
 			return $this->tonKho;
+		}
+
+		public function setGiaNhap($giaNhap)
+		{
+			$this->giaNhap=$giaNhap;
+		}
+		public function getGiaNhap()
+		{
+			return $this->giaNhap;
 		}
 	}
 ?>
