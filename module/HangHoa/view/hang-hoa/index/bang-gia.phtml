@@ -99,7 +99,8 @@
                                                     echo '<tr>';
                                                     echo '<td><input type="checkbox"/></td>';
 
-                                                    echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
+                                                    echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
+
 
                                                     echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
                                                     echo '<td>';
