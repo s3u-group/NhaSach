@@ -114,7 +114,11 @@
                             <div class="col-md-6">                            
                                 	<input type="text" class="form-control h5a-input" placeholder="Tiêu đề" value="Mô tả sản phẩm" disabled="disabled">
                                     <p>
-                                        <?php 
+                                        <?php                                        
+                                            echo $this->formHidden($sanPham->get('idSanPham'));
+                                            echo $this->formHidden($sanPham->get('tonKho'));
+                                            
+
                                             $moTa=$sanPham->get('moTa');
                                             $moTa->setAttribute('class','form-control h5a');
                                             $moTa->setAttribute('id','editor');
@@ -153,15 +157,18 @@
                                             <tr>
                                                 <td>Hình ảnh</td>
                                                 <td>
-                                                    <img width="350px" height="350px" class="img-responsive" src="<?php echo $this->basePath();?>/img/<?php echo $sanPhams->getHinhAnh(); ?>" alt="Whatever Item">
+                                                    <img width="350px" height="350px" src="<?php echo $this->basePath();?>/img/<?php echo $sanPhams->getHinhAnh(); ?>" alt="Whatever Item">
                                                 </td>
                                             </tr>
 		                                    
 		                                    <tr>
 		                                        <td>Đổi hình ảnh: </td>
 		                                        <td>
-		                                            <input type="filepicker" data-fp-button-text="<i class='fa fa-cloud-upload'></i> Files UPLOAD from ANYWERE" data-fp-apikey="fakeAPIkey" name="filePicker" id="filePicker" class="h5a-btn btn btn-primary" style="display: none;">
-		                                            <button type="button" class="h5a-btn btn btn-primary"><i class="fa fa-cloud-upload"></i>Tải lên</button>
+                                                    <?php                                                                  
+                                                        $hinhAnh=$sanPham->get('hinhAnh');                                                
+                                                        $hinhAnh->setAttribute('class','form-control h5a-input');
+                                                        echo $this->formElement($hinhAnh);                                                
+                                                    ?>  
 		                                        </td>
 		                                    </tr>
 		                                    <tr>

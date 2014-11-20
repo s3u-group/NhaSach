@@ -70,16 +70,28 @@
               $request->getPost()->toArray(),
               $request->getFiles()->toArray()
         );
+        $form->setData($request->getPost());
         if($form->isValid())
         {
-          /*foreach ($post['san-pham']['hinhAnhs']['hinhAnhs'] as $p) 
+          if($post['san-pham']['hinhAnh']['error']==0)
           {
-             
-             $uniqueToken=md5(uniqid(mt_rand(),true));
-             $newName=$uniqueToken.'_'.$p['name'];
-             $filter = new \Zend\Filter\File\Rename("./public/img/".$yMD.'/'.$newName);
-             $filter->filter($p);
-          }*/
+            // xóa bỏ hình củ trong img
+            $mask =__ROOT_PATH__.'/public/img/'.$sanPhams->getHinhAnh();
+            array_map( "unlink", glob( $mask ) );
+            // tạo lại tên mới
+            $uniqueToken=md5(uniqid(mt_rand(),true));
+            $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
+            // lưu vào cơ sở dữ liệu với tên hình là tên vừa tạo ở trên
+            $sanPhams->setHinhAnh($newName);
+            // di chuyển hình ảnh vào img            
+            $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+            $filter->filter($post['san-pham']['hinhAnh']);
+          }
+          $entityManager->flush();
+        }
+        else
+        {
+          die(var_dump($form->getMessages()));
         }
      } 
      return array(
@@ -130,19 +142,36 @@
     {      
       $form->setData($request->getPost());      
       if ($form->isValid()){
-        die(var_dump($sanPham->getMaSanPham()));
+        //die(var_dump($sanPham->getMaSanPham()));
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
-        //$queryBuilder->add('where','sp.maSanPham=\''..'\'');
-        //$query = $queryBuilder->getQuery(); 
-        //$sanPham = $query->execute();
+        $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+        $query = $queryBuilder->getQuery(); 
+        $maSanPham = $query->execute();
+        if(!$maSanPham)
+        {
+          $sanPham->setTonKho(0);
+          $entityManager->persist($sanPham);
+          $entityManager->flush();
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hanHoa'));
+        }
+        else
+        {
+          return array(
+            'form' => $form, 
+            'loais'=>$loais,
+            'donViTinhs'=>$donViTinhs,
+            'kiemTraTonTai'=>1,
+          );          
+        }
       }      
     }
 
     return array(
       'form' => $form, 
       'loais'=>$loais,
-      'donViTinhs'=>$donViTinhs,      
+      'donViTinhs'=>$donViTinhs,
+      'kiemTraTonTai'=>0,
     ); 
 
   }
