@@ -155,17 +155,18 @@
         $maSanPham = $query->execute();
         if(!$maSanPham)
         {
-          if($sanPham->getHinhAnh()==null)
-          {
-            $sanPham->setHinhAnh('photo_default.png');
-          }
-          elseif ($post['san-pham']['hinhAnh']['error']==0) {
+          if ($post['san-pham']['hinhAnh']['error']==0) {
             $uniqueToken=md5(uniqid(mt_rand(),true));          
             $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
             $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
             $filter->filter($post['san-pham']['hinhAnh']);
             $sanPham->setHinhAnh($newName);
           }
+          else
+          {
+            $sanPham->setHinhAnh('photo_default.png');
+          }     
+          
           $sanPham->setTonKho(0);
           $entityManager->persist($sanPham);
           $entityManager->flush();         
