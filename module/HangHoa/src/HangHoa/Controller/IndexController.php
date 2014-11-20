@@ -51,14 +51,21 @@
          ));
      }  
      $this->layout('layout/giaodien');  
-     $entityManager=$this->getEntityManager();
-     $sanPhams=new SanPhamFieldset();
-     $form= new CreateSanPhamForm($entityManager);
-     $form->bind($bangTin);
+     $entityManager=$this->getEntityManager();     
+     $form= new CreateSanPhamForm($entityManager);     
      $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id); 
+     $form->bind($sanPhams);
+
+     $taxonomyLoai=$this->TaxonomyFunction();
+     $loais=$taxonomyLoai->getListChildTaxonomy('danh-muc-hang-hoa');// đưa vào taxonomy dạng slug
+    
+     $taxonomyDonViTinh=$this->TaxonomyFunction();
+     $donViTinhs=$taxonomyDonViTinh->getListChildTaxonomy('don-vi-tinh');// đưa vào taxonomy dạng slug
      return array(
        'sanPhams'=>$sanPhams,
        'form' =>$form,
+       'donViTinhs'=>$donViTinhs,
+       'loais'=>$loais,
      );
 
   }
