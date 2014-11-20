@@ -106,6 +106,18 @@
   public function bangGiaAction()
   {
     $this->layout('layout/giaodien');  
+    $entityManager=$this->getEntityManager();
+    $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+
+    $taxonomyLoai=$this->TaxonomyFunction();
+    $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+
+    return array(
+       'sanPhams'=>$sanPhams,
+       'kenhPhanPhois'=>$kenhPhanPhois,
+     );
+
   }
 
   public function nhapHangAction()

@@ -77,12 +77,42 @@
                                                 <th>Sản phẩm</th>
                                                 <th>Đơn vị tính</th>
                                                 <th>Giá nhập</th>
-                                                <th>Giá điểm bán</th>
+                                                <?php 
+                                                    die(var_dump($kenhPhanPhois));
+                                                    foreach ($kenhPhanPhois as $kenhPhanPhoi)
+                                                    {
+                                                        if($kenhPhanPhoi['cap']>0)
+                                                        {
+                                                            echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
+                                                        }                                                        
+                                                    }
+                                                ?>
+                                                <!-- <th>Giá điểm bán</th>
                                                 <th>Giá cơ quan</th>
                                                 <th>Giá trường học</th>
-                                                <th>Giá bán lẻ</th>
+                                                <th>Giá bán lẻ</th> -->
                                             </thead>
                                             <tbody>
+                                            <?php
+                                                foreach($sanPhams as $sanPham)
+                                                {
+                                                    echo '<td><input type="checkbox"/></td>';
+
+                                                    echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40"> <a href="sanPham.html">'.$sanPham->getTenSanPham().'</a></td>';
+
+                                                    echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
+
+                                                    foreach($kenhPhanPhois as $kenhPhanPhoi)
+                                                    {
+                                                        if($kenhPhanPhoi['cap']>0)
+                                                        {
+                                                            //echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
+                                                            echo '<td>'.$sanPham->getGiaNhap()+(($sanPham->getGiaNhap()*$kenhPhanPhoi['description'])/100).'</td>';
+                                                        } 
+                                                    }
+
+                                                }
+                                            ?><!-- 
                                                 <tr>
                                                     <td><input type="checkbox"/></td>
                                                     <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
@@ -202,7 +232,7 @@
                                                     <td>71.000</td>
                                                     <td>71.000</td>
                                                     <td>75.000</td>
-                                                </tr>
+                                                </tr> -->
                                             </tbody>
                                         </table>
                                     </div>
