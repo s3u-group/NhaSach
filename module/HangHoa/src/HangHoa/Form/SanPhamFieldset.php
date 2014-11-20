@@ -10,8 +10,6 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-//use S3UTaxonomy\Form\TermTaxonomyFieldset;
-
 use HangHoa\Entity\SanPham;
 
 class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
@@ -87,7 +85,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
 
          $this->add(array(
              'name' => 'hinhAnh',
-             'type' => 'Text',
+             'type' => 'Zend\Form\Element\File',
              'options' => array(
                  'label' => 'Hình anh',
              ),             
@@ -95,16 +93,10 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
 
         $this->add(array(
              'name' => 'tonKho',
-             'type' => 'Text',
-             'options' => array(
-                 'label' => 'Tồn kho',
+             'type' => 'Hidden',
+             'options' => array(                 
              ),             
-         ));
-
-         /*$hinhAnhFieldset = new HinhAnhFieldset($objectManager);
-         $hinhAnhFieldset->setUseAsBaseFieldset(true);
-         $hinhAnhFieldset->setName('hinhAnhs');
-         $this->add($hinhAnhFieldset);*/
+         ));         
     }
 
     public function getInputFilterSpecification()

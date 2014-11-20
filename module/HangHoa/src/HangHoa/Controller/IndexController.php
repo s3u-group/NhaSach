@@ -89,19 +89,36 @@
     {      
       $form->setData($request->getPost());      
       if ($form->isValid()){
-        die(var_dump($sanPham->getMaSanPham()));
+        //die(var_dump($sanPham->getMaSanPham()));
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
-        //$queryBuilder->add('where','sp.maSanPham=\''..'\'');
-        //$query = $queryBuilder->getQuery(); 
-        //$sanPham = $query->execute();
+        $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+        $query = $queryBuilder->getQuery(); 
+        $maSanPham = $query->execute();
+        if(!$maSanPham)
+        {
+          $sanPham->setTonKho(0);
+          $entityManager->persist($sanPham);
+          $entityManager->flush();
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hanHoa'));
+        }
+        else
+        {
+          return array(
+            'form' => $form, 
+            'loais'=>$loais,
+            'donViTinhs'=>$donViTinhs,
+            'kiemTraTonTai'=>1,
+          );          
+        }
       }      
     }
 
     return array(
       'form' => $form, 
       'loais'=>$loais,
-      'donViTinhs'=>$donViTinhs,      
+      'donViTinhs'=>$donViTinhs,
+      'kiemTraTonTai'=>0,
     ); 
   }
 

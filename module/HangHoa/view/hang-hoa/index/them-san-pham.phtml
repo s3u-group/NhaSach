@@ -13,7 +13,8 @@
  echo $this->form()->openTag($form);
 
  $sanPham=$form->get('san-pham');    
- echo $this->formHidden($sanPham->get('idSanPham'));    
+ echo $this->formHidden($sanPham->get('idSanPham'));
+ echo $this->formHidden($sanPham->get('tonKho'));
 ?>
 <div class="container">
         <div class="row">
@@ -42,11 +43,12 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="pull-right">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>                                        
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                        <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
                                         <?php 
-                                            $submit=$form->get('submit'); 
+                                            /*$submit=$form->get('submit'); 
                                             $submit->setValue('Thêm'); 
-                                            echo $this->formSubmit($submit);                                            
+                                            echo $this->formSubmit($submit);*/                                            
                                         ?>
                                     </div>
                                 </div>
@@ -62,7 +64,11 @@
                                                 $tenSanPham=$sanPham->get('tenSanPham');
                                                 $tenSanPham->setAttribute('class','h5a-input form-control input-sm');
                                                 $tenSanPham->setAttribute('placeholder','Tên sản phẩm');
-                                                echo $this->formElement($tenSanPham);                                                
+                                                echo $this->formElement($tenSanPham);
+                                                if($kiemTraTonTai==1)
+                                                {
+                                                    echo '<p class="badge red" style="color:white">Sản phẩm đã tồn tại</p>';
+                                                }
                                             ?>
                                         </td>
                                     </tr>
@@ -92,29 +98,11 @@
                                         <td>
                                             <?php                                                
                                                 $hinhAnh=$sanPham->get('hinhAnh');
-                                                $hinhAnh->setAttribute('class','form-control h5a-input');
+                                                $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
                                                 echo $this->formElement($hinhAnh);                                                
                                             ?>
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Tồn khoa</td>
-                                        <td>
-                                            <?php                                                
-                                                $tonKho=$sanPham->get('tonKho');
-                                                $tonKho->setAttribute('class','form-control h5a-input');
-                                                echo $this->formElement($tonKho);                                                
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    </tr>
-                                    <!-- <tr>
-                                        <td>Hình ảnh</td>
-                                        <td>
-                                            <input type="filepicker" data-fp-button-text="<i class='fa fa-cloud-upload'></i> Files UPLOAD from ANYWERE" data-fp-apikey="fakeAPIkey" name="filePicker" id="filePicker" class="h5a-btn btn btn-primary" style="display: none;">
-                                            <button type="button" class="h5a-btn btn btn-primary"><i class="fa fa-cloud-upload"></i>Tải lên</button>
-                                        </td>
-                                    </tr> -->
+                                    </tr>                                    
                                     <tr>
                                         <td>Nhãn</td>
                                         <td class="red">                                                                       
