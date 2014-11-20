@@ -75,7 +75,7 @@
                                             <thead>
                                                 <th><input type="checkbox"/></th>
                                                 <th>Sản phẩm</th>
-                                                <th>Đơn vị tính</th>
+                                                <th>ĐVT</th>
                                                 <th>Giá nhập</th>
                                                 <?php 
                                                     //die(var_dump($kenhPhanPhois));
@@ -99,7 +99,7 @@
                                                     echo '<tr>';
                                                     echo '<td><input type="checkbox"/></td>';
 
-                                                    echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40"> <a href="sanPham.html">'.$sanPham->getTenSanPham().'</a></td>';
+                                                    echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
 
                                                     echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
                                                     echo '<td>';
@@ -109,7 +109,7 @@
                                                     }
                                                     else
                                                     {
-                                                        echo 'Giá nhập';
+                                                        echo $sanPham->getGiaNhap();
                                                     }
                                                     echo '</td>';
 
@@ -117,135 +117,25 @@
                                                     {
                                                         if($kenhPhanPhoi['cap']>0)
                                                         {
-                                                            /*//echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
-                                                            echo '<td>'.$sanPham->getGiaNhap()+(($sanPham->getGiaNhap()*$kenhPhanPhoi['description'])/100).'</td>';*/
-                                                            echo '<td>một</td>';
+                                                            echo '<td>';
+                                                                $giaNhap=$sanPham->getGiaNhap();
+                                                                $chietKhau=((float)$kenhPhanPhoi['description']*$giaNhap)/100;
+                                                                $giaXuat=$giaNhap+$chietKhau;
+                                                                if($giaNhap==0)
+                                                                {
+                                                                    echo 'Chưa có';
+                                                                }
+                                                                else
+                                                                {
+                                                                    echo $giaXuat;
+                                                                }
+
+                                                            echo '</td>';                                                           
                                                         } 
                                                     }
                                                     echo '</tr>';
-
                                                 }
-                                            ?><!-- 
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="img/brand.png" height="40"> <a href="sanPham.html">Giấy in Lucky 100g</a></td>
-                                                    <td>Thùng</td>
-                                                    <td>70.000</td>
-                                                    <td>72.000</td>
-                                                    <td>71.000</td>
-                                                    <td>71.000</td>
-                                                    <td>75.000</td>
-                                                </tr> -->
+                                            ?>
                                             </tbody>
                                         </table>
                                     </div>
