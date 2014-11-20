@@ -8,6 +8,13 @@
 
     <title>Sản phẩm</title>
 </head>
+<?php
+     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'sanPham','id'=>$sanPhams->getIdSanPham())));
+     $form->setAttribute('role','form');
+     $form->prepare();
+     echo $this->form()->openTag($form);
+     $sanPham=$form->get('san-pham');
+?>
 
 <div class="container">
         <div class="row">
@@ -24,26 +31,6 @@
             </div>
             <div class="col-md-10" role="main">
                 <div class="h5a-docs-section">
-                    <!-- <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2>Chi tiết khách hàng</h2>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
             </div>
         </div>
@@ -54,12 +41,13 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <h1>
-                <img class="pull-left img-circle" src="http://lorempixel.com/40/40/food/" alt=""> Giấy in Lucky <small>100g</small>
+                <img class="pull-left img-circle" width="40px" height="40px" src="<?php echo $this->basePath();?>/img/<?php echo $sanPhams->getHinhAnh(); ?>" alt=""> <?php echo $sanPhams->getTenSanPham(); ?>
             </h1>
             <div class="btn-group pull-right">
                 <a class="btn h5a-btn btn-danger btn-xs"><i class="fa fa-times"></i> Xóa sản phẩm</a>                
             </div>
-            	<p>Tenderloin pastrami shank filet mignon sirloin jerky leberkas meatball pork tail<br>rump capicolameatball capicola turkey fatback kielbasa brisket.<br><br>
+            	<p>
+                    <?php echo $sanPhams->getMoTa(); ?>
             	</p>
             <div class="tabbable">
                 <ul class="nav nav-tabs" role="tablist" id="myTab">
@@ -75,46 +63,41 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="thumbnail">
-                                    <img class="img-responsive" src="http://lorempixel.com/1650/1400/food/An%20Item/" alt="Whatever Item">
-                                    <div class="caption">
-                                        <h4>Simple Johnx XXL</h4>
-                                        <p>This is a picture caption</p>
-                                    </div>
+                                    <img class="img-responsive" src="<?php echo $this->basePath();?>/img/<?php echo $sanPhams->getHinhAnh(); ?>" alt="Whatever Item">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <h4>This can be anything</h4>
-                                <p>Nội dung</p>
+                                <h4>Sản phẩm: <?php echo $sanPhams->getTenSanPham(); ?></h4>
                                 <h4 class="underline">More Info</h4>
                                 <table class="item">
                                     <tbody>
                                         <tr>
-                                            <td><i class="fa fa-key"></i> ID</td>
+                                            <td><i class="fa fa-key"></i> ID: <?php echo $sanPhams->getIdSanPham(); ?></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td>Tên sản phẩm</td>
+                                            <td>Tên sản phẩm: <?php echo $sanPhams->getTenSanPham(); ?></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-arrows"></i> Mã sản phẩm</td>
+                                            <td><i class="fa fa-arrows"></i> Mã sản phẩm: <?php echo $sanPhams->getMaSanPham(); ?></td>
                                             <td class="red"></td>
                                         </tr>                                  
                                         <tr>
-                                            <td>Mô tả</td>
+                                            <td>Mô tả: <?php echo $sanPhams->getMoTa(); ?></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-edit"></i>Loại</td>
+                                            <td><i class="fa fa-edit"></i>Loại: <?php echo $sanPhams->getIdLoai()->getTermId()->getName(); ?></td>
                                             <td>         
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-cog"></i> Nhãn</td>
+                                            <td><i class="fa fa-cog"></i> Nhãn: <?php echo $sanPhams->getNhan(); ?></td>
                                             <td></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-globe"></i> Đơn vị tính</td>
+                                            <td><i class="fa fa-globe"></i> Đơn vị tính: <?php echo $sanPhams->getIdDonViTinh()->getTermId()->getName(); ?></td>
                                             <td></td>
                                         </tr>
                                         <tr>
@@ -128,12 +111,22 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="1">
                         <div class="row">
-                            <div class="col-md-6">                                
-                                <form>
-                                	<input type="text" class="form-control h5a-input" placeholder="Tiêu đề" value="This can be anything">
+                            <div class="col-md-6">                            
+                                	<input type="text" class="form-control h5a-input" placeholder="Tiêu đề" value="Mô tả sản phẩm" disabled="disabled">
                                     <p>
-                                        <textarea placeholder="Nội dung mô tả" name="longtext" class="form-control h5a-input" rows="6">Nội dung mô tả
-                                            </textarea><br><br>
+                                        <?php                                        
+                                            echo $this->formHidden($sanPham->get('idSanPham'));
+                                            echo $this->formHidden($sanPham->get('tonKho'));
+                                            
+
+                                            $moTa=$sanPham->get('moTa');
+                                            $moTa->setAttribute('class','form-control h5a');
+                                            $moTa->setAttribute('id','editor');
+                                            $moTa->setAttribute('rows','5');
+                                            echo $this->formElement($moTa);                                                
+                                        ?>
+                                            <br><br>
+
                                     </p>
 		                            <h4 class="underline">More Info</h4>
 		                            <table class="item">
@@ -141,52 +134,89 @@
 		                                    <tr>
 		                                        <td>Tên sản phẩm</td>
 		                                        <td>
-		                                            <input type="text" id="txtTenSanPham" placeholder="Tên sản phẩm" class="h5a-input form-control input-sm">
+                                                    <?php 
+                                                        $tenSanPham=$sanPham->get('tenSanPham');
+                                                        $tenSanPham->setAttribute('class','form-control h5a');
+                                                        $tenSanPham->setAttribute('id','editor');
+                                                        echo $this->formElement($tenSanPham);                                                
+                                                    ?>
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
 		                                        <td>Mã sản phẩm</td>
-		                                        <td><input type="text" class="form-control h5a-input" placeholder="Mã sản phẩm"></td>
+		                                        <td>
+                                                    <?php 
+                                                        $maSanPham=$sanPham->get('maSanPham');
+                                                        $maSanPham->setAttribute('class','form-control h5a');
+                                                        $maSanPham->setAttribute('id','editor');
+                                                        echo $this->formElement($maSanPham);                                                
+                                                    ?>
+                                                </td>
 		                                    </tr>
-		                                    <!-- <tr>
-		                                        <td>Mô tả</td>
-		                                        <td>
-		                                            <textarea class="form-control h5a" rows="5" id="editor"></textarea>
-		                                        </td>
-		                                    </tr> -->
+
+                                            <tr>
+                                                <td>Hình ảnh</td>
+                                                <td>
+                                                    <img width="350px" height="350px" src="<?php echo $this->basePath();?>/img/<?php echo $sanPhams->getHinhAnh(); ?>" alt="Whatever Item">
+                                                </td>
+                                            </tr>
+		                                    
 		                                    <tr>
-		                                        <td>Hình ảnh</td>
+		                                        <td>Đổi hình ảnh: </td>
 		                                        <td>
-		                                            <input type="filepicker" data-fp-button-text="<i class='fa fa-cloud-upload'></i> Files UPLOAD from ANYWERE" data-fp-apikey="fakeAPIkey" name="filePicker" id="filePicker" class="h5a-btn btn btn-primary" style="display: none;">
-		                                            <button type="button" class="h5a-btn btn btn-primary"><i class="fa fa-cloud-upload"></i>Tải lên</button>
+                                                    <?php                                                                  
+                                                        $hinhAnh=$sanPham->get('hinhAnh');                                                
+                                                        $hinhAnh->setAttribute('class','form-control h5a-input');
+                                                        echo $this->formElement($hinhAnh);                                                
+                                                    ?>  
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
 		                                        <td>Loại</td>
 		                                        <td class="green"> 
-		                                            <select class="form-control h5a-input" name="loai">
-		                                            </select>                      
+		                                           <?php                                                                  
+                                                        $idLoai=$sanPham->get('idLoai');                                                
+                                                        $idLoai->setAttribute('class','form-control h5a-input');
+                                                        $idLoai->setValueOptions($this->MakeArrayOptionTaxonomy($loais));
+                                                        echo $this->formElement($idLoai);                                                
+                                                    ?>                 
 		                                        </td>
 		                                    </tr>                                      
 		                                    <tr>
 		                                        <td>Nhãn</td>
 		                                        <td class="red">                           
-		                                            <input type="text" class="form-control h5a-input" placeholder="Nhãn">
+		                                            <?php 
+                                                        $nhan=$sanPham->get('nhan');
+                                                        $nhan->setAttribute('class','form-control h5a');
+                                                        $nhan->setAttribute('id','editor');
+                                                        echo $this->formElement($nhan);                                                
+                                                    ?>
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
 		                                        <td>Đơn vị tính</td>
 		                                        <td>
-		                                            <select class="form-control h5a-input" name="don_vi_tinh">
-		                                            </select>
+                                                    <?php                                                                  
+                                                        $donViTinh=$sanPham->get('idDonViTinh');                                                
+                                                        $donViTinh->setAttribute('class','form-control h5a-input');
+                                                        $donViTinh->setValueOptions($this->MakeArrayOptionTaxonomy($donViTinhs));
+                                                        echo $this->formElement($donViTinh);                                                
+                                                    ?>
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
-                                                <td colspan="2"><br><a class="full btn h5a-btn btn-success">LƯU THAY ĐỔI</a></td>
+                                                <td colspan="2">
+                                                    <br>
+                                                    <?php 
+                                                        $form->get('submit')->setAttribute('class','full btn h5a-btn btn-success');
+                                                        $form->get('submit')->setAttribute('value','LƯU THAY ĐỔI');
+                                                        echo $this->formSubmit($form->get('submit'));
+                                                    ?>
+                                                </td>
                                             </tr>
 		                                </tbody>
 		                            </table>
-		                        </form>
+		                        
                             </div>
                             <div class="col-md-6">
 
@@ -198,6 +228,9 @@
         </div>
     </div>
 </div>
+<?php
+    echo $this->form()->closeTag();
+?>
 
 <!-- jQuery -->
 <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>

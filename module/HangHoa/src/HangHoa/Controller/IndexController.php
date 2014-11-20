@@ -36,16 +36,71 @@
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
-    //die(var_dump($sanPhams));
     return array('sanPhams'=>$sanPhams);
       
   }
 
 
   // xem chi tiết sản phẩm
-  public function chiTietSanPhamAction()
+  public function sanPhamAction()
   {
-    $this->layout('layout/giaodien');  
+     $id = (int) $this->params()->fromRoute('id', 0);
+     if (!$id) {
+         return $this->redirect()->toRoute('hang_hoa/crud', array(
+             'action' => 'hangHoa',
+         ));
+     }  
+     $this->layout('layout/giaodien');  
+     $entityManager=$this->getEntityManager();     
+     $form= new CreateSanPhamForm($entityManager);     
+     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id); 
+     $form->bind($sanPhams);
+
+     $taxonomyLoai=$this->TaxonomyFunction();
+     $loais=$taxonomyLoai->getListChildTaxonomy('danh-muc-hang-hoa');// đưa vào taxonomy dạng slug
+    
+     $taxonomyDonViTinh=$this->TaxonomyFunction();
+     $donViTinhs=$taxonomyDonViTinh->getListChildTaxonomy('don-vi-tinh');// đưa vào taxonomy dạng slug
+
+     $request = $this->getRequest();
+
+     if($request->isPost())
+     {
+        $post = array_merge_recursive(
+              $request->getPost()->toArray(),
+              $request->getFiles()->toArray()
+        );
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+          if($post['san-pham']['hinhAnh']['error']==0)
+          {
+            // xóa bỏ hình củ trong img
+            $mask =__ROOT_PATH__.'/public/img/'.$sanPhams->getHinhAnh();
+            array_map( "unlink", glob( $mask ) );
+            // tạo lại tên mới
+            $uniqueToken=md5(uniqid(mt_rand(),true));
+            $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
+            // lưu vào cơ sở dữ liệu với tên hình là tên vừa tạo ở trên
+            $sanPhams->setHinhAnh($newName);
+            // di chuyển hình ảnh vào img            
+            $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+            $filter->filter($post['san-pham']['hinhAnh']);
+          }
+          $entityManager->flush();
+        }
+        else
+        {
+          die(var_dump($form->getMessages()));
+        }
+     } 
+     return array(
+       'sanPhams'=>$sanPhams,
+       'form' =>$form,
+       'donViTinhs'=>$donViTinhs,
+       'loais'=>$loais,
+     );
+
   }
 
   public function bangGiaAction()
@@ -63,13 +118,11 @@
     $this->layout('layout/giaodien');  
   }
 
-  public function sanPhamAction()
-  {
-    $this->layout('layout/giaodien');  
-  }
+  
 
   public function themSanPhamAction()
   {
+
     $this->layout('layout/giaodien'); 
 
     $entityManager=$this->getEntityManager();
@@ -132,6 +185,7 @@
       'donViTinhs'=>$donViTinhs,
       'kiemTraTonTai'=>0,
     ); 
+
   }
 
  	public function addAction()

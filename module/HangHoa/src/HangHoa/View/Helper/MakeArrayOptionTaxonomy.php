@@ -20,7 +20,7 @@ class MakeArrayOptionTaxonomy extends AbstractHelper{
 					$str.='__ ';
 				}
 				$str.=$mang['termId']['name'];
-				$dm[$mang['termTaxonomyId']]=$str;
+				$dm[$mang['termTaxonomyId']]=$mang['termId']['name'];
 			}
 			
 		}	

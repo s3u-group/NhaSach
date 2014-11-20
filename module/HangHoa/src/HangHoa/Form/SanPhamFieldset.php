@@ -32,7 +32,11 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(
                  'label' => 'Tên sản phẩm',
              ),
-             'attributes'=>array('required'=>'required'),
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Tên sản phẩm',
+            ),
          )); 
 
          $this->add(array(
@@ -53,9 +57,10 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              //'attributes'=>array('required'=>'required'),
          ));         
                   
+
          $this->add(array(
              'name' => 'idLoai',
-             'type' => 'Select',
+             'type' => '\Zend\Form\Element\Select',
              'options' => array(
                  'label' => 'Loại',
                  'empty_option'=>'----------Chọn Loại Sản Phẩm----------',
@@ -75,7 +80,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
        
          $this->add(array(
              'name' => 'idDonViTinh',
-             'type' => 'Select',
+             'type' => '\Zend\Form\Element\Select',
              'options' => array(
                  'label' => 'Chọn Đơn Vị Tính',
                  'empty_option'=>'----------Chọn Đơn Vị Tính----------',
@@ -86,12 +91,12 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
          $this->add(array(
              'name' => 'hinhAnh',
              'type' => 'Zend\Form\Element\File',
-             'options' => array(
-                 'label' => 'Hình ảnh',
-             ),             
+             'options' => array( 
+                'attributes'=>array('required'=>false),
          ));
 
         $this->add(array(
+
              'name' => 'tonKho',
              'type' => 'Hidden',
              'options' => array(                 
