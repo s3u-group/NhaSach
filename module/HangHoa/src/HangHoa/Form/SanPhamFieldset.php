@@ -96,12 +96,11 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
          ));
 
         $this->add(array(
-
              'name' => 'tonKho',
              'type' => 'Hidden',
              'options' => array(                 
              ),             
-         ));         
+         ));        
     }
 
     public function getInputFilterSpecification()
