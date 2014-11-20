@@ -78,7 +78,7 @@
                                                 <th>Đơn vị tính</th>
                                                 <th>Giá nhập</th>
                                                 <?php 
-                                                    die(var_dump($kenhPhanPhois));
+                                                    //die(var_dump($kenhPhanPhois));
                                                     foreach ($kenhPhanPhois as $kenhPhanPhoi)
                                                     {
                                                         if($kenhPhanPhoi['cap']>0)
@@ -96,20 +96,33 @@
                                             <?php
                                                 foreach($sanPhams as $sanPham)
                                                 {
+                                                    echo '<tr>';
                                                     echo '<td><input type="checkbox"/></td>';
 
                                                     echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40"> <a href="sanPham.html">'.$sanPham->getTenSanPham().'</a></td>';
 
                                                     echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
+                                                    echo '<td>';
+                                                    if($sanPham->getGiaNhap()==0)
+                                                    {
+                                                        echo 'Chưa nhập';
+                                                    }
+                                                    else
+                                                    {
+                                                        echo 'Giá nhập';
+                                                    }
+                                                    echo '</td>';
 
                                                     foreach($kenhPhanPhois as $kenhPhanPhoi)
                                                     {
                                                         if($kenhPhanPhoi['cap']>0)
                                                         {
-                                                            //echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
-                                                            echo '<td>'.$sanPham->getGiaNhap()+(($sanPham->getGiaNhap()*$kenhPhanPhoi['description'])/100).'</td>';
+                                                            /*//echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
+                                                            echo '<td>'.$sanPham->getGiaNhap()+(($sanPham->getGiaNhap()*$kenhPhanPhoi['description'])/100).'</td>';*/
+                                                            echo '<td>một</td>';
                                                         } 
                                                     }
+                                                    echo '</tr>';
 
                                                 }
                                             ?><!-- 
