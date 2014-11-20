@@ -24,26 +24,6 @@
             </div>
             <div class="col-md-10" role="main">
                 <div class="h5a-docs-section">
-                    <!-- <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h2>Chi tiết khách hàng</h2>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>-->
                 </div>
             </div>
         </div>
@@ -129,7 +109,14 @@
                     <div role="tabpanel" class="tab-pane" id="1">
                         <div class="row">
                             <div class="col-md-6">                                
-                                <form>
+                                
+                               <?php
+                                 $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'sanPham')));
+                                 $form->setAttribute('role','form');
+                                 $form->prepare();
+                                 echo $this->form()->openTag($form);
+                                 $sanPham=$form->get('san-pham');
+                                ?>
                                 	<input type="text" class="form-control h5a-input" placeholder="Tiêu đề" value="This can be anything">
                                     <p>
                                         <textarea placeholder="Nội dung mô tả" name="longtext" class="form-control h5a-input" rows="6">Nội dung mô tả
@@ -148,12 +135,7 @@
 		                                        <td>Mã sản phẩm</td>
 		                                        <td><input type="text" class="form-control h5a-input" placeholder="Mã sản phẩm"></td>
 		                                    </tr>
-		                                    <!-- <tr>
-		                                        <td>Mô tả</td>
-		                                        <td>
-		                                            <textarea class="form-control h5a" rows="5" id="editor"></textarea>
-		                                        </td>
-		                                    </tr> -->
+		                                    
 		                                    <tr>
 		                                        <td>Hình ảnh</td>
 		                                        <td>
@@ -186,7 +168,9 @@
                                             </tr>
 		                                </tbody>
 		                            </table>
-		                        </form>
+		                        <?php
+                                    echo $this->form()->closeTag();
+                                ?>
                             </div>
                             <div class="col-md-6">
 

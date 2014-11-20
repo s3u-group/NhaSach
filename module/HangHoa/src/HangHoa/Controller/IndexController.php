@@ -36,7 +36,6 @@
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
-    //die(var_dump($sanPhams));
     return array('sanPhams'=>$sanPhams);
       
   }
@@ -45,7 +44,23 @@
   // xem chi tiết sản phẩm
   public function sanPhamAction()
   {
-    $this->layout('layout/giaodien');  
+     $id = (int) $this->params()->fromRoute('id', 0);
+     if (!$id) {
+         return $this->redirect()->toRoute('hang_hoa/crud', array(
+             'action' => 'hangHoa',
+         ));
+     }  
+     $this->layout('layout/giaodien');  
+     $entityManager=$this->getEntityManager();
+     $sanPhams=new SanPhamFieldset();
+     $form= new CreateSanPhamForm($entityManager);
+     $form->bind($bangTin);
+     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id); 
+     return array(
+       'sanPhams'=>$sanPhams,
+       'form' =>$form,
+     );
+
   }
 
   public function bangGiaAction()
@@ -67,40 +82,7 @@
 
   public function themSanPhamAction()
   {
-    $this->layout('layout/giaodien'); 
-
-    $entityManager=$this->getEntityManager();
-    $sanPham=new sanPham();
-    $form= new CreateSanPhamForm($entityManager);
-    $form->bind($sanPham);
-
-    $taxonomyLoai=$this->TaxonomyFunction();
-    $loais=$taxonomyLoai->getListChildTaxonomy('danh-muc-hang-hoa');// đưa vào taxonomy dạng slug
-    
-    $taxonomyDonViTinh=$this->TaxonomyFunction();
-    $donViTinhs=$taxonomyDonViTinh->getListChildTaxonomy('don-vi-tinh');// đưa vào taxonomy dạng slug
-
-    $request = $this->getRequest();
-
-    if($request->isPost())
-    {
-      //die(var_dump($request->getPost()));
-      $form->setData($request->getPost());
-      //var_dump($sanPham);
-      //die(var_dump($form));
-      if ($form->isValid()){
-        echo "isValid";
-      }
-      else
-        //echo "Not Valid";
-        die(var_dump($form->getMessages()));
-    }
-
-    return array(
-      'form' => $form, 
-      'loais'=>$loais,
-      'donViTinhs'=>$donViTinhs,      
-    ); 
+    $this->layout('layout/giaodien');  
   }
 
  	public function addAction()

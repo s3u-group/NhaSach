@@ -42,7 +42,7 @@
 		/**
 		* @ORM\Column(name="hinh_anh")
 		*/
-		private $hinhAnh='hinh';
+		private $hinhAnh;
 
 
 		/**
@@ -55,14 +55,14 @@
 		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
 		* @ORM\JoinColumn(name="id_don_vi_tinh", referencedColumnName="term_taxonomy_id")
 		*/
-		private $idDonViTinh=1;
+		private $idDonViTinh;
 
 
 		/**
 		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
 		* @ORM\JoinColumn(name="id_loai", referencedColumnName="term_taxonomy_id")
 		*/
-		private $idLoai=9;
+		private $idLoai;
 
 
 		/**

@@ -34,7 +34,11 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(
                  'label' => 'Tên sản phẩm',
              ),
-             'attributes'=>array('required'=>'required'),
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Tên sản phẩm',
+            ),
          )); 
 
          $this->add(array(
@@ -55,15 +59,15 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              //'attributes'=>array('required'=>'required'),
          ));         
                   
-         /* $this->add(array(
+          $this->add(array(
              'name' => 'idLoai',
-             'type' => 'Select',
+             'type' => '\Zend\Form\Element\Select',
              'options' => array(
                  'label' => 'Loại',
                  'empty_option'=>'----------Chọn Loại Sản Phẩm----------',
                  'disable_inarray_validator' => true,
              ),
-         ));*/
+         ));
 
         $this->add(array(
          'name' => 'nhan',
@@ -75,37 +79,32 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
         ));
 
        
-        /* $this->add(array(
+         $this->add(array(
              'name' => 'idDonViTinh',
-             'type' => 'Select',
+             'type' => '\Zend\Form\Element\Select',
              'options' => array(
                  'label' => 'Chọn Đơn Vị Tính',
                  'empty_option'=>'----------Chọn Đơn Vị Tính----------',
                  'disable_inarray_validator' => true,                 
              ),
          ));
-*/
-        /* $this->add(array(
+
+         $this->add(array(
              'name' => 'hinhAnh',
              'type' => 'Text',
              'options' => array(
                  'label' => 'Hình anh',
              ),             
-         )); */
+         )); 
 
-        /* $this->add(array(
+         $this->add(array(
              'name' => 'tonKho',
-             'type' => 'Text',
+             'type' => 'text',
              'options' => array(
                  'label' => 'Tồn kho',
              ),             
          ));  
-*/
 
-         /*$hinhAnhFieldset = new HinhAnhFieldset($objectManager);
-         $hinhAnhFieldset->setUseAsBaseFieldset(true);
-         $hinhAnhFieldset->setName('hinhAnhs');
-         $this->add($hinhAnhFieldset);*/
     }
 
     public function getInputFilterSpecification()
