@@ -10,7 +10,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-use S3UTaxonomy\Form\TermTaxonomyFieldset;
+//use S3UTaxonomy\Form\TermTaxonomyFieldset;
 
 use HangHoa\Entity\SanPham;
 
@@ -55,7 +55,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              //'attributes'=>array('required'=>'required'),
          ));         
                   
-         /* $this->add(array(
+         $this->add(array(
              'name' => 'idLoai',
              'type' => 'Select',
              'options' => array(
@@ -63,7 +63,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
                  'empty_option'=>'----------Chọn Loại Sản Phẩm----------',
                  'disable_inarray_validator' => true,
              ),
-         ));*/
+         ));
 
         $this->add(array(
          'name' => 'nhan',
@@ -75,7 +75,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
         ));
 
        
-        /* $this->add(array(
+         $this->add(array(
              'name' => 'idDonViTinh',
              'type' => 'Select',
              'options' => array(
@@ -84,23 +84,22 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
                  'disable_inarray_validator' => true,                 
              ),
          ));
-*/
-        /* $this->add(array(
+
+         $this->add(array(
              'name' => 'hinhAnh',
              'type' => 'Text',
              'options' => array(
                  'label' => 'Hình anh',
              ),             
-         )); */
+         ));
 
-        /* $this->add(array(
+        $this->add(array(
              'name' => 'tonKho',
              'type' => 'Text',
              'options' => array(
                  'label' => 'Tồn kho',
              ),             
-         ));  
-*/
+         ));
 
          /*$hinhAnhFieldset = new HinhAnhFieldset($objectManager);
          $hinhAnhFieldset->setUseAsBaseFieldset(true);

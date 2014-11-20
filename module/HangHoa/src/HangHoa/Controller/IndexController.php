@@ -86,17 +86,16 @@
     $request = $this->getRequest();
 
     if($request->isPost())
-    {
-      //die(var_dump($request->getPost()));
-      $form->setData($request->getPost());
-      //var_dump($sanPham);
-      //die(var_dump($form));
+    {      
+      $form->setData($request->getPost());      
       if ($form->isValid()){
-        echo "isValid";
-      }
-      else
-        //echo "Not Valid";
-        die(var_dump($form->getMessages()));
+        die(var_dump($sanPham->getMaSanPham()));
+        $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+        $queryBuilder = $repository->createQueryBuilder('sp');
+        //$queryBuilder->add('where','sp.maSanPham=\''..'\'');
+        //$query = $queryBuilder->getQuery(); 
+        //$sanPham = $query->execute();
+      }      
     }
 
     return array(

@@ -55,20 +55,20 @@
 		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
 		* @ORM\JoinColumn(name="id_don_vi_tinh", referencedColumnName="term_taxonomy_id")
 		*/
-		private $idDonViTinh=1;
+		private $idDonViTinh;
 
 
 		/**
 		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
 		* @ORM\JoinColumn(name="id_loai", referencedColumnName="term_taxonomy_id")
 		*/
-		private $idLoai=9;
+		private $idLoai;
 
 
 		/**
 		* @ORM\Column(name="ton_kho", type="float")
 		*/
-		private $tonKho=0;
+		private $tonKho;
 
 
 		public function setIdSanPham($idSanPham)
@@ -160,6 +160,4 @@
 			return $this->tonKho;
 		}
 	}
-	
-
 ?>
