@@ -42,7 +42,7 @@
 		/**
 		* @ORM\Column(name="hinh_anh")
 		*/
-		private $hinhAnh='hinh';
+		private $hinhAnh;
 
 
 		/**

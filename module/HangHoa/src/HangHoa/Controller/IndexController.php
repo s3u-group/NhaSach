@@ -86,7 +86,12 @@
     $request = $this->getRequest();
 
     if($request->isPost())
-    {      
+    {
+      $post = array_merge_recursive(
+              $request->getPost()->toArray(),
+              $request->getFiles()->toArray()
+          );
+
       $form->setData($request->getPost());      
       if ($form->isValid()){
         //die(var_dump($sanPham->getMaSanPham()));
@@ -97,10 +102,17 @@
         $maSanPham = $query->execute();
         if(!$maSanPham)
         {
+          $uniqueToken=md5(uniqid(mt_rand(),true));          
+          $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
+          $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+          $filter->filter($post['san-pham']['hinhAnh']);
+
+          $sanPham->setHinhAnh($newName);
           $sanPham->setTonKho(0);
+
           $entityManager->persist($sanPham);
-          $entityManager->flush();
-          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hanHoa'));
+          $entityManager->flush();         
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
         }
         else
         {
