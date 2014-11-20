@@ -61,6 +61,27 @@
     
      $taxonomyDonViTinh=$this->TaxonomyFunction();
      $donViTinhs=$taxonomyDonViTinh->getListChildTaxonomy('don-vi-tinh');// đưa vào taxonomy dạng slug
+
+     $request = $this->getRequest();
+
+     if($request->isPost())
+     {
+        $post = array_merge_recursive(
+              $request->getPost()->toArray(),
+              $request->getFiles()->toArray()
+        );
+        if($form->isValid())
+        {
+          /*foreach ($post['san-pham']['hinhAnhs']['hinhAnhs'] as $p) 
+          {
+             
+             $uniqueToken=md5(uniqid(mt_rand(),true));
+             $newName=$uniqueToken.'_'.$p['name'];
+             $filter = new \Zend\Filter\File\Rename("./public/img/".$yMD.'/'.$newName);
+             $filter->filter($p);
+          }*/
+        }
+     } 
      return array(
        'sanPhams'=>$sanPhams,
        'form' =>$form,

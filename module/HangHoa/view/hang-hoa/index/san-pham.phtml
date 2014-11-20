@@ -9,7 +9,7 @@
     <title>Sản phẩm</title>
 </head>
 <?php
-     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'sanPham')));
+     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'sanPham','id'=>$sanPhams->getIdSanPham())));
      $form->setAttribute('role','form');
      $form->prepare();
      echo $this->form()->openTag($form);
@@ -198,7 +198,14 @@
 		                                        </td>
 		                                    </tr>
 		                                    <tr>
-                                                <td colspan="2"><br><a class="full btn h5a-btn btn-success">LƯU THAY ĐỔI</a></td>
+                                                <td colspan="2">
+                                                    <br>
+                                                    <?php 
+                                                        $form->get('submit')->setAttribute('class','full btn h5a-btn btn-success');
+                                                        $form->get('submit')->setAttribute('value','LƯU THAY ĐỔI');
+                                                        echo $this->formSubmit($form->get('submit'));
+                                                    ?>
+                                                </td>
                                             </tr>
 		                                </tbody>
 		                            </table>
