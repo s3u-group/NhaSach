@@ -155,14 +155,18 @@
         $maSanPham = $query->execute();
         if(!$maSanPham)
         {
-          $uniqueToken=md5(uniqid(mt_rand(),true));          
-          $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
-          $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
-          $filter->filter($post['san-pham']['hinhAnh']);
-
-          $sanPham->setHinhAnh($newName);
+          if($sanPham->getHinhAnh()==null)
+          {
+            $sanPham->setHinhAnh('photo_default.png');
+          }
+          elseif ($post['san-pham']['hinhAnh']['error']==0) {
+            $uniqueToken=md5(uniqid(mt_rand(),true));          
+            $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
+            $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+            $filter->filter($post['san-pham']['hinhAnh']);
+            $sanPham->setHinhAnh($newName);
+          }
           $sanPham->setTonKho(0);
-
           $entityManager->persist($sanPham);
           $entityManager->flush();         
           return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
