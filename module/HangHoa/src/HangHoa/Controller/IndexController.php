@@ -82,6 +82,23 @@
     
     $taxonomyDonViTinh=$this->TaxonomyFunction();
     $donViTinhs=$taxonomyDonViTinh->getListChildTaxonomy('don-vi-tinh');// đưa vào taxonomy dạng slug
+
+    $request = $this->getRequest();
+
+    if($request->isPost())
+    {
+      //die(var_dump($request->getPost()));
+      $form->setData($request->getPost());
+      //var_dump($sanPham);
+      //die(var_dump($form));
+      if ($form->isValid()){
+        echo "isValid";
+      }
+      else
+        //echo "Not Valid";
+        die(var_dump($form->getMessages()));
+    }
+
     return array(
       'form' => $form, 
       'loais'=>$loais,

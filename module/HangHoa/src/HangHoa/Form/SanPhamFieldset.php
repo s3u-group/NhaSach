@@ -52,10 +52,10 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(
                  'label' => 'Mô tả',
              ),
-             'attributes'=>array('required'=>'required'),
+             //'attributes'=>array('required'=>'required'),
          ));         
                   
-          $this->add(array(
+         /* $this->add(array(
              'name' => 'idLoai',
              'type' => 'Select',
              'options' => array(
@@ -63,29 +63,44 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
                  'empty_option'=>'----------Chọn Loại Sản Phẩm----------',
                  'disable_inarray_validator' => true,
              ),
-         ));
+         ));*/
 
         $this->add(array(
          'name' => 'nhan',
-         'type' => 'Select',
+         'type' => 'Text',
          'options' => array(
-             'label' => 'Chọn Nhãn',
-             'empty_option'=>'----------Chọn Nhãn Sản Phẩm----------',
-             'disable_inarray_validator' => true,
+             'label' => 'Chọn Nhãn',             
          ),
+         'attributes'=>array('required'=>'required'),
         ));
 
        
-         $this->add(array(
-             'name' => 'donViTinh',
+        /* $this->add(array(
+             'name' => 'idDonViTinh',
              'type' => 'Select',
              'options' => array(
                  'label' => 'Chọn Đơn Vị Tính',
                  'empty_option'=>'----------Chọn Đơn Vị Tính----------',
-                 'disable_inarray_validator' => true,
+                 'disable_inarray_validator' => true,                 
              ),
-         ));        
+         ));
+*/
+        /* $this->add(array(
+             'name' => 'hinhAnh',
+             'type' => 'Text',
+             'options' => array(
+                 'label' => 'Hình anh',
+             ),             
+         )); */
 
+        /* $this->add(array(
+             'name' => 'tonKho',
+             'type' => 'Text',
+             'options' => array(
+                 'label' => 'Tồn kho',
+             ),             
+         ));  
+*/
 
          /*$hinhAnhFieldset = new HinhAnhFieldset($objectManager);
          $hinhAnhFieldset->setUseAsBaseFieldset(true);
