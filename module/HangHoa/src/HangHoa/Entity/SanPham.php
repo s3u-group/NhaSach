@@ -68,7 +68,7 @@
 		/**
 		* @ORM\Column(name="ton_kho", type="float")
 		*/
-		private $tonKho=0;
+		private $tonKho;
 
 
 		public function setIdSanPham($idSanPham)
@@ -160,6 +160,4 @@
 			return $this->tonKho;
 		}
 	}
-	
-
 ?>

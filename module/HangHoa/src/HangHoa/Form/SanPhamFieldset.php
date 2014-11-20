@@ -10,7 +10,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 
-use S3UTaxonomy\Form\TermTaxonomyFieldset;
+//use S3UTaxonomy\Form\TermTaxonomyFieldset;
 
 use HangHoa\Entity\SanPham;
 
@@ -59,7 +59,8 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              //'attributes'=>array('required'=>'required'),
          ));         
                   
-          $this->add(array(
+
+         $this->add(array(
              'name' => 'idLoai',
              'type' => '\Zend\Form\Element\Select',
              'options' => array(
@@ -95,16 +96,17 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(
                  'label' => 'Hình anh',
              ),             
-         )); 
+         ));
 
-         $this->add(array(
+        $this->add(array(
+
              'name' => 'tonKho',
              'type' => 'text',
              'options' => array(
                  'label' => 'Tồn kho',
              ),             
-         ));  
 
+         ));
     }
 
     public function getInputFilterSpecification()
