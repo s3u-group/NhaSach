@@ -42,13 +42,6 @@
 		*/
 		private $idKenhPhanPhoi;
 
-		const DIEM_BAN=1;		
-		const CO_QUAN=2;
-		const TRUONG_HOC=3;
-		const CUA_HANG=4;
-		const BAN_LE=5;
-
-
 		public function setIdGiaXuat($idGiaXuat)
 		{
 			$this->idGiaXuat=$idGiaXuat;

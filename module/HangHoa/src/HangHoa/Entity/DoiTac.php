@@ -89,9 +89,6 @@
 		*/
 		private $loaiDoiTac;
 
-		const KHACH_HANG=1;
-		const NHA_CUNG_CAP=2;
-
 
 
 
