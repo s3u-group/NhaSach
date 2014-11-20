@@ -180,6 +180,7 @@
           }     
           
           $sanPham->setTonKho(0);
+          $sanPham->setGiaNhap(0);
           $entityManager->persist($sanPham);
           $entityManager->flush();         
           return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
