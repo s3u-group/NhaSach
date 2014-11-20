@@ -92,6 +92,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'hinhAnh',
              'type' => 'Zend\Form\Element\File',
              'options' => array( 
+              )             
          ));
 
         $this->add(array(
