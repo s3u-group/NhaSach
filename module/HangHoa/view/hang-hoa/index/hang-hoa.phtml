@@ -4,6 +4,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <script type="text/javascript">
+        functionLocTheoLoaiHang = function(){
+            document.getElementById("locTheoLoaiHang").click();
+        }
+
+        functionLocTheoNhanHang = function(){
+            document.getElementById("locTheoNhanHang").click();
+        }
+    </script>
     <title>Hàng hóa</title>
 </head>
 <div class="container">
@@ -70,22 +79,29 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="home">
                                 <div class="container">
-                                    <div class="row bottom20">
+                                    <div class="row bottom20">                                        
+                                        <?php
+                                            // gửi tới form loc hang hóa
+                                            $url=$this->url('hang_hoa/crud', array('action' => 'locHangHoa'));
+                                        ?>
+                                        <form method="post" action="<?php echo $url; ?>">
                                         <div class="input-group has-feedback">
-                                            <div class="input-group-btn">
+                                            <div class="input-group-btn">                                       
                                                 <button type="button" class="btn btn-default h5a-btn dropdown-toggle" data-toggle="dropdown">Lọc sản phẩm <span class="caret"></span></button>
                                                 <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#<?php //echo $this->url('hang_hoa/crud',array('action'=>'locTheoLoaiHang'));?>">Loại hàng</a></li>
-                                                    <li><a href="#<?php //echo $this->url('hang_hoa/crud',array('action'=>'locTheoNhanHang'));?>">Nhãn hàng</a></li>
+                                                    <li><a onclick="functionLocTheoLoaiHang();" >Loại hàng</a></li>
+                                                    <li><a onclick="functionLocTheoNhanHang();">Nhãn hàng</a></li>
                                                 </ul>
                                             </div><!-- /btn-group -->
-                                            <input type="text" class="form-control h5a-input"> 
+                                            
+                                            <input type="text" class="form-control h5a-input" name="dieu_kien_loc"> 
                                             <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                            <!-- <span class="input-group-btn hide">
-                                                <button class="btn btn-default" type="button">Go!</button>
-                                            </span> -->
-                                        </div><!-- /input-group -->
+                                            <input type="submit" id="locTheoLoaiHang" name="locHangHoa" hidden="true" value="locTheoLoaiHang"> 
+                                            <input type="submit" id="locTheoNhanHang" name="locHangHoa" hidden="true" value="locTheoNhanHang"> 
+                                        </div>
+                                        </form> 
                                     </div>
+
                                     <div class="row">
                                         <table id="dataTables-example" class="">
                                             <thead>

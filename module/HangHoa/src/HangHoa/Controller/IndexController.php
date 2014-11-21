@@ -34,11 +34,58 @@
   public function hangHoaAction()
   {
     $this->layout('layout/giaodien'); 
-    $entityManager=$this->getEntityManager();
+    $entityManager=$this->getEntityManager();   
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
     return array('sanPhams'=>$sanPhams);
       
   }
+
+  public function locHangHoaAction()
+  {
+    $this->layout('layout/giaodien'); 
+    $entityManager=$this->getEntityManager();      
+    $request=$this->getRequest();
+    if($request->isPost())
+    {
+      if($request->getPost()['dieu_kien_loc'])    
+      {
+        if($request->getPost()['locHangHoa']=='locTheoLoaiHang')
+        {
+          //die(var_dump('Lọc theo loại hàng'));
+          $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+          foreach ($sanPhams as $sanPham) 
+          {
+            if($sanPham->getIdLoai()->getTermId()->getName()==$request->getPost()['dieu_kien_loc'])
+            {
+              $tam[]=$sanPham;
+            }
+            
+          }
+          $sanPhams=$tam;
+          //die(var_dump($sanPhams));          
+        }
+        elseif($request->getPost()['locHangHoa']=='locTheoNhanHang')
+        {
+           //die(var_dump('Lọc theo nhãn hàng'));
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.nhan=\''.$request->getPost()['dieu_kien_loc'].'\'');
+          $sanPhams = $query->getResult(); // array of CmsArticle objects    
+          
+        }
+      }
+      else
+      {
+        $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
+      }      
+    }
+    else
+    {
+      $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
+    } 
+    return array('sanPhams'=>$sanPhams);
+  }
+
+
+
 
 
   // xem chi tiết sản phẩm
