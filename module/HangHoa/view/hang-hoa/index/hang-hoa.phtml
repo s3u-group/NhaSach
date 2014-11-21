@@ -12,6 +12,15 @@
         functionLocTheoNhanHang = function(){
             document.getElementById("locTheoNhanHang").click();
         }
+
+        functionKiemTraDieuKienLoc = function(){
+            if(!document.getElementById("dieuKienLoc").value)
+            {
+                alert('Vui lòng nhập điều kiện tìm kiếm!');
+                return false;
+            }
+            return true;
+        }
     </script>
     <title>Hàng hóa</title>
 </head>
@@ -84,7 +93,7 @@
                                             // gửi tới form loc hang hóa
                                             $url=$this->url('hang_hoa/crud', array('action' => 'locHangHoa'));
                                         ?>
-                                        <form method="post" action="<?php echo $url; ?>">
+                                        <form method="post" action="<?php echo $url; ?>" onSubmit="return functionKiemTraDieuKienLoc();">
                                         <div class="input-group has-feedback">
                                             <div class="input-group-btn">                                       
                                                 <button type="button" class="btn btn-default h5a-btn dropdown-toggle" data-toggle="dropdown">Lọc sản phẩm <span class="caret"></span></button>
@@ -94,7 +103,7 @@
                                                 </ul>
                                             </div><!-- /btn-group -->
                                             
-                                            <input type="text" class="form-control h5a-input" name="dieu_kien_loc"> 
+                                            <input type="text" class="form-control h5a-input" id="dieuKienLoc" name="dieuKienLoc"> 
                                             <i class="glyphicon glyphicon-search form-control-feedback"></i>
                                             <input type="submit" id="locTheoLoaiHang" name="locHangHoa" hidden="true" value="locTheoLoaiHang"> 
                                             <input type="submit" id="locTheoNhanHang" name="locHangHoa" hidden="true" value="locTheoNhanHang"> 

@@ -47,7 +47,7 @@
     $request=$this->getRequest();
     if($request->isPost())
     {
-      if($request->getPost()['dieu_kien_loc'])    
+      if($request->getPost()['dieuKienLoc'])    
       {
         if($request->getPost()['locHangHoa']=='locTheoLoaiHang')
         {
@@ -55,7 +55,7 @@
           $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
           foreach ($sanPhams as $sanPham) 
           {
-            if($sanPham->getIdLoai()->getTermId()->getName()==$request->getPost()['dieu_kien_loc'])
+            if($sanPham->getIdLoai()->getTermId()->getName()==$request->getPost()['dieuKienLoc'])
             {
               $tam[]=$sanPham;
             }
@@ -67,7 +67,7 @@
         elseif($request->getPost()['locHangHoa']=='locTheoNhanHang')
         {
            //die(var_dump('Lọc theo nhãn hàng'));
-          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.nhan=\''.$request->getPost()['dieu_kien_loc'].'\'');
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.nhan=\''.$request->getPost()['dieuKienLoc'].'\'');
           $sanPhams = $query->getResult(); // array of CmsArticle objects    
           
         }
