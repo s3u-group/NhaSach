@@ -40,15 +40,20 @@ $this->headTitle($title);
                            
                         </div>
                     </div>
-                    <form class="form-horizontal" role="form">
+                    <?php
+                     echo $this->form()->openTag($form);
+                     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuatHang')));
+                     $form->setAttribute('role','form');
+                     $form->setAttribute('class','form-horizontal');
+                     $form->prepare();
+                     $formHoaDon=$form->get('hoa-don');
+                    ?>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-3">Khách hàng</label>
                                 <div class="col-sm-7">
                                     <input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="Trường Đại học Trà Vinh">
-                                <?php
-                                    $form
-                                ?>
+                                
                                 </div>
                             </div>
                             <div class="form-group">
@@ -89,7 +94,7 @@ $this->headTitle($title);
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    <?php echo $this->form()->closeTag(); ?>
                 </div>
             </div>
         </div>
