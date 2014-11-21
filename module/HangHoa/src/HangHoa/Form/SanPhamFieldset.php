@@ -44,7 +44,11 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(
                  'label' => 'Mã sản phẩm',
              ),
-             'attributes'=>array('required'=>'required'),
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Mã hàng',
+             ),
          ));
 
          $this->add(array(

@@ -1,29 +1,24 @@
-<head>
-    <meta charset="UTF-8">    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <script type="text/javascript">
-        functionLocTheoLoaiHang = function(){
-            document.getElementById("locTheoLoaiHang").click();
-        }
+<script type="text/javascript">
+    functionLocTheoLoaiHang = function(){
+        document.getElementById("locTheoLoaiHang").click();
+    }
 
-        functionLocTheoNhanHang = function(){
-            document.getElementById("locTheoNhanHang").click();
-        }
+    functionLocTheoNhanHang = function(){
+        document.getElementById("locTheoNhanHang").click();
+    }
 
-        functionKiemTraDieuKienLoc = function(){
-            if(!document.getElementById("dieuKienLoc").value)
-            {
-                alert('Vui lòng nhập điều kiện tìm kiếm!');
-                return false;
-            }
-            return true;
+    functionKiemTraDieuKienLoc = function(){
+        if(!document.getElementById("dieuKienLoc").value)
+        {
+            alert('Vui lòng nhập điều kiện tìm kiếm!');
+            return false;
         }
-    </script>
-    <title>Hàng hóa</title>
-</head>
+        return true;
+    }
+</script>    
+<?php
+    $this->headTitle('Hàng hóa');
+?>
 <div class="container">
         <div class="row">
             <div class="col-md-2">

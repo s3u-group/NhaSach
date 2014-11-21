@@ -1,16 +1,11 @@
-<head>
-    <meta charset="UTF-8">    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <title>Nhập hàng</title>
-</head>
 <?php
+     $this->headTitle('Nhập hàng');
      $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhapHang')));
      $form->setAttribute('role','form');
+     $form->setAttribute('class','form-horizontal');
      $form->prepare();
-     echo $this->form()->openTag($form);        
+     echo $this->form()->openTag($form);
+     $phieuNhap=$form->get('phieu-nhap');        
 ?>
 <div class="container">
         <div class="row">
@@ -23,7 +18,7 @@
                     </span>
                     <ul class="nav h5a-sidenav nav-list accordion">                        
                         <li>
-                            <a href="<?php echo $this->url('hang_hoa');?>">
+                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
                                 <i class="fa fa-cubes"></i> Danh sách hàng
                             </a>
                         </li>
@@ -47,53 +42,48 @@
                             <div class="col-sm-6">
                                 <h1>Nhập hàng</h1>
                             </div>
-                            <div class="col-sm-6">
-                                <?php
-                                    echo $this->formCollection($form->get('phieu-nhap'));
-                                ?>
-                                <!-- <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
-                                    </div>
-                                </div> -->
+                            <div class="col-sm-6">                                
                             </div>
                         </div>
                     </div>                    
-                    <!-- <form class="form-horizontal" role="form">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
-                                <div class="col-sm-7">
-                                    <input type="text" name="maHang" id="form-field-1" placeholder="Mã hàng" class="h5a-input form-control input-sm">
+                                <div class="col-sm-7">                                    
+                                    <?php                                    
+                                        $maSanPham=$phieuNhap->get('ct-phieu-nhap')->get('idSanPham')->get('maSanPham');
+                                        echo $this->formElement($maSanPham);
+                                    ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
-                                <div class="col-sm-7">
-                                    <input type="text" id="form-field-2" placeholder="Tên hàng" class="h5a-input form-control input-sm">
+                                <div class="col-sm-7">                                    
+                                    <?php                                    
+                                        $tenSanPham=$phieuNhap->get('ct-phieu-nhap')->get('idSanPham')->get('tenSanPham');
+                                        $tenSanPham->setAttribute('placeholder','Tên hàng');
+                                        echo $this->formElement($tenSanPham);
+                                    ?>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
-                                <div class="col-sm-7">
-                                    <input type="text" id="form-field-3" class="h5a-input form-control input-sm">
+                                <div class="col-sm-7">                                    
+                                    <?php                                    
+                                        $soLuong=$phieuNhap->get('ct-phieu-nhap')->get('soLuong');                             
+                                        echo $this->formElement($soLuong);
+                                    ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
-                                <div class="col-sm-7">
-                                    <input type="number" id="form-field-4" class="h5a-input form-control input-sm">
+                                <div class="col-sm-7">                                    
+                                    <?php                                    
+                                        $giaNhap=$phieuNhap->get('ct-phieu-nhap')->get('giaNhap');                             
+                                        echo $this->formElement($giaNhap);
+                                    ?>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -102,7 +92,6 @@
                                 </div>
                             </div>
                         </div>
-                    </form> -->                    
                 </div>                
             </div>
         </div>
