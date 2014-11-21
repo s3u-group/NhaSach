@@ -5,7 +5,12 @@
  use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
  use Zend\ServiceManager\ServiceManager;
  use HangHoa\Entity\SanPham;
+ use HangHoa\Entity\HoaDon;
+ use HangHoa\Entity\CTHoaDon;
  use HangHoa\Form\CreateSanPhamForm;
+
+ use HangHoa\Form\XuatHoaDonForm;
+
  use HangHoa\Form\CreateNhapHangForm;
 
  use Zend\Validator\File\Size;
@@ -13,6 +18,8 @@
  use Zend\Stdlib\AbstractOptions;
  
  use S3UTaxonomy\Form\CreateTermTaxonomyForm;
+
+
  
  class IndexController extends AbstractActionController
  {
@@ -31,6 +38,7 @@
  	{
     $this->layout('layout/giaodien');    
  	}
+  
 
   public function hangHoaAction()
   {
@@ -182,6 +190,9 @@
   public function xuatHangAction()
   {
     $this->layout('layout/giaodien');  
+    $entityManager=$this->getEntityManager();     
+    $form= new XuatHoaDonForm($entityManager);
+    return array('form'=>$form);
   }
 
   
