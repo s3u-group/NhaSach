@@ -111,20 +111,6 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(                 
              ),             
          ));
-
-        /*$this->add(array(
-        'type' => 'Zend\Form\Element\Collection',
-        'name' => 'nhan',
-        'options' => array(
-
-            'count' => 1,
-            'should_create_template' => true,
-            'allow_add' => true,
-            'allow_remove' => true,
-            'template_placeholder' => '__element_name__',
-            'target_element' => new CustomFieldset('nhan', 'Nhãn')
-            )
-        )); */       
     }
 
     public function getInputFilterSpecification()

@@ -5,7 +5,7 @@
      $form->setAttribute('class','form-horizontal');
      $form->prepare();
      echo $this->form()->openTag($form);
-     $phieuNhap=$form->get('phieu-nhap');        
+     $formNhap=$form->get('create-nhap-hang');        
 ?>
 <div class="container">
         <div class="row">
@@ -50,8 +50,10 @@
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
                                 <div class="col-sm-7">                                    
-                                    <?php                                    
-                                        $maSanPham=$phieuNhap->get('ct-phieu-nhap')->get('idSanPham')->get('maSanPham');
+                                    <?php
+                                    //die(var_dump($phieuNhap->get('ctPhieuNhap')->get('idSanPham')[0]));
+
+                                        $maSanPham=$formNhap->get('ctPhieuNhap')->get('idSanPham')->get('maSanPham');
                                         echo $this->formElement($maSanPham);
                                     ?>
                                 </div>
@@ -60,7 +62,7 @@
                                 <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
                                 <div class="col-sm-7">                                    
                                     <?php                                    
-                                        $tenSanPham=$phieuNhap->get('ct-phieu-nhap')->get('idSanPham')->get('tenSanPham');
+                                        $tenSanPham=$phieuNhap->get('ctPhieuNhap')->get('idSanPham')->get('tenSanPham');
                                         $tenSanPham->setAttribute('placeholder','Tên hàng');
                                         echo $this->formElement($tenSanPham);
                                     ?>
@@ -72,7 +74,7 @@
                                 <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
                                 <div class="col-sm-7">                                    
                                     <?php                                    
-                                        $soLuong=$phieuNhap->get('ct-phieu-nhap')->get('soLuong');                             
+                                        $soLuong=$phieuNhap->get('ctPhieuNhap')->get('soLuong');                             
                                         echo $this->formElement($soLuong);
                                     ?>
                                 </div>
@@ -81,7 +83,7 @@
                                 <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
                                 <div class="col-sm-7">                                    
                                     <?php                                    
-                                        $giaNhap=$phieuNhap->get('ct-phieu-nhap')->get('giaNhap');                             
+                                        $giaNhap=$phieuNhap->get('ctPhieuNhap')->get('giaNhap');                             
                                         echo $this->formElement($giaNhap);
                                     ?>
                                 </div>
