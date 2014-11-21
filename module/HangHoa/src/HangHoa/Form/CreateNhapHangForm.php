@@ -26,13 +26,51 @@ class CreateNhapHangForm extends Form
         $this->add($nhapHangFieldset);
 
         $this->add(array(
+             'name' => 'maHang',
+             'type' => 'Text',
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',                
+            ),
+         ));
+
+        $this->add(array(
+             'name' => 'tenHang',
+             'type' => 'Text',
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',                
+            ),
+         ));
+
+        $this->add(array(
+             'name' => 'soLuong',
+             'type' => 'Number',             
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',                
+                'min'=>0,
+            ),
+         ));
+        $this->add(array(
+             'name' => 'giaNhap',
+             'type' => 'Number',             
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',                
+                'min'=>0,
+                'step'=>500,
+            ),
+         ));
+
+        $this->add(array(
              'name' => 'submit',
              'type' => 'Submit',
              'attributes' => array(
                  'value' => 'Go',
                  'id' => 'submitbutton',
              ),
-         ));        
+         ));
     }
         
 }

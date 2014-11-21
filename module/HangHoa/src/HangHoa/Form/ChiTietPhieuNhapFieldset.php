@@ -10,6 +10,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use HangHoa\Entity\CTPhieuNhap;
+use HangHoa\Form\SanPhamFieldset;
 
 class ChiTietPhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
 {
