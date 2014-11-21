@@ -171,6 +171,6 @@
 		public function getGiaNhap()
 		{
 			return $this->giaNhap;
-		}
+		}		
 	}
 ?>
