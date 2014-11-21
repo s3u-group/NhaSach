@@ -11,11 +11,11 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use HangHoa\Entity\DoiTac;
 
-class SystemUserFieldset extends Fieldset implements InputFilterProviderInterface
+class DoiTacFieldset extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct(ObjectManager $objectManager)
     {
-        parent::__construct('san-pham');
+        parent::__construct('doi-tac');
 
         $this->setHydrator(new DoctrineHydrator($objectManager))
              ->setObject(new DoiTac());

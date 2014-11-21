@@ -17,7 +17,7 @@ use HangHoa\Entity\SanPham;
 use HangHoa\Entity\HoaDon;
 use HangHoa\Entity\CTHoaDon;
 
-class CTHoaDonFieldset extends Fieldset implements InputFilterProviderInterface
+class CTHoaDonFieldset  extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct(ObjectManager $objectManager)
     {
@@ -36,10 +36,6 @@ class CTHoaDonFieldset extends Fieldset implements InputFilterProviderInterface
              'type' => 'Hidden',
          ));
 
-         $hoaDonFieldset = new HoaDonFieldset($objectManager);
-         $hoaDonFieldset->setUseAsBaseFieldset(true);
-         $hoaDonFieldset->setName('idHoaDon');
-         $this->add($hoaDonFieldset); 
         
          $sanPhamFieldset = new SanPhamFieldset($objectManager);
          $sanPhamFieldset->setUseAsBaseFieldset(true);

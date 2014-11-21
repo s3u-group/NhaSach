@@ -15,7 +15,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
 {
     public function __construct(ObjectManager $objectManager)
     {
-        parent::__construct('san-pham');
+        parent::__construct('system-user');
 
         $this->setHydrator(new DoctrineHydrator($objectManager))
              ->setObject(new SystemUser());

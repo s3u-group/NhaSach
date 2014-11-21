@@ -8,6 +8,8 @@ use Zend\Form\Fieldset;
 use Zend\InputFilter\InputFilterProviderInterface;
 
 use HangHoa\Form\CTHoaDonFieldset;
+use HangHoa\Form\SystemUserFieldset;
+use HangHoa\Form\DoiTacFieldset;
 
 use Zend\Form\Element;
 use Zend\Form\Form;
@@ -62,9 +64,8 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
         $systemUserFieldset->setName('idUserNv');
         $this->add($systemUserFieldset); 
 
-       
-
-         $this->add(array(
+        $ctHoaDonFieldset = new CTHoaDonFieldset($objectManager);
+        $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
             'name' => 'ctHoaDon',
             'options' => array(
@@ -72,9 +73,7 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
                 'count' => 1,
                 'should_create_template' => false,
                 'allow_add' => false,
-                'target_element' => array(
-                    'type' => 'HangHoa\Form\CTHoaDonFieldset'
-                )
+                'target_element' => $ctHoaDonFieldset,
             )
         ));      
                   

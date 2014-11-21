@@ -38,13 +38,7 @@
  	{
     $this->layout('layout/giaodien');    
  	}
-  public function xuatHoaDonAction()
-  {
-     $this->layout('layout/giaodien');  
-     $form= new XuatHoaDonForm($entityManager);
-     return array('form'=>$form);
-
-  }
+  
 
   public function hangHoaAction()
   {
@@ -196,6 +190,9 @@
   public function xuatHangAction()
   {
     $this->layout('layout/giaodien');  
+    $entityManager=$this->getEntityManager();     
+    $form= new XuatHoaDonForm($entityManager);
+    return array('form'=>$form);
   }
 
   
