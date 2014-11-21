@@ -6,6 +6,12 @@
     <meta name="author" content="">
     <title>Nhập hàng</title>
 </head>
+<?php
+     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhapHang')));
+     $form->setAttribute('role','form');
+     $form->prepare();
+     echo $this->form()->openTag($form);        
+?>
 <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -41,8 +47,11 @@
                             <div class="col-sm-6">
                                 <h1>Nhập hàng</h1>
                             </div>
-                            <!-- <div class="col-sm-6">
-                                <div class="pull-right">
+                            <div class="col-sm-6">
+                                <?php
+                                    echo $this->formCollection($form->get('phieu-nhap'));
+                                ?>
+                                <!-- <div class="pull-right">
                                     <div class="btn-group ">
                                         <button type="button" class="h5a-btn btn btn-default btn-sm">
                                             <i class="fa fa-chevron-left"></i>
@@ -55,11 +64,11 @@
                                         <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
                                         <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
                                     </div>
-                                </div>
-                            </div> -->
+                                </div> -->
+                            </div>
                         </div>
-                    </div>
-                    <form class="form-horizontal" role="form">
+                    </div>                    
+                    <!-- <form class="form-horizontal" role="form">
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
@@ -93,8 +102,8 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
-                </div>
+                    </form> -->                    
+                </div>                
             </div>
         </div>
 </div>
@@ -119,31 +128,7 @@
                                 <td>Thùng</td>
                                 <td>125</td>
                                 <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
+                            </tr>                            
                         </tbody>
                     </table>
                 </div>
@@ -159,3 +144,28 @@
             </div>
         </div>
     </div>
+<?php
+    echo $this->form()->closeTag();
+?>
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+    </script>

@@ -36,10 +36,15 @@ class CTHoaDonFieldset extends Fieldset implements InputFilterProviderInterface
              'type' => 'Hidden',
          ));
 
-         $this->add(array(
-             'name' => 'idSanPham',
-             'type' => 'Hidden',
-         ));
+         $hoaDonFieldset = new HoaDonFieldset($objectManager);
+         $hoaDonFieldset->setUseAsBaseFieldset(true);
+         $hoaDonFieldset->setName('idHoaDon');
+         $this->add($hoaDonFieldset); 
+        
+         $sanPhamFieldset = new SanPhamFieldset($objectManager);
+         $sanPhamFieldset->setUseAsBaseFieldset(true);
+         $sanPhamFieldset->setName('idSanPham');
+         $this->add($sanPhamFieldset); 
 
          $this->add(array(
              'name' => 'gia',

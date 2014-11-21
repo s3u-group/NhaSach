@@ -50,22 +50,19 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
              'attributes'=>array('required'=>'required'),
          ));
 
-         $this->add(array(
-             'name' => 'idDoiTac',
-             'type' => 'Text',
-             'options' => array(
-                 'label' => 'Id đối tác',
-             ),
-         ));         
-             
+          
 
-        $this->add(array(
-             'name' => 'idUserNv',
-             'type' => 'Text',
-             'options' => array(
-                 'label' => 'Id nhân viên',
-             ),
-         ));   
+        $doiTacFieldset = new DoiTacFieldset($objectManager);
+        $doiTacFieldset->setUseAsBaseFieldset(true);
+        $doiTacFieldset->setName('idDoiTac');
+        $this->add($doiTacFieldset);      
+             
+        $systemUserFieldset = new SystemUserFieldset($objectManager);
+        $systemUserFieldset->setUseAsBaseFieldset(true);
+        $systemUserFieldset->setName('idUserNv');
+        $this->add($systemUserFieldset); 
+
+       
 
          $this->add(array(
             'type' => 'Zend\Form\Element\Collection',

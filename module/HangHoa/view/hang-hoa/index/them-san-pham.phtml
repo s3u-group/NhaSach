@@ -1,4 +1,3 @@
-
 <head>
     <meta charset="UTF-8">    
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,141 +18,136 @@
  echo $this->formHidden($sanPham->get('giaNhap'));
 ?>
 <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                        <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
-                         / Thêm sản phẩm /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa');?>">
-                                <i class="fa fa-cubes"></i> Danh sách hàng
-                            </a>
-                        </li>
-                    </ul>
-                </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
+                     / Thêm sản phẩm /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">                        
+                    <li>
+                        <a href="<?php echo $this->url('hang_hoa');?>">
+                            <i class="fa fa-cubes"></i> Danh sách hàng
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">                    
-                        <div class="page-header">
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <h1>Thêm sản phẩm</h1>
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="pull-right">
-                                        <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                        <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
-                                        <?php 
-                                            /*$submit=$form->get('submit'); 
-                                            $submit->setValue('Thêm'); 
-                                            echo $this->formSubmit($submit);*/                                            
-                                        ?>
-                                    </div>
-                                </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">                
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Thêm sản phẩm</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>                                
                             </div>
                         </div>
-                        <div class="row">
-                            <table class="item">
-                                <tbody>
-                                    <tr>
-                                        <td>Tên sản phẩm</td>
-                                        <td>                                            
-                                            <?php 
-                                                $tenSanPham=$sanPham->get('tenSanPham');
-                                                $tenSanPham->setAttribute('class','h5a-input form-control input-sm');
-                                                $tenSanPham->setAttribute('placeholder','Tên sản phẩm');
-                                                echo $this->formElement($tenSanPham);
-                                                if($kiemTraTonTai==1)
-                                                {
-                                                    echo '<p class="badge red" style="color:white">Sản phẩm đã tồn tại</p>';
-                                                }
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mã sản phẩm</td>
-                                        <td>                                            
-                                            <?php 
-                                                $maSanPham=$sanPham->get('maSanPham');
-                                                $maSanPham->setAttribute('class','form-control h5a-input');
-                                                $maSanPham->setAttribute('placeholder','Mã sản phẩm');
-                                                echo $this->formElement($maSanPham);                                                
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mô tả</td>
-                                        <td>                                        
-                                            <?php 
-                                                $moTa=$sanPham->get('moTa');
-                                                $moTa->setAttribute('class','form-control h5a');
-                                                $moTa->setAttribute('id','editor');
-                                                echo $this->formElement($moTa);                                                
-                                            ?>
-                                        </td>
-                                    <tr>
-                                        <td>Hình ảnh</td>
-                                        <td>
-                                            <?php                                                
-                                                $hinhAnh=$sanPham->get('hinhAnh');
-                                                $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
-                                                echo $this->formElement($hinhAnh);                                                
-                                            ?>
-                                        </td>
-                                    </tr>                                    
-                                    <tr>
-                                        <td>Nhãn</td>
-                                        <td class="red">                                                                       
-                                            <?php 
-                                                $nhan=$sanPham->get('nhan');
-                                                $nhan->setAttribute('class','form-control h5a-input');
-                                                $nhan->setAttribute('placeholder','Nhãn sản phẩm');
-                                                echo $this->formElement($nhan);                                                
-                                            ?>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Loại</td>
-                                        <td>
-                                            <?php                                                
-                                                $loai=$sanPham->get('idLoai');                                                
-                                                $loai->setAttribute('style','width:35%;height:35px');
-                                                $loai->setValueOptions($this->MakeArrayOptionTaxonomy($loais));
-                                                echo $this->formElement($loai);                                                
-                                            ?>
-                                        </td>
-                                    </tr>                                    
-                                    <tr>
-                                        <td>Đơn vị tính</td>
-                                        <td>
-                                            <?php                                                                  
-                                                $donViTinh=$sanPham->get('idDonViTinh');                                                
-                                                $donViTinh->setAttribute('style','width:35%;height:35px');
-                                                $donViTinh->setValueOptions($this->MakeArrayOptionTaxonomy($donViTinhs));
-                                                echo $this->formElement($donViTinh);                                                
-                                            ?>
-                                        </td>
-                                    </tr>                                    
-                                </tbody>
-                            </table>                            
-                        </div>
-                        <div class="page-footer">
-                            <div class="row bottom20">
-                                <div class="col-sm-6 col-sm-offset-6">
-                                    <div class="pull-right">
-                                        <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                        <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
-                                    </div>
-                                </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <table class="item">
+                        <tbody>
+                            <tr>
+                                <td>Tên sản phẩm</td>
+                                <td>                                            
+                                    <?php 
+                                        $tenSanPham=$sanPham->get('tenSanPham');
+                                        $tenSanPham->setAttribute('class','h5a-input form-control input-sm');
+                                        $tenSanPham->setAttribute('placeholder','Tên sản phẩm');
+                                        echo $this->formElement($tenSanPham);
+                                        if($kiemTraTonTai==1)
+                                        {
+                                            echo '<p class="badge red" style="color:white">Sản phẩm đã tồn tại</p>';
+                                        }
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mã sản phẩm</td>
+                                <td>                                            
+                                    <?php 
+                                        $maSanPham=$sanPham->get('maSanPham');
+                                        $maSanPham->setAttribute('class','form-control h5a-input');
+                                        $maSanPham->setAttribute('placeholder','Mã sản phẩm');
+                                        echo $this->formElement($maSanPham);                                                
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mô tả</td>
+                                <td>                                        
+                                    <?php 
+                                        $moTa=$sanPham->get('moTa');
+                                        $moTa->setAttribute('class','form-control h5a');
+                                        $moTa->setAttribute('id','editor');
+                                        echo $this->formElement($moTa);                                                
+                                    ?>
+                                </td>
+                            <tr>
+                                <td>Hình ảnh</td>
+                                <td>
+                                    <?php                                                
+                                        $hinhAnh=$sanPham->get('hinhAnh');
+                                        $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
+                                        echo $this->formElement($hinhAnh);                                                
+                                    ?>
+                                </td>
+                            </tr>                                    
+                            <tr>
+                                <td>Nhãn</td>
+                                <td class="red">                                                                       
+                                    <?php 
+                                        $nhan=$sanPham->get('nhan');
+                                        $nhan->setAttribute('class','form-control h5a-input');
+                                        $nhan->setAttribute('placeholder','Nhãn sản phẩm');
+                                        echo $this->formElement($nhan);                                                
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Loại</td>
+                                <td>
+                                    <?php                                                
+                                        $loai=$sanPham->get('idLoai');                                                
+                                        $loai->setAttribute('style','width:35%;height:35px');
+                                        $loai->setValueOptions($this->MakeArrayOptionTaxonomy($loais));
+                                        echo $this->formElement($loai);                                                
+                                    ?>
+                                </td>
+                            </tr>                                    
+                            <tr>
+                                <td>Đơn vị tính</td>
+                                <td>
+                                    <?php                                                                  
+                                        $donViTinh=$sanPham->get('idDonViTinh');                                                
+                                        $donViTinh->setAttribute('style','width:35%;height:35px');
+                                        $donViTinh->setValueOptions($this->MakeArrayOptionTaxonomy($donViTinhs));
+                                        echo $this->formElement($donViTinh);                                                
+                                    ?>
+                                </td>
+                            </tr>                                    
+                        </tbody>
+                    </table>                            
+                </div>
+                <div class="page-footer">
+                    <div class="row bottom20">
+                        <div class="col-sm-6 col-sm-offset-6">
+                            <div class="pull-right">
+                                <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
                             </div>
-                        </div>                    
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 <?php
     echo $this->form()->closeTag();
@@ -185,4 +179,3 @@ $(document).ready(function() {
 
 $("#editor").summernote({height:150});
 </script>
-

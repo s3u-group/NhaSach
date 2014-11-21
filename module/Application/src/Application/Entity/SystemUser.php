@@ -103,14 +103,12 @@
 
 
 
-		// sử dụng hằng cho loại tài khoản,
+		
 		/**
-		* @ORM\Column(name="loai_tai_khoan", type="integer")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\JoinColumn(name="loai_tai_khoan", referencedColumnName="term_taxonomy_id")
 		*/
 		private $loaiTaiKhoan;
-
-		const NHAN_VIEN_CUA_HANG=1;
-		const NHAN_VIEN_DIEM_BAN=2;
 
 
 		/**

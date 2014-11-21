@@ -8,7 +8,10 @@
  use HangHoa\Entity\HoaDon;
  use HangHoa\Entity\CTHoaDon;
  use HangHoa\Form\CreateSanPhamForm;
+
  use HangHoa\Form\XuatHoaDonForm;
+
+ use HangHoa\Form\CreateNhapHangForm;
 
  use Zend\Validator\File\Size;
 
@@ -181,7 +184,13 @@
 
   public function nhapHangAction()
   {
-    $this->layout('layout/giaodien');  
+    $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();     
+    $form= new CreateNhapHangForm($entityManager);
+
+    return array(       
+       'form' =>$form,
+     );
   }
 
   public function xuatHangAction()
