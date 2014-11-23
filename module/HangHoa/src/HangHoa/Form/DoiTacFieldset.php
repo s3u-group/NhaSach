@@ -29,11 +29,13 @@ class DoiTacFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'hoTen',
              'type' => 'Text',
              'options' => array(
-                 'label' => 'Họ tên',
+               
              ),
-             'attributes'=>array(                
-                'class'   => 'h5a-input form-control input-sm',
-                'placeholder'=>'Họ tên',
+             'attributes'=>array(  
+               'id'=>"form-field-3",
+               'class'=>"h5a-input form-control input-sm",
+               'placeholder'=>'Nhập khách hàng',
+               'required'=>'required',
             ),
          )); 
 
@@ -42,9 +44,13 @@ class DoiTacFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'diaChi',
              'type' => 'Text',
              'options' => array(
-                 'label' => 'Địa chỉ',             
              ),
-             'attributes'=>array('required'=>'required'),
+             'attributes'=>array( 
+                 'id'=>"form-field-4",
+                 'class'=>"h5a-input form-control input-sm",
+                 'placeholder'=>'Nhập địa chỉ hàng',
+                 'required'=>'required',
+            ),
         ));
 
        

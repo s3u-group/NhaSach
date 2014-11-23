@@ -40,18 +40,32 @@ $this->headTitle($title);
                            
                         </div>
                     </div>
-                    <form class="form-horizontal" role="form">
+                    <?php
+                     echo $this->form()->openTag($form);
+                     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuatHang')));
+                     $form->setAttribute('role','form');
+                     $form->setAttribute('class','form-horizontal');
+                     $form->prepare();
+                    ?>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-3">Khách hàng</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="Trường Đại học Trà Vinh">
+                                    <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="Trường Đại học Trà Vinh">-->
+                                <?php
+                                    echo $this->formHidden($form->get('idKhachHang'));
+                                    echo $this->formHidden($form->get('idSanPham'));
+                                    echo $this->formRow($form->get('khachHang'));
+                                ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-4">Địa chỉ</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="Số 126 Quốc lộ 53, khóm 4, phường 5, Tp.Trà Vinh, tỉnh Trà Vinh">
+                                    <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="Số 126 Quốc lộ 53, khóm 4, phường 5, Tp.Trà Vinh, tỉnh Trà Vinh">-->
+                                <?php
+                                    echo $this->formRow($form->get('diaChi'));
+                                ?>
                                 </div>
                             </div>
                         </div>
@@ -59,34 +73,46 @@ $this->headTitle($title);
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="form-field-1" placeholder="Mã hàng" class="h5a-input form-control input-sm">
+                                    <!--<input type="text" id="form-field-1" placeholder="Mã hàng" class="h5a-input form-control input-sm">-->
+                                <?php
+                                    echo $this->formRow($form->get('maHang'));
+                                ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="form-field-2" placeholder="Tên hàng" class="h5a-input form-control input-sm">
+                                    <!--<input type="text" id="form-field-2" placeholder="Tên hàng" class="h5a-input form-control input-sm">-->
+                                <?php
+                                    echo $this->formRow($form->get('tenHang'));
+                                ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="120">
+                                    <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="120">-->
+                                <?php
+                                    echo $this->formRow($form->get('soLuong'));
+                                ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
                                 <div class="col-sm-7">
-                                    <input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="325.000">
+                                    <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="325.000">-->
+                                <?php
+                                    echo $this->formRow($form->get('giaNhap'));
+                                ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-1">
-                                    <button class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
+                                    <button id="btnXuatHang" class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    <?php echo $this->form()->closeTag(); ?>
                 </div>
             </div>
         </div>
@@ -107,36 +133,7 @@ $this->headTitle($title);
                             <th>Giá xuất</th>
                         </thead>
                         <tbody>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>
+                            
                         </tbody>
                     </table>
                     <div class="row">
@@ -171,5 +168,28 @@ $this->headTitle($title);
             "bInfo": true,
             "bAutoWidth": true
         });
+
+        $('#btnXuatHang').click(function(){
+            alert('Zô chưa');
+            return false;
+        })
+
+        $('#tenKhachHang').keyup(function(){
+            var tenKhachHang=$(this).val();
+            $.ajax({
+                url:'<?php echo $this->url("hang_hoa/crud", array("action"=>"searchKhachHang")); ?>',
+                type:'post',
+                dataType:'json',
+                data:{
+                    'tenKhachHang':tenKhachHang
+                },
+                success:function(data){
+                    $.each(data, function(key,val){
+                        alert(val.tenKhachHang);
+                    })
+                }
+            })
+            return false;
+        })
     });
     </script>

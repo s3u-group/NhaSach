@@ -1,13 +1,16 @@
-<head>
+<?php
+ $this->headTitle('Thêm khách hàng');
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+ $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'themKhachHang')));
+ $form->setAttribute('role','form');
+ $form->prepare();
+ echo $this->form()->openTag($form);
 
-    <title>Thêm khách hàng</title>
-</head>
+ $khachHang=$form->get('khach-hang');    
+ echo $this->formHidden($khachHang->get('idDoiTac'));
+ $khachHang->get('loaiDoiTac')->setAttribute('value','45');
+ echo $this->formHidden($khachHang->get('loaiDoiTac'));
+?>
 
 <div class="container">
         <div class="row">
@@ -37,106 +40,161 @@
                             <div class="col-sm-6">
                                 <div class="pull-right">
                                     <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="button" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <form>
+                    <div class="row">                        
                             <h4 class="underline">More Info</h4>
                             <table class="item">
                                 <tbody>
+                                    <?php
+                                        if($ktTonTaiKhachHang==1)
+                                        {
+                                            echo '<tr>';
+                                                echo '<td></td>';
+                                                echo '<td><span class="label label-warning">Khách hàng vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
+                                            echo '<tr>';
+                                        }
+                                    ?>
                                     <tr>
                                         <td>Tên khách hàng</td>
                                         <td>
-                                            <input type="text" id="form-field-1" placeholder="Username" class="h5a-input form-control input-sm">
+                                        <?php 
+                                            $hoTen=$khachHang->get('hoTen');
+                                            $hoTen->setAttribute('class','h5a-input form-control input-sm');
+                                            $hoTen->setAttribute('placeholder','Họ tên khách hàng');
+                                            $hoTen->setAttribute('id','form-field-1');
+                                            echo $this->formElement($hoTen);
+                                        ?>                                           
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Địa chỉ khách hàng</td>
+                                        <td>
+                                        <?php 
+                                            $diaChi=$khachHang->get('diaChi');
+                                            $diaChi->setAttribute('class','h5a-input form-control input-sm');
+                                            $diaChi->setAttribute('placeholder','Địa chỉ khách hàng');
+                                            $diaChi->setAttribute('id','form-field-1');
+                                            echo $this->formElement($diaChi);
+                                        ?>                                           
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Mô tả</td>
                                         <td>
-                                            <textarea class="form-control h5a" rows="5" id="editor"></textarea>
+                                            
+                                        <?php 
+                                            $moTa=$khachHang->get('moTa');
+                                            $moTa->setAttribute('class','form-control h5a');
+                                            $moTa->setAttribute('placeholder','Mô tả khách hàng');
+                                            $moTa->setAttribute('id','editor');
+                                            $moTa->setAttribute('rows','5');
+                                            echo $this->formElement($moTa);
+                                        ?>   
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>Hình ảnh</td>
                                         <td>
-                                            <input type="filepicker" data-fp-button-text="<i class='fa fa-cloud-upload'></i> Files UPLOAD from ANYWERE" data-fp-apikey="fakeAPIkey" name="filePicker" id="filePicker" class="h5a-btn btn btn-primary" style="display: none;">
-                                            <button type="button" class="h5a-btn btn btn-primary"><i class="fa fa-cloud-upload"></i> Tải lên</button>
+                                        <?php 
+                                            $hinhAnh=$khachHang->get('hinhAnh');        
+                                            $hinhAnh->setAttribute('placeholder','Chọn hình ảnh');
+                                            $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
+                                            echo $this->formElement($hinhAnh);
+                                        ?>                                           
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>CompanyCode</td>
-                                        <td><input type="text" class="form-control h5a-input" placeholder="CompanyCode?" value="33223-556H-TT"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Size</td>
-                                        <td class="red"><input type="text" class="form-control h5a-input" placeholder="Size?" value="-556 mm/hh"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Niceness</td>
-                                        <td class="green"><input type="text" class="form-control h5a-input" placeholder="Niceness?" value="Super Kewl"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>TAGS</td>
+                                        <td>Kênh phân phối</td>
                                         <td>
-                                            <span class="tm-tag" id="SCZrC_1"><span>Super</span><a href="#" class="tm-tag-remove" id="SCZrC_Remover_1" tagidtoremove="1">x</a></span> 
-                                            <span class="tm-tag" id="SCZrC_1"><span>Kewl</span><a href="#" class="tm-tag-remove" id="SCZrC_Remover_1" tagidtoremove="1">x</a></span> 
-                                            <span class="tm-tag" id="SCZrC_1"><span>wow</span><a href="#" class="tm-tag-remove" id="SCZrC_Remover_1" tagidtoremove="1">x</a></span>
-                                            <div class="form-group">
-                                                <input type="text" name="display-tfmjW" placeholder="Tags" id="tags-input" class="h5a-input form-control">
-                                                <input type="hidden" name="tags">
-                                                <label for="exampleInputEmail1"><small>Comma Separated tags</small></label>
-                                            </div>
+                                        <?php 
+                                            $idKenhPhanPhoi=$khachHang->get('idKenhPhanPhoi');
+                                            $idKenhPhanPhoi->setAttribute('class','h5a-input form-control input-sm');
+                                            $idKenhPhanPhoi->setAttribute('id','form-field-1');
+                                            $idKenhPhanPhoi->setValueOptions($this->MakeArrayOptionTaxonomy($kenhPhanPhois)); 
+                                            echo $this->formElement($idKenhPhanPhoi);
+                                        ?>                                           
                                         </td>
                                     </tr>
+
                                     <tr>
-                                        <td>Colors</td>
+                                        <td>Địa chỉ email</td>
                                         <td>
-                                            <select multiple="multiple" id="select-colors" name="my-select[]" style="position: absolute; left: -9999px;">
-                                                <option value="elem_1">blue</option>
-                                                <option value="elem_2">red</option>
-                                                <option value="elem_3">orange</option>
-                                                <option value="elem_4">yellow</option>
-                                                <option value="elem_100">green</option>
-                                            </select>
-                                            <div class="ms-container" id="ms-select-colors">
-                                                <div class="ms-selectable">
-                                                    <ul class="ms-list" tabindex="-1">
-                                                        <li class="ms-elem-selectable" id="elem_1-selectable"><span>blue</span></li>
-                                                        <li class="ms-elem-selectable" id="elem_2-selectable"><span>red</span></li>
-                                                        <li class="ms-elem-selectable" id="elem_3-selectable"><span>orange</span></li>
-                                                        <li class="ms-elem-selectable ms-hover" id="elem_4-selectable"><span>yellow</span></li>
-                                                        <li class="ms-elem-selectable" id="elem_100-selectable"><span>green</span></li>
-                                                    </ul>
-                                                </div>
-                                                <div class="ms-selection">
-                                                    <ul class="ms-list" tabindex="-1">
-                                                        <li class="ms-elem-selection" id="elem_1-selection" style="display: none;"><span>blue</span></li>
-                                                        <li class="ms-elem-selection" id="elem_2-selection" style="display: none;"><span>red</span></li>
-                                                        <li class="ms-elem-selection" id="elem_3-selection" style="display: none;"><span>orange</span></li>
-                                                        <li class="ms-elem-selection" id="elem_4-selection" style="display: none;"><span>yellow</span></li>
-                                                        <li class="ms-elem-selection" id="elem_100-selection" style="display: none;"><span>green</span></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                        <?php 
+                                            $email=$khachHang->get('email');
+                                            $email->setAttribute('class','h5a-input form-control input-sm');
+                                            $email->setAttribute('placeholder','Địa chỉ email');
+                                            $email->setAttribute('id','form-field-1');
+                                            echo $this->formElement($email);
+                                        ?>                                           
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Type</td>
-                                        <td><input type="text" class="form-control h5a-input" placeholder="Type?" value="556H-TT"></td>
+                                        <td>Di động</td>
+                                        <td>
+                                        <?php 
+                                            $diDong=$khachHang->get('diDong');
+                                            $diDong->setAttribute('class','h5a-input form-control input-sm');
+                                            $diDong->setAttribute('placeholder','Điện thoại di động');
+                                            $diDong->setAttribute('id','form-field-1');
+                                            echo $this->formElement($diDong);
+                                        ?>                                           
+                                        </td>
                                     </tr>
+
+
+                                    <tr>
+                                        <td>Điện thoại cố định</td>
+                                        <td>
+                                        <?php 
+                                            $dienThoaiCoDinh=$khachHang->get('dienThoaiCoDinh');
+                                            $dienThoaiCoDinh->setAttribute('class','h5a-input form-control input-sm');
+                                            $dienThoaiCoDinh->setAttribute('placeholder','Điện thoại cố định');
+                                            $dienThoaiCoDinh->setAttribute('id','form-field-1');
+                                            echo $this->formElement($dienThoaiCoDinh);
+                                        ?>                                           
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Website</td>
+                                        <td>
+                                        <?php 
+                                            $website=$khachHang->get('website');
+                                            $website->setAttribute('class','h5a-input form-control input-sm');
+                                            $website->setAttribute('placeholder','Website');
+                                            $website->setAttribute('id','form-field-1');
+                                            echo $this->formElement($website);
+                                        ?>                                           
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>Twitter</td>
+                                        <td>
+                                        <?php 
+                                            $twitter=$khachHang->get('twitter');
+                                            $twitter->setAttribute('class','h5a-input form-control input-sm');
+                                            $twitter->setAttribute('placeholder','Twitter');
+                                            $twitter->setAttribute('id','form-field-1');
+                                            echo $this->formElement($twitter);
+                                        ?>                                           
+                                        </td>
+                                    </tr>
+
+                                    
                                 </tbody>
                             </table>
-                        </form>
                     </div>
                     <div class="page-footer">
                         <div class="row bottom20">
                             <div class="col-sm-6 col-sm-offset-6">
                                 <div class="pull-right">
                                     <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="button" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
                                 </div>
                             </div>
                         </div>

@@ -1,13 +1,6 @@
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Kênh phân phối</title>
-</head>
+<?php
+     $this->headTitle('Kênh phân phối');
+?>
 <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -61,18 +54,19 @@
                             <li role="presentation" class="active">
                                 <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
                             </li>
-                            <li role="presentation">
-                                <a href="#1" role="tab" data-toggle="tab">Điểm bán</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#2" role="tab" data-toggle="tab">Cơ quan</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#3" role="tab" data-toggle="tab">Trường học</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#4" role="tab" data-toggle="tab">Bán lẻ</a>
-                            </li>
+                            <?php                           
+                            foreach ($kenhPhanPhois as $key=>$kenhPhanPhoi) 
+                            {
+                                if($kenhPhanPhoi['cap']>0)
+                                {
+                                    echo '<li role="presentation">';
+                                        echo '<a href="#'.$key.'" role="tab" data-toggle="tab">'.$kenhPhanPhoi['termId']['name'].'</a>';
+                                    echo '</li>';
+                                }
+                                
+                                
+                            }
+                            ?>                       
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="home">
@@ -88,31 +82,76 @@
                                                 <th>Mới nhất</th>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'khachHang'));?>">Trường Đại học Trà Vinh</a></td>
-                                                    <td>0743855246</td>
-                                                    <td>Số 126 Quốc lộ 53, khóm 4, phường 5, Tp.Trà Vinh, tỉnh Trà Vinh</td>
-                                                    <td>12</td>
-                                                    <td><a href="#">#2-3323</a></td>
-                                                </tr>            
+                                                
+                                                    
+                                                    <?php
+                                                        foreach ($doiTacs as $key => $doiTac) {
+                                                            if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==45)
+                                                            {
+                                                                echo '<tr>';
+                                                                    echo '<td><input type="checkbox"/></td>';
+                                                                    echo '<td>';
+                                                                        echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'khachHang','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
+                                                                    echo '</td>';                                                            
+                                                                    echo '<td>'.$doiTac->getDiDong().'</td>';
+                                                                    echo '<td>'.$doiTac->getDiaChi().'</td>';
+                                                                    echo '<td>Đơn hàng</td>';
+                                                                    echo '<td><a href="#">Mới nhất</a></td>';
+                                                                echo '</tr>  ';
+                                                            }
+                                                        }
+                                                    ?>                                                     
                                             </tbody>
                                         </table>
                                     </div>
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="1">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="2">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="3">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="4">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
+                            
+                            <?php                                                       
+                            foreach ($kenhPhanPhois as $key=>$kenhPhanPhoi) 
+                            {
+                                if($kenhPhanPhoi['cap']>0)
+                                {
+                                    echo '<div role="tabpanel" class="tab-pane" id="'.$key.'">';
+                                    ?>
+                                        <div class="container">
+                                            <div class="row">                                    
+                                                    <table id="dataTables-example" class="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
+                                                        <thead>
+                                                            <th><input type="checkbox"/></th>
+                                                            <th>Khách hàng</th>
+                                                            <th>Điện thoại</th>
+                                                            <th>Địa chỉ</th>
+                                                            <th>Đơn hàng</th>
+                                                            <th>Mới nhất</th>
+                                                        </thead>
+                                                        <tbody> 
+                                                            <?php
+                                                                foreach ($doiTacs as $key => $doiTac) {
+                                                                    if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==45&&$doiTac->getIdKenhPhanPhoi()->getTermId()->getTermId()==$kenhPhanPhoi['termTaxonomyId'])
+                                                                    {
+                                                                        echo '<tr>';
+                                                                            echo '<td><input type="checkbox"/></td>';
+                                                                            echo '<td>';
+                                                                                echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'khachHang','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
+                                                                            echo '</td>';                                                            
+                                                                            echo '<td>'.$doiTac->getDiDong().'</td>';
+                                                                            echo '<td>'.$doiTac->getDiaChi().'</td>';
+                                                                            echo '<td>Đơn hàng</td>';
+                                                                            echo '<td><a href="#">Mới nhất</a></td>';
+                                                                        echo '</tr>  ';
+                                                                    }
+                                                                }
+                                                            ?>                                                     
+                                                        </tbody>
+                                                    </table>                                      
+                                                </div>
+                                            </div>
+                                    <?php
+                                    echo '</div>';
+                                }                               
+                            }
+                            ?>      
                         </div>
                     </div>
                 </div>
