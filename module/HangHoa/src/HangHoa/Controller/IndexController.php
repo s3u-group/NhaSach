@@ -309,7 +309,7 @@
       }
     }*/
 
-    $json = new \Zend\View\Model\JsonModel($response);
+    $json = new JsonModel($response);
     return $json;
 
   }

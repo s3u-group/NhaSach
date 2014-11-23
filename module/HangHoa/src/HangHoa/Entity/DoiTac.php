@@ -35,15 +35,9 @@
 
 
 		/**
-		* @ORM\Column
+		* @ORM\Column(name="email")
 		*/
 		private $email;
-
-
-		/**
-		* @ORM\Column(type="smallint",length=6)
-		*/
-		private $state;
 
 
 		/**
@@ -83,11 +77,23 @@
 
 
 
-		// sử dụng hằng cho loại đối tác,
+		// loại đối tác: 45 là khách hàng
+		// loại đối tác: 46 là nhà cung cấp
 		/**
-		* @ORM\Column(name="loai_doi_tac", type="integer")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\JoinColumn(name="loai_doi_tac", referencedColumnName="term_taxonomy_id")
 		*/
 		private $loaiDoiTac;
+
+
+
+		// cái này là lấy trong termtaxonomy phân phối: id từ 39, 40, 41, 42, 43 tương ứng: điểm bán, trường học, cơ quan, của hàng bán lẽ
+		/**
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\JoinColumn(name="id_kenh_phan_phoi", referencedColumnName="term_taxonomy_id")
+		*/
+		private $idKenhPhanPhoi;
+
 
 
 
@@ -209,6 +215,15 @@
 		public function getLoaiDoiTac()
 		{
 			return $this->loaiDoiTac;
+		}
+
+		public function setIdKenhPhanPhoi($idKenhPhanPhoi)
+		{
+			$this->idKenhPhanPhoi=$idKenhPhanPhoi;
+		}
+		public function getIdKenhPhanPhoi()
+		{
+			return $this->idKenhPhanPhoi;
 		}
 	}
 	

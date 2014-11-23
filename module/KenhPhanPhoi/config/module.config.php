@@ -38,7 +38,13 @@ return array(
 		'template_path_stack' => array(
 			'kenh_phan_phoi' => __DIR__ . '/../view'
 		),        
-	),    
+	),  
+
+    'view_helpers'=>array(
+        'invokables'=>array(
+            'make_array_option_taxonomy'=>'KenhPhanPhoi\View\Helper\MakeArrayOptionTaxonomy',
+        ),
+    ),     
 
 	/*'doctrine' => array(
         'driver' => array(
