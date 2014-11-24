@@ -59,7 +59,10 @@
       }  
       $entityManager=$this->getEntityManager();
       $hoaDon=$entityManager->getRepository('HangHoa\Entity\HoaDon')->find($id);
-      die(var_dump($hoaDon));
+      //die(var_dump($hoaDon));
+      return array(
+        'hoaDon'=>$hoaDon,
+      );
   }
 
  	public function themKhachHangAction()

@@ -46,10 +46,52 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <p>
-                            phan văn thanh
-                        </p>
+                    <div class="box">   
+                        
+                        <table>
+                            <tr>
+                                <td>
+                                    Họ tên: 
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
+                                </td>
+                                <td>
+                                    Địa chỉ: 
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getDiaChi(); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Di động: 
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getDiDong(); ?>
+                                </td>
+                                <td>
+                                    Điện thoại cố định: 
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getDienThoaiCoDinh(); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Email:  
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getEmail(); ?>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                     <div class="box">                        
                         <div class="tab-content">

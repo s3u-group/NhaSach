@@ -56,22 +56,4 @@ return array(
         ), 
         
     ),     
-
-	'doctrine' => array(
-        'driver' => array(
-            'kenh_phan_phoi_annotation_driver' => array(
-                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
-                'cache' => 'array',
-                'paths' => array(
-                    __DIR__.'/../src/KenhPhanPhoi/Entity',//Edit
-                ),
-            ),
-
-            'orm_default' => array(
-                'drivers' => array(
-                    'KenhPhanPhoi\Entity' => 'kenh_phan_phoi_annotation_driver',//Edit
-                )
-            )
-        )
-    ),
 );
