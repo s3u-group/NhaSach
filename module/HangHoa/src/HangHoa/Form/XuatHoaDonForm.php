@@ -58,7 +58,8 @@ class XuatHoaDonForm extends Form
              'type' => 'Text',
              'attributes'=>array(
                 'required'=>'required',
-                'class'   => 'h5a-input form-control input-sm',  
+                'class'   => 'h5a-input form-control input-sm', 
+                'id' => 'diaChiKhachHang',
                 'placeholder'=>'Nhập địa chỉ',              
             ),
          ));

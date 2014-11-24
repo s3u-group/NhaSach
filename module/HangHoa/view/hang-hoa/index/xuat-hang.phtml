@@ -57,6 +57,7 @@ $this->headTitle($title);
                                     echo $this->formHidden($form->get('idSanPham'));
                                     echo $this->formRow($form->get('khachHang'));
                                 ?>
+                                <div id="search-result"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -172,24 +173,54 @@ $this->headTitle($title);
         $('#btnXuatHang').click(function(){
             alert('Zô chưa');
             return false;
-        })
+        });
+
+        var xhr;
 
         $('#tenKhachHang').keyup(function(){
             var tenKhachHang=$(this).val();
-            $.ajax({
-                url:'<?php echo $this->url("hang_hoa/crud", array("action"=>"searchKhachHang")); ?>',
-                type:'post',
+
+            if(xhr && xhr.readyState != 4){
+                xhr.abort(); //huy lenh ajax truoc do
+            }
+
+            xhr = $.ajax({
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'searchKhachHang')); ?>',
+                type:'POST',
                 dataType:'json',
                 data:{
                     'tenKhachHang':tenKhachHang
                 },
                 success:function(data){
                     $.each(data, function(key,val){
-                        alert(val.tenKhachHang);
-                    })
+                        $('#search-result').empty(); //lam rong khung ket qua
+
+                        var pos = $('#tenKhachHang').position(); //lấy tọa độ của ô tên khách hàng
+                        $('#search-result').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+                        $.each(data, function(key, val){
+                            $('#search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span><span class="hide">'+val.diaChiKhachHang+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
+                        })
+                    });
                 }
-            })
+            });
             return false;
-        })
+        });
+
+        $('#search-result').on('click', '.list-group-item', function(){
+            var id = $(this).find('span:eq(0)').text(); alert(id);
+            var ten = $(this).find('span:eq(1)').text();
+            var diaChi = $(this).find('span:eq(2)').text();
+
+            $('#idKhachhang').val(id);
+            $('#tenKhachHang').val(ten);
+            $('#diaChiKhachHang').val(diaChi);
+
+            $('#search-result').empty();
+        });
     });
     </script>
