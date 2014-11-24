@@ -57,6 +57,7 @@
     $request=$this->getRequest();
     if($request->isPost())
     {
+      $tam=array();
       if($request->getPost()['dieuKienLoc'])    
       {
         if($request->getPost()['locHangHoa']=='locTheoLoaiHang')
