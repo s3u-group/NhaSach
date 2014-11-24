@@ -41,9 +41,9 @@
 
 
 		/**
-		* @ORM\Column(name="gia_nhap", type="float")
+		* @ORM\Column(name="gia", type="float")
 		*/
-		private $giaNhap;
+		private $gia;
 
 
 		/**
@@ -83,13 +83,13 @@
 		}
 
 
-		public function setGiaNhap($giaNhap)
+		public function setGia($gia)
 		{
-			$this->giaNhap=$giaNhap;
+			$this->gia=$gia;
 		}
-		public function getGiaNhap()
+		public function getGia()
 		{
-			return $this->giaNhap;
+			return $this->gia;
 		}
 
 

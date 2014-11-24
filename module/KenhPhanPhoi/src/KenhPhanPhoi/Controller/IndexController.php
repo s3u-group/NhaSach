@@ -7,6 +7,7 @@
  use HangHoa\Entity\DoiTac;
  use KenhPhanPhoi\Form\ThemKhachHangForm;
  use KenhPhanPhoi\Form\KhachHangFieldset;
+ use HangHoa\Entity\CTHoaDon;
  
  class IndexController extends AbstractActionController
  {
@@ -58,9 +59,16 @@
            return $this->redirect()->toRoute('kenh_phan_phoi/crud');
       }  
       $entityManager=$this->getEntityManager();
+      //die(var_dump($id));
       $hoaDon=$entityManager->getRepository('HangHoa\Entity\HoaDon')->find($id);
-      //die(var_dump($hoaDon));
+      
+      $query=$entityManager->createQuery('SELECT cthd FROM HangHoa\Entity\CTHoaDon cthd WHERE cthd.idHoaDon='.$id);
+      $chiTietHoaDons=$query->getResult();
+      //die(var_dump($chiTietHoaDon));
+
+      
       return array(
+        'chiTietHoaDons'=>$chiTietHoaDons,
         'hoaDon'=>$hoaDon,
       );
   }
