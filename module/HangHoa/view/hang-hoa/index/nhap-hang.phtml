@@ -55,6 +55,7 @@
                                         echo $this->formElement($maSanPham);        
                                     ?>
                                 </div>
+                                <div id="ma-hang-search-result"></div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
@@ -155,9 +156,59 @@
             "bInfo": true,
             "bAutoWidth": true
         });
-    });
+        $('#btnNhapHang').click(function(){
+        });
 
-    $('#btnNhapHang').click(function(){
-        
+        var xhr;
+    //Hiển thị, chọn sản phẩm
+        $('#idMaHang').keyup(function(){            
+            var maHang=$(this).val();            
+            if(xhr && xhr.readyState != 4){
+                xhr.abort(); //huy lenh ajax truoc do
+            }
+
+            xhr = $.ajax({
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'searchSanPham')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'maHang':maHang
+                },                
+                success:function(data){                    
+                    $.each(data, function(key,val){
+                        $('#ma-hang-search-result').empty(); //lam rong khung ket qua
+
+                        var pos = $('#idMaHang').position(); //lấy tọa độ của ô mã sản phẩm
+                        $('#ma-hang-search-result').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left+170,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+
+                        $.each(data, function(key, val){
+                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span></div>');
+                            // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
+                        })
+                    });
+                }
+            });
+            return false;
+        });
+
+        $('#ma-hang-search-result').on('click', '.list-group-item', function(){
+            var id = $(this).find('span:eq(0)').text();
+            var ma = $(this).find('span:eq(1)').text();
+            var ten = $(this).find('span:eq(2)').text();            
+            var giaNhap = $(this).find('span:eq(3)').text();
+
+            $('#idSanPham').val(id);
+            $('#idMaHang').val(ma);
+            $('#tenHang').val(ten);
+            //$('#giaNhap').val(giaNhap);
+
+            $('#ma-hang-search-result').empty();
+        });
+    //./Hiển thị, chọn sản phẩm
     });
     </script>

@@ -81,7 +81,8 @@ class XuatHoaDonForm extends Form
              'attributes'=>array(
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',     
-                'placeholder'=>'Nhập tên hàng',             
+                'placeholder'=>'Nhập tên hàng',
+                'id'=>'tenHang',
             ),
          ));
 
@@ -93,6 +94,7 @@ class XuatHoaDonForm extends Form
                 'class'   => 'h5a-input form-control input-sm',                
                 'min'=>0,
                 'placeholder'=>'Nhập số lượng',
+                'id'=>'soLuong',
             ),
          ));
         $this->add(array(
@@ -104,6 +106,7 @@ class XuatHoaDonForm extends Form
                 'min'=>0,
                 'step'=>500,
                 'placeholder'=>'Nhập giá',
+                'id'=>'giaNhap',
             ),
          ));
 

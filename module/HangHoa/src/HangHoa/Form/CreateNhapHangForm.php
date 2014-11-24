@@ -27,7 +27,10 @@ class CreateNhapHangForm extends Form
 
         $this->add(array(
              'name' => 'idSanPham',
-             'type' => 'Hidden',             
+             'type' => 'Hidden',
+             'attributes'=>array(
+                'id'=>'idSanPham',
+             ),
          ));
 
         $this->add(array(
@@ -36,7 +39,8 @@ class CreateNhapHangForm extends Form
              'attributes'=>array(
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',
-                'placeholder'=>'Mã hàng'
+                'placeholder'=>'Mã hàng',
+                'id'=>'idMaHang',
             ),
          ));
 
@@ -46,7 +50,8 @@ class CreateNhapHangForm extends Form
              'attributes'=>array(
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',
-                'placeholder'=>'Tên hàng'
+                'placeholder'=>'Tên hàng',
+                'id'=>'tenHang',
             ),
          ));
 
@@ -57,6 +62,7 @@ class CreateNhapHangForm extends Form
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',                
                 'min'=>0,
+                'id'=>'soLuong',
             ),
          ));
         $this->add(array(
@@ -67,6 +73,7 @@ class CreateNhapHangForm extends Form
                 'class'   => 'h5a-input form-control input-sm',                
                 'min'=>0,
                 'step'=>500,
+                'id'=>'giaNhap',
             ),
          ));
 

@@ -311,5 +311,34 @@
 
   }
 
+  public function searchSanPhamAction()
+  {
+    $response=array();
+
+    $request=$this->getRequest();
+    if($request->isXmlHttpRequest())
+    {
+      $data=$request->getPost();
+      $maHang=$data['maHang'];
+      if($maHang)
+      {
+        $entityManager=$this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham LIKE :maHang');
+        $query->setParameter('maHang','%'.$maHang.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $sanPhams = $query->getResult(); // array of CmsArticle objects         
+        foreach ($sanPhams as $sanPham) {
+          $response[]=array(
+            'idSanPham'=>$sanPham->getIdSanPham(),
+            'maHang'=>$sanPham->getMaSanPham(),
+            'tenSanPham'=>$sanPham->getTenSanPham(),
+            'giaNhap'=>$sanPham->getGiaNhap(),
+          );
+        }
+      }
+    }
+    $json = new JsonModel($response);
+    return $json;
+
+  }
  }
 ?>
