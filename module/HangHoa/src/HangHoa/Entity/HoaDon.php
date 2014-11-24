@@ -6,11 +6,13 @@
 	use ZfcUser\Entity\UserInterface;
 	use BjyAuthorize\Provider\Role\ProviderInterface;
 	use Doctrine\Common\Collections\ArrayCollection;
+	use Datetime;
 
 
 	/**
 	* @ORM\Entity
 	* @ORM\Table(name="hoa_don")
+	* @ORM\HasLifecycleCallbacks
 	*/
 	class HoaDon {
 		
@@ -36,7 +38,7 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
 		*/
 		private $idDoiTac;
@@ -44,13 +46,46 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="Application\Entity\SystemUser")
+		* @ORM\ManyToOne(targetEntity="Application\Entity\SystemUser", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_user_nv", referencedColumnName="user_id")
 		*/
 		private $idUserNv;
 
+		/**
+		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTHoaDon", mappedBy="id_hoa_don", cascade={"persist"})
+		 */
+		private $ctHoaDons;
 
+		/**
+		 * @ORM\PrePersist 
+		 */
+		public function onPrePersist(){
+	    	$this->ngayXuat = new DateTime('now');
+	    //	$this->idUserNv = 1; //tam thoi
+	    	$this->maHoaDon = $this->ngayXuat->format('His');
+		}
 
+		public function __construct(){
+			$this->ctHoaDons = new ArrayCollection();
+		}
+
+		public function getCtHoaDons(){
+			return $this->ctHoaDons->toArray();
+		}
+
+		public function addCtHoaDons($ctHoaDons){
+			foreach($ctHoaDons as $ctHoaDon){
+				$ctHoaDon->setIdHoaDon($this);
+				$this->ctHoaDons->add($ctHoaDon);
+			}
+		}
+
+		public function removeProductList($ctHoaDons){
+			foreach($ctHoaDons as $ctHoaDon){
+				$ctHoaDon->setOrder(null);
+				$this->ctHoaDons->removeElement($ctHoaDon);
+			}
+		}
 
 		public function setIdHoaDon($idHoaDon)
 		{

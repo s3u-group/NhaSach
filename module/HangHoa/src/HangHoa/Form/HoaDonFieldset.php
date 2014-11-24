@@ -57,17 +57,24 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
         $doiTacFieldset = new DoiTacFieldset($objectManager);
         $doiTacFieldset->setUseAsBaseFieldset(true);
         $doiTacFieldset->setName('idDoiTac');
+        $doiTacFieldset->remove('email');
+        $doiTacFieldset->remove('state');
+        $doiTacFieldset->remove('moTa');
+        $doiTacFieldset->remove('loaiDoiTac');
+
         $this->add($doiTacFieldset);      
              
         $systemUserFieldset = new SystemUserFieldset($objectManager);
         $systemUserFieldset->setUseAsBaseFieldset(true);
         $systemUserFieldset->setName('idUserNv');
+        $doiTacFieldset->remove('email');
+        $doiTacFieldset->remove('loaiTaiKhoan');
         $this->add($systemUserFieldset); 
 
         $ctHoaDonFieldset = new CTHoaDonFieldset($objectManager);
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
-            'name' => 'ctHoaDon',
+            'name' => 'ctHoaDons',
             'options' => array(
                 'label' => '',
                 'count' => 1,
@@ -84,6 +91,9 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
     public function getInputFilterSpecification()
     {
         return array(
+            'ngayXuat' => array(
+                'required' => false
+            )
         );
     }
 }

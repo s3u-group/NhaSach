@@ -25,7 +25,7 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\HoaDon")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\HoaDon", inversedBy="ctHoaDons")
 		* @ORM\JoinColumn(name="id_hoa_don", referencedColumnName="id_hoa_don")
 		*/
 		private $idHoaDon;
@@ -33,7 +33,7 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham", inversedBy="ctHoaDons")
 		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
 		private $idSanPham;
@@ -41,9 +41,9 @@
 
 
 		/**
-		* @ORM\Column(name="gia_nhap", type="float")
+		* @ORM\Column(name="gia", type="float")
 		*/
-		private $giaNhap;
+		private $gia;
 
 
 		/**
@@ -83,13 +83,13 @@
 		}
 
 
-		public function setGiaNhap($giaNhap)
+		public function setGia($gia)
 		{
-			$this->giaNhap=$giaNhap;
+			$this->gia=$gia;
 		}
-		public function getGiaNhap()
+		public function getGia()
 		{
-			return $this->giaNhap;
+			return $this->gia;
 		}
 
 
