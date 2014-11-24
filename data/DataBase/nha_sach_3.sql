@@ -82,16 +82,16 @@ CREATE TABLE IF NOT EXISTS `doi_tac` (
   `ho_ten` varchar(100) NOT NULL,
   `dia_chi` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `state` smallint(6) DEFAULT NULL,
   `mo_ta` longtext,
   `dien_thoai_co_dinh` int(11) DEFAULT NULL,
   `di_dong` int(11) DEFAULT NULL,
   `hinh_anh` varchar(255) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
   `twitter` varchar(255) DEFAULT NULL,
-  `loai_doi_tac` int(11) DEFAULT NULL,
+  `loai_doi_tac` bigint(20) DEFAULT NULL,
+  `id_kenh_phan_phoi` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id_doi_tac`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
