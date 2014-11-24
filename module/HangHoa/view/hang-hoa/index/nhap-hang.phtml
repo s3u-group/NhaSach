@@ -5,7 +5,7 @@
      $form->setAttribute('class','form-horizontal');
      $form->prepare();
      echo $this->form()->openTag($form);
-     $formNhap=$form->get('create-nhap-hang');        
+     echo $this->formHidden($form->get('idSanPham'));
 ?>
 <div class="container">
         <div class="row">
@@ -50,11 +50,9 @@
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
                                 <div class="col-sm-7">                                    
-                                    <?php
-                                    //die(var_dump($phieuNhap->get('ctPhieuNhap')->get('idSanPham')[0]));
-
-                                        $maSanPham=$formNhap->get('ctPhieuNhap')->get('idSanPham')->get('maSanPham');
-                                        echo $this->formElement($maSanPham);
+                                    <?php                                    
+                                        $maSanPham=$form->get('maHang');
+                                        echo $this->formElement($maSanPham);        
                                     ?>
                                 </div>
                             </div>
@@ -62,8 +60,7 @@
                                 <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
                                 <div class="col-sm-7">                                    
                                     <?php                                    
-                                        $tenSanPham=$phieuNhap->get('ctPhieuNhap')->get('idSanPham')->get('tenSanPham');
-                                        $tenSanPham->setAttribute('placeholder','Tên hàng');
+                                        $tenSanPham=$form->get('tenHang');         
                                         echo $this->formElement($tenSanPham);
                                     ?>
                                 </div>
@@ -74,7 +71,7 @@
                                 <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
                                 <div class="col-sm-7">                                    
                                     <?php                                    
-                                        $soLuong=$phieuNhap->get('ctPhieuNhap')->get('soLuong');                             
+                                        $soLuong=$form->get('soLuong');
                                         echo $this->formElement($soLuong);
                                     ?>
                                 </div>
@@ -83,14 +80,14 @@
                                 <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
                                 <div class="col-sm-7">                                    
                                     <?php                                    
-                                        $giaNhap=$phieuNhap->get('ctPhieuNhap')->get('giaNhap');                             
+                                        $giaNhap=$form->get('giaNhap');
                                         echo $this->formElement($giaNhap);
                                     ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-1">
-                                    <button class="btn h5a-btn btn-primary full">Nhập hàng</button>
+                                    <button id="btnNhapHang" class="btn h5a-btn btn-primary full">Nhập hàng</button>
                                 </div>
                             </div>
                         </div>
@@ -134,7 +131,7 @@
                 </div> 
             </div>
         </div>
-    </div>
+</div>
 <?php
     echo $this->form()->closeTag();
 ?>
@@ -158,5 +155,9 @@
             "bInfo": true,
             "bAutoWidth": true
         });
+    });
+
+    $('#btnNhapHang').click(function(){
+        
     });
     </script>
