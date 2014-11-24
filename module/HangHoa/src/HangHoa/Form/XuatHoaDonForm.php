@@ -43,6 +43,14 @@ class XuatHoaDonForm extends Form
 
 
         $this->add(array(
+             'name' => 'donViTinh',
+             'type' => 'hidden',
+             'attributes'=>array(  
+                'id'=>'donViTinh'            
+            ),
+         ));
+
+        $this->add(array(
              'name' => 'khachHang',
              'type' => 'Text',
              'attributes'=>array(
@@ -98,7 +106,7 @@ class XuatHoaDonForm extends Form
             ),
          ));
         $this->add(array(
-             'name' => 'giaNhap',
+             'name' => 'giaXuat',
              'type' => 'Number',             
              'attributes'=>array(
                 'required'=>'required',
@@ -106,7 +114,7 @@ class XuatHoaDonForm extends Form
                 'min'=>0,
                 'step'=>500,
                 'placeholder'=>'Nhập giá',
-                'id'=>'giaNhap',
+                'id'=>'giaXuat',
             ),
          ));
 

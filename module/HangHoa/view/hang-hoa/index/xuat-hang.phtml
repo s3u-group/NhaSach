@@ -1,6 +1,11 @@
 <?php
 $title = 'Xuất hàng';
 $this->headTitle($title);
+ $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuatHang')));
+ $form->setAttribute('role','form');
+ $form->setAttribute('class','form-horizontal');
+ $form->prepare();
+ echo $this->form()->openTag($form);
 ?>
 <div class="container">
         <div class="row">
@@ -39,24 +44,21 @@ $this->headTitle($title);
                             </div>
                            
                         </div>
-                    </div>
-                    <?php
-                     echo $this->form()->openTag($form);
-                     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuatHang')));
-                     $form->setAttribute('role','form');
-                     $form->setAttribute('class','form-horizontal');
-                     $form->prepare();
-                    ?>
+                    </div>                    
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-3">Khách hàng</label>
                                 <div class="col-sm-7">
                                     <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="Trường Đại học Trà Vinh">-->
                                 <?php
+                                    $hoaDon = $form->get('hoa-don');
                                     echo $this->formHidden($form->get('idKhachHang'));
                                     echo $this->formHidden($form->get('idSanPham'));
+                                    echo $this->formHidden($form->get('donViTinh'));
                                     echo $this->formRow($form->get('khachHang'));
+                                    echo $this->formHidden($hoaDon->get('idDoiTac'));
                                 ?>
+                                <input type='hidden' name="" />
                                 <div id="search-result"></div>
                                 </div>
                             </div>
@@ -100,25 +102,25 @@ $this->headTitle($title);
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
+                                <label class="col-sm-4 right" for="form-field-4">Giá xuất</label>
                                 <div class="col-sm-7">
                                     <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="325.000">-->
                                 <?php
-                                    echo $this->formRow($form->get('giaNhap'));
+                                    echo $this->formRow($form->get('giaXuat'));
                                 ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-1">
-                                    <button id="btnXuatHang" class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
+                                    <button id="btnThemHang" class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
                                 </div>
                             </div>
                         </div>
-                    <?php echo $this->form()->closeTag(); ?>
                 </div>
             </div>
         </div>
 </div>
+<php echo $this->form()->closeTag(); ?>
 <div class="container h5a-container">
         <div class="row">
             <div class="col-md-2">
@@ -127,15 +129,16 @@ $this->headTitle($title);
             <div class="col-md-10">
                 <h1>Danh sách xuất</h1>
                 <div class="box">
-                    <table class="invoice pricelist bottom20">
+                    <table id="tbXuatHang" class="invoice pricelist bottom20">
                         <thead>
-                            <th>Sản phẩm</th>
-                            <th>Đơn vị tính</th>
-                            <th>Số lượng</th>
-                            <th>Giá xuất</th>
+                            <tr>
+                                <th>Sản phẩm</th>
+                                <th>Đơn vị tính</th>
+                                <th>Số lượng</th>
+                                <th>Giá xuất</th>
+                            </tr>
                         </thead>
                         <tbody>
-                            
                         </tbody>
                     </table>
                     <div class="row">
@@ -143,7 +146,7 @@ $this->headTitle($title);
                             <button class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button>
                         </div>
                         <div class="col-sm-3 pull-right">
-                            <button class="btn h5a-btn btn-primary full"><i class="fa fa-print"></i> In đơn hàng</button>
+                            <button type="submit" class="btn h5a-btn btn-primary full"><i class="fa fa-print"></i> In đơn hàng</button>
                         </div>
                     </div>
                 </div>
@@ -171,8 +174,38 @@ $this->headTitle($title);
             "bAutoWidth": true
         });
 
-        $('#btnXuatHang').click(function(){
-            alert('Zô chưa');
+        $('#btnThemHang').click(function(){
+            var idKhachhang=$('#idKhachhang').val();
+            var tenKhachHang=$('#tenKhachHang').val();
+            var idSanPham=$('#idSanPham').val();
+            var tenHang=$('#tenHang').val();
+            var donViTinh=$('#donViTinh').val();
+            var soLuong=$('#soLuong').val(); 
+            var giaXuat=$('#giaXuat').val();   
+
+            var soDong = $('#tbXuatHang > tbody > tr').length;      
+
+            var template = '<tr class="price">'+
+                '<td>'+tenHang+
+                '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;idCTHoaDon&#x5D;" />'+
+                '</td>'+
+                '<td>'+donViTinh+'</td>'+
+                '<td>'+
+                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5B;" value="'+idSanPham+'">'+
+                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
+                    '<span>'+soLuong+'</span>'+
+                '</td>'+
+                '<td>'+
+                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;giaXuat&#x5D;" value="'+giaXuat+'">'+
+                    '<span>'+giaXuat+'</span>'+
+                '</td>'+
+                '</tr>';
+
+                $('input[name="hoa-don[idDoiTac]"]').val(idKhachhang);
+
+
+            template = template.replace(/__index__/g, soDong);
+            $('#tbXuatHang tbody').append(template);
             return false;
         });
 
@@ -213,7 +246,8 @@ $this->headTitle($title);
         });
 
         $('#search-result').on('click', '.list-group-item', function(){
-            var id = $(this).find('span:eq(0)').text();
+
+            var id = $(this).find('span:eq(0)').text(); 
             var ten = $(this).find('span:eq(1)').text();
             var diaChi = $(this).find('span:eq(2)').text();
 
@@ -252,7 +286,7 @@ $this->headTitle($title);
                         });
 
                         $.each(data, function(key, val){
-                            $('#san-pham-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span class="hide">'+val.tenSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.giaNhap+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
+                            $('#san-pham-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span class="hide">'+val.tenSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.giaXuat+'</span><span class="hide">'+val.donViTinh+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
                         })
                     });
                 }
@@ -264,12 +298,14 @@ $this->headTitle($title);
             var id = $(this).find('span:eq(0)').text();
             var ten = $(this).find('span:eq(1)').text();
             var ma = $(this).find('span:eq(2)').text();
-            var giaNhap = $(this).find('span:eq(3)').text();
+            var giaXuat = $(this).find('span:eq(3)').text();
+            var donViTinh = $(this).find('span:eq(4)').text();
 
             $('#idSanPham').val(id);
             $('#maHang').val(ma);
             $('#tenHang').val(ten);
-            $('#giaNhap').val(giaNhap);
+            $('#giaXuat').val(giaXuat);
+            $('#donViTinh').val(donViTinh);
 
             $('#san-pham-search-result').empty();
         });

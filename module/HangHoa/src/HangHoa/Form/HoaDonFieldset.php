@@ -71,8 +71,8 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
             'options' => array(
                 'label' => '',
                 'count' => 1,
-                'should_create_template' => false,
-                'allow_add' => false,
+                'should_create_template' => true,
+                'allow_add' => true,
                 'target_element' => $ctHoaDonFieldset,
             )
         ));      
