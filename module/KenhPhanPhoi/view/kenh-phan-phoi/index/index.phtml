@@ -88,6 +88,10 @@
                                                         foreach ($doiTacs as $key => $doiTac) {
                                                             if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==45)
                                                             {
+                                                                $array=$this->GetSoHoaDonVaHoaDonMoiNhat($doiTac->getIdDoiTac());
+                                                                $soHoaDon=$array['soHoaDon'];
+                                                                $hoaDonMoiNhat=$array['hoaDonMoiNhat'];
+                                                                $idHoaDon=$array['idHoaDon'];
                                                                 echo '<tr>';
                                                                     echo '<td><input type="checkbox"/></td>';
                                                                     echo '<td>';
@@ -95,8 +99,8 @@
                                                                     echo '</td>';                                                            
                                                                     echo '<td>'.$doiTac->getDiDong().'</td>';
                                                                     echo '<td>'.$doiTac->getDiaChi().'</td>';
-                                                                    echo '<td>Đơn hàng</td>';
-                                                                    echo '<td><a href="#">Mới nhất</a></td>';
+                                                                    echo '<td>'.$soHoaDon.'</td>';
+                                                                    echo '<td><a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'donHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a></td>';
                                                                 echo '</tr>  ';
                                                             }
                                                         }
@@ -130,6 +134,10 @@
                                                                 foreach ($doiTacs as $key => $doiTac) {
                                                                     if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==45&&$doiTac->getIdKenhPhanPhoi()->getTermId()->getTermId()==$kenhPhanPhoi['termTaxonomyId'])
                                                                     {
+                                                                        $array=$this->GetSoHoaDonVaHoaDonMoiNhat($doiTac->getIdDoiTac());
+                                                                        $soHoaDon=$array['soHoaDon'];
+                                                                        $hoaDonMoiNhat=$array['hoaDonMoiNhat'];
+                                                                        $idHoaDon=$array['idHoaDon'];
                                                                         echo '<tr>';
                                                                             echo '<td><input type="checkbox"/></td>';
                                                                             echo '<td>';
@@ -137,8 +145,8 @@
                                                                             echo '</td>';                                                            
                                                                             echo '<td>'.$doiTac->getDiDong().'</td>';
                                                                             echo '<td>'.$doiTac->getDiaChi().'</td>';
-                                                                            echo '<td>Đơn hàng</td>';
-                                                                            echo '<td><a href="#">Mới nhất</a></td>';
+                                                                            echo '<td>'.$soHoaDon.'</td>';
+                                                                            echo '<td><a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'donHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a></td>';
                                                                         echo '</tr>  ';
                                                                     }
                                                                 }
