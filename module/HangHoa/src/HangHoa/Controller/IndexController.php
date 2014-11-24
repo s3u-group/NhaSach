@@ -190,6 +190,24 @@
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();     
     $form= new XuatHoaDonForm($entityManager);
+    $hoaDon = new HoaDon();
+    $form->bind($hoaDon);
+
+    $request = $this->getRequest();
+    if($request->isPost()){
+      $form->setData($request->getPost());
+       // die(var_dump($request->getPost()['hoa-don']['ctHoaDon']));
+      if($form->isValid()){
+        die(var_dump($hoaDon));
+        $entityManager->persist();
+        $entityManager->flush();
+        return $this->redirect()->toRoute('hang_hoa/crud', array(
+             'action' => 'hangHoa',
+         ));
+      }
+      else
+        die(var_dump($form->getMessages()));
+    }
     return array('form'=>$form);
   }
 
@@ -315,6 +333,7 @@
   {
     $response=array();
 
+
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
     {
@@ -327,11 +346,13 @@
         $query->setParameter('maHang','%'.$maHang.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $sanPhams = $query->getResult(); // array of CmsArticle objects         
         foreach ($sanPhams as $sanPham) {
+
           $response[]=array(
             'idSanPham'=>$sanPham->getIdSanPham(),
             'maHang'=>$sanPham->getMaSanPham(),
             'tenSanPham'=>$sanPham->getTenSanPham(),
             'giaNhap'=>$sanPham->getGiaNhap(),
+            'donViTinh'=>$sanPham->getDonViTinh(),
           );
         }
       }

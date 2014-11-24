@@ -95,6 +95,7 @@
 		}
 
 
+
 		public function setTenSanPham($tenSanPham)
 		{
 			$this->tenSanPham=$tenSanPham;
@@ -142,6 +143,11 @@
 		public function getIdDonViTinh()
 		{
 			return $this->idDonViTinh;
+		}
+
+		public function getDonViTinh()
+		{
+			return $this->getIdDonViTinh()->getTermId()->getName();
 		}
 
 
