@@ -41,6 +41,8 @@
  	public function donHangAction()
  	{
     	$this->layout('layout/giaodien');
+     
+
  	}
 
  	public function doanhThuAction()

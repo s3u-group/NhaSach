@@ -34,6 +34,8 @@ return array(
          ),
      ),    
 
+   
+
 	'view_manager' => array(
 		'template_path_stack' => array(
 			'kenh_phan_phoi' => __DIR__ . '/../view'
@@ -44,9 +46,18 @@ return array(
         'invokables'=>array(
             'make_array_option_taxonomy'=>'KenhPhanPhoi\View\Helper\MakeArrayOptionTaxonomy',
         ),
+        'factories'=>array(
+            'get_so_hoa_don_va_hoa_don_moi_nhat' => function($sm){
+                $entityManager=$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                $doctrineKenhPhanPhoiHelper=new \KenhPhanPhoi\View\Helper\GetSoHoaDonVaHoaDonMoiNhat();
+                $doctrineKenhPhanPhoiHelper->setEntityManager($entityManager);
+                return $doctrineKenhPhanPhoiHelper;
+            },
+        ), 
+        
     ),     
 
-	/*'doctrine' => array(
+	'doctrine' => array(
         'driver' => array(
             'kenh_phan_phoi_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -62,5 +73,5 @@ return array(
                 )
             )
         )
-    ),*/
+    ),
 );
