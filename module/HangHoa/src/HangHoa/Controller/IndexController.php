@@ -57,6 +57,7 @@
     $request=$this->getRequest();
     if($request->isPost())
     {
+      $tam=array();
       if($request->getPost()['dieuKienLoc'])    
       {
         if($request->getPost()['locHangHoa']=='locTheoLoaiHang')
@@ -93,10 +94,6 @@
     } 
     return array('sanPhams'=>$sanPhams);
   }
-
-
-
-
 
   // xem chi tiết sản phẩm
   public function sanPhamAction()
@@ -288,7 +285,7 @@
   {
     $response=array();
 
-    /*$request=$this->getRequest();
+    $request=$this->getRequest();
     if($request->isXmlHttpRequest())
     {
       $data=$request->getPost();
@@ -301,13 +298,13 @@
         $khachHangs = $query->getResult(); // array of CmsArticle objects 
         foreach ($khachHangs as $khachHang) {
           $response[]=array(
-            'id'=>$khachHang->getIdDoiTac(),
+            'idKhachHang'=>$khachHang->getIdDoiTac(),
             'tenKhachHang'=>$khachHang->getHoTen(),
             'diaChiKhachHang'=>$khachHang->getDiaChi(),
           );
         }
       }
-    }*/
+    }
 
     $json = new JsonModel($response);
     return $json;

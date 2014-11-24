@@ -91,6 +91,9 @@ return array(
         'template_path_stack' => array(
             __DIR__ . '/../view',
         ),
+        'strategies' => array(
+            'ViewJsonStrategy', //add to use AJAX
+        ),
     ),
     // Placeholder for console routes
     'console' => array(
