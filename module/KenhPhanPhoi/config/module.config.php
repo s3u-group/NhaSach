@@ -57,7 +57,7 @@ return array(
         
     ),     
 
-	'doctrine' => array(
+	/*'doctrine' => array(
         'driver' => array(
             'kenh_phan_phoi_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -73,5 +73,5 @@ return array(
                 )
             )
         )
-    ),
+    ),*/
 );
