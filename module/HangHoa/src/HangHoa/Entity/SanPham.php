@@ -75,6 +75,11 @@
 		*/
 		private $giaNhap;
 
+		/**
+		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTHoaDon", mappedBy="id_san_pham")
+		 */
+		private $ctHoaDons;
+
 		public function setIdSanPham($idSanPham)
 		{
 			$this->idSanPham=$idSanPham;

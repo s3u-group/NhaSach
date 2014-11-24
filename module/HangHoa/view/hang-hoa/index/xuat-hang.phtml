@@ -56,7 +56,8 @@ $this->headTitle($title);
                                     echo $this->formHidden($form->get('idSanPham'));
                                     echo $this->formHidden($form->get('donViTinh'));
                                     echo $this->formRow($form->get('khachHang'));
-                                    echo $this->formHidden($hoaDon->get('idDoiTac'));
+                                    echo $this->formHidden($hoaDon->get('idDoiTac')->get('idDoiTac'));
+                                    //echo $this->formCollection($hoaDon->get('ctHoaDon'));
                                 ?>
                                 <input type='hidden' name="" />
                                 <div id="search-result"></div>
@@ -186,22 +187,20 @@ $this->headTitle($title);
             var soDong = $('#tbXuatHang > tbody > tr').length;      
 
             var template = '<tr class="price">'+
-                '<td>'+tenHang+
-                '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;idCTHoaDon&#x5D;" />'+
-                '</td>'+
+                '<td>'+tenHang+'</td>'+
                 '<td>'+donViTinh+'</td>'+
                 '<td>'+
-                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5B;" value="'+idSanPham+'">'+
+                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
                     '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
                     '<span>'+soLuong+'</span>'+
                 '</td>'+
                 '<td>'+
-                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;giaXuat&#x5D;" value="'+giaXuat+'">'+
+                    '<input type="hidden" name="hoa-don&#x5B;ctHoaDon&#x5D;&#x5B;__index__&#x5D;&#x5B;gia&#x5D;" value="'+giaXuat+'">'+
                     '<span>'+giaXuat+'</span>'+
                 '</td>'+
                 '</tr>';
 
-                $('input[name="hoa-don[idDoiTac]"]').val(idKhachhang);
+                $('input[name="hoa-don[idDoiTac][idDoiTac]"]').val(idKhachhang);
 
 
             template = template.replace(/__index__/g, soDong);

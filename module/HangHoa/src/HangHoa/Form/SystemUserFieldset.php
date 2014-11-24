@@ -75,13 +75,13 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
         ));
 
        
-         $this->add(array(
+         /*$this->add(array(
              'name' => 'email',
              'type' => '\Zend\Form\Element\Email',
              'options' => array(
                  'label' => 'Email',
              ),
-         ));
+         ));*/
 
          $this->add(array(
              'name' => 'state',
@@ -131,7 +131,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
          ));
 
          
-         $this->add(array(
+         /*$this->add(array(
              'name' => 'loaiTaiKhoan',
              'type' => '\Zend\Form\Element\Select',
              'options' => array(
@@ -139,7 +139,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
                  'empty_option'=>'----------Chọn Loại tài khoản----------',
                  'disable_inarray_validator' => true,
              ),
-         ));
+         ));*/
 
     }
 
