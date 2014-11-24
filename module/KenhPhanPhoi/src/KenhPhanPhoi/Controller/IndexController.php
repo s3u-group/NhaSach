@@ -58,7 +58,11 @@
            return $this->redirect()->toRoute('kenh_phan_phoi/crud');
       }  
       $entityManager=$this->getEntityManager();
-      //$hoaDon=$entityManager->getRepository()->find($id);
+      $hoaDon=$entityManager->getRepository('HangHoa\Entity\HoaDon')->find($id);
+      //die(var_dump($hoaDon));
+      return array(
+        'hoaDon'=>$hoaDon,
+      );
   }
 
  	public function themKhachHangAction()

@@ -34,8 +34,17 @@ class  GetSoHoaDonVaHoaDonMoiNhat extends AbstractHelper{
        
        
         $soHoaDon=count($hoaDons);
-        $hoaDonMoiNhat=$hoaDons[0]->getMaHoaDon();
-        $idHoaDon=$hoaDons[0]->getIdHoaDon();
+        if($hoaDons)
+        {
+            $hoaDonMoiNhat=$hoaDons[0]->getMaHoaDon();
+            $idHoaDon=$hoaDons[0]->getIdHoaDon();
+        }
+        else
+        {
+            $hoaDonMoiNhat='';
+            $idHoaDon=0;
+        }
+        
         $array=array(
             'soHoaDon'=>$soHoaDon,
             'hoaDonMoiNhat'=>$hoaDonMoiNhat,
