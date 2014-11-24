@@ -72,7 +72,7 @@
                             <div role="tabpanel" class="tab-pane active" id="home">
                                 <div class="container">
                                     <div class="row">
-                                        <table id="dataTables-example" class="">
+                                        <table id="tatCa" class="dataTables">
                                             <thead>
                                                 <th><input type="checkbox"/></th>
                                                 <th>Khách hàng</th>
@@ -116,7 +116,7 @@
                                     ?>
                                         <div class="container">
                                             <div class="row">                                    
-                                                    <table id="dataTables-example" class="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
+                                                    <table id="<?php echo $key; ?>" class="dataTables">
                                                         <thead>
                                                             <th><input type="checkbox"/></th>
                                                             <th>Khách hàng</th>
@@ -172,7 +172,7 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
     $(document).ready(function() {
-        $('#dataTables-example').dataTable({
+        $('.dataTables').dataTable({
             "pagingType": "simple",
             "bPaginate": true,
             "bLengthChange": true,
