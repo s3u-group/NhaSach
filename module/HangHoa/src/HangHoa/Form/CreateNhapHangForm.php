@@ -26,11 +26,17 @@ class CreateNhapHangForm extends Form
         $this->add($nhapHangFieldset);
 
         $this->add(array(
+             'name' => 'idSanPham',
+             'type' => 'Hidden',             
+         ));
+
+        $this->add(array(
              'name' => 'maHang',
              'type' => 'Text',
              'attributes'=>array(
                 'required'=>'required',
-                'class'   => 'h5a-input form-control input-sm',                
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Mã hàng'
             ),
          ));
 
@@ -39,7 +45,8 @@ class CreateNhapHangForm extends Form
              'type' => 'Text',
              'attributes'=>array(
                 'required'=>'required',
-                'class'   => 'h5a-input form-control input-sm',                
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Tên hàng'
             ),
          ));
 
