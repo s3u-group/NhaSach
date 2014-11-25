@@ -14,6 +14,9 @@
  use PHPExcel_Style_NumberFormat;
  use PHPExcel_Style_Color;
  use PHPExcel_RichText;
+ use PHPExcel_Style_Border;
+ use PHPExcel_Style_Alignment;
+ use PHPExcel_Style_Fill;
 
  
  
@@ -153,7 +156,11 @@
 
   public function exportExcelAction()
   {
+
     $entityManager=$this->getEntityManager();
+
+    $filename='PhanVanThanh.xlsx';
+
 
     /** Error reporting */
     error_reporting(E_ALL);
@@ -165,7 +172,17 @@
 
     // Create new PHPExcel object
     echo date('H:i:s') , " Create new PHPExcel object" , EOL;
+
+    
+
+
+
     $objPHPExcel = new PHPExcel();
+    
+
+    
+
+
 
     // Set document properties
     echo date('H:i:s') , " Set document properties" , EOL;
@@ -182,11 +199,29 @@
     $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
                                               ->setSize(10);
 
+// canh chỉnh trong phpexcel: chỉnh mà cho border
+    $styleArray = array(
+       'borders' => array(
+             'outline' => array(
+                    'style' => PHPExcel_Style_Border::BORDER_DOUBLE,
+                    'color' => array('argb' => 'FFFF0000'),
+             ),
+       ),
+    );
+    //->getStyle('B3')->getFill()->getStartColor()->setARGB('B7B7B7');
     // Add some data, resembling some different data types
     echo date('H:i:s') , " Add some data" , EOL;
+    $objPHPExcel->getActiveSheet()->setCellValue('A15', 'phan văn thanh đẹp trai')
+                                  ->setCellValue('B15', '22-3-1992')
+                                  ->setCellValue('C15', 'PHPExcel');
+    // set background color
+    $this->cellColor('A15:C15','FFFF0000', $objPHPExcel);
+
     $objPHPExcel->getActiveSheet()->setCellValue('A1', 'phan văn thanh đẹp trai')
                                   ->setCellValue('B1', '22-3-1992')
-                                  ->setCellValue('C1', 'PHPExcel');
+                                  ->setCellValue('C1', 'PHPExcel')
+                                  // sử dụng applyFormArray(); để chỉnh
+                                  ->getStyle('A1:C14')->applyFromArray($styleArray);
 
     $objPHPExcel->getActiveSheet()->setCellValue('A2', 'String')
                                   ->setCellValue('B2', 'Symbols')
@@ -194,11 +229,13 @@
 
     $objPHPExcel->getActiveSheet()->setCellValue('A3', 'String')
                                   ->setCellValue('B3', 'UTF-8')
-                                  ->setCellValue('C3', 'Создать MS Excel Книги из PHP скриптов');
-
+                                  ->setCellValue('C3', 'Создать MS Excel Книги из PHP скриптов')                                  
+                                  ->getStyle('A2:L2')->getBorders()->getTop()->setColor(new PHPExcel_Style_Color(PHPExcel_Style_Color::COLOR_BLUE));
+    
     $objPHPExcel->getActiveSheet()->setCellValue('A4', 'Number')
                                   ->setCellValue('B4', 'Integer')
-                                  ->setCellValue('C4', 12);
+                                  ->setCellValue('C4', 12)
+                                  ->getStyle('A1:C1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
     $objPHPExcel->getActiveSheet()->setCellValue('A5', 'Number')
                                   ->setCellValue('B5', 'Float')
@@ -207,6 +244,7 @@
     $objPHPExcel->getActiveSheet()->setCellValue('A6', 'Number')
                                   ->setCellValue('B6', 'Negative')
                                   ->setCellValue('C6', -7.89);
+                                  
 
     $objPHPExcel->getActiveSheet()->setCellValue('A7', 'Boolean')
                                   ->setCellValue('B7', 'True')
@@ -276,10 +314,14 @@
     echo date('H:i:s') , " Write to Excel2007 format" , EOL;
     $callStartTime = microtime(true);
 
+    
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-    $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
+    $objWriter->save(str_replace('.php', '.xlsx', $filename));
+    //__FILE__
     $callEndTime = microtime(true);
     $callTime = $callEndTime - $callStartTime;
+
+    
 
     echo date('H:i:s') , " File written to " , str_replace('.php', '.xlsx', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
     echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
@@ -290,15 +332,23 @@
     echo date('H:i:s') , " Reload workbook from saved file" , EOL;
     $callStartTime = microtime(true);
 
-    $objPHPExcel = PHPExcel_IOFactory::load(str_replace('.php', '.xlsx', __FILE__));
+    $objPHPExcel = PHPExcel_IOFactory::load(str_replace('.php', '.xlsx', $filename));
 
     $callEndTime = microtime(true);
     $callTime = $callEndTime - $callStartTime;
     echo 'Call time to reload Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
     // Echo memory usage
     echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
+    
 
+    header('Cache-Control: max-age=0');
+    // We'll be outputting an excel file
+    header('Content-type: application/vnd.ms-excel; charset=utf-8');
 
+    // It will be called file.xls
+    header('Content-Disposition: attachment; filename="PhanVanThanh.xls"');
+    // Write file to the browser
+    $objWriter->save('php://output');
     var_dump($objPHPExcel->getActiveSheet()->toArray());
 
 
@@ -308,7 +358,20 @@
     // Echo done
     echo date('H:i:s') , " Done testing file" , EOL;
     echo 'File has been created in ' , getcwd() , EOL;
-
     }
- }
+
+    public function cellColor($cells,$color, $objPHPExcel){
+      
+      $objPHPExcel->getActiveSheet()->getStyle($cells)->getFill()
+      ->applyFromArray(array('type' => PHPExcel_Style_Fill::FILL_SOLID,
+      'startcolor' => array('rgb' => $color),
+      'endcolor'   => array('rgb' => $color),
+      ));
+    }
+
+  }
+
+ 
+
+    
 ?>
