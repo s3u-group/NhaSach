@@ -199,7 +199,7 @@
         $entityManager->persist($hoaDon);
         $entityManager->flush();
         return $this->redirect()->toRoute('hang_hoa/crud', array(
-             'action' => 'hangHoa',
+             'action' => 'xuatHang',
          ));
       }
       else
