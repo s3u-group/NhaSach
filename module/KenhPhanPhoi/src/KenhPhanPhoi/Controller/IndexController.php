@@ -10,6 +10,10 @@
  use HangHoa\Entity\CTHoaDon;
  use PHPExcel;
  use PHPExcel_IOFactory;
+ use PHPExcel_Shared_Date;
+ use PHPExcel_Style_NumberFormat;
+ use PHPExcel_Style_Color;
+ use PHPExcel_RichText;
 
  
  
@@ -159,11 +163,6 @@
 
     define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
-    /** Include PHPExcel */
-    //require_once dirname(__FILE__) . '/../Classes/PHPExcel.php';
-    //die(var_dump(__ROOT_PATH__.'/vendor/phpoffice/phpexcel/Classes/PHPExcel.php'));
-    //require_once 'C:\wamp\www\Zend\NhaSach\vendor\phpoffice\phpexcel\Classes\PHPExcel.php';
-
     // Create new PHPExcel object
     echo date('H:i:s') , " Create new PHPExcel object" , EOL;
     $objPHPExcel = new PHPExcel();
@@ -218,11 +217,12 @@
                                   ->setCellValue('C8', false);
 
     $dateTimeNow = time();
-    /*$objPHPExcel->getActiveSheet()->setCellValue('A9', 'Date/Time')
+    $objPHPExcel->getActiveSheet()->setCellValue('A9', 'Date/Time')
                                   ->setCellValue('B9', 'Date')
                                   ->setCellValue('C9', PHPExcel_Shared_Date::PHPToExcel( $dateTimeNow ));
     $objPHPExcel->getActiveSheet()->getStyle('C9')->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
 
+    
     $objPHPExcel->getActiveSheet()->setCellValue('A10', 'Date/Time')
                                   ->setCellValue('B10', 'Time')
                                   ->setCellValue('C10', PHPExcel_Shared_Date::PHPToExcel( $dateTimeNow ));
@@ -262,7 +262,7 @@
 
     $objPHPExcel->getActiveSheet()->getColumnDimension('B')->setAutoSize(true);
     $objPHPExcel->getActiveSheet()->getColumnDimension('C')->setAutoSize(true);
-*/
+
     // Rename worksheet
     echo date('H:i:s') , " Rename worksheet" , EOL;
     $objPHPExcel->getActiveSheet()->setTitle('Datatypes');
