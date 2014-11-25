@@ -19,8 +19,7 @@
  use Zend\Stdlib\AbstractOptions;
  
  use S3UTaxonomy\Form\CreateTermTaxonomyForm;
-
-
+ use PHPExcel;
  
  class IndexController extends AbstractActionController
  {
@@ -210,8 +209,6 @@
     return array('form'=>$form);
   }
 
-  
-
   public function themSanPhamAction()
   {
 
@@ -331,8 +328,6 @@
   public function searchSanPhamAction()
   {
     $response=array();
-
-
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
     {
@@ -358,7 +353,21 @@
     }
     $json = new JsonModel($response);
     return $json;
-
   }
+
+  public function importAction()
+  {
+    $this->layout('layout/giaodien');
+
+    $objPHPExcel = new PHPExcel();
+    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:D1');
+    $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Loan');
+    $objWriter =  new IOFactory;
+    //$objWriter::createWriter($objPHPExcel, 'Excel2007');
+    //$filename = "luukimloan".".xlsx";
+    //$objWriter->save($filename);
+    die(var_dump($objWriter));
+  }
+  
  }
 ?>

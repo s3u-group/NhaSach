@@ -12,7 +12,7 @@ return array(
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
         'BaconStringUtils',
-        'Application',
+        'Application',        
         'S3UTaxonomy',
         'HangHoa',
         'KenhPhanPhoi',
