@@ -29,7 +29,7 @@
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h1>Chi tiết đơn hàng</h1>
+                                <h2>Thông tin khách hàng</h2>
                             </div>
                             <div class="col-sm-6">
                                 <div class="pull-right">
@@ -41,16 +41,66 @@
                                             <i class="fa fa-chevron-right"></i>
                                         </button>
                                     </div>
-                                     <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                     <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'exportExcel'));?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <p>
-                            phan văn thanh
-                        </p>
+                    <div class="box">   
+                        
+                        <table>
+                            <tr>
+                                <td>
+                                    <b>Họ tên: </b>
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
+                                </td>
+                                <td>
+                                    <b>Địa chỉ: </b>
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getDiaChi(); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Di động:</b> 
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getDiDong(); ?>
+                                </td>
+                                <td>
+                                    <b>Điện thoại cố định: </b>
+                                </td>
+                                <td>
+                                    <?php 
+                                        if($hoaDon->getIdDoiTac()->getDienThoaiCoDinh()!=0)
+                                            echo $hoaDon->getIdDoiTac()->getDienThoaiCoDinh(); 
+
+                                    ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Email:  </b>
+                                </td>
+                                <td>
+                                    <?php echo $hoaDon->getIdDoiTac()->getEmail(); ?>
+                                </td>
+                                <td>
+                                    
+                                </td>
+                                <td>
+                                    
+                                </td>
+                            </tr>
+                        </table>
                     </div>
+                    <div>
+                        <h2>Chi tiết đơn hàng</h2>
+                    </div>
+                    
                     <div class="box">                        
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="home">
@@ -59,117 +109,24 @@
                                         <table id="dataTables-example" class="">
                                             <thead>
                                                 <th><input type="checkbox"/></th>
-                                                <th>Đơn hàng</th>
-                                                <th>Ngày</th>
-                                                <th>Khách hàng</th>
-                                                <th>Thanh toán</th>
-                                                <th>Tổng tiền</th>
+                                                <th>Tên sản phẩm</th>
+                                                <th>Giá</th>
+                                                <th>Số lượng</th>   
+                                                <th>Thành tiền</th>                                                 
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-success">Đã thanh toán</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html">#2-3323</a></td>
-                                                    <td>11/11/2014</td>
-                                                    <td><a href="khachHang.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td><span class="label label-warning">Ghi nợ</span></td>
-                                                    <td>230.000</td>
-                                                </tr>
+                                                
+                                            <?php
+                                            foreach ($chiTietHoaDons as $chiTietHoaDon) {
+                                                echo '<tr>';
+                                                    echo '<td><input type="checkbox"/></td>';
+                                                    echo '<td><a href="#">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a></td>';
+                                                    echo '<td>'.$chiTietHoaDon->getGia().'</td>';
+                                                    echo '<td>'.$chiTietHoaDon->getSoLuong().'</td>';
+                                                    echo '<td>'.$chiTietHoaDon->getGia()*$chiTietHoaDon->getSoLuong().'</td>';
+                                                echo '</tr>';
+                                            }
+                                            ?>
                                             </tbody>
                                         </table>
                                     </div>

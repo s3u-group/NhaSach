@@ -100,7 +100,12 @@
                                                                     echo '<td>'.$doiTac->getDiDong().'</td>';
                                                                     echo '<td>'.$doiTac->getDiaChi().'</td>';
                                                                     echo '<td>'.$soHoaDon.'</td>';
-                                                                    echo '<td><a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a></td>';
+                                                                    echo '<td>';
+                                                                        if($hoaDonMoiNhat!='')
+                                                                        {
+                                                                            echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a>';
+                                                                        }
+                                                                    echo '</td>';
                                                                 echo '</tr>  ';
                                                             }
                                                         }
@@ -146,7 +151,12 @@
                                                                             echo '<td>'.$doiTac->getDiDong().'</td>';
                                                                             echo '<td>'.$doiTac->getDiaChi().'</td>';
                                                                             echo '<td>'.$soHoaDon.'</td>';
-                                                                            echo '<td><a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'donHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a></td>';
+                                                                            echo '<td>';
+                                                                                if($hoaDonMoiNhat!='')
+                                                                                {
+                                                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a>';
+                                                                                }
+                                                                            echo '</td>';
                                                                         echo '</tr>  ';
                                                                     }
                                                                 }
