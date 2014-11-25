@@ -197,7 +197,6 @@
       $form->setData($request->getPost());
       if($form->isValid()){
         $entityManager->persist($hoaDon);
-        //die(var_dump($hoaDon));
         $entityManager->flush();
         return $this->redirect()->toRoute('hang_hoa/crud', array(
              'action' => 'hangHoa',
