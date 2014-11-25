@@ -20,7 +20,6 @@
  
  use S3UTaxonomy\Form\CreateTermTaxonomyForm;
  use PHPExcel;
-
  
  class IndexController extends AbstractActionController
  {
@@ -210,8 +209,6 @@
     return array('form'=>$form);
   }
 
-  
-
   public function themSanPhamAction()
   {
 
@@ -365,10 +362,11 @@
     $objPHPExcel = new PHPExcel();
     $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:D1');
     $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Loan');
-    //$objWriter =  new phpexcel \ Classes\ PHPExcel\ IOFactory;
+    $objWriter =  new IOFactory;
     //$objWriter::createWriter($objPHPExcel, 'Excel2007');
     //$filename = "luukimloan".".xlsx";
     //$objWriter->save($filename);
+    die(var_dump($objWriter));
   }
   
  }
