@@ -80,9 +80,9 @@
 			}
 		}
 
-		public function removeProductList($ctHoaDons){
+		public function removeCtHoaDons($ctHoaDons){
 			foreach($ctHoaDons as $ctHoaDon){
-				$ctHoaDon->setOrder(null);
+				$ctHoaDon->setIdHoaDon(null);
 				$this->ctHoaDons->removeElement($ctHoaDon);
 			}
 		}
