@@ -20,10 +20,10 @@
 		* @ORM\Id
 		* @ORM\GeneratedValue
 		*/
+		
 		private $idGiaXuat;
-
-
 		/**
+		* @ORM\Column(name="id_san_pham")
 		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
 		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
@@ -38,7 +38,9 @@
 
 
 		/**
-		* @ORM\Column(name="id_kenh_phan_phoi", type="integer")
+		* @ORM\Column(name="id_kenh_phan_phoi")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\JoinColumn(name="id_kenh_phan_phoi", referencedColumnName="term_taxonomy_id")
 		*/
 		private $idKenhPhanPhoi;
 

@@ -9,6 +9,7 @@
  use HangHoa\Entity\CTPhieuNhap;
  use HangHoa\Entity\HoaDon;
  use HangHoa\Entity\CTHoaDon;
+ use HangHoa\Entity\GiaXuat;
  use HangHoa\Form\CreateSanPhamForm;
 
  use HangHoa\Form\XuatHoaDonForm;
@@ -20,12 +21,21 @@
  use Zend\Stdlib\AbstractOptions;
  
  use S3UTaxonomy\Form\CreateTermTaxonomyForm;
+ 
  use PHPExcel;
  use PHPExcel_IOFactory;
+
  use PHPExcel_Cell;
  use PHPExcel_Cell_DataType;
+ use PHPExcel_Shared_Date;
+ use PHPExcel_Style_NumberFormat;
  use PHPExcel_Style_Color;
+ use PHPExcel_RichText;
+ use PHPExcel_Style_Border;
+ use PHPExcel_Style_Alignment;
  use PHPExcel_Style_Fill;
+ use PHPExcel_Style_Font;
+
  
  class IndexController extends AbstractActionController
  {
@@ -205,11 +215,16 @@
     if($request->isPost()){
       $form->setData($request->getPost());
       if($form->isValid()){
+        foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
+          $soLuongXuat=$chiTietHoaDon->getSoLuong();
+          $soLuongTon=$chiTietHoaDon->getIdSanPham()->getTonKho();
+          $soLuongConLai=$soLuongTon-$soLuongXuat;
+          $chiTietHoaDon->getIdSanPham()->setTonKho($soLuongConLai);
+        }
         $entityManager->persist($hoaDon);
-        //die(var_dump($hoaDon));
         $entityManager->flush();
         return $this->redirect()->toRoute('hang_hoa/crud', array(
-             'action' => 'hangHoa',
+             'action' => 'xuatHang',
          ));
       }
       else
@@ -269,7 +284,35 @@
           $sanPham->setTonKho(0);
           $sanPham->setGiaNhap(0);
           $entityManager->persist($sanPham);
-          $entityManager->flush();         
+          $entityManager->flush(); 
+
+          $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+          $queryBuilder = $repository->createQueryBuilder('sp');
+          $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+          $query = $queryBuilder->getQuery(); 
+          $sanPhams = $query->execute();
+          
+
+          $taxonomyLoai=$this->TaxonomyFunction();
+          $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+          
+          foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+            if($kenhPhanPhoi['cap']>0)
+            {
+              $giaXuat=new GiaXuat();
+              $giaXuat->setIdGiaXuat('');
+              $giaXuat->setIdSanPham($sanPhams[0]->getIdSanPham());
+              $gx=(int)$sanPhams[0]->getGiaNhap()+(((int)$sanPhams[0]->getGiaNhap()*(int)$kenhPhanPhoi['description'])/100);
+              $giaXuat->setGiaXuat($gx);
+              $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
+              
+              $entityManager->persist($giaXuat);
+              $entityManager->flush(); 
+            }
+            
+          }
+          die(var_dump('stop'));
+
           return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
         }
         else
@@ -325,6 +368,7 @@
             'idKhachHang'=>$khachHang->getIdDoiTac(),
             'tenKhachHang'=>$khachHang->getHoTen(),
             'diaChiKhachHang'=>$khachHang->getDiaChi(),
+            'chietKhau'=>$khachHang->getIdKenhPhanPhoi()->getDescription(),
           );
         }
       }
@@ -356,6 +400,7 @@
             'tenSanPham'=>$sanPham->getTenSanPham(),
             'giaNhap'=>$sanPham->getGiaNhap(),
             'donViTinh'=>$sanPham->getDonViTinh(),
+            'tonKho'=>$sanPham->getTonKho(),
           );
         }
       }
@@ -465,5 +510,166 @@
     }
   }
 
-}
+  public function exportHangHoaAction()
+  {
+    $entityManager=$this->getEntityManager();
+
+    $filename='data_hang_hoa.xlsx';
+
+    
+    /** Error reporting */
+    error_reporting(E_ALL);
+    ini_set('display_errors', TRUE); 
+    ini_set('display_startup_errors', TRUE); 
+    date_default_timezone_set('Europe/London');
+
+    define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+    // Create new PHPExcel object
+    
+    $objPHPExcel = new PHPExcel();
+
+    // Set document properties
+    
+    $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+                   ->setLastModifiedBy("Maarten Balliauw")
+                   ->setTitle("Office 2007 XLSX Test Document")
+                   ->setSubject("Office 2007 XLSX Test Document")
+                   ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+                   ->setKeywords("office 2007 openxml php")
+                   ->setCategory("Test result file");
+
+    // Set default font
+    
+    $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
+                                              ->setSize(10);
+
+    // set data output
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A2', 'HÀNG HÓA');
+    $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                                  
+   
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A4', 'Sản Phẩm')
+                                  ->setCellValue('B4', 'Mã sản phẩm')
+                                  ->setCellValue('C4', 'Tồn kho')
+                                  ->setCellValue('D4', 'Loại')
+                                  ->setCellValue('E4', 'Nhãn hàng')                                  
+                                  ->getStyle('A4:E4')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();
+    foreach ($sanPhams as $key=>$sanPham) {
+      //die(var_dump($sanPham));
+      $index=$key+5;
+      $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())
+                                    ->setCellValue('B'.$index, $sanPham->getMaSanPham())
+                                    ->setCellValue('C'.$index, $sanPham->getTonKho())
+                                    ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
+                                    ->setCellValue('E'.$index, $sanPham->getNhan());
+      $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    }
+
+    // Rename worksheet    
+    $objPHPExcel->getActiveSheet()->setTitle('data_hang_hoa');
+    // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+    $objPHPExcel->setActiveSheetIndex(0);
+    // Save Excel 2007 file
+    $callStartTime = microtime(true);
+
+    
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    $objWriter->save(str_replace('.php', '.xlsx', $filename));   
+
+    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));                                  
+
+  }
+
+  public function exportBangGiaAction()
+  {
+    $entityManager=$this->getEntityManager();
+
+    $filename='data_bang_gia.xlsx';
+
+    
+    /** Error reporting */
+    error_reporting(E_ALL);
+    ini_set('display_errors', TRUE); 
+    ini_set('display_startup_errors', TRUE); 
+    date_default_timezone_set('Europe/London');
+
+    define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
+
+    // Create new PHPExcel object
+    
+    $objPHPExcel = new PHPExcel();
+
+    // Set document properties
+    
+    $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
+                   ->setLastModifiedBy("Maarten Balliauw")
+                   ->setTitle("Office 2007 XLSX Test Document")
+                   ->setSubject("Office 2007 XLSX Test Document")
+                   ->setDescription("Test document for Office 2007 XLSX, generated using PHP classes.")
+                   ->setKeywords("office 2007 openxml php")
+                   ->setCategory("Test result file");
+
+    // Set default font
+    
+    $objPHPExcel->getDefaultStyle()->getFont()->setName('Arial')
+                                              ->setSize(10);
+
+    // set data output
+
+    $taxonomyLoai=$this->TaxonomyFunction();
+    $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+    $soCot=count($kenhPhanPhois)-1;
+    die(var_dump($soCot));
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A2', 'BẢNG GIÁ');
+    $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                                  
+   
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A4', 'Sản Phẩm')
+                                  ->setCellValue('B4', 'Mã sản phẩm')
+                                  ->setCellValue('C4', 'Tồn kho')
+                                  ->setCellValue('D4', 'Loại')
+                                  ->setCellValue('E4', 'Nhãn hàng')                                  
+                                  ->getStyle('A4:E4')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();
+    foreach ($sanPhams as $key=>$sanPham) {
+      //die(var_dump($sanPham));
+      $index=$key+5;
+      $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())
+                                    ->setCellValue('B'.$index, $sanPham->getMaSanPham())
+                                    ->setCellValue('C'.$index, $sanPham->getTonKho())
+                                    ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
+                                    ->setCellValue('E'.$index, $sanPham->getNhan());
+      $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    }
+
+    // Rename worksheet    
+    $objPHPExcel->getActiveSheet()->setTitle('data_hang_hoa');
+    // Set active sheet index to the first sheet, so Excel opens this as the first sheet
+    $objPHPExcel->setActiveSheetIndex(0);
+    // Save Excel 2007 file
+    $callStartTime = microtime(true);
+
+    
+    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+    $objWriter->save(str_replace('.php', '.xlsx', $filename));   
+
+    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));                                  
+
+  }
+  
+ }
 ?>

@@ -57,7 +57,8 @@ class XuatHoaDonForm extends Form
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm', 
                 'placeholder'=>'Nhập tên khách hàng',   
-                'id'=>'tenKhachHang'            
+                'id'=>'tenKhachHang',
+                'autocomplete'=>'off',
             ),
          )); 
 
@@ -68,7 +69,8 @@ class XuatHoaDonForm extends Form
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm', 
                 'id' => 'diaChiKhachHang',
-                'placeholder'=>'Nhập địa chỉ',              
+                'placeholder'=>'Nhập địa chỉ', 
+                'autocomplete'=>'off',             
             ),
          ));
 
@@ -80,6 +82,7 @@ class XuatHoaDonForm extends Form
                 'class'   => 'h5a-input form-control input-sm',  
                 'placeholder'=>'Nhập mã hàng', 
                 'id'=>'maHang',
+                'autocomplete'=>'off',
             ),
          ));
 
@@ -91,6 +94,7 @@ class XuatHoaDonForm extends Form
                 'class'   => 'h5a-input form-control input-sm',     
                 'placeholder'=>'Nhập tên hàng',
                 'id'=>'tenHang',
+                'autocomplete'=>'off',
             ),
          ));
 
@@ -111,8 +115,7 @@ class XuatHoaDonForm extends Form
              'attributes'=>array(
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',                
-                'min'=>0,
-                'step'=>500,
+                'min'=>0,                
                 'placeholder'=>'Nhập giá',
                 'id'=>'giaXuat',
             ),
