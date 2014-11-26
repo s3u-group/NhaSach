@@ -20,6 +20,7 @@ $this->headTitle($title);
         .col-md-2{display: none;}
         h1{display: none;}
         .page-header{display: none;}
+        .an{display: none;}
         .print{display: block; text-align: left;}
         #h5a-container{display: none;}
         .printHoTen {display: block;}
@@ -186,6 +187,7 @@ $this->headTitle($title);
                                 <th>Đơn vị tính</th>
                                 <th>Số lượng</th>
                                 <th>Giá xuất</th>
+                                <th class="an" id="btnHuy">Hủy</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,7 +195,7 @@ $this->headTitle($title);
                     </table>
                     <div class="row">
                         <div class="col-sm-3">
-                            <button class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button>
+                            <a href=""><button class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
                         </div>
                         <div class="col-sm-3 pull-right">
                             <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button>
@@ -225,6 +227,8 @@ $this->headTitle($title);
             "bAutoWidth": true
         });
 
+        
+
         $('#btnThemHang').click(function(){
             var idKhachhang=$('#idKhachhang').val();
             var tenKhachHang=$('#tenKhachHang').val();
@@ -235,6 +239,11 @@ $this->headTitle($title);
             var soLuong=$('#soLuong').val(); 
             var giaXuat=$('#giaXuat').val();   
             var tonKho=$('#tonKho').val(); 
+            if(idKhachhang==''||tenKhachHang==''||diaChi==''||idSanPham==''||tenHang==''||donViTinh==''||soLuong==''||giaXuat==''||tonKho==''||idKhachhang==null||tenKhachHang==null||diaChi==null||idSanPham==null||tenHang==null||donViTinh==null||soLuong==null||giaXuat==null||tonKho==null)
+            {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return false;
+            }
             if(parseInt(tonKho)<parseInt(soLuong)||parseInt(soLuong)==0||parseInt(tonKho)==0)
             {
                 
@@ -271,6 +280,9 @@ $this->headTitle($title);
                     '<td>'+
                         '<input type="hidden" name="hoa-don&#x5B;ctHoaDons&#x5D;&#x5B;__index__&#x5D;&#x5B;gia&#x5D;" value="'+giaXuat+'">'+
                         '<span>'+giaXuat+'</span>'+
+                    '</td>'+
+                    '<td class="an" style="text-align:left;">'+
+                        '<a id="btnHuy" href="#"><img src="<?php echo $this->basePath(); ?>/img/delete.png" width="30px" height="30px"></a>'+
                     '</td>'+
                     '</tr>';
 
@@ -324,6 +336,8 @@ $this->headTitle($title);
             });
             return false;
         });
+
+        
 
         $('#search-result').on('click', '.list-group-item', function(){
 
@@ -402,6 +416,8 @@ $this->headTitle($title);
         });
     });
 //./Hiển thị, chọn sản phẩm
+
+
     </script>
 
     <script>
@@ -421,4 +437,14 @@ $this->headTitle($title);
                 return true;
             }                
         }
+
+    </script>
+    <script>
+        $(document).ready(function(){
+          $('#btnHuy').click(function(){
+            alert('Zô rồi');
+            var trHuy=$(this).closest('tr').remove();
+            
+          });
+        });
     </script>
