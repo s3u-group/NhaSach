@@ -122,7 +122,7 @@
                                             foreach ($chiTietHoaDons as $chiTietHoaDon) {
                                                 echo '<tr>';
                                                     echo '<td><input type="checkbox"/></td>';
-                                                    echo '<td><a href="#">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a></td>';
+                                                    echo '<td><a href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a></td>';
                                                     echo '<td>'.$chiTietHoaDon->getGia().'</td>';
                                                     echo '<td>'.$chiTietHoaDon->getSoLuong().'</td>';
                                                     echo '<td>'.$chiTietHoaDon->getGia()*$chiTietHoaDon->getSoLuong().'</td>';

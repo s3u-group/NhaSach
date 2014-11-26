@@ -28,7 +28,7 @@ class  GetSoHoaDonVaHoaDonMoiNhat extends AbstractHelper{
 
         $repository = $entityManager->getRepository('HangHoa\Entity\HoaDon');
         $queryBuilder = $repository->createQueryBuilder('hd');
-        $queryBuilder->add('where','hd.idDoiTac='.$idDoiTac.' ORDER BY hd.ngayXuat DESC');
+        $queryBuilder->add('where','hd.idDoiTac='.$idDoiTac.' ORDER BY hd.ngayXuat, hd.idHoaDon DESC');
         $query = $queryBuilder->getQuery();
         $hoaDons = $query->execute();
        

@@ -70,13 +70,9 @@
            return $this->redirect()->toRoute('kenh_phan_phoi/crud');
       }  
       $entityManager=$this->getEntityManager();
-      //die(var_dump($id));
       $hoaDon=$entityManager->getRepository('HangHoa\Entity\HoaDon')->find($id);
-      
-      $query=$entityManager->createQuery('SELECT cthd FROM HangHoa\Entity\CTHoaDon cthd WHERE cthd.idHoaDon='.$id);
+      $query=$entityManager->createQuery('SELECT cthd FROM HangHoa\Entity\CTHoaDon cthd WHERE cthd.idHoaDon='.$hoaDon->getIdHoaDon());
       $chiTietHoaDons=$query->getResult();
-      //die(var_dump($chiTietHoaDon));
-
       
       return array(
         'chiTietHoaDons'=>$chiTietHoaDons,
@@ -172,17 +168,7 @@
 
     // Create new PHPExcel object
     echo date('H:i:s') , " Create new PHPExcel object" , EOL;
-
-    
-
-
-
     $objPHPExcel = new PHPExcel();
-    
-
-    
-
-
 
     // Set document properties
     echo date('H:i:s') , " Set document properties" , EOL;
@@ -341,14 +327,14 @@
     echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
     
 
-    header('Cache-Control: max-age=0');
+    /*header('Cache-Control: max-age=0');
     // We'll be outputting an excel file
     header('Content-type: application/vnd.ms-excel; charset=utf-8');
 
     // It will be called file.xls
     header('Content-Disposition: attachment; filename="PhanVanThanh.xls"');
     // Write file to the browser
-    $objWriter->save('php://output');
+    $objWriter->save('php://output');*/
     var_dump($objPHPExcel->getActiveSheet()->toArray());
 
 
