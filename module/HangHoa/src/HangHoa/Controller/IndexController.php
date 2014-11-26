@@ -6,6 +6,7 @@
  use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
  use Zend\ServiceManager\ServiceManager;
  use HangHoa\Entity\SanPham;
+ use HangHoa\Entity\CTPhieuNhap;
  use HangHoa\Entity\HoaDon;
  use HangHoa\Entity\CTHoaDon;
  use HangHoa\Form\CreateSanPhamForm;
@@ -13,13 +14,18 @@
  use HangHoa\Form\XuatHoaDonForm;
 
  use HangHoa\Form\CreateNhapHangForm;
-
+ use HangHoa\Form\FileForm;
  use Zend\Validator\File\Size;
 
  use Zend\Stdlib\AbstractOptions;
  
  use S3UTaxonomy\Form\CreateTermTaxonomyForm;
  use PHPExcel;
+ use PHPExcel_IOFactory;
+ use PHPExcel_Cell;
+ use PHPExcel_Cell_DataType;
+ use PHPExcel_Style_Color;
+ use PHPExcel_Style_Fill;
  
  class IndexController extends AbstractActionController
  {
@@ -43,10 +49,13 @@
   public function hangHoaAction()
   {
     $this->layout('layout/giaodien'); 
-    $entityManager=$this->getEntityManager();   
+    $entityManager=$this->getEntityManager();    
+    $form= new FileForm($entityManager);
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
-    return array('sanPhams'=>$sanPhams);
-      
+    return array(
+      'sanPhams'=>$sanPhams,
+      'form'=>$form,
+    );
   }
 
   public function locHangHoaAction()
@@ -215,7 +224,7 @@
     $this->layout('layout/giaodien'); 
 
     $entityManager=$this->getEntityManager();
-    $sanPham=new sanPham();
+    $sanPham=new SanPham();
     $form= new CreateSanPhamForm($entityManager);
     $form->bind($sanPham);
 
@@ -232,11 +241,12 @@
       $post = array_merge_recursive(
               $request->getPost()->toArray(),
               $request->getFiles()->toArray()
-          );
-
-      $form->setData($request->getPost());      
+          ); 
+      //var_dump($sanPham);
+      $form->setData($request->getPost()); 
+      //var_dump($form);
       if ($form->isValid()){
-        //die(var_dump($sanPham->getMaSanPham()));
+        //die(var_dump($sanPham));
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
         $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
@@ -322,7 +332,6 @@
 
     $json = new JsonModel($response);
     return $json;
-
   }
 
   public function searchSanPhamAction()
@@ -353,21 +362,108 @@
     }
     $json = new JsonModel($response);
     return $json;
-  }
+  }  
 
   public function importAction()
   {
     $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();
+    $sanPham=new SanPham();
+    $form= new CreateSanPhamForm($entityManager);
+    $form->bind($sanPham);
 
-    $objPHPExcel = new PHPExcel();
-    $objPHPExcel->setActiveSheetIndex(0)->mergeCells('A1:D1');
-    $objPHPExcel->getActiveSheet()->setCellValue('A1', 'Loan');
-    $objWriter =  new IOFactory;
-    //$objWriter::createWriter($objPHPExcel, 'Excel2007');
-    //$filename = "luukimloan".".xlsx";
-    //$objWriter->save($filename);
-    die(var_dump($objWriter));
+    $request = $this->getRequest();        
+    if($request->isPost())
+    {
+      $post = array_merge_recursive(
+        $request->getPost()->toArray(),
+        $request->getFiles()->toArray()
+      );
+
+      $fileType=$post['file']['type'];     
+      if($fileType=='application/vnd.ms-excel')
+      {
+        $objPHPExcel = new PHPExcel();
+        $tmpName=$post['file']['tmp_name'];
+        $objLoad = PHPExcel_IOFactory::load($tmpName);        
+
+        $listMaSanPham=array();
+
+        foreach ($objLoad->getWorksheetIterator() as $worksheet) {
+            //$worksheetTitle     = $worksheet->getTitle();
+            $highestRow         = $worksheet->getHighestRow(); // e.g. 10
+            $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
+
+            //echo "<br>The worksheet ".$worksheetTitle." has ";
+            //echo $nrColumns . ' columns (A-' . $highestColumn . ') ';
+            //echo ' and ' . $highestRow . ' row.';
+            //echo '<table border="1"><tr>';
+            $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+            for ($row = 2; $row <= $highestRow; ++ $row) {
+                //echo '<tr>';
+                for ($col = 2; $col < $highestColumnIndex; ++ $col) {
+                    
+                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                    if($col==2)
+                    {
+                      $maSanPham = $cell->getValue();
+                    }
+                    if($col==3)
+                    {
+                      $soLuong = $cell->getValue();
+                    }
+                    if($col==4)
+                    {
+                      $giaNhap = $cell->getValue();
+                    }                    
+                }
+                $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
+                $SanPhams = $query->getResult();                    
+                //die(var_dump($maSanPham));
+                if($SanPhams)
+                {
+                  foreach ($SanPhams as $SanPham)
+                  {
+                  //Cập nhật bảng SẢN PHẨM
+                    $tonKho=(int)($SanPham->getTonKho())+$soLuong;
+                    $SanPham->setTonKho($tonKho);
+                    $SanPham->setGiaNhap($giaNhap);
+                    $entityManager->flush();
+
+                  //Cập nhật bảng CHI TIẾT PHIẾU NHẬP
+                    $idSanPham=$SanPham->getIdSanPham();
+                    $query = $entityManager->createQuery('SELECT pn FROM HangHoa\Entity\CTPhieuNhap pn WHERE pn.idSanPham ='.$idSanPham);
+                    $PhieuNhaps = $query->getResult();
+                    foreach ($PhieuNhaps as $PhieuNhap)
+                    {
+                      $PhieuNhap->setSoLuong($soLuong);
+                      $PhieuNhap->setGiaNhap($giaNhap);
+                      $entityManager->flush();                      
+                    }
+                  //Cập nhật bảng 
+
+                  }                  
+                }
+                else
+                {
+                  //lưu lại các mã sản phẩm chưa có trong CSDL->xuất thông báo     
+                  $listMaSanPham[]=$maSanPham;
+                  die(var_dump($listMaSanPham));
+                }                
+            }
+        }
+      }
+      else
+      {
+        //Thông báo File không hợp lệ, quay về trang hàng hóa
+        //return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+      }
+    }
+    else
+    {
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+    }
   }
-  
- }
+
+}
 ?>
