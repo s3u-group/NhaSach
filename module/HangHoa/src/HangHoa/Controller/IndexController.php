@@ -311,8 +311,7 @@
             }
             
           }
-          die(var_dump('stop'));
-
+          
           return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
         }
         else
@@ -433,7 +432,8 @@
         $objLoad = PHPExcel_IOFactory::load($tmpName);        
 
         $listMaSanPham=array();
-
+        $taxonomyLoai=$this->TaxonomyFunction();
+        $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
         foreach ($objLoad->getWorksheetIterator() as $worksheet) {
             //$worksheetTitle     = $worksheet->getTitle();
             $highestRow         = $worksheet->getHighestRow(); // e.g. 10
@@ -485,7 +485,23 @@
                       $PhieuNhap->setGiaNhap($giaNhap);
                       $entityManager->flush();                      
                     }
-                  //Cập nhật bảng 
+                  //Cập nhật bảng GIÁ XUẤT
+                    // đưa vào taxonomy dạng slug
+                    
+                    foreach ($kenhPhanPhois as $kenhPhanPhoi) 
+                    {
+                      if($kenhPhanPhoi['cap']>0)
+                      {
+
+                        $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
+                        $giaXuats = $query->getResult();
+                        foreach ($giaXuats as $giaXuat) {  
+                          $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                          $giaXuat->setGiaXuat($gx);
+                          $entityManager->flush();
+                        }
+                      }
+                    }
 
                   }                  
                 }
