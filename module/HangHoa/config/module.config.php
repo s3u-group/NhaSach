@@ -47,6 +47,14 @@ return array(
         'invokables'=>array(
             'make_array_option_taxonomy'=>'HangHoa\View\Helper\MakeArrayOptionTaxonomy',
         ),
+        'factories'=>array(
+            'in_gia_xuat' => function($sm){
+                $entityManager=$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                $doctrineInGiaXuatHelper=new \HangHoa\View\Helper\InGiaXuat();
+                $doctrineInGiaXuatHelper->setEntityManager($entityManager);
+                return $doctrineInGiaXuatHelper;
+            },
+        ), 
     ),    
 
 	'doctrine' => array(

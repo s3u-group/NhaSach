@@ -196,6 +196,21 @@
                                                     ?>
 		                                        </td>
 		                                    </tr>
+                                            <?php
+                                                foreach ($kenhPhanPhois as $kenhPhanPhoi) 
+                                                {
+                                                    if($kenhPhanPhoi['cap']>0)
+                                                    {
+                                                        echo '<tr>';
+                                                            echo '<td>'.$kenhPhanPhoi['termId']['name'].'</td>';
+                                                            echo '<td>'; 
+                                                                $giaXuat=$this->InGiaXuat($sanPhams->getIdSanPham(),$kenhPhanPhoi['termTaxonomyId']);                                      
+                                                                echo '<input type="text" class="form-control h5a-input" name="'.$kenhPhanPhoi['termTaxonomyId'].'" value="'.$giaXuat.'"/>';
+                                                            echo '</td>';
+                                                        echo '</tr>';
+                                                    }
+                                                }
+                                            ?>
 		                                    <tr>
                                                 <td colspan="2">
                                                     <br>

@@ -134,6 +134,10 @@
      $taxonomyDonViTinh=$this->TaxonomyFunction();
      $donViTinhs=$taxonomyDonViTinh->getListChildTaxonomy('don-vi-tinh');// đưa vào taxonomy dạng slug
 
+     $taxonomyKenhPhanPhoi=$this->TaxonomyFunction();
+     $kenhPhanPhois=$taxonomyKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+
      $request = $this->getRequest();
 
      if($request->isPost())
@@ -145,6 +149,7 @@
         $form->setData($request->getPost());
         if($form->isValid())
         {
+          //die(var_dump($request->getPost()));
           if($post['san-pham']['hinhAnh']['error']==0)
           {
             // xóa bỏ hình củ trong img
@@ -160,6 +165,21 @@
             $filter->filter($post['san-pham']['hinhAnh']);
           }
           $entityManager->flush();
+
+          // sửa giá xuất từng kênh phân phối của sản phẩm
+          foreach ($kenhPhanPhois as $kenhPhanPhoi) 
+          {
+            if($kenhPhanPhoi['cap']>0)
+            {
+              $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham='.$id.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);
+              $giaXuats=$query->getResult();
+              foreach ($giaXuats as $giaXuat)
+              {
+                $giaXuat->setGiaXuat($request->getPost()[$kenhPhanPhoi['termTaxonomyId']]);
+                $entityManager->flush();
+              }                          
+            }
+          }
         }
         else
         {
@@ -171,6 +191,7 @@
        'form' =>$form,
        'donViTinhs'=>$donViTinhs,
        'loais'=>$loais,
+       'kenhPhanPhois'=>$kenhPhanPhois,
      );
 
   }
@@ -642,38 +663,62 @@
 
     $taxonomyLoai=$this->TaxonomyFunction();
     $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
-    $soCot=count($kenhPhanPhois)-1;
-    die(var_dump($soCot));
+    $soCot=count($kenhPhanPhois)+3;// tổng số cột dạng int
+    $soCotAscii=ord($soCot);// tổng cộng số cột dạng ascii
+    $cotCuoiCungAscii=$soCotAscii+16;// cột cuối cùng dạng ascii
+    $cotCuoiCung=chr($cotCuoiCungAscii);// cuột cuối cùng dạng string
 
+    
     $objPHPExcel->getActiveSheet()->setCellValue('A2', 'BẢNG GIÁ');
-    $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
-    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getFont()->setBold(true);
-    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $objPHPExcel->getActiveSheet()->mergeCells('A2:'.$cotCuoiCung.'2');
+    $objPHPExcel->getActiveSheet()->getStyle('A2:'.$cotCuoiCung.'2')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A2:'.$cotCuoiCung.'2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
                                   
-   
+    // xuất giá trị dòng title ra excel tại dòng thứ 4
+    $objPHPExcel->getActiveSheet()->setCellValue('A4', 'Sản phẩm');
+    $objPHPExcel->getActiveSheet()->setCellValue('B4', 'Mã sản phẩm');
+    $objPHPExcel->getActiveSheet()->setCellValue('C4', 'Giá nhập');
+    $objPHPExcel->getActiveSheet()->setCellValue('D4', 'Đơn vị tính');
+    foreach ($kenhPhanPhois as $key=>$kenhPhanPhoi) {
+      if($kenhPhanPhoi['cap']>0)
+      {
+        $sttCot=$key+4;
+        $cotHienTaiAscii=ord($sttCot)+16;
+        $cotHienTai=chr($cotHienTaiAscii);// cột hiện tại dạng string        
+        $objPHPExcel->getActiveSheet()->setCellValue($cotHienTai.'4', $kenhPhanPhoi['termId']['name']);
+      }
+    }
+    $objPHPExcel->getActiveSheet()->getStyle('A4:'.$cotCuoiCung.'4')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A4:'.$cotCuoiCung.'4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-    $objPHPExcel->getActiveSheet()->setCellValue('A4', 'Sản Phẩm')
-                                  ->setCellValue('B4', 'Mã sản phẩm')
-                                  ->setCellValue('C4', 'Tồn kho')
-                                  ->setCellValue('D4', 'Loại')
-                                  ->setCellValue('E4', 'Nhãn hàng')                                  
-                                  ->getStyle('A4:E4')->getFont()->setBold(true);
-    $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
+    // xuất dữ liệu trong csdl ra excel từ dùng số 5 trở đi
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();
     foreach ($sanPhams as $key=>$sanPham) {
-      //die(var_dump($sanPham));
-      $index=$key+5;
-      $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())
-                                    ->setCellValue('B'.$index, $sanPham->getMaSanPham())
-                                    ->setCellValue('C'.$index, $sanPham->getTonKho())
-                                    ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
-                                    ->setCellValue('E'.$index, $sanPham->getNhan());
-      $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+      $sttDong=$key+5;
+      $objPHPExcel->getActiveSheet()->setCellValue('A'.$sttDong, $sanPham->getTenSanPham());
+      $objPHPExcel->getActiveSheet()->setCellValue('B'.$sttDong, $sanPham->getMaSanPham());
+      $objPHPExcel->getActiveSheet()->setCellValue('C'.$sttDong, $sanPham->getGiaNhap());
+      $objPHPExcel->getActiveSheet()->setCellValue('D'.$sttDong, $sanPham->getDonViTinh());
+      foreach ($kenhPhanPhois as $key=>$kenhPhanPhoi) 
+      {
+        if($kenhPhanPhoi['cap']>0)
+        {
+          $sttCot=$key+4;
+          $cotHienTaiAscii=ord($sttCot)+16;
+          $cotHienTai=chr($cotHienTaiAscii);// cột hiện tại dạng string 
+
+          $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham='.$sanPham->getIdSanPham().' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']); 
+          $giaXuats=$query->getResult();
+          if($giaXuats)
+          {
+            $objPHPExcel->getActiveSheet()->setCellValue($cotHienTai.$sttDong, $giaXuats[0]->getGiaXuat());
+          }
+        }
+      }
     }
 
     // Rename worksheet    
-    $objPHPExcel->getActiveSheet()->setTitle('data_hang_hoa');
+    $objPHPExcel->getActiveSheet()->setTitle('data_bang_gia');
     // Set active sheet index to the first sheet, so Excel opens this as the first sheet
     $objPHPExcel->setActiveSheetIndex(0);
     // Save Excel 2007 file
@@ -683,7 +728,7 @@
     $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
     $objWriter->save(str_replace('.php', '.xlsx', $filename));   
 
-    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));                                  
+    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));                                  
 
   }
   
