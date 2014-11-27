@@ -20,6 +20,7 @@ $this->headTitle($title);
         .col-md-2{display: none;}
         h1{display: none;}
         .page-header{display: none;}
+        .an{display: none;}
         .print{display: block; text-align: left;}
         #h5a-container{display: none;}
         .printHoTen {display: block;}
@@ -145,8 +146,8 @@ $this->headTitle($title);
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-1">
                                     <input type="hidden" id="tonKho"/>
-                                    <input type="hidden" id="chietKhau" value="0"/>
-                                    <input type="hidden" id="giaNhap" value="0"/>
+                                    <input type="hidden" id="kenhPhanPhoi" value=""/>
+                                    <input type="hidden" id="giaXuat" value=""/>
                                     <button id="btnThemHang" class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
                                 </div>
                             </div>
@@ -186,6 +187,7 @@ $this->headTitle($title);
                                 <th>Đơn vị tính</th>
                                 <th>Số lượng</th>
                                 <th>Giá xuất</th>
+                                <th class="an" id="btnHuy">Hủy</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -193,7 +195,7 @@ $this->headTitle($title);
                     </table>
                     <div class="row">
                         <div class="col-sm-3">
-                            <button class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button>
+                            <a href=""><button class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
                         </div>
                         <div class="col-sm-3 pull-right">
                             <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button>
@@ -225,6 +227,8 @@ $this->headTitle($title);
             "bAutoWidth": true
         });
 
+        
+
         $('#btnThemHang').click(function(){
             var idKhachhang=$('#idKhachhang').val();
             var tenKhachHang=$('#tenKhachHang').val();
@@ -235,6 +239,11 @@ $this->headTitle($title);
             var soLuong=$('#soLuong').val(); 
             var giaXuat=$('#giaXuat').val();   
             var tonKho=$('#tonKho').val(); 
+            if(idKhachhang==''||tenKhachHang==''||diaChi==''||idSanPham==''||tenHang==''||donViTinh==''||soLuong==''||giaXuat==''||tonKho==''||idKhachhang==null||tenKhachHang==null||diaChi==null||idSanPham==null||tenHang==null||donViTinh==null||soLuong==null||giaXuat==null||tonKho==null)
+            {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return false;
+            }
             if(parseInt(tonKho)<parseInt(soLuong)||parseInt(soLuong)==0||parseInt(tonKho)==0)
             {
                 
@@ -271,6 +280,9 @@ $this->headTitle($title);
                     '<td>'+
                         '<input type="hidden" name="hoa-don&#x5B;ctHoaDons&#x5D;&#x5B;__index__&#x5D;&#x5B;gia&#x5D;" value="'+giaXuat+'">'+
                         '<span>'+giaXuat+'</span>'+
+                    '</td>'+
+                    '<td class="an" style="text-align:left;">'+
+                        '<a class="btnHuy"><img src="<?php echo $this->basePath(); ?>/img/delete.png" width="30px" height="30px"></a>'+
                     '</td>'+
                     '</tr>';
 
@@ -317,7 +329,7 @@ $this->headTitle($title);
                             'z-index': 100 // đặt search-result lên layout ngoài nhất
                         });
                         $.each(data, function(key, val){
-                            $('#search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span><span class="hide">'+val.diaChiKhachHang+'</span><span class="hide">'+val.chietKhau+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
+                            $('#search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span><span class="hide">'+val.diaChiKhachHang+'</span><span class="hide">'+val.kenhPhanPhoi+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
                         })
                     });
                 }
@@ -325,23 +337,25 @@ $this->headTitle($title);
             return false;
         });
 
+        
+
         $('#search-result').on('click', '.list-group-item', function(){
 
             var id = $(this).find('span:eq(0)').text(); 
             var ten = $(this).find('span:eq(1)').text();
             var diaChi = $(this).find('span:eq(2)').text();
-            var chietKhau=$(this).find('span:eq(3)').text();
+            var kenhPhanPhoi=$(this).find('span:eq(3)').text();
 
             $('#idKhachhang').val(id);
             $('#tenKhachHang').val(ten);
             $('#diaChiKhachHang').val(diaChi);
-            $('#chietKhau').val(chietKhau);
+            $('#kenhPhanPhoi').val(kenhPhanPhoi);
 
             $('#search-result').empty();
         });
-//./Hiển thị, chọn khách hàng
+        //./Hiển thị, chọn khách hàng
 
-//Hiển thị, chọn sản phẩm
+        //Hiển thị, chọn sản phẩm
         $('#maHang').keyup(function(){
             var maHang=$(this).val();            
             if(xhr && xhr.readyState != 4){
@@ -356,20 +370,30 @@ $this->headTitle($title);
                     'maHang':maHang
                 },
                 success:function(data){
+                    $('#san-pham-search-result').empty(); //lam rong khung ket qua
+
+                    var pos = $('#maHang').position(); //lấy tọa độ của ô tên sản phẩm
+                    $('#san-pham-search-result').css({
+                        position:'absolute',
+                        top:pos.top + 35,
+                        left:pos.left,
+                        'z-index': 100 // đặt search-result lên layout ngoài nhất
+                    });
                     $.each(data, function(key,val){
-                        $('#san-pham-search-result').empty(); //lam rong khung ket qua
+                            var gx='';
+                            //alert(val.giaXuat[39]);
+                            
+                            $.each(val.giaXuat, function(k, v)
+                            {
+                                if($('#kenhPhanPhoi').val()==k)
+                                {
+                                    gx+='<span class="hide">'+v+'</span>';
+                                }
+                                
+                            });
 
-                        var pos = $('#maHang').position(); //lấy tọa độ của ô tên sản phẩm
-                        $('#san-pham-search-result').css({
-                            position:'absolute',
-                            top:pos.top + 35,
-                            left:pos.left,
-                            'z-index': 100 // đặt search-result lên layout ngoài nhất
-                        });
-
-                        $.each(data, function(key, val){
-                            $('#san-pham-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span class="hide">'+val.tenSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.giaXuat+'</span><span class="hide">'+val.donViTinh+'</span><span class="hide">'+val.tonKho+'</span><span class="hide">'+val.giaNhap+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
-                        })
+                            $('#san-pham-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span class="hide">'+val.tenSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.donViTinh+'</span><span class="hide">'+val.tonKho+'</span>'+gx+'</div>'); // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
+                        
                     });
                 }
             });
@@ -379,19 +403,16 @@ $this->headTitle($title);
         $('#san-pham-search-result').on('click', '.list-group-item', function(){
             var id = $(this).find('span:eq(0)').text();
             var ten = $(this).find('span:eq(1)').text();
-            var ma = $(this).find('span:eq(2)').text();
-            var giaNhap= $(this).find('span:eq(6)').text();
-            var loiNhuan=(giaNhap*$('#chietKhau').val())/100;
-
-            var giaXuat = parseInt(giaNhap)+parseInt(loiNhuan);//$(this).find('span:eq(3)').text();
-            var donViTinh = $(this).find('span:eq(4)').text();
-            var tonKho = $(this).find('span:eq(5)').text();// tồn kho trong cơ sở dữ liệu
+            var ma = $(this).find('span:eq(2)').text();          
+            var donViTinh = $(this).find('span:eq(3)').text();
+            var tonKho = $(this).find('span:eq(4)').text();// tồn kho trong cơ sở dữ liệu
+            
+            var giaXuat= $(this).find('span:eq(5)').text(); 
             
 
             $('#idSanPham').val(id);
             $('#maHang').val(ma);
             $('#tenHang').val(ten);
-            $('#giaNhap').val(giaNhap);
             $('#giaXuat').val(giaXuat);
             $('#donViTinh').val(donViTinh);
             $('#tonKho').val(tonKho);
@@ -402,6 +423,8 @@ $this->headTitle($title);
         });
     });
 //./Hiển thị, chọn sản phẩm
+
+
     </script>
 
     <script>
@@ -421,4 +444,13 @@ $this->headTitle($title);
                 return true;
             }                
         }
+
+    </script>
+    <script>
+        $(document).ready(function(){
+          $(document).on('click', '.btnHuy', function(){
+            $(this).closest('tr').remove();
+            return false;
+          });
+        });
     </script>

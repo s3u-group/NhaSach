@@ -82,10 +82,6 @@
                                                         }                                                        
                                                     }
                                                 ?>
-                                                <!-- <th>Giá điểm bán</th>
-                                                <th>Giá cơ quan</th>
-                                                <th>Giá trường học</th>
-                                                <th>Giá bán lẻ</th> -->
                                             </thead>
                                             <tbody>
                                             <?php
@@ -114,10 +110,8 @@
                                                         if($kenhPhanPhoi['cap']>0)
                                                         {
                                                             echo '<td>';
-                                                                $giaNhap=$sanPham->getGiaNhap();
-                                                                $chietKhau=((float)$kenhPhanPhoi['description']*$giaNhap)/100;
-                                                                $giaXuat=$giaNhap+$chietKhau;
-                                                                if($giaNhap==0)
+                                                                $giaXuat=$this->InGiaXuat($sanPham->getIdSanPham(), $kenhPhanPhoi['termTaxonomyId']);
+                                                                if($sanPham->getGiaNhap()==0)
                                                                 {
                                                                     echo 'Chưa có';
                                                                 }
