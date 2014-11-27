@@ -457,13 +457,13 @@
       if($nhaCungCap)
       {
         $entityManager=$this->getEntityManager();
-        $query = $entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.hoTen LIKE :hoTen');
+        $query = $entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=46 and dt.hoTen LIKE :hoTen');
         $query->setParameter('hoTen','%'.$nhaCungCap.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $nhaCungCaps = $query->getResult(); // array of CmsArticle objects           
         foreach ($nhaCungCaps as $ncc) {
           $response[]=array(
             'idDoiTac'=>$ncc->getIdDoiTac(),
-            'hoTen'=>'ten',
+            'hoTen'=>$ncc->getHoTen(),
           );
         }
       }

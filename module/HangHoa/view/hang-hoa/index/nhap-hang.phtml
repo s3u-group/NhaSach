@@ -7,7 +7,12 @@
      echo $this->form()->openTag($form);
      echo $this->formHidden($form->get('idSanPham'));
      echo $this->formHidden($form->get('donViTinh'));
+     echo $this->formHidden($form->get('idNhaCungCap'));
 ?>
+<style type="text/css">
+    #nha-cung-cap-search-result{ cursor:pointer;}
+    #ma-hang-search-result{ cursor:pointer;}
+</style>
 <div class="container">
         <div class="row">
             <div class="col-md-2">
@@ -100,7 +105,7 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-10 col-sm-offset-1">
-                                    <button id="btnNhapHang" class="btn h5a-btn btn-primary full">Nhập hàng</button>
+                                    <button type="button" id="btnNhapHang" class="btn h5a-btn btn-primary full">Nhập hàng</button>
                                 </div>
                             </div>
                         </div>
@@ -169,6 +174,7 @@
             var soLuong=$('#soLuong').val(); 
             var giaNhap=$('#giaNhap').val();
             var donViTinh=$('#donViTinh').val();
+            alert(idSanPham+' '+maHang+' '+tenHang+' '+soLuong+' '+giaNhap+' '+donViTinh);
 
             var soDong = $('#tbNhapHang > tbody > tr').length;
             var template = '<tr class="price">'+
@@ -219,7 +225,7 @@
                         $('#ma-hang-search-result').css({
                             position:'absolute',
                             top:pos.top + 35,
-                            left:pos.left+170,
+                            left:pos.left+177,
                             'z-index': 100 // đặt search-result lên layout ngoài nhất
                         });
 
@@ -239,7 +245,7 @@
             var ten = $(this).find('span:eq(2)').text();            
             var giaNhap = $(this).find('span:eq(3)').text();
             var donViTinh = $(this).find('span:eq(4)').text();
-
+            alert(ma);
             $('#idSanPham').val(id);
             $('#idMaHang').val(ma);
             $('#tenHang').val(ten);
@@ -274,13 +280,12 @@
                         var pos = $('#nhaCungCap').position(); //lấy tọa độ của ô mã sản phẩm
                         $('#nha-cung-cap-search-result').css({
                             position:'absolute',
-                            top:pos.top + 35,
-                            left:pos.left,
+                            top:pos.top + 109,
+                            left:pos.left+177,
                             'z-index': 100 // đặt search-result lên layout ngoài nhất
                         });
 
                         $.each(data, function(key, val){
-                            alert(val.idDoiTac);
                             $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span></div>');
                         })
                     });
@@ -292,7 +297,7 @@
         $('#nha-cung-cap-search-result').on('click', '.list-group-item', function(){
             var idDoiTac = $(this).find('span:eq(0)').text();
             var hoTen = $(this).find('span:eq(1)').text();
-
+            $('#idNhaCungCap').val(idDoiTac); 
             $('#nhaCungCap').val(hoTen);            
 
             $('#nha-cung-cap-search-result').empty();

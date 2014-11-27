@@ -41,6 +41,13 @@ class CreateNhapHangForm extends Form
             ),
          ));
         $this->add(array(
+             'name' => 'idNhaCungCap',
+             'type' => 'hidden',
+             'attributes'=>array(  
+                'id'=>'idNhaCungCap'            
+            ),
+         ));
+        $this->add(array(
              'name' => 'nhaCungCap',
              'type' => 'Text',             
              'attributes'=>array(
@@ -48,6 +55,7 @@ class CreateNhapHangForm extends Form
                 'class'   => 'h5a-input form-control input-sm',
                 'placeholder'=>'Nhà cung cấp',
                 'id'=>'nhaCungCap',
+                'autocomplete'=>'off',
              ),
          ));
         $this->add(array(
