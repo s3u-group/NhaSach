@@ -196,10 +196,9 @@
   {
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();     
-    $form= new CreateNhapHangForm($entityManager);
-
+    $form= new CreateNhapHangForm($entityManager);    
     return array(       
-       'form' =>$form,
+       'form' =>$form,       
      );
   }
 
@@ -406,9 +405,35 @@
     }
     $json = new JsonModel($response);
     return $json;
+  }
+
+  public function searchNhaCungCapAction()
+  {
+    $response=array();
+    $request=$this->getRequest();
+    if($request->isXmlHttpRequest())
+    {
+      $data=$request->getPost();
+      $nhaCungCap=$data['nhaCungCap'];
+      if($nhaCungCap)
+      {
+        $entityManager=$this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.hoTen LIKE :hoTen');
+        $query->setParameter('hoTen','%'.$nhaCungCap.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $nhaCungCaps = $query->getResult(); // array of CmsArticle objects           
+        foreach ($nhaCungCaps as $ncc) {
+          $response[]=array(
+            'idDoiTac'=>$ncc->getIdDoiTac(),
+            'hoTen'=>'ten',
+          );
+        }
+      }
+    }
+    $json = new JsonModel($response);
+    return $json;
   }  
 
-  public function importAction()
+  public function importHangHoaAction()
   {
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
@@ -508,14 +533,21 @@
                 else
                 {
                   //lưu lại các mã sản phẩm chưa có trong CSDL->xuất thông báo     
-                  $listMaSanPham[]=$maSanPham;
-                  die(var_dump($listMaSanPham));
+                  $listMaSanPham[]=$maSanPham;                  
                 }                
             }
         }
+        return array(
+          'listMaSanPham' => $listMaSanPham,
+          'import'=>1,
+        ); 
       }
       else
       {
+        return array(
+          'listMaSanPham' => array(),
+          'import'=>0,         
+        );
         //Thông báo File không hợp lệ, quay về trang hàng hóa
         //return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
       }

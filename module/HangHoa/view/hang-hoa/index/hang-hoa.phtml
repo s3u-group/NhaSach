@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="btn-group ">                
                                         <?php
-                                            $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'import')));
+                                            $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'importHangHoa')));
                                             $form->setAttribute('role','form');
                                             $form->setAttribute('name','frmImport');
                                             $form->setAttribute('style','margin-top: 0px;margin-bottom:0px;');
@@ -77,7 +77,8 @@
                                             echo $this->formElement($file);
                                             ?>
                                             <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();">Import</button>
-                                            <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'exportHangHoa')); ?>">
+                                            <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                                         <?php
                                             echo $this->form()->closeTag();
                                         ?>

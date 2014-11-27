@@ -6,6 +6,7 @@
      $form->prepare();
      echo $this->form()->openTag($form);
      echo $this->formHidden($form->get('idSanPham'));
+     echo $this->formHidden($form->get('donViTinh'));
 ?>
 <div class="container">
         <div class="row">
@@ -66,6 +67,17 @@
                                     ?>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label class="col-sm-4 right" for="form-field-1">Nhà cung cấp</label>
+                                <div class="col-sm-7">
+                                    <?php                                        
+                                        $nhaCungCap=$form->get('nhaCungCap');       
+                                        echo $this->formElement($nhaCungCap);
+                                    ?>
+                                </div>
+                                <div id="nha-cung-cap-search-result"></div>
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -104,7 +116,7 @@
             <div class="col-md-10">
                 <h1>Danh sách nhập</h1>
                 <div class="box">
-                    <table class="invoice pricelist bottom20">
+                    <table id="tbNhapHang" class="invoice pricelist bottom20">
                         <thead>
                             <th>Sản phẩm</th>
                             <th>Đơn vị tính</th>
@@ -112,12 +124,6 @@
                             <th>Giá nhập</th>
                         </thead>
                         <tbody>
-                            <tr class="price">
-                                <td>Giấy in Lucky 100g</td>
-                                <td>Thùng</td>
-                                <td>125</td>
-                                <td>70.000</td>
-                            </tr>                            
                         </tbody>
                     </table>
                 </div>
@@ -156,10 +162,40 @@
             "bInfo": true,
             "bAutoWidth": true
         });
-        $('#btnNhapHang').click(function(){
+        $('#btnNhapHang').click(function(){            
+            var idSanPham=$('#idSanPham').val();
+            var maHang=$('#maHang').val();
+            var tenHang=$('#tenHang').val();
+            var soLuong=$('#soLuong').val(); 
+            var giaNhap=$('#giaNhap').val();
+            var donViTinh=$('#donViTinh').val();
+
+            var soDong = $('#tbNhapHang > tbody > tr').length;
+            var template = '<tr class="price">'+
+                '<td>'+tenHang+'</td>'+
+                '<td>'+donViTinh+'</td>'+
+                '<td>'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhap&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhap&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
+                    '<span>'+soLuong+'</span>'+
+                '</td>'+
+                '<td>'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhap&#x5D;&#x5B;__index__&#x5D;&#x5B;gia&#x5D;" value="'+giaNhap+'">'+
+                    '<span>'+giaNhap+'</span>'+
+                '</td>'+
+                '</tr>';
+
+                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idKhachhang);
+
+
+            template = template.replace(/__index__/g, soDong);
+            $('#tbNhapHang tbody').append(template);
+
+            return false;
         });
 
         var xhr;
+        var xhr1;
     //Hiển thị, chọn sản phẩm
         $('#idMaHang').keyup(function(){            
             var maHang=$(this).val();            
@@ -167,14 +203,15 @@
                 xhr.abort(); //huy lenh ajax truoc do
             }
 
-            xhr = $.ajax({
+           xhr = $.ajax({
                 url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'searchSanPham')); ?>',
                 type:'POST',
                 dataType:'json',
                 data:{
                     'maHang':maHang
-                },                
-                success:function(data){                    
+                },
+
+                success:function(data){                
                     $.each(data, function(key,val){
                         $('#ma-hang-search-result').empty(); //lam rong khung ket qua
 
@@ -187,7 +224,7 @@
                         });
 
                         $.each(data, function(key, val){
-                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span></div>');
+                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span><span class="hide">'+val.donViTinh+'</span></div>');
                             // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
                         })
                     });
@@ -201,14 +238,66 @@
             var ma = $(this).find('span:eq(1)').text();
             var ten = $(this).find('span:eq(2)').text();            
             var giaNhap = $(this).find('span:eq(3)').text();
+            var donViTinh = $(this).find('span:eq(4)').text();
 
             $('#idSanPham').val(id);
             $('#idMaHang').val(ma);
             $('#tenHang').val(ten);
-            //$('#giaNhap').val(giaNhap);
+            $('#giaNhap').val(giaNhap);
+            $('#donViTinh').val(donViTinh);
 
             $('#ma-hang-search-result').empty();
         });
     //./Hiển thị, chọn sản phẩm
+
+    //Hiển thị, chọn nhà cung cấp
+        $('#nhaCungCap').keyup(function()
+        {
+            var nhaCungCap=$(this).val();            
+            if(xhr1 && xhr1.readyState != 4){
+                xhr1.abort(); //huy lenh ajax truoc do
+            }
+
+            xhr1 = $.ajax({
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'searchNhaCungCap')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'nhaCungCap':nhaCungCap
+                },
+
+                success:function(data){  
+                             
+                    $.each(data, function(key,val){
+                        $('#nha-cung-cap-search-result').empty(); //lam rong khung ket qua
+
+                        var pos = $('#nhaCungCap').position(); //lấy tọa độ của ô mã sản phẩm
+                        $('#nha-cung-cap-search-result').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+
+                        $.each(data, function(key, val){
+                            alert(val.idDoiTac);
+                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span></div>');
+                        })
+                    });
+                }
+            });            
+            return false;
+        });
+
+        $('#nha-cung-cap-search-result').on('click', '.list-group-item', function(){
+            var idDoiTac = $(this).find('span:eq(0)').text();
+            var hoTen = $(this).find('span:eq(1)').text();
+
+            $('#nhaCungCap').val(hoTen);            
+
+            $('#nha-cung-cap-search-result').empty();
+        });
+    //./Hiển thị, chọn nhà cung cấp
+
     });
     </script>
