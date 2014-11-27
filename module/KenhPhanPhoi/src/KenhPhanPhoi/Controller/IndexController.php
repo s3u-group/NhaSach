@@ -132,7 +132,8 @@
             }
             $entityManager->persist($doiTac);
             $entityManager->flush();
-            
+
+            return $this->redirect()->toRoute('kenh_phan_phoi/crud');   
           }          
         }
       }

@@ -388,7 +388,8 @@
             'idKhachHang'=>$khachHang->getIdDoiTac(),
             'tenKhachHang'=>$khachHang->getHoTen(),
             'diaChiKhachHang'=>$khachHang->getDiaChi(),
-            'chietKhau'=>$khachHang->getIdKenhPhanPhoi()->getDescription(),
+            'kenhPhanPhoi'=>$khachHang->getIdKenhPhanPhoi()->getTermTaxonomyId(),
+            //'chietKhau'=>$khachHang->getIdKenhPhanPhoi()->getDescription(),
           );
         }
       }
@@ -412,15 +413,32 @@
         $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham LIKE :maHang');
         $query->setParameter('maHang','%'.$maHang.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $sanPhams = $query->getResult(); // array of CmsArticle objects         
+
+        $pluginKenhPhanPhoi=$this->TaxonomyFunction();
+        $kenhPhanPhois=$pluginKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+          
+
         foreach ($sanPhams as $sanPham) {
 
+          foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+            if($kenhPhanPhoi['cap']>0)
+            {
+              $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham='.$sanPham->getIdSanPham().' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);
+              $giaXuats=$query->getResult();
+              foreach ($giaXuats as $gx) {
+                $giaXuat[$kenhPhanPhoi['termTaxonomyId']]=$gx->getGiaXuat();
+              }
+              
+            }            
+          }
+          $soKenhPhanPhoi=count($giaXuat);
           $response[]=array(
             'idSanPham'=>$sanPham->getIdSanPham(),
             'maHang'=>$sanPham->getMaSanPham(),
             'tenSanPham'=>$sanPham->getTenSanPham(),
-            'giaNhap'=>$sanPham->getGiaNhap(),
             'donViTinh'=>$sanPham->getDonViTinh(),
             'tonKho'=>$sanPham->getTonKho(),
+            'giaXuat'=>$giaXuat,
           );
         }
       }
