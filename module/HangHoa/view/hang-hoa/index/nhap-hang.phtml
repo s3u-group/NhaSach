@@ -56,9 +56,8 @@
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
                                 <div class="col-sm-7">                                    
-                                    <?php                                    
-                                        $maSanPham=$form->get('maHang');
-                                        echo $this->formElement($maSanPham);        
+                                    <?php
+                                        echo $this->formElement($form->get('maHang'));
                                     ?>
                                 </div>
                                 <div id="ma-hang-search-result"></div>
@@ -66,9 +65,8 @@
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
                                 <div class="col-sm-7">                                    
-                                    <?php                                    
-                                        $tenSanPham=$form->get('tenHang');         
-                                        echo $this->formElement($tenSanPham);
+                                    <?php
+                                        echo $this->formElement($form->get('tenHang'));
                                     ?>
                                 </div>
                             </div>
@@ -76,9 +74,8 @@
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-1">Nhà cung cấp</label>
                                 <div class="col-sm-7">
-                                    <?php                                        
-                                        $nhaCungCap=$form->get('nhaCungCap');       
-                                        echo $this->formElement($nhaCungCap);
+                                    <?php
+                                        echo $this->formElement($form->get('nhaCungCap'));
                                     ?>
                                 </div>
                                 <div id="nha-cung-cap-search-result"></div>
@@ -88,18 +85,16 @@
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
                                 <div class="col-sm-7">                                    
-                                    <?php                                    
-                                        $soLuong=$form->get('soLuong');
-                                        echo $this->formElement($soLuong);
+                                    <?php
+                                        echo $this->formElement($form->get('soLuong'));
                                     ?>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
                                 <div class="col-sm-7">                                    
-                                    <?php                                    
-                                        $giaNhap=$form->get('giaNhap');
-                                        echo $this->formElement($giaNhap);
+                                    <?php
+                                        echo $this->formElement($form->get('giaNhap'));
                                     ?>
                                 </div>
                             </div>
