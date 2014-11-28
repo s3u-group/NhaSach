@@ -66,13 +66,13 @@
                                     <b>Họ tên: </b>
                                 </td>
                                 <td>                                    
-                                    <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
+                                    <?php echo $phieuNhap->getIdDoiTac()->getHoTen(); ?>
                                 </td>
                                 <td>
                                     <b>Địa chỉ: </b>
                                 </td>
                                 <td>
-                                    <?php echo $hoaDon->getIdDoiTac()->getDiaChi(); ?>
+                                    <?php echo $phieuNhap->getIdDoiTac()->getDiaChi(); ?>
                                 </td>
                             </tr>
                             <tr>
@@ -80,15 +80,15 @@
                                     <b>Di động:</b> 
                                 </td>
                                 <td>
-                                    <?php echo $hoaDon->getIdDoiTac()->getDiDong(); ?>
+                                    <?php echo $phieuNhap->getIdDoiTac()->getDiDong(); ?>
                                 </td>
                                 <td>
                                     <b>Điện thoại cố định: </b>
                                 </td>
                                 <td>
                                     <?php 
-                                        if($hoaDon->getIdDoiTac()->getDienThoaiCoDinh()!=0)
-                                            echo $hoaDon->getIdDoiTac()->getDienThoaiCoDinh(); 
+                                        if($phieuNhap->getIdDoiTac()->getDienThoaiCoDinh()!=0)
+                                            echo $phieuNhap->getIdDoiTac()->getDienThoaiCoDinh(); 
 
                                     ?>
                                 </td>
@@ -98,7 +98,7 @@
                                     <b>Email:  </b>
                                 </td>
                                 <td>
-                                    <?php echo $hoaDon->getIdDoiTac()->getEmail(); ?>
+                                    <?php echo $phieuNhap->getIdDoiTac()->getEmail(); ?>
                                 </td>
                                 <td>
                                     
@@ -110,7 +110,7 @@
                         </table>
                     </div>
                     <div>
-                        <h2>Chi tiết đơn hàng</h2>
+                        <h2>Chi tiết phiếu nhập</h2>
                     </div>
                     
                     <div class="box">                        
@@ -129,13 +129,13 @@
                                             <tbody>
                                                 
                                             <?php
-                                            foreach ($chiTietHoaDons as $chiTietHoaDon) {
+                                            foreach ($chiTietPhieuNhaps as $chiTietPhieuNhap) {
                                                 echo '<tr>';
                                                     echo '<td><input type="checkbox"/></td>';
-                                                    echo '<td><a href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a></td>';
-                                                    echo '<td>'.$chiTietHoaDon->getGia().'</td>';
-                                                    echo '<td>'.$chiTietHoaDon->getSoLuong().'</td>';
-                                                    echo '<td>'.$chiTietHoaDon->getGia()*$chiTietHoaDon->getSoLuong().'</td>';
+                                                    echo '<td><a href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietPhieuNhap->getIdSanPham()->getIdSanPham())).'">'.$chiTietPhieuNhap->getIdSanPham()->getTenSanPham().'</a></td>';
+                                                    echo '<td>'.$chiTietPhieuNhap->getGiaNhap().'</td>';
+                                                    echo '<td>'.$chiTietPhieuNhap->getSoLuong().'</td>';
+                                                    echo '<td>'.$chiTietPhieuNhap->getGiaNhap()*$chiTietPhieuNhap->getSoLuong().'</td>';
                                                 echo '</tr>';
                                             }
                                             ?>

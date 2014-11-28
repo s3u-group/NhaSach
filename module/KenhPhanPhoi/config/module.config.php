@@ -53,6 +53,13 @@ return array(
                 $doctrineKenhPhanPhoiHelper->setEntityManager($entityManager);
                 return $doctrineKenhPhanPhoiHelper;
             },
+
+            'get_so_phieu_nhap_va_phieu_nhap_moi_nhat' => function($sm){
+                $entityManager=$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                $doctrineKenhPhanPhoiHelper=new \KenhPhanPhoi\View\Helper\GetSoPhieuNhapVaPhieuNhapMoiNhat();
+                $doctrineKenhPhanPhoiHelper->setEntityManager($entityManager);
+                return $doctrineKenhPhanPhoiHelper;
+            },
         ), 
         
     ),     

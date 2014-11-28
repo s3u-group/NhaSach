@@ -80,7 +80,7 @@
 		// loại đối tác: 45 là khách hàng
 		// loại đối tác: 46 là nhà cung cấp
 		/**
-		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy", cascade={"persist", "remove"})
 		* @ORM\JoinColumn(name="loai_doi_tac", referencedColumnName="term_taxonomy_id")
 		*/
 		private $loaiDoiTac;

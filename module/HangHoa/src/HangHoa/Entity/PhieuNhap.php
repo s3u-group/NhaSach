@@ -23,7 +23,7 @@
 		private $idPhieuNhap;
 
 		/**
-		* @ORM\Column(name="ma_phieu_nhap", length=9)
+		* @ORM\Column(name="ma_phieu_nhap", type="text")
 		*/
 		private $maPhieuNhap;
 

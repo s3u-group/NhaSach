@@ -50,17 +50,20 @@
 
  	}
 
- 	public function donHangAction()
- 	{
-    	$this->layout('layout/giaodien');
-      
+  // đã sửa tên biến
+  public function nhaCungCapAction()
+  {
+    $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();
+    $doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->findAll(); 
 
- 	}
+    return array(
+      'doiTacs'=>$doiTacs,
+    );
 
- 	public function doanhThuAction()
- 	{
-    	$this->layout('layout/giaodien');
- 	}
+  }
+
+
 
   public function chiTietDonHangAction()
   {
@@ -77,6 +80,24 @@
       return array(
         'chiTietHoaDons'=>$chiTietHoaDons,
         'hoaDon'=>$hoaDon,
+      );
+  }
+
+  // đã sửa tên biến
+  public function chiTietPhieuNhapAction()
+  {
+      $this->layout('layout/giaodien');
+      $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+           return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));
+      }  
+      $entityManager=$this->getEntityManager();
+      $phieuNhap=$entityManager->getRepository('HangHoa\Entity\PhieuNhap')->find($id);
+      $query=$entityManager->createQuery('SELECT cthd FROM HangHoa\Entity\CTPhieuNhap cthd WHERE cthd.idPhieuNhap='.$phieuNhap->getIdPhieuNhap());
+      $chiTietPhieuNhaps=$query->getResult();
+      return array(
+        'chiTietPhieuNhaps'=>$chiTietPhieuNhaps,
+        'phieuNhap'=>$phieuNhap,
       );
   }
 
@@ -103,7 +124,7 @@
         $form->setData($request->getPost());      
         if ($form->isValid())
         {
-          $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.hoTen=\''.$doiTac->getHoTen().'\' and kh.diaChi=\''.$doiTac->getDiaChi().'\'');
+          $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.email=\''.$doiTac->getEmail().'\'');
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
           {
@@ -145,9 +166,276 @@
 
  	}
 
-  public function khachHangAction()
+  //đã sửa tên biến
+  public function themNhaCungCapAction()
   {
       $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
+
+      $doiTac=new DoiTac();
+      $form= new ThemKhachHangForm($entityManager);
+      $form->bind($doiTac);
+
+      $taxonomyFunction=$this->TaxonomyFunction();
+      $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+
+      $request = $this->getRequest();
+      if($request->isPost())
+      {
+        $post = array_merge_recursive(
+              $request->getPost()->toArray(),
+              $request->getFiles()->toArray()
+        );
+        $form->setData($request->getPost());      
+        if ($form->isValid())
+        {
+          $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.hoTen=\''.$doiTac->getHoTen().'\'');
+          $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
+          if($ktDoiTac)
+          {
+            return array(
+              'form' => $form, 
+              'kenhPhanPhois'=>$kenhPhanPhois,
+              'ktTonTaiNhaCungCap'=>1,
+            ); 
+          }
+          else
+          {
+            if($post['khach-hang']['hinhAnh']['error']==0)
+            {
+              // tạo lại tên mới
+              $uniqueToken=md5(uniqid(mt_rand(),true));
+              $newName=$uniqueToken.'_'.$post['khach-hang']['hinhAnh']['name'];
+              // lưu vào cơ sở dữ liệu với tên hình là tên vừa tạo ở trên
+              $doiTac->setHinhAnh($newName);
+              // di chuyển hình ảnh vào img            
+              $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+              $filter->filter($post['khach-hang']['hinhAnh']);
+            }
+            if(!$doiTac->getHinhAnh())
+            {
+              $doiTac->setHinhAnh('photo_default.png');
+            }
+            
+            $entityManager->persist($doiTac);
+            $entityManager->flush();
+            return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));   
+          }          
+        }
+      }
+      return array(
+        'form' => $form, 
+        'kenhPhanPhois'=>$kenhPhanPhois,
+        'ktTonTaiNhaCungCap'=>0,
+      ); 
+
+  }
+
+
+  public function chiTietKhachHangAction()
+  {
+
+      $this->layout('layout/giaodien');
+      $id=(int)$this->params()->fromRoute('id',0);
+      if(!$id)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+      }
+      $entityManager=$this->getEntityManager();      
+      $query=$entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.idDoiTac='.$id.' and kh.loaiDoiTac=45');
+      $khachHangs=$query->getResult();
+      // nếu id khách hàng này không tồn tại
+      if(!$khachHangs)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+      }
+      $taxonomyFunction=$this->TaxonomyFunction();
+      $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+
+      $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.idDoiTac='.$id);
+      $lichSuGiaoDichs=$query->getResult();
+
+      $khachHang=$khachHangs[0];
+      $form= new ThemKhachHangForm($entityManager);
+      $form->bind($khachHang);
+
+
+      $request=$this->getRequest();
+      if($request->isPost())
+      {
+        $post = array_merge_recursive(
+              $request->getPost()->toArray(),
+              $request->getFiles()->toArray()
+          ); 
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+          $query=$entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.loaiDoiTac=45 and kh.email=\''.$khachHang->getEmail().'\'');
+          $ktKhachHang=$query->getResult();
+          if(!$ktKhachHang||($ktKhachHang&&$ktKhachHang[0]->getIdDoiTac()==$khachHang->getIdDoiTac()))
+          {
+            if ($post['khach-hang']['hinhAnh']['error']==0) {
+              $uniqueToken=md5(uniqid(mt_rand(),true));          
+              $newName=$uniqueToken.'_'.$post['khach-hang']['hinhAnh']['name'];
+              $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+              $filter->filter($post['khach-hang']['hinhAnh']);
+              $khachHang->setHinhAnh($newName);
+            }   
+            $entityManager->flush();
+          }        
+          else
+          {
+            $khachHang->setHoTen($request->getPost()['hoTenTruoc']);
+            return array(
+              'form'=>$form,
+              'khachHang'=>$khachHang,
+              'kenhPhanPhois'=>$kenhPhanPhois,
+              'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+              'coKiemTraTrung'=>1,
+            );
+          }
+        }       
+        
+      }
+
+      return array(
+        'form'=>$form,
+        'khachHang'=>$khachHang,
+        'kenhPhanPhois'=>$kenhPhanPhois,
+        'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+        'coKiemTraTrung'=>0,
+      );
+  }
+
+
+  // đã sửa tên biến
+  public function chiTietNhaCungCapAction()
+  {
+
+      $this->layout('layout/giaodien');
+      $id=(int)$this->params()->fromRoute('id',0);
+      if(!$id)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
+      }
+      $entityManager=$this->getEntityManager();      
+      $query=$entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.idDoiTac='.$id.' and kh.loaiDoiTac=46');
+      $khachHangs=$query->getResult();
+      // nếu id khách hàng này không tồn tại
+      if(!$khachHangs)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
+      }
+      $taxonomyFunction=$this->TaxonomyFunction();
+      $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+
+      $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.idDoiTac='.$id);
+      $lichSuGiaoDichs=$query->getResult();
+
+      $nhaCungCap=$khachHangs[0];
+      $form= new ThemKhachHangForm($entityManager);
+      $form->bind($nhaCungCap);
+
+
+      $request=$this->getRequest();
+      if($request->isPost())
+      {
+        //die(var_dump($request->getPost()['hoTenTruoc']));
+        $post = array_merge_recursive(
+              $request->getPost()->toArray(),
+              $request->getFiles()->toArray()
+          ); 
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+          $query=$entityManager->createQuery('SELECT ncc FROM HangHoa\Entity\DoiTac ncc WHERE ncc.loaiDoiTac=46 and ncc.hoTen=\''.$nhaCungCap->getHoTen().'\'');
+          $ktNhaCungCap=$query->getResult();
+          if(!$ktNhaCungCap||($ktNhaCungCap&&$ktNhaCungCap[0]->getIdDoiTac()==$nhaCungCap->getIdDoiTac()))
+          {
+
+            if ($post['khach-hang']['hinhAnh']['error']==0) 
+            {
+              $uniqueToken=md5(uniqid(mt_rand(),true));          
+              $newName=$uniqueToken.'_'.$post['khach-hang']['hinhAnh']['name'];
+              $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+              $filter->filter($post['khach-hang']['hinhAnh']);
+              $nhaCungCap->setHinhAnh($newName);
+            }   
+            $entityManager->flush();
+          }  
+          else
+          {
+            $nhaCungCap->setHoTen($request->getPost()['hoTenTruoc']);
+            return array(
+              'form'=>$form,
+              'nhaCungCap'=>$nhaCungCap,
+              'kenhPhanPhois'=>$kenhPhanPhois,
+              'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+              'coKiemTraTrung'=>1,
+            );
+
+          }
+
+        }       
+        
+      }
+      
+      return array(
+        'form'=>$form,
+        'nhaCungCap'=>$nhaCungCap,
+        'kenhPhanPhois'=>$kenhPhanPhois,
+        'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+        'coKiemTraTrung'=>0,
+      );
+  }
+
+  public function xoaKhachHangAction()
+  {
+      $this->layout('layout/giaodien');
+      $id=(int)$this->params()->fromRoute('id',0);
+      if(!$id)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+      }
+      $entityManager=$this->getEntityManager();
+      $doiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
+      if(!$doiTac)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+      }
+
+      $loaiDoiTac=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(0);
+      $doiTac->setLoaiDoiTac($loaiDoiTac);
+      $entityManager->flush();
+      return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+
+  }
+
+
+  // sửa tên biến
+  public function xoaNhaCungCapAction()
+  {
+      $this->layout('layout/giaodien');
+      $id=(int)$this->params()->fromRoute('id',0);
+      if(!$id)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+      }
+      $entityManager=$this->getEntityManager();
+      $doiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
+      if(!$doiTac)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
+      }
+
+      $loaiDoiTac=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(0);
+      $doiTac->setLoaiDoiTac($loaiDoiTac);
+      $entityManager->flush();
+      return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
+
   }
 
 
@@ -355,6 +643,20 @@
       'endcolor'   => array('rgb' => $color),
       ));
     }
+
+
+
+  public function donHangAction()
+  {
+      $this->layout('layout/giaodien');
+      
+
+  }
+
+  public function doanhThuAction()
+  {
+      $this->layout('layout/giaodien');
+  }
 
   }
 
