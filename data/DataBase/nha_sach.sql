@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Client :  127.0.0.1
--- Généré le :  Mer 19 Novembre 2014 à 08:31
+-- Généré le :  Ven 28 Novembre 2014 à 07:21
 -- Version du serveur :  5.6.17
 -- Version de PHP :  5.5.12
 
@@ -82,16 +82,17 @@ CREATE TABLE IF NOT EXISTS `doi_tac` (
   `ho_ten` varchar(100) NOT NULL,
   `dia_chi` varchar(255) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
-  `state` smallint(6) DEFAULT NULL,
   `mo_ta` longtext,
   `dien_thoai_co_dinh` int(11) DEFAULT NULL,
   `di_dong` int(11) DEFAULT NULL,
   `hinh_anh` varchar(255) DEFAULT NULL,
   `website` varchar(255) DEFAULT NULL,
   `twitter` varchar(255) DEFAULT NULL,
-  `loai_doi_tac` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id_doi_tac`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+  `loai_doi_tac` bigint(20) DEFAULT NULL,
+  `id_kenh_phan_phoi` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id_doi_tac`),
+  KEY `fk_doitac_zf_term_taxonomy` (`loai_doi_tac`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 -- --------------------------------------------------------
 
@@ -101,11 +102,12 @@ CREATE TABLE IF NOT EXISTS `doi_tac` (
 
 CREATE TABLE IF NOT EXISTS `gia_xuat` (
   `id_gia_xuat` int(11) NOT NULL AUTO_INCREMENT,
-  `id_san_pham` int(11) NOT NULL,
+  `id_san_pham` int(11) DEFAULT NULL,
   `gia_xuat` float NOT NULL,
-  `id_kenh_phan_phoi` int(11) NOT NULL,
+  `id_kenh_phan_phoi` bigint(20) NOT NULL,
   PRIMARY KEY (`id_gia_xuat`),
-  KEY `fk_giaxuat_sanpham` (`id_san_pham`)
+  KEY `fk_giaxuat_sanpham` (`id_san_pham`),
+  KEY `fk_gia_xuat_term_taxonomy` (`id_kenh_phan_phoi`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -119,7 +121,7 @@ CREATE TABLE IF NOT EXISTS `hoa_don` (
   `ma_hoa_don` char(6) NOT NULL,
   `ngay_xuat` date NOT NULL,
   `id_doi_tac` int(11) NOT NULL,
-  `id_user_nv` int(11) NOT NULL,
+  `id_user_nv` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_hoa_don`),
   KEY `fk_hoadon_doitac` (`id_doi_tac`),
   KEY `fk_hoadon_user` (`id_user_nv`)
@@ -156,7 +158,7 @@ CREATE TABLE IF NOT EXISTS `phieu_nhap` (
   PRIMARY KEY (`id_phieu_nhap`),
   KEY `fk_phieunhap_user` (`id_user_nv`),
   KEY `fk_phieunhap_doitac` (`id_doi_tac`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
@@ -190,10 +192,11 @@ CREATE TABLE IF NOT EXISTS `san_pham` (
   `id_don_vi_tinh` bigint(20) NOT NULL,
   `id_loai` bigint(20) NOT NULL,
   `ton_kho` float NOT NULL,
+  `gia_nhap` float NOT NULL,
   PRIMARY KEY (`id_san_pham`),
   KEY `fk_sanpham_termtaxonomy` (`id_don_vi_tinh`),
   KEY `fk_sanpham_zftermtaxonomy` (`id_loai`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
 
 -- --------------------------------------------------------
 
@@ -220,7 +223,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Contenu de la table `user`
+--
+
+INSERT INTO `user` (`user_id`, `username`, `password`, `display_name`, `hoten`, `dia_chi`, `email`, `state`, `mo_ta`, `dien_thoai_co_dinh`, `di_dong`, `hinh_anh`, `website`, `twitter`, `loai_tai_khoan`) VALUES
+(1, 'phanvanthanh', 'fasdf', 'Phan Van Thanh', 'Phan Van Thanh', 'Cau ke', 'phanvanthanhda10tt@gmail.com', 0, 'fnmdfasdf', 74, 1699580585, 'photo_default.png', NULL, NULL, 48);
 
 -- --------------------------------------------------------
 
@@ -269,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `zf_term` (
   `slug` varchar(200) DEFAULT NULL,
   `term_group` bigint(10) DEFAULT NULL,
   PRIMARY KEY (`term_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
 
 --
 -- Contenu de la table `zf_term`
@@ -284,38 +294,24 @@ INSERT INTO `zf_term` (`term_id`, `name`, `slug`, `term_group`) VALUES
 (7, 'Lá»', 'lo', 0),
 (8, 'Danh Má»¥c HÃ ng HÃ³a', 'danh-muc-hang-hoa', 0),
 (9, 'Dá»¤NG Cá»¤ Há»ŒC SINH', 'dung-cu-hoc-sinh', 0),
-(10, 'Táº­p há»c', 'tap-hoc', 0),
-(11, 'Viáº¿t', 'viet', 0),
-(12, 'Dá»¥ng cá»¥', 'dung-cu', 0),
-(13, 'MÃ¡y tÃ­nh há»c sinh', 'may-tinh-hoc-sinh', 0),
 (14, 'VÄ‚N PHÃ’NG PHáº¨M', 'van-phong-pham', 0),
-(15, 'Giáº¥y in', 'giay-in', 0),
-(16, 'BÄƒng keo', 'bang-keo', 0),
-(17, 'File Ä‘á»±ng há»“ sÆ¡', 'file-dung-ho-so', 0),
-(18, 'Dá»¥ng cá»¥ vÄƒn phÃ²ng', 'dung-cu-van-phong', 0),
 (19, 'THIáº¾T Bá»Š TRÆ¯á»œNG Há»ŒC', 'thiet-bi-truong-hoc', 0),
-(20, 'Máº§m non', 'mam-non', 0),
-(21, 'Tiá»ƒu há»c', 'tieu-hoc', 0),
-(22, 'Cáº¥p 2', 'cap-2', 0),
-(23, 'Cáº¥p 3', 'cap-3', 0),
 (24, 'SÃCH GIÃO KHOA', 'sach-giao-khoa', 0),
-(25, 'Lá»›p 1', 'lop-1', 0),
-(26, 'Lá»›p 2', 'lop-2', 0),
-(27, 'Lá»›p 3', 'lop-3', 0),
-(28, 'Lá»›p 4', 'lop-4', 0),
-(29, 'Lá»›p 5', 'lop-5', 0),
-(30, 'Lá»›p 6', 'lop-6', 0),
-(31, 'Lá»›p 7', 'lop-7', 0),
-(32, 'Lá»›p 8', 'lop-8', 0),
-(33, 'Lá»›p 9', 'lop-9', 0),
-(34, 'Lá»›p 10', 'lop-10', 0),
-(35, 'Lá»›p 11', 'lop-11', 0),
-(36, 'Lá»›p 12', 'lop-12', 0),
 (37, 'SÃCH THAM KHáº¢O', 'sach-tham-khao', 0),
-(38, 'STK Máº§m non', 'stk-mam-non', 0),
-(39, 'STK Tiáº¿u há»c', 'stk-tieu-hoc', 0),
-(40, 'STK Cáº¥p 2', 'stk-cap-2', 0),
-(41, 'STK Cáº¥p 3', 'stk-cap-3', 0);
+(38, 'KÃªnh phÃ¢n phá»‘i', 'kenh-phan-phoi', 0),
+(39, 'Äiá»ƒm bÃ¡n', 'diem-ban', 0),
+(40, 'TrÆ°á»ng há»c', 'truong-hoc', 0),
+(41, 'CÆ¡ quan', 'co-quan', 0),
+(42, 'Cá»­a hÃ ng', 'cua-hang', 0),
+(43, 'BÃ¡n láº½', 'ban-le', 0),
+(44, 'Äá»‘i tÃ¡c', 'doi-tac', 0),
+(45, 'KhÃ¡ch hÃ ng', 'khach-hang', 0),
+(46, 'NhÃ  cung cáº¥p', 'nha-cung-cap', 0),
+(47, 'Loáº¡i TÃ i Khoan', 'loai-tai-khoan', 0),
+(48, 'NhÃ¢n viÃªn há»‡ thá»‘ng', 'nhan-vien-he-thong', 0),
+(49, 'NhÃ¢n viÃªn giang hÃ ng', 'nhan-vien-giang-hang', 0),
+(50, 'Cuá»‘n', 'cuon', 0),
+(51, 'KhÃ´ng hoáº¡t Ä‘á»™ng', 'khong-hoat-dong', 0);
 
 -- --------------------------------------------------------
 
@@ -333,13 +329,14 @@ CREATE TABLE IF NOT EXISTS `zf_term_taxonomy` (
   PRIMARY KEY (`term_taxonomy_id`),
   KEY `term_id` (`term_id`),
   KEY `parent` (`parent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=42 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=51 ;
 
 --
 -- Contenu de la table `zf_term_taxonomy`
 --
 
 INSERT INTO `zf_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `description`, `parent`, `count`) VALUES
+(0, 51, 'doi-tac', 'Äá»‘i tÃ¡c thuá»™c loáº¡i nÃ y lÃ  Ä‘á»‘i tÃ¡c Ä‘Ã£ bá»‹ xÃ³a', 44, NULL),
 (1, 1, 'don-vi-tinh', 'Taxonomy', NULL, NULL),
 (3, 3, 'don-vi-tinh', 'Sáº£n pháº©m dáº¡ng thÃ¹ng', 1, NULL),
 (4, 4, 'don-vi-tinh', 'Sáº£n pháº©m dáº¡ng cÃ¢y nhÆ°: cÃ¢y viáº¿t, cÃ¢y thÆ°á»›c...', 1, NULL),
@@ -348,38 +345,23 @@ INSERT INTO `zf_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `desc
 (7, 7, 'don-vi-tinh', 'Sáº£n pháº©m thuá»™c dáº¡ng lá» nhÆ°: lá» má»±c...', 1, NULL),
 (8, 8, 'danh-muc-hang-hoa', 'Taxonomy', NULL, NULL),
 (9, 9, 'danh-muc-hang-hoa', 'Dá»¤NG Cá»¤ Há»ŒC SINH', 8, NULL),
-(10, 10, 'danh-muc-hang-hoa', 'Táº­p há»c', 9, NULL),
-(11, 11, 'danh-muc-hang-hoa', 'CÃ¢y viáº¿t', 9, NULL),
-(12, 12, 'danh-muc-hang-hoa', 'Dá»¥ng cá»¥', 9, NULL),
-(13, 13, 'danh-muc-hang-hoa', 'MÃ¡y tÃ­nh há»c sinh', 9, NULL),
 (14, 14, 'danh-muc-hang-hoa', 'VÄ‚N PHÃ’NG PHáº¨M', 8, NULL),
-(15, 15, 'danh-muc-hang-hoa', 'Giáº¥y in', 14, NULL),
-(16, 16, 'danh-muc-hang-hoa', 'BÄƒng keo', 14, NULL),
-(17, 17, 'danh-muc-hang-hoa', 'File Ä‘á»±ng há»“ sÆ¡', 14, NULL),
-(18, 18, 'danh-muc-hang-hoa', 'Dá»¥ng cá»¥ vÄƒn phÃ²ng', 14, NULL),
 (19, 19, 'danh-muc-hang-hoa', 'THIáº¾T Bá»Š TRÆ¯á»œNG Há»ŒC', 8, NULL),
-(20, 20, 'danh-muc-hang-hoa', 'Máº§n non', 19, NULL),
-(21, 21, 'danh-muc-hang-hoa', 'Tiá»ƒu há»c', 19, NULL),
-(22, 22, 'danh-muc-hang-hoa', 'Cáº¥p 2', 19, NULL),
-(23, 23, 'danh-muc-hang-hoa', 'Cáº¥p 3', 19, NULL),
 (24, 24, 'danh-muc-hang-hoa', 'SÃCH GIÃO KHOA', 8, NULL),
-(25, 25, 'danh-muc-hang-hoa', 'Lá»›p 1', 24, NULL),
-(26, 26, 'danh-muc-hang-hoa', 'Lá»›p 2', 24, NULL),
-(27, 27, 'danh-muc-hang-hoa', 'Lá»›p 3', 24, NULL),
-(28, 28, 'danh-muc-hang-hoa', 'Lá»›p 4', 24, NULL),
-(29, 29, 'danh-muc-hang-hoa', 'Lá»›p 5', 24, NULL),
-(30, 30, 'danh-muc-hang-hoa', 'Lá»›p 6', 24, NULL),
-(31, 31, 'danh-muc-hang-hoa', 'Lá»›p 7', 24, NULL),
-(32, 32, 'danh-muc-hang-hoa', 'Lá»›p 8', 24, NULL),
-(33, 33, 'danh-muc-hang-hoa', 'Lá»›p 9', 24, NULL),
-(34, 34, 'danh-muc-hang-hoa', 'Lá»›p 10', 24, NULL),
-(35, 35, 'danh-muc-hang-hoa', 'Lá»›p 11', 24, NULL),
-(36, 36, 'danh-muc-hang-hoa', 'Lá»›p 12', 24, NULL),
 (37, 37, 'danh-muc-hang-hoa', 'SÃCH THAM KHáº¢O', 8, NULL),
-(38, 38, 'danh-muc-hang-hoa', 'STK Máº§m non', 37, NULL),
-(39, 39, 'danh-muc-hang-hoa', 'STK Tiáº¿u há»c', 37, NULL),
-(40, 40, 'danh-muc-hang-hoa', 'STK Cáº¥p 2', 37, NULL),
-(41, 41, 'danh-muc-hang-hoa', 'STK Cáº¥p 3', 37, NULL);
+(38, 38, 'kenh-phan-phoi', 'Taxonomy', NULL, NULL),
+(39, 39, 'kenh-phan-phoi', '5', 38, NULL),
+(40, 40, 'kenh-phan-phoi', '10', 38, NULL),
+(41, 41, 'kenh-phan-phoi', '15', 38, NULL),
+(42, 42, 'kenh-phan-phoi', '20', 38, NULL),
+(43, 43, 'kenh-phan-phoi', '25', 38, NULL),
+(44, 44, 'doi-tac', 'Taxonomy', NULL, NULL),
+(45, 45, 'doi-tac', 'KhÃ¡c hÃ ng', 44, NULL),
+(46, 46, 'doi-tac', 'NhÃ  cung cáº¥p', 44, NULL),
+(47, 47, 'loai-tai-khoan', 'Taxonomy', NULL, NULL),
+(48, 48, 'loai-tai-khoan', 'NhÃ¢n viÃªn há»‡ thá»‘ng', 47, NULL),
+(49, 49, 'loai-tai-khoan', 'NhÃ¢n viÃªn giang hÃ ng', 47, NULL),
+(50, 50, 'don-vi-tinh', 'Cuá»‘n sÃ¡ch', 1, NULL);
 
 --
 -- Contraintes pour les tables exportées
@@ -406,10 +388,17 @@ ALTER TABLE `ct_phieu_nhap`
   ADD CONSTRAINT `fk_ctphieunhap_sanpham` FOREIGN KEY (`id_san_pham`) REFERENCES `san_pham` (`id_san_pham`);
 
 --
+-- Contraintes pour la table `doi_tac`
+--
+ALTER TABLE `doi_tac`
+  ADD CONSTRAINT `fk_doitac_zf_term_taxonomy` FOREIGN KEY (`loai_doi_tac`) REFERENCES `zf_term_taxonomy` (`term_taxonomy_id`);
+
+--
 -- Contraintes pour la table `gia_xuat`
 --
 ALTER TABLE `gia_xuat`
-  ADD CONSTRAINT `fk_giaxuat_sanpham` FOREIGN KEY (`id_san_pham`) REFERENCES `san_pham` (`id_san_pham`);
+  ADD CONSTRAINT `fk_giaxuat_sanpham` FOREIGN KEY (`id_san_pham`) REFERENCES `san_pham` (`id_san_pham`),
+  ADD CONSTRAINT `fk_gia_xuat_term_taxonomy` FOREIGN KEY (`id_kenh_phan_phoi`) REFERENCES `zf_term_taxonomy` (`term_taxonomy_id`);
 
 --
 -- Contraintes pour la table `hoa_don`

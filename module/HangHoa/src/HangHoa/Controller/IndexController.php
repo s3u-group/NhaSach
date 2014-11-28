@@ -223,6 +223,7 @@
      );
   }
 
+  // set lại id user nhân viên
   public function xuatHangAction()
   {
     $this->layout('layout/giaodien');  
@@ -233,8 +234,11 @@
 
     $request = $this->getRequest();
     if($request->isPost()){
+
       $form->setData($request->getPost());
       if($form->isValid()){
+        
+        die(var_dump($hoaDon));
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
           $soLuongXuat=$chiTietHoaDon->getSoLuong();
           $soLuongTon=$chiTietHoaDon->getIdSanPham()->getTonKho();
@@ -246,9 +250,7 @@
         return $this->redirect()->toRoute('hang_hoa/crud', array(
              'action' => 'xuatHang',
          ));
-      }
-      else
-        die(var_dump($form->getMessages()));
+      }      
     }
     return array('form'=>$form);
   }
