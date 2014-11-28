@@ -1,0 +1,328 @@
+<?php $this->headTitle('Thông tin khách hàng'); ?>
+<div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h5a-sidebar affix">
+                    <span class="breadcrumb row">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                        <a href="<?php echo $this->url('kenh_phan_phoi');?>">/ Khách hàng</a>
+                         / #xxx /
+                    </span>
+                    <ul class="nav h5a-sidenav nav-list accordion">
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                                <i class="fa fa-cubes"></i> Khách hàng
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                                <i class="fa fa-cubes"></i> Nhà cung cấp
+                            </a>
+                        </li>                 
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'donHang'));?>">
+                                <i class="fa fa-cubes"></i> Đơn hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'doanhThu'));?>">
+                                <i class="fa fa-flag-checkered"></i> Doanh thu
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" role="main">
+                <div class="h5a-docs-section">
+                    
+            </div>
+        </div>
+</div>
+<!-- /.container -->
+
+<div class="container h5a-container gray">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <h1>
+                <img class="pull-left img-circle" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" width="40px" height="40px" alt="Ảnh đại diện"> <?php echo $khachHang->getHoTen(); ?>
+            </h1>
+            <div class="btn-group pull-right">
+                <a href="<?php echo $this->url('kenh_phan_phoi/crud', array('action'=>'xoaKhachHang','id'=>$khachHang->getIdDoiTac())); ?>" class="btn h5a-btn btn-danger btn-xs"><i class="fa fa-times"></i> Xóa khách hàng</a> 
+                <!-- <a class="btn h5a-btn btn-primary btn-xs"><i class="fa fa-refresh"></i> Refresh Item</a> -->
+            </div>
+            <p>
+            <?php echo $khachHang->getMoTa(); ?>
+            </p>
+            <div class="tabbable">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Xem chi tiết</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#1" role="tab" data-toggle="tab">Cập nhật</a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#2" role="tab" data-toggle="tab">Lịch sử giao dịch</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="thumbnail">
+                                    <img class="img-responsive" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" alt="Ảnh đại diện">
+                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Khách hàng: <?php echo $khachHang->getHoTen(); ?></h4>
+                                <p><?php echo $khachHang->getMoTa(); ?> </p>
+                                <h4 class="underline">Thông tin chi tiết</h4>
+                                <table class="item">
+                                    <tbody>
+                                        <tr>
+                                            <td><i class="fa fa-key"></i> Họ Tên</td>
+                                            <td><?php echo $khachHang->getHoTen(); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Địa chỉ</td>
+                                            <td><?php echo $khachHang->getDiaChi(); ?></td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td><i class="fa fa-user"></i> Di động</td>
+                                            <td class="green"><?php echo $khachHang->getDiDong(); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-tag"></i> Điện thoại cố định</td>
+                                            <td><?php echo $khachHang->getDienThoaiCoDinh(); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-arrows"></i> Email: </td>
+                                            <td class="red"><?php echo $khachHang->getEmail(); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-edit"></i>Twitter: </td>
+                                            <td>
+                                                <?php echo $khachHang->getTwitter(); ?>
+                                            </td>
+                                        </tr>
+                                        
+                                        <tr>
+                                            <td><i class="fa fa-globe"></i> Website</td>
+                                            <td><a href=""><?php echo $khachHang->getWebsite(); ?></a></td>
+                                        </tr>
+                                        <tr>
+                                            <td><i class="fa fa-twitter"></i> Twitter</td>
+                                            <td><a href="http://www.twitter.com/sharedesk">@sharedesk</a></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="1">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <?php  
+                                $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'chiTietKhachHang','id'=>$khachHang->getIdDoiTac())));
+                                $form->setAttribute('role','form');
+                                $form->prepare();
+                                echo $this->form()->openTag($form);
+
+                                $khachHangElement=$form->get('khach-hang');
+                                echo $this->formHidden($khachHangElement->get('idDoiTac'));
+                                ?>     
+                                <input type="text" name="hoTenTruoc" value="<?php echo $khachHang->getHoTen(); ?>" hidden="true"/>    
+                                    <h4 class="underline">More Info</h4>
+                                    <table class="item">
+                                        <tbody> 
+
+                                            <tr>
+                                                <td>Họ Tên</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('hoTen')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('hoTen'));
+                                                ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Địa chỉ</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('hoTen')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('diaChi'));
+                                                ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mô tả</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('moTa')->setAttribute('class','form-control h5a-input');
+                                                    $khachHangElement->get('moTa')->setAttribute('rows','6');
+                                                    echo $this->formElement($khachHangElement->get('moTa'));
+                                                ?> 
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Kênh phân phối</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('idKenhPhanPhoi')->setAttribute('class','form-control h5a-input');
+                                                    $khachHangElement->get('idKenhPhanPhoi')->setValueOptions($this->MakeArrayOptionTaxonomy($kenhPhanPhois));
+                                                    echo $this->formElement($khachHangElement->get('idKenhPhanPhoi'));
+                                                ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Di động</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('diDong')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('diDong'));
+                                                ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Điện thoại cố định</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('dienThoaiCoDinh')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('dienThoaiCoDinh'));
+                                                ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Ảnh đại diện</td>
+                                                <td>
+                                                <img src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" width="350px" height="350px"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Đổi ảnh đại diện</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('hinhAnh')->setAttribute('class','h5a-btn btn btn-primary');
+                                                    $khachHangElement->get('hinhAnh')->setAttribute('placeholder','Tải ảnh đại diện');
+                                                    echo $this->formElement($khachHangElement->get('hinhAnh'));
+                                                ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Email</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('email')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('email'));
+                                                ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                <?php
+                                                if($coKiemTraTrung==1)
+                                                {
+                                                    echo '<span class="label label-warning">Email vừa nhập đã tồn tại</span>';
+                                                }
+                                                ?>
+                                                </td>
+                                            </tr>
+
+                                            <tr>
+                                                <td>Twitter</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('twitter')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('twitter'));
+                                                ?>
+                                                </td>
+                                            </tr>
+
+
+                                            <tr>
+                                                <td>Website</td>
+                                                <td>
+                                                <?php
+                                                    $khachHangElement->get('website')->setAttribute('class','form-control h5a-input');
+                                                    echo $this->formElement($khachHangElement->get('website'));
+                                                ?>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td> </td>
+                                                <td>                                                
+                                                <input type="submit" class="full btn h5a-btn btn-success" value="Lưu Thay Đổi"/>
+                                                </td>
+                                            </tr>
+                                            
+
+                                        </tbody>
+                                    </table>
+                            <?php echo $this->form()->closeTag(); ?>
+                            </div>
+                            <div class="col-md-6">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="2">
+                        <div class="container">
+                            <div class="row">
+                                <table id="dataTables-example" class="">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>
+                                        <th>Ngày</th>
+                                        <th>Giao dịch</th>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach ($lichSuGiaoDichs as $lichSuGiaoDich) 
+                                    {?>
+                                       <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><?php  echo $lichSuGiaoDich->getNgayXuat()->format('d/m/Y'); ?></td>
+                                            <td>
+                                                <?php                                                 
+                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud', array('action'=>'chiTietDonHang', 'id'=>$lichSuGiaoDich->getIdHoaDon())).'">#'.$lichSuGiaoDich->getMaHoaDon(); 
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+    </script>

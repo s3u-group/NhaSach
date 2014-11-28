@@ -1,15 +1,19 @@
 <?php
  $this->headTitle('Thêm khách hàng');
 
- $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'themKhachHang')));
+ $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'themNhaCungCap')));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);
 
  $khachHang=$form->get('khach-hang');    
  echo $this->formHidden($khachHang->get('idDoiTac'));
- $khachHang->get('loaiDoiTac')->setAttribute('value','45');
+ $khachHang->get('loaiDoiTac')->setAttribute('value','46');
  echo $this->formHidden($khachHang->get('loaiDoiTac'));
+
+ $idKenhPhanPhoi=$khachHang->get('idKenhPhanPhoi');
+$idKenhPhanPhoi->setAttribute('value','39');                                            
+echo $this->formHidden($idKenhPhanPhoi);
 ?>
 
 <div class="container">
@@ -50,7 +54,7 @@
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h1>Thêm khách hàng</h1>
+                                <h1>Thêm nhà cung cấp</h1>
                             </div>
                             <div class="col-sm-6">
                                 <div class="pull-right">
@@ -64,26 +68,34 @@
                             <h4 class="underline">More Info</h4>
                             <table class="item">
                                 <tbody>
-                                    
+                                    <?php
+                                        if($ktTonTaiNhaCungCap==1)
+                                        {
+                                            echo '<tr>';
+                                                echo '<td></td>';
+                                                echo '<td><span class="label label-warning">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
+                                            echo '<tr>';
+                                        }
+                                    ?>
                                     <tr>
-                                        <td>Tên khách hàng</td>
+                                        <td>Tên nhà cung cấp</td>
                                         <td>
                                         <?php 
                                             $hoTen=$khachHang->get('hoTen');
                                             $hoTen->setAttribute('class','h5a-input form-control input-sm');
-                                            $hoTen->setAttribute('placeholder','Họ tên khách hàng');
+                                            $hoTen->setAttribute('placeholder','Họ tên nhà cung cấp');
                                             $hoTen->setAttribute('id','form-field-1');
                                             echo $this->formElement($hoTen);
                                         ?>                                           
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>Địa chỉ khách hàng</td>
+                                        <td>Địa chỉ nhà cung cấp</td>
                                         <td>
                                         <?php 
                                             $diaChi=$khachHang->get('diaChi');
                                             $diaChi->setAttribute('class','h5a-input form-control input-sm');
-                                            $diaChi->setAttribute('placeholder','Địa chỉ khách hàng');
+                                            $diaChi->setAttribute('placeholder','Địa nhà cung cấp');
                                             $diaChi->setAttribute('id','form-field-1');
                                             echo $this->formElement($diaChi);
                                         ?>                                           
@@ -96,7 +108,7 @@
                                         <?php 
                                             $moTa=$khachHang->get('moTa');
                                             $moTa->setAttribute('class','form-control h5a');
-                                            $moTa->setAttribute('placeholder','Mô tả khách hàng');
+                                            $moTa->setAttribute('placeholder','Mô tả nhà cung cấp');
                                             $moTa->setAttribute('id','editor');
                                             $moTa->setAttribute('rows','5');
                                             echo $this->formElement($moTa);
@@ -114,18 +126,7 @@
                                         ?>                                           
                                         </td>
                                     </tr>
-                                    <tr>
-                                        <td>Kênh phân phối</td>
-                                        <td>
-                                        <?php 
-                                            $idKenhPhanPhoi=$khachHang->get('idKenhPhanPhoi');
-                                            $idKenhPhanPhoi->setAttribute('class','h5a-input form-control input-sm');
-                                            $idKenhPhanPhoi->setAttribute('id','form-field-1');
-                                            $idKenhPhanPhoi->setValueOptions($this->MakeArrayOptionTaxonomy($kenhPhanPhois)); 
-                                            echo $this->formElement($idKenhPhanPhoi);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
+                                    
 
                                     <tr>
                                         <td>Địa chỉ email</td>
@@ -138,21 +139,6 @@
                                             echo $this->formElement($email);
                                         ?>                                           
                                         </td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <?php
-                                                if($ktTonTaiKhachHang==1)
-                                                {
-                                                    echo '<tr>';
-                                                        echo '<td></td>';
-                                                        echo '<td><span class="label label-warning">Email đã được sử dụng, vui lòng kiểm tra lại</span></td>';
-                                                    echo '<tr>';
-                                                }
-                                            ?>
-                                        </td>
-
                                     </tr>
                                     <tr>
                                         <td>Di động</td>

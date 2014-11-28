@@ -24,7 +24,7 @@
 
 
 		/**
-		* @ORM\Column(name="ma_phieu_nhap", type="char", length=6)
+		* @ORM\Column(name="ma_phieu_nhap", type="text")
 		*/
 		private $maPhieuNhap;
 

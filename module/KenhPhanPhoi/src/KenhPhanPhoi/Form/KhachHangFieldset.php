@@ -112,7 +112,7 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'loaiDoiTac',
              'type' => 'Hidden',
              'options' => array( 
-                'value'=>45,
+                
               )
          ));
 

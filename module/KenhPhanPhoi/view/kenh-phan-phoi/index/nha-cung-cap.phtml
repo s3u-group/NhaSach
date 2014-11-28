@@ -39,7 +39,7 @@
                     <div class="page-header">
                         <div class="row">
                             <div class="col-sm-6">
-                                <h1>Khách hàng</h1>
+                                <h1>Nhà cung cấp</h1>
                             </div>
                             <div class="col-sm-6">
                                 <div class="pull-right">
@@ -55,7 +55,7 @@
                                         <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
                                         <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
                                     </div>                                    
-                                    <a  href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themKhachHang'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
+                                    <a  href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themNhaCungCap'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
                                 </div>
                             </div>
                         </div>
@@ -65,19 +65,6 @@
                             <li role="presentation" class="active">
                                 <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
                             </li>
-                            <?php                           
-                            foreach ($kenhPhanPhois as $key=>$kenhPhanPhoi) 
-                            {
-                                if($kenhPhanPhoi['cap']>0)
-                                {
-                                    echo '<li role="presentation">';
-                                        echo '<a href="#'.$key.'" role="tab" data-toggle="tab">'.$kenhPhanPhoi['termId']['name'].'</a>';
-                                    echo '</li>';
-                                }
-                                
-                                
-                            }
-                            ?>                       
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="home">
@@ -86,7 +73,7 @@
                                         <table id="tatCa" class="dataTables">
                                             <thead>
                                                 <th><input type="checkbox"/></th>
-                                                <th>Khách hàng</th>
+                                                <th>Nhà cung cấp</th>
                                                 <th>Điện thoại</th>
                                                 <th>Địa chỉ</th>
                                                 <th>Đơn hàng</th>
@@ -95,16 +82,16 @@
                                             <tbody>                                               
                                                 <?php
                                                     foreach ($doiTacs as $key => $doiTac) {
-                                                        if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==45)
+                                                        if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==46)
                                                         {
-                                                            $array=$this->GetSoHoaDonVaHoaDonMoiNhat($doiTac->getIdDoiTac());
+                                                            $array=$this->GetSoPhieuNhapVaPhieuNhapMoiNhat($doiTac->getIdDoiTac());
                                                             $soHoaDon=$array['soHoaDon'];
                                                             $hoaDonMoiNhat=$array['hoaDonMoiNhat'];
                                                             $idHoaDon=$array['idHoaDon'];
                                                             echo '<tr>';
                                                                 echo '<td><input type="checkbox"/></td>';
                                                                 echo '<td>';
-                                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
+                                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietNhaCungCap','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
                                                                 echo '</td>';                                                            
                                                                 echo '<td>'.$doiTac->getDiDong().'</td>';
                                                                 echo '<td>'.$doiTac->getDiaChi().'</td>';
@@ -112,7 +99,7 @@
                                                                 echo '<td>';
                                                                     if($hoaDonMoiNhat!='')
                                                                     {
-                                                                        echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a>';
+                                                                        echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietPhieuNhap','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a>';
                                                                     }
                                                                 echo '</td>';
                                                             echo '</tr>  ';
@@ -124,61 +111,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
-                            <?php                                                       
-                            foreach ($kenhPhanPhois as $key=>$kenhPhanPhoi) 
-                            {
-                                if($kenhPhanPhoi['cap']>0)
-                                {
-                                    echo '<div role="tabpanel" class="tab-pane" id="'.$key.'">';
-                                    ?>
-                                        <div class="container">
-                                            <div class="row">                                    
-                                                    <table id="<?php echo $key; ?>" class="dataTables">
-                                                        <thead>
-                                                            <th><input type="checkbox"/></th>
-                                                            <th>Khách hàng</th>
-                                                            <th>Điện thoại</th>
-                                                            <th>Địa chỉ</th>
-                                                            <th>Đơn hàng</th>
-                                                            <th>Mới nhất</th>
-                                                        </thead>
-                                                        <tbody> 
-                                                            <?php
-                                                                foreach ($doiTacs as $key => $doiTac) {
-                                                                    if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==45&&$doiTac->getIdKenhPhanPhoi()->getTermId()->getTermId()==$kenhPhanPhoi['termTaxonomyId'])
-                                                                    {
-                                                                        $array=$this->GetSoHoaDonVaHoaDonMoiNhat($doiTac->getIdDoiTac());
-                                                                        $soHoaDon=$array['soHoaDon'];
-                                                                        $hoaDonMoiNhat=$array['hoaDonMoiNhat'];
-                                                                        $idHoaDon=$array['idHoaDon'];
-                                                                        echo '<tr>';
-                                                                            echo '<td><input type="checkbox"/></td>';
-                                                                            echo '<td>';
-                                                                                echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
-                                                                            echo '</td>';                                                            
-                                                                            echo '<td>'.$doiTac->getDiDong().'</td>';
-                                                                            echo '<td>'.$doiTac->getDiaChi().'</td>';
-                                                                            echo '<td>'.$soHoaDon.'</td>';
-                                                                            echo '<td>';
-                                                                                if($hoaDonMoiNhat!='')
-                                                                                {
-                                                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a>';
-                                                                                }
-                                                                            echo '</td>';
-                                                                        echo '</tr>  ';
-                                                                    }
-                                                                }
-                                                            ?>                                                     
-                                                        </tbody>
-                                                    </table>                                      
-                                                </div>
-                                            </div>
-                                    <?php
-                                    echo '</div>';
-                                }                               
-                            }
-                            ?>      
+                               
                         </div>
                     </div>
                 </div>

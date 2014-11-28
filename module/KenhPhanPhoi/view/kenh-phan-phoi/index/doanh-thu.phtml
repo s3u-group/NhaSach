@@ -17,7 +17,18 @@
                         <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
                          / Doanh thu /
                     </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
+                    <ul class="nav h5a-sidenav nav-list accordion">
+
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                                <i class="fa fa-cubes"></i> Khách hàng
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                                <i class="fa fa-cubes"></i> Nhà cung cấp
+                            </a>
+                        </li>                         
                         <li>
                             <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'donHang'));?>">
                                 <i class="fa fa-cubes"></i> Đơn hàng
