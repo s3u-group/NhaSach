@@ -61,6 +61,7 @@ class PhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
         $doiTacFieldset = new DoiTacFieldset($objectManager);
         $doiTacFieldset->setUseAsBaseFieldset(true);
         $doiTacFieldset->setName('idDoiTac');
+        $doiTacFieldset->remove('hoTen');
         $doiTacFieldset->remove('email');
         $doiTacFieldset->remove('state');
         $doiTacFieldset->remove('moTa');
@@ -72,6 +73,7 @@ class PhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
         $systemUserFieldset->setUseAsBaseFieldset(true);
         $systemUserFieldset->setName('idUserNv');
         $doiTacFieldset->remove('email');
+        $doiTacFieldset->remove('hoTen');
         $doiTacFieldset->remove('loaiTaiKhoan');
         $this->add($systemUserFieldset); 
 

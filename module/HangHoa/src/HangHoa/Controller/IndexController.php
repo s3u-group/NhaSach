@@ -229,20 +229,14 @@
     if($request->isPost())
     {
       $form->setData($request->getPost());
-      die(var_dump($request->getPost()));
-      /*die(var_dump($phieuNhap));*/
-      
       if($form->isValid())
       {
-        die(var_dump($phieuNhap));
-
         $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);;
         $phieuNhap->setIdUserNv($user);
         $entityManager->persist($phieuNhap);
 
-        $entityManager->flush();
-        /*var_dump('toi da den day giao choi');
-        die(var_dump($form->getData()));*/
+        $entityManager->flush();        
+        die(var_dump('ok'));
       }
       else
       {
@@ -369,9 +363,7 @@
     if($request->isPost()){
 
       $form->setData($request->getPost());
-      if($form->isValid()){
-        
-        die(var_dump($hoaDon));
+      if($form->isValid()){        
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
           $soLuongXuat=$chiTietHoaDon->getSoLuong();
           $soLuongTon=$chiTietHoaDon->getIdSanPham()->getTonKho();
