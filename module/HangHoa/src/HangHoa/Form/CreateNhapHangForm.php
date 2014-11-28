@@ -66,6 +66,7 @@ class CreateNhapHangForm extends Form
                 'class'   => 'h5a-input form-control input-sm',
                 'placeholder'=>'Mã hàng',
                 'id'=>'idMaHang',
+                'autocomplete'=>'off',
             ),
          ));
 

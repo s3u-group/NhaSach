@@ -25,7 +25,7 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\PhieuNhap")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\PhieuNhap", inversedBy="ctPhieuNhaps")
 		* @ORM\JoinColumn(name="id_phieu_nhap", referencedColumnName="id_phieu_nhap")
 		*/
 		private $idPhieuNhap;
@@ -33,7 +33,7 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham", inversedBy="ctPhieuNhaps")
 		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
 		private $idSanPham;

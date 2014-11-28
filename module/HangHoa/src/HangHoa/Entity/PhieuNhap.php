@@ -1,16 +1,16 @@
 <?php
-
 	namespace HangHoa\Entity;
 	
 	use Doctrine\ORM\Mapping as ORM;
 	use ZfcUser\Entity\UserInterface;
 	use BjyAuthorize\Provider\Role\ProviderInterface;
 	use Doctrine\Common\Collections\ArrayCollection;
-
+	use Datetime;
 
 	/**
 	* @ORM\Entity
 	* @ORM\Table(name="phieu_nhap")
+	* @ORM\HasLifecycleCallbacks
 	*/
 	class PhieuNhap {
 		
@@ -22,9 +22,8 @@
 		*/
 		private $idPhieuNhap;
 
-
 		/**
-		* @ORM\Column(name="ma_phieu_nhap", type="char", length=6)
+		* @ORM\Column(name="ma_phieu_nhap", length=9)
 		*/
 		private $maPhieuNhap;
 
@@ -36,21 +35,51 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
 		*/
 		private $idDoiTac;
 
-
+		/**
+		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTPhieuNhap", mappedBy="id_phieu_nhap", cascade={"persist"})
+		 */
+		private $ctPhieuNhaps;
 
 		/**
-		* @ORM\ManyToOne(targetEntity="Application\Entity\SystemUser")
+		* @ORM\ManyToOne(targetEntity="Application\Entity\SystemUser", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_user_nv", referencedColumnName="user_id")
 		*/
 		private $idUserNv;
 
+		/**
+		 * @ORM\PrePersist 
+		 */
+		public function onPrePersist(){
+	    	$this->ngayNhap = new DateTime('now');
+	    	$this->maPhieuNhap = $this->ngayNhap->format('His');    	
+		}
 
+		public function __construct(){
+			$this->ctPhieuNhaps = new ArrayCollection();
+		}
 
+		public function getCtPhieuNhaps(){
+			return $this->ctPhieuNhaps->toArray();
+		}
+
+		public function addCtPhieuNhaps($ctPhieuNhaps){
+			foreach($ctPhieuNhaps as $ctPhieuNhap){
+				$ctPhieuNhap->setIdPhieuNhap($this);
+				$this->ctPhieuNhaps->add($ctPhieuNhap);
+			}
+		}
+
+		public function removeCtPhieuNhaps($ctPhieuNhaps){
+			foreach($ctPhieuNhaps as $ctPhieuNhap){
+				$ctPhieuNhap->setIdPhieuNhap(null);
+				$this->ctPhieuNhaps->removeElement($ctPhieuNhap);
+			}
+		}
 
 		public function setIdPhieuNhap($idPhieuNhap)
 		{

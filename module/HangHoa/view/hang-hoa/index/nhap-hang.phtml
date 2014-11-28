@@ -1,4 +1,5 @@
 <?php
+     
      $this->headTitle('Nhập hàng');
      $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhapHang')));
      $form->setAttribute('role','form');
@@ -8,6 +9,14 @@
      echo $this->formHidden($form->get('idSanPham'));
      echo $this->formHidden($form->get('donViTinh'));
      echo $this->formHidden($form->get('idNhaCungCap'));
+     echo $this->formHidden($form->get('phieu-nhap')->get('idPhieuNhap'));
+     $form->get('phieu-nhap')->get('maPhieuNhap')->setAttribute('value','1114-9999');
+     echo $this->formHidden($form->get('phieu-nhap')->get('maPhieuNhap'));
+     $form->get('phieu-nhap')->get('ngayNhap')->setAttribute('value',Date('Y-m-d'));
+     echo $this->formHidden($form->get('phieu-nhap')->get('ngayNhap'));     
+     echo $this->formHidden($form->get('phieu-nhap')->get('idDoiTac')->get('idDoiTac'));
+     echo $this->formHidden($form->get('phieu-nhap')->get('idUserNv')->get('userId'));
+     
 ?>
 <style type="text/css">
     #nha-cung-cap-search-result{ cursor:pointer;}
@@ -122,6 +131,7 @@
                             <th>Đơn vị tính</th>
                             <th>Số lượng</th>
                             <th>Giá nhập</th>
+                            <th>Hủy</th>
                         </thead>
                         <tbody>
                         </tbody>
@@ -169,25 +179,36 @@
             var soLuong=$('#soLuong').val(); 
             var giaNhap=$('#giaNhap').val();
             var donViTinh=$('#donViTinh').val();
-            alert(idSanPham+' '+maHang+' '+tenHang+' '+soLuong+' '+giaNhap+' '+donViTinh);
+            var idNhaCungCap=$('#idNhaCungCap').val();
+            if(idSanPham==''||maHang==''||tenHang==''||donViTinh==''||soLuong==''||giaNhap==''||idSanPham==null||maHang==null||tenHang==null||donViTinh==null||soLuong==null||giaNhap==null)
+            {
+                alert('Vui lòng điền đầy đủ thông tin');
+                return false;
+            }
+            //alert(idSanPham+' '+maHang+' '+tenHang+' '+soLuong+' '+giaNhap+' '+donViTinh+' '+idNhaCungCap);
 
-            var soDong = $('#tbNhapHang > tbody > tr').length;
+            var soDong = $('#tbNhapHang > tbody > tr').length;            
             var template = '<tr class="price">'+
                 '<td>'+tenHang+'</td>'+
                 '<td>'+donViTinh+'</td>'+
                 '<td>'+
-                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhap&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
-                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhap&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
+                    '<input type="text" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
                     '<span>'+soLuong+'</span>'+
                 '</td>'+
                 '<td>'+
-                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhap&#x5D;&#x5B;__index__&#x5D;&#x5B;gia&#x5D;" value="'+giaNhap+'">'+
+                    '<input type="text" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
                     '<span>'+giaNhap+'</span>'+
+                '</td>'+
+                '<td style="text-align:left;">'+
+                    '<a class="btnHuy"><img src="<?php echo $this->basePath(); ?>/img/delete.png" width="30px" height="30px"></a>'+
                 '</td>'+
                 '</tr>';
 
-                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idKhachhang);
+                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);
 
+                //$('input[name="phieu-nhap[ngayNhap]"]').val();
+                $('input[name="phieu-nhap[idUserNv][userId]"]').val(1);
 
             template = template.replace(/__index__/g, soDong);
             $('#tbNhapHang tbody').append(template);
@@ -239,8 +260,7 @@
             var ma = $(this).find('span:eq(1)').text();
             var ten = $(this).find('span:eq(2)').text();            
             var giaNhap = $(this).find('span:eq(3)').text();
-            var donViTinh = $(this).find('span:eq(4)').text();
-            alert(ma);
+            var donViTinh = $(this).find('span:eq(4)').text();            
             $('#idSanPham').val(id);
             $('#idMaHang').val(ma);
             $('#tenHang').val(ten);
@@ -299,5 +319,12 @@
         });
     //./Hiển thị, chọn nhà cung cấp
 
+    });
+
+    $(document).ready(function(){
+      $(document).on('click', '.btnHuy', function(){
+        $(this).closest('tr').remove();
+        return false;
+      });
     });
     </script>
