@@ -80,6 +80,11 @@
 		 */
 		private $ctHoaDons;
 
+		/**
+		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTPhieuNhap", mappedBy="id_san_pham")
+		 */
+		private $ctPhieuNhaps;
+
 		public function setIdSanPham($idSanPham)
 		{
 			$this->idSanPham=$idSanPham;

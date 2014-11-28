@@ -12,6 +12,8 @@ use HangHoa\Entity\PhieuNhap;
 use HangHoa\Form\ChiTietPhieuNhapFieldset;
 use HangHoa\Form\DoiTacFieldset;
 use HangHoa\Form\SystemUserFieldset;
+use DateTime;
+use DateTimeZone;
 
 class PhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -40,14 +42,18 @@ class PhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
             ),
          ));
 
+        $currentDate = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh'));
+        $ngayHienTai=new DateTime($currentDate->format('Y-m-d'));
+
         $this->add(array(
              'name' => 'ngayNhap',
              'type' => 'Date',
              'options' => array(
                  'label' => 'Ngày nhập',
+                 'value'=>$ngayHienTai,
              ),
              'attributes'=>array(
-                //'required'=>'required',
+                'required'=>false,
                 //'class'   => 'h5a-input form-control input-sm',                
             ),
          ));        
@@ -55,22 +61,29 @@ class PhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
         $doiTacFieldset = new DoiTacFieldset($objectManager);
         $doiTacFieldset->setUseAsBaseFieldset(true);
         $doiTacFieldset->setName('idDoiTac');
+        $doiTacFieldset->remove('email');
+        $doiTacFieldset->remove('state');
+        $doiTacFieldset->remove('moTa');
+        $doiTacFieldset->remove('loaiDoiTac');
+
         $this->add($doiTacFieldset);
 
         $systemUserFieldset = new SystemUserFieldset($objectManager);
         $systemUserFieldset->setUseAsBaseFieldset(true);
         $systemUserFieldset->setName('idUserNv');
+        $doiTacFieldset->remove('email');
+        $doiTacFieldset->remove('loaiTaiKhoan');
         $this->add($systemUserFieldset); 
 
         $chiTietNhapHangFieldset = new ChiTietPhieuNhapFieldset($objectManager);
         $this->add(array(
             'type' => 'Zend\Form\Element\Collection',
-            'name' => 'ctPhieuNhap',
+            'name' => 'ctPhieuNhaps',
             'options' => array(
                 'label' => '',
                 'count' => 1,
-                'should_create_template' => false,
-                'allow_add' => false,
+                'should_create_template' => true,
+                'allow_add' => true,
                 'target_element' => $chiTietNhapHangFieldset,
             )
         ));       

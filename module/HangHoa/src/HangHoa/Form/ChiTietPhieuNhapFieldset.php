@@ -60,10 +60,15 @@ class ChiTietPhieuNhapFieldset extends Fieldset implements InputFilterProviderIn
             ),
          ));
 
-        $SanPhamFieldset = new SanPhamFieldset($objectManager);
-        $SanPhamFieldset->setUseAsBaseFieldset(true);
-        $SanPhamFieldset->setName('idSanPham');
-        $this->add($SanPhamFieldset);
+         $sanPhamFieldset = new SanPhamFieldset($objectManager);
+         $sanPhamFieldset->setUseAsBaseFieldset(true);
+         $sanPhamFieldset->setName('idSanPham');
+         $sanPhamFieldset->remove('idLoai');
+         $sanPhamFieldset->remove('idDonViTinh');
+         $sanPhamFieldset->remove('nhan');
+         $sanPhamFieldset->remove('hinhAnh');
+         $sanPhamFieldset->remove('tonKho');
+         $this->add($sanPhamFieldset);
     }
     public function getInputFilterSpecification()
     {
