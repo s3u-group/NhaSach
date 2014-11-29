@@ -26,7 +26,7 @@
 
 
 		/**
-		* @ORM\Column(name="ma_hoa_don", type="text", length=6)
+		* @ORM\Column(name="ma_hoa_don", type="text")
 		*/
 		private $maHoaDon;
 

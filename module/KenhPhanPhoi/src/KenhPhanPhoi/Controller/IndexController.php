@@ -17,7 +17,8 @@
  use PHPExcel_Style_Border;
  use PHPExcel_Style_Alignment;
  use PHPExcel_Style_Fill;
-
+ use DateTime;
+ use DateTimeZone;
  
  
  class IndexController extends AbstractActionController
@@ -124,6 +125,10 @@
         $form->setData($request->getPost());      
         if ($form->isValid())
         {
+
+          $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
+     
+          $doiTac->setNgayDangKy($datetime);
           $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.email=\''.$doiTac->getEmail().'\'');
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
@@ -151,9 +156,9 @@
             {
               $doiTac->setHinhAnh('photo_default.png');
             }
+            
             $entityManager->persist($doiTac);
             $entityManager->flush();
-
             return $this->redirect()->toRoute('kenh_phan_phoi/crud');   
           }          
         }
@@ -190,6 +195,8 @@
         $form->setData($request->getPost());      
         if ($form->isValid())
         {
+          $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
+     
           $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.hoTen=\''.$doiTac->getHoTen().'\'');
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
@@ -218,6 +225,7 @@
               $doiTac->setHinhAnh('photo_default.png');
             }
             
+            $doiTac->setNgayDangKy($datetime);
             $entityManager->persist($doiTac);
             $entityManager->flush();
             return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));   
