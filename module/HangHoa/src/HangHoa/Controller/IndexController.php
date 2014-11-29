@@ -241,7 +241,7 @@
       else
       {
         var_dump('toi da den day');
-        var_dump($request->getPost()['phieu-nhap']);
+        var_dump($request->getPost()['phieu-nhap']['ctPhieuNhaps']);
         die(var_dump($form->getMessages()));
       }
     }
