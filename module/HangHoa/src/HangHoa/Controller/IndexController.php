@@ -368,11 +368,45 @@
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
           $soLuongXuat=$chiTietHoaDon->getSoLuong();
           $soLuongTon=$chiTietHoaDon->getIdSanPham()->getTonKho();
-          $soLuongConLai=$soLuongTon-$soLuongXuat;
+          $soLuongConLai=$soLuongTon-$soLuongXuat;          
           $chiTietHoaDon->getIdSanPham()->setTonKho($soLuongConLai);
         }
+        
         $entityManager->persist($hoaDon);
         $entityManager->flush();
+
+
+        $mHD=$hoaDon->getMaHoaDon();
+
+        
+        $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.maHoaDon=\''.$mHD.'\'');
+        $hoaDons=$query->getResult();
+
+        $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
+        $y=$datetime->format('Y');$m=$datetime->format('m');
+        $mY=$m.$y[2].$y[3];
+
+        $idHD=$hoaDons[0]->getIdHoaDon();
+        if($idHD<10)
+        {
+          $newMaHoaDon=$mY.'-'.'000'.$idHD;
+
+        }
+        if ($idHD>=10&&$idHD<100) {
+          $newMaHoaDon=$mY.'-'.'00'.$idHD;          
+        }
+        if ($idHD>=100&&$idHD<1000) {
+          $newMaHoaDon=$mY.'-'.'0'.$idHD;    
+        }
+        if($idHD>=1000)
+        {
+          $newMaHoaDon=$mY.'-'.$idHD;  
+        }
+        $hoaDon=$hoaDons[0];        
+
+        $hoaDon->setMaHoaDon($newMaHoaDon);
+        $entityManager->flush();
+        die(var_dump($newMaHoaDon));
         return $this->redirect()->toRoute('hang_hoa/crud', array(
              'action' => 'xuatHang',
          ));
@@ -729,7 +763,7 @@
     error_reporting(E_ALL);
     ini_set('display_errors', TRUE); 
     ini_set('display_startup_errors', TRUE); 
-    date_default_timezone_set('Europe/London');
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
 
     define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 

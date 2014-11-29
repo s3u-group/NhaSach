@@ -128,6 +128,17 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
                 'required'=>'required',
              ),
          ));
+
+          /*$this->add(array(
+             'name' => 'loaiDoiTac',
+             'type' => 'date',
+             'options' => array( 
+
+              ),
+             'attributes'=>array(
+                'Hidden'=>'true',
+             ),
+         ));*/
     }
 
     public function getInputFilterSpecification()

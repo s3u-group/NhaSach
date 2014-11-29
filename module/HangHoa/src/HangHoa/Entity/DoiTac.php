@@ -6,6 +6,8 @@
 	use ZfcUser\Entity\UserInterface;
 	use BjyAuthorize\Provider\Role\ProviderInterface;
 	use Doctrine\Common\Collections\ArrayCollection;
+	use DateTime;
+	use DateTimeZone;
 
 
 	/**
@@ -93,6 +95,11 @@
 		* @ORM\JoinColumn(name="id_kenh_phan_phoi", referencedColumnName="term_taxonomy_id")
 		*/
 		private $idKenhPhanPhoi;
+
+		/**
+		 * @ORM\Column(name="ngay_dang_ky", type="date")
+		 */
+		private $ngayDangKy;
 
 
 
@@ -224,6 +231,15 @@
 		public function getIdKenhPhanPhoi()
 		{
 			return $this->idKenhPhanPhoi;
+		}
+
+		public function setNgayDangKy($ngayDangKy)
+		{			
+			$this->ngayDangKy=$ngayDangKy;
+		}
+		public function getNgayDangKy()
+		{
+			return $this->ngayDangKy;
 		}
 	}
 	
