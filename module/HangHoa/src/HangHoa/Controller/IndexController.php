@@ -236,13 +236,9 @@
         $entityManager->persist($phieuNhap);
 
         $entityManager->flush();        
-        die(var_dump('ok'));
+        
       }
-      else
-      {
-        var_dump('toi da den day');
-        die(var_dump($form->getMessages()));
-      }
+      
     }
     return array(       
        'form' =>$form,       
@@ -405,7 +401,7 @@
 
         $hoaDon->setMaHoaDon($newMaHoaDon);
         $entityManager->flush();
-        die(var_dump($newMaHoaDon));
+        //die(var_dump($newMaHoaDon));
         return $this->redirect()->toRoute('hang_hoa/crud', array(
              'action' => 'xuatHang',
          ));
