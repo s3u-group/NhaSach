@@ -13,7 +13,7 @@
   {
      if(!$this->entityManager)
      {
-      //$this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+      $this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
      }
      return $this->entityManager;
   }
@@ -22,5 +22,11 @@
  	{
     	$this->layout('layout/giaodien');
  	} 	
+
+
+ 	public function thanhToanAction()
+ 	{
+    	$this->layout('layout/giaodien');
+ 	} 
  }
 ?>

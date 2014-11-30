@@ -1,6 +1,6 @@
 <?php
 
-	namespace HangHoa\Entity;
+	namespace CongNo\Entity;
 	
 	use Doctrine\ORM\Mapping as ORM;
 	use ZfcUser\Entity\UserInterface;
@@ -49,10 +49,11 @@
 
 
 		/**
-		* @ORM\Column(name="cong_no_moi",type="float")
+		* @ORM\Column(name="du_no",type="float")
 		*/
-		private $congNoMoi;
+		private $duNo;
 
+		
 
 		public function setIdCongNo($idCongNo)
 		{
@@ -104,13 +105,13 @@
 		}
 
 
-		public function setCongNoMoi($congNoMoi)
+		public function setDuNo($duNo)
 		{
-			$this->congNoMoi=$congNoMoi;
+			$this->duNo=$duNo;
 		}
-		public function getCongNoMoi()
+		public function getDuNo()
 		{
-			return $this->congNoMoi;
+			return $this->duNo;
 		}
 	}
 	

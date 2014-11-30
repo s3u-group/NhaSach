@@ -1,6 +1,6 @@
 <?php
 
-	namespace HangHoa\Entity;
+	namespace CongNo\Entity;
 	
 	use Doctrine\ORM\Mapping as ORM;
 	use ZfcUser\Entity\UserInterface;
@@ -10,21 +10,21 @@
 
 	/**
 	* @ORM\Entity
-	* @ORM\Table(name="phieu_thu")
+	* @ORM\Table(name="phieu_chi")
 	*/
-	class PhieuThu {
+	class PhieuChi {
 		
 
 		/**
-		* @ORM\Column(name="id_phieu_thu",type="integer")
+		* @ORM\Column(name="id_phieu_chi",type="integer")
 		* @ORM\Id
 		* @ORM\GeneratedValue
 		*/
-		private $idPhieuThu;
+		private $idPhieuChi;
 
 
 		/**
-		* @ORM\OneToOne(targetEntity="HangHoa\Entity\CongNo")
+		* @ORM\OneToOne(targetEntity="CongNo\Entity\CongNo")
 		* @ORM\JoinColumn(name="id_cong_no", referencedColumnName="id_cong_no")
 		*/
 		private $idCongNo;
@@ -38,19 +38,29 @@
 
 
 		/**
-		* @ORM\Column(name="ly_do")
+		* @ORM\Column(name="ly_do", type="text")
 		*/
 		private $lyDo;
 
+		/**
+		* @ORM\Column(name="soTien",type="float")
+		*/
+		private $soTien;
+
+		/**
+		* @ORM\Column(name="ngay_xuat_phieu_chi", type="date")
+		*/
+		private $ngayXuatPhieuChi;
 
 
-		public function setIdPhieuThu($idPhieuThu)
+
+		public function setIdPhieuChi($idPhieuChi)
 		{
-			$this->idPhieuThu=$idPhieuThu;
+			$this->idPhieuChi=$idPhieuChi;
 		}
-		public function getIdPhieuThu()
+		public function getIdPhieuChi()
 		{
-			return $this->idPhieuThu;
+			return $this->idPhieuChi;
 		}
 
 
@@ -81,6 +91,16 @@
 		public function getLyDo()
 		{
 			return $this->lyDo;
+		}
+
+		public function setNgayXuatPhieuChi($ngayXuatPhieuChi)
+		{
+			$this->ngayXuatPhieuChi=$ngayXuatPhieuChi;
+		}
+
+		public function getNgayXuatphieuChi()
+		{
+			return $this->ngayXuatPhieuChi;
 		}
 	}
 	
