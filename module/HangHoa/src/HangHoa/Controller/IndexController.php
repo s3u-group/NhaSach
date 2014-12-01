@@ -231,7 +231,7 @@
       $form->setData($request->getPost());
       if($form->isValid())
       {
-        $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);;
+        $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
         $phieuNhap->setIdUserNv($user);
         $entityManager->persist($phieuNhap);
 
