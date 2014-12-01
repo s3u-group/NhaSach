@@ -320,9 +320,7 @@
 
     $request = $this->getRequest();
     if($request->isPost()){
-      $form->setData($request->getPost());
-      var_dump($request->getPost());
-      die(var_dump($hoaDon));
+      $form->setData($request->getPost());      
       if($form->isValid()){
         //die(var_dump($hoaDon));
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {

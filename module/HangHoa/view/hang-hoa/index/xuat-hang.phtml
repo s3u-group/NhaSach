@@ -240,6 +240,23 @@ $this->headTitle($title);
             var soLuong=$('#soLuong').val(); 
             var giaXuat=$('#giaXuat').val();   
             var tonKho=$('#tonKho').val(); 
+            var soDong = $('#tbXuatHang > tbody > tr').length; 
+            if(soDong>0)
+            {
+                for(var i=0; i<soDong; i++)
+                {
+                    var id='#soDong'+i;
+                    var idSP=$(id).val();
+                    if(idSanPham==idSP)
+                    {
+                        alert('Sản phẩm đã được thêm rồi. Vui lòng kiểm tra lại!');
+                        return false;
+                    }
+                }
+
+            }
+            
+
             if(idKhachhang==''||tenKhachHang==''||diaChi==''||idSanPham==''||tenHang==''||donViTinh==''||soLuong==''||giaXuat==''||tonKho==''||idKhachhang==null||tenKhachHang==null||diaChi==null||idSanPham==null||tenHang==null||donViTinh==null||soLuong==null||giaXuat==null||tonKho==null)
             {
                 alert('Vui lòng điền đầy đủ thông tin');
@@ -268,13 +285,13 @@ $this->headTitle($title);
             }
             else
             {
-                var soDong = $('#tbXuatHang > tbody > tr').length;      
+                var soDong = $('#tbXuatHang > tbody > tr').length;   
 
                 var template = '<tr class="price">'+
                     '<td>'+tenHang+'</td>'+
                     '<td>'+donViTinh+'</td>'+
                     '<td>'+
-                        '<input type="hidden" name="hoa-don&#x5B;ctHoaDons&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
+                        '<input type="hidden" id="soDong'+soDong+'" name="hoa-don&#x5B;ctHoaDons&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
                         '<input type="hidden" name="hoa-don&#x5B;ctHoaDons&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
                         '<span>'+soLuong+'</span>'+
                     '</td>'+
