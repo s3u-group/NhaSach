@@ -31,6 +31,11 @@ class HoaDonFieldset extends Fieldset implements InputFilterProviderInterface
          ));
 
          $this->add(array(
+             'name' => 'status',
+             'type' => 'Hidden',
+         ));
+
+         $this->add(array(
              'name' => 'maHoaDon',
              'type' => 'Text',
              'options' => array(

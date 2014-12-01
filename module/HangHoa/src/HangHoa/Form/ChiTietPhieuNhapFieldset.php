@@ -42,7 +42,6 @@ class ChiTietPhieuNhapFieldset extends Fieldset implements InputFilterProviderIn
                 'class'   => 'h5a-input form-control input-sm',
                 //'placeholder'=>'Giá nhập',
                 'min'=>0,
-                'step'=>500,
             ),
          ));
 

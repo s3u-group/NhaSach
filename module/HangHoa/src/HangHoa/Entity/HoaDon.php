@@ -52,7 +52,16 @@
 		private $idUserNv;
 
 		/**
-		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTHoaDon", mappedBy="id_hoa_don", cascade={"persist"})
+		 * @ORM\Column(type="integer")
+		 */
+
+		// status =0: là chưa thanh toán
+		// status !=0: là đã thanh toán
+
+		private $status; 
+
+		/**
+		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTHoaDon", mappedBy="idHoaDon", cascade={"persist"})
 		 */
 		private $ctHoaDons;
 
@@ -134,7 +143,19 @@
 		public function getIdUserNv()
 		{
 			return $this->idUserNv;
-		}		
+		}	
+
+		public function setStatus($status=null)
+		{
+			if($status==null)
+				$status=0;
+			$this->status=$status;
+		}	
+
+		public function getStatus()
+		{
+			return $this->status;
+		}
 	}
 	
 

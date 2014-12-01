@@ -38,7 +38,12 @@ return array(
 		'template_path_stack' => array(
 			'loi_nhuan' => __DIR__ . '/../view'
 		),        
-	),    
+	),   
+
+    'controller_plugins' => array(
+        'invokables' => array(
+            'distinct_plugin' => 'LoiNhuan\Controller\Plugin\DistinctPlugin', 
+    )), 
 
 	/*'doctrine' => array(
         'driver' => array(

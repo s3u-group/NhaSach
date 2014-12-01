@@ -85,7 +85,7 @@ return array(
     ),
 
 
-      'controller_plugins' => array(
+    'controller_plugins' => array(
         'invokables' => array(
             'tree_plugin' => 'S3UTaxonomy\Controller\Plugin\TreePlugin', 
         ),

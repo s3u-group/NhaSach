@@ -227,128 +227,20 @@
     {      
       //var_dump($request->getPost());
       $form->setData($request->getPost());      
-      die(var_dump($request->getPost()['phieu-nhap']));
+      //die(var_dump($request->getPost()));
       if($form->isValid())
       {        
-        die(var_dump('ok'));
+        //die(var_dump($request->getPost()));
         $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);;
         $phieuNhap->setIdUserNv($user);
         $entityManager->persist($phieuNhap);
-
-        $entityManager->flush();                
       }
-      else
-      {
-        var_dump('toi da den day');
-        var_dump($request->getPost()['phieu-nhap']['ctPhieuNhaps']);
-        die(var_dump($form->getMessages()));
-      }
+      
     }
     return array(       
        'form' =>$form,       
      );
-  }    
-      
-      //die(var_dump($post));      
-      /*$idSanPham=$post->get('idSanPham');
-      $giaNhap=(int)($post->get('giaNhap'));
-
-      $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.idSanPham ='.$idSanPham);
-      $SanPhams = $query->getResult();      
-      if($SanPhams)
-      {
-        $taxonomyLoai=$this->TaxonomyFunction();
-        $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
-        foreach ($SanPhams as $SanPham)
-        {
-        //Cập nhật bảng SẢN PHẨM
-          $tonKho=(int)($SanPham->getTonKho())+(int)($post->get('soLuong'));
-          $SanPham->setTonKho($tonKho);
-          $SanPham->setGiaNhap($giaNhap);          
-          $entityManager->flush();          
-        //Cập nhật bảng SẢN PHẨM
-
-        //Cập nhật bảng PHIẾU NHẬP            
-          $phieuNhap->setMaPhieuNhap(0);
-          
-          $currentDate = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh'));
-          $ngayHienTai=new DateTime($currentDate->format('Y-m-d'));
-          $phieuNhap->setNgayNhap($ngayHienTai);
-
-          $idDt=$post->get('phieu-nhap')['idDoiTac']['idDoiTac'];
-          $idDoiTac = $entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDt);          
-          $idUn=$post->get('phieu-nhap')['idUserNv']['userId'];
-          //Test với idUserNv=1
-          $idUn=1;
-
-          $idUserNv = $entityManager->getRepository('Application\Entity\SystemUser')->find($idUn);
-
-          $phieuNhap->setIdDoiTac($idDoiTac);
-          $phieuNhap->setIdUserNv($idUserNv);
-
-          $entityManager->persist($phieuNhap);            
-          $entityManager->flush();
-
-          $query = $entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.maPhieuNhap=0 and pn.idDoiTac='.$idDt.' and pn.idUserNv='.$idUn);
-          $PhieuNhaps = $query->getResult();
-          if($PhieuNhaps)
-          {
-            foreach ($PhieuNhaps as $PhieuNhap)
-            {
-              $maPn=(getdate()['mon']).(getdate()['year']%2000)."-";
-              $idPhieuNhap=($PhieuNhap->getIdPhieuNhap())%1000;
-
-              if($idPhieuNhap<10)
-              {
-                $maPn=$maPn."000".$idPhieuNhap;
-              }
-              if($idPhieuNhap>=10&&$idPhieuNhap<=99)
-              {
-                $maPn=$maPn."00".$idPhieuNhap;
-              }
-              if($idPhieuNhap>=100&&$idPhieuNhap<=999)
-              {
-                $maPn=$maPn."0".$idPhieuNhap;
-              }
-              $PhieuNhap->setMaPhieuNhap($maPn);              
-              $entityManager->flush();
-
-              //Cập nhật bảng CTPHIẾU NHẬP
-                $idPN = $entityManager->getRepository('HangHoa\Entity\PhieuNhap')->find($PhieuNhap->getIdPhieuNhap());
-                $chiTietPhieuNhap->setIdPhieuNhap($idPN);
-
-                $idSP = $entityManager->getRepository('HangHoa\Entity\SanPham')->find($idSanPham);
-                $chiTietPhieuNhap->setIdSanPham($idSP);
-
-                $chiTietPhieuNhap->setGiaNhap($giaNhap);
-                $chiTietPhieuNhap->setSoLuong((int)($post->get('soLuong')));
-                
-                $entityManager->persist($chiTietPhieuNhap);
-                $entityManager->flush();                
-              //Cập nhật bảng CTPHIẾU NHẬP
-
-              //Cập nhật bảng GIÁ XUẤT                
-                foreach ($kenhPhanPhois as $kenhPhanPhoi) 
-                {
-                  if($kenhPhanPhoi['cap']>0)
-                  {
-                    $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
-                    $giaXuats = $query->getResult();
-                    foreach ($giaXuats as $giaXuat) {  
-                      $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
-                      $giaXuat->setGiaXuat($gx);
-                      $entityManager->flush();
-                      //die(var_dump($giaXuat));
-                    }
-                  }
-                }
-              //Cập nhật bảng GIÁ XUẤT
-            }
-          }
-          //die(var_dump($PhieuNhaps));
-        //Cập nhật bảng PHIẾU NHẬP        
-        }
-      }*/
+  }   
 
   // set lại id user nhân viên
   public function xuatHangAction()
@@ -408,8 +300,8 @@
         $hoaDon=$hoaDons[0];        
 
         $hoaDon->setMaHoaDon($newMaHoaDon);
+
         $entityManager->flush();
-        die(var_dump($newMaHoaDon));
         return $this->redirect()->toRoute('hang_hoa/crud', array(
              'action' => 'xuatHang',
          ));

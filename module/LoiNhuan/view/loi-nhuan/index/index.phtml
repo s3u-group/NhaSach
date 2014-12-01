@@ -8,22 +8,24 @@
 
     <title>Doanh thu</title>
 </head>
+
 <div class="container">
         <div class="row">
             <div class="col-md-2">
                 <div class="h5a-sidebar affix">
                     <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
                          / Doanh thu /
                     </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
+                    <ul class="nav h5a-sidenav nav-list accordion">
+                                            
                         <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'donHang'));?>">
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
                                 <i class="fa fa-cubes"></i> Đơn hàng
                             </a>
                         </li>
                         <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'doanhThu'));?>">
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
                                 <i class="fa fa-flag-checkered"></i> Doanh thu
                             </a>
                         </li>
@@ -187,7 +189,9 @@
             </div>
         </div>
     </div>
-	<!-- jQuery -->
+    <!-- /.container -->
+
+    <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -196,6 +200,7 @@
     <!-- DataTables JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable({
