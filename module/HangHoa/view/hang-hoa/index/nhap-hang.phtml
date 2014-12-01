@@ -182,20 +182,19 @@
             var giaNhap=$('#giaNhap').val();
             var donViTinh=$('#donViTinh').val();
             var idNhaCungCap=$('#idNhaCungCap').val();
-            
+
             if(idSanPham==''||maHang==''||tenHang==''||donViTinh==''||soLuong==''||giaNhap==''||idSanPham==null||maHang==null||tenHang==null||donViTinh==null||soLuong==null||giaNhap==null)
             {
                 alert('Vui lòng điền đầy đủ thông tin');
                 return false;
-            }
-            //alert(idSanPham+' '+maHang+' '+tenHang+' '+soLuong+' '+giaNhap+' '+donViTinh+' '+idNhaCungCap);
+            }            
 
             var soDong = $('#tbNhapHang > tbody > tr').length;            
             var template = '<tr class="price">'+
                 '<td>'+tenHang+'</td>'+
                 '<td>'+donViTinh+'</td>'+
                 '<td>'+
-                    '<input type="text" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
                     '<span>'+soLuong+'</span>'+
                 '</td>'+
@@ -223,6 +222,10 @@
             var maHang=$(this).val();            
             if(xhr && xhr.readyState != 4){
                 xhr.abort(); //huy lenh ajax truoc do
+            }
+            if(maHang==''||maHang==null)
+            {                
+                $('#tenHang').val('');
             }
 
            xhr = $.ajax({
