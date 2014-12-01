@@ -102,9 +102,6 @@
 		private $ngayDangKy;
 
 
-
-
-
 		public function setIdDoiTac($idDoiTac)
 		{
 			$this->idDoiTac=$idDoiTac;

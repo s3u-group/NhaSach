@@ -219,24 +219,23 @@
   {
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();     
-    $form= new CreateNhapHangForm($entityManager);
-    //$sanPham= new SanPham();
-    $phieuNhap= new PhieuNhap();
-    //$chiTietPhieuNhap= new CTPhieuNhap();
+    $form= new CreateNhapHangForm($entityManager);    
+    $phieuNhap= new PhieuNhap();    
     $form->bind($phieuNhap);
-
     $request = $this->getRequest();
     if($request->isPost())
-    {
-      $form->setData($request->getPost());
+    {      
+      //var_dump($request->getPost());
+      $form->setData($request->getPost());      
+      die(var_dump($request->getPost()['phieu-nhap']));
       if($form->isValid())
-      {
+      {        
+        die(var_dump('ok'));
         $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);;
         $phieuNhap->setIdUserNv($user);
         $entityManager->persist($phieuNhap);
 
-        $entityManager->flush();        
-        die(var_dump('ok'));
+        $entityManager->flush();                
       }
       else
       {
@@ -362,15 +361,19 @@
 
     $request = $this->getRequest();
     if($request->isPost()){
-
       $form->setData($request->getPost());
-      if($form->isValid()){        
+      var_dump($request->getPost());
+      die(var_dump($hoaDon));
+      if($form->isValid()){
+        //die(var_dump($hoaDon));
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
+          //var_dump($chiTietHoaDon);
           $soLuongXuat=$chiTietHoaDon->getSoLuong();
           $soLuongTon=$chiTietHoaDon->getIdSanPham()->getTonKho();
           $soLuongConLai=$soLuongTon-$soLuongXuat;          
           $chiTietHoaDon->getIdSanPham()->setTonKho($soLuongConLai);
         }
+        //die(var_dump($hoaDon));
         
         $entityManager->persist($hoaDon);
         $entityManager->flush();
