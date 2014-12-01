@@ -219,24 +219,88 @@
   {
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();     
-    $form= new CreateNhapHangForm($entityManager);
-    //$sanPham= new SanPham();
-    $phieuNhap= new PhieuNhap();
-    //$chiTietPhieuNhap= new CTPhieuNhap();
+    $form= new CreateNhapHangForm($entityManager);    
+    $phieuNhap= new PhieuNhap();    
     $form->bind($phieuNhap);
-
     $request = $this->getRequest();
     if($request->isPost())
-    {
-      $form->setData($request->getPost());
+    {            
+      $form->setData($request->getPost());      
       if($form->isValid())
       {
-        $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
-        $phieuNhap->setIdUserNv($user);
-        $entityManager->persist($phieuNhap);
 
-        $entityManager->flush();        
-        
+        $taxonomyLoai=$this->TaxonomyFunction();
+        $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');     
+
+        foreach ($phieuNhap->getCtPhieuNhaps() as $cTPhieuNhap) 
+        { 
+          $giaNhap=$cTPhieuNhap->getGiaNhap();
+          $soLuong=$cTPhieuNhap->getSoLuong();
+          //Cập nhật Phiếu Nhập
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+          $phieuNhap->setIdUserNv($user);
+          $entityManager->persist($phieuNhap);
+          $entityManager->flush();
+
+
+          $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
+          $y=$datetime->format('Y');          
+          $m=$datetime->format('m');
+          $mY=$m.$y[2].$y[3];
+
+          $idPhieuNhap=$phieuNhap->getIdPhieuNhap();
+          if($idPhieuNhap<10)
+          {
+            $maPhieuNhap=$mY.'-'.'000'.$idPhieuNhap;
+          }
+          if($idPhieuNhap>=10&&$idPhieuNhap<100)
+          {
+            $maPhieuNhap=$mY.'-'.'00'.$idPhieuNhap;
+          }
+          if($idPhieuNhap>100&&$idPhieuNhap<1000)
+          {
+            $maPhieuNhap=$mY.'-'.'0'.$idPhieuNhap;
+          }
+          if($idPhieuNhap>1000)
+          {
+            $maPhieuNhap=$mY.'-'.$idPhieuNhap;
+          }
+          $phieuNhap->setMaPhieuNhap($maPhieuNhap);
+          $entityManager->flush();          
+          
+          //Cập nhật Sản Phẩm
+          $idSanPham=$cTPhieuNhap->getIdSanPham()->getIdSanPham();        
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.idSanPham =\''.$idSanPham.'\'');
+          $sanPhams = $query->getResult();
+          if($sanPhams)
+          {
+            foreach ($sanPhams as $sanPham)
+            {
+              $tonKho=(int)($sanPham->getTonKho())+$soLuong;
+              $sanPham->setTonKho($tonKho);
+              $sanPham->setGiaNhap($giaNhap);
+              $entityManager->flush(); 
+
+              foreach ($kenhPhanPhois as $kenhPhanPhoi) 
+              {
+                if($kenhPhanPhoi['cap']>0)
+                {
+                  $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
+                  $giaXuats = $query->getResult();
+                  foreach ($giaXuats as $giaXuat) {  
+                    $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                    $giaXuat->setGiaXuat($gx);
+                    $entityManager->flush();
+                  }
+                }
+              }           
+            }
+          }
+          else
+          {
+            //Có lỗi trong quá trình cập nhật Sản Phẩm
+          }
+        }         
       }
       
     }
@@ -256,15 +320,19 @@
 
     $request = $this->getRequest();
     if($request->isPost()){
-
       $form->setData($request->getPost());
-      if($form->isValid()){        
+      var_dump($request->getPost());
+      die(var_dump($hoaDon));
+      if($form->isValid()){
+        //die(var_dump($hoaDon));
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
+          //var_dump($chiTietHoaDon);
           $soLuongXuat=$chiTietHoaDon->getSoLuong();
           $soLuongTon=$chiTietHoaDon->getIdSanPham()->getTonKho();
           $soLuongConLai=$soLuongTon-$soLuongXuat;          
           $chiTietHoaDon->getIdSanPham()->setTonKho($soLuongConLai);
         }
+        //die(var_dump($hoaDon));
         
         $entityManager->persist($hoaDon);
         $entityManager->flush();

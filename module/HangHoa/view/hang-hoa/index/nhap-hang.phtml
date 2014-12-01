@@ -3,6 +3,7 @@
      $this->headTitle('Nhập hàng');
      $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhapHang')));
      $form->setAttribute('role','form');
+     $form->setAttribute('id','formNhapHang');
      $form->setAttribute('class','form-horizontal');
      $form->prepare();
      echo $this->form()->openTag($form);
@@ -142,7 +143,7 @@
                     <div class="row bottom20">
                         <div class="col-sm-6 col-sm-offset-6">
                             <div class="col-sm-10 col-sm-offset-1"><!-- class="pull-right" -->
-                                <button type="submit" class="btn h5a-btn btn-primary full">Lưu</button>
+                                <button type="submit" class="btn h5a-btn btn-primary full" onclick="return luuNhapHangFunction();">Lưu</button>
                             </div>
                         </div>
                     </div>
@@ -181,6 +182,10 @@
             var giaNhap=$('#giaNhap').val();
             var donViTinh=$('#donViTinh').val();
             var idNhaCungCap=$('#idNhaCungCap').val();
+            if()
+            {
+                
+            }
             if(idSanPham==''||maHang==''||tenHang==''||donViTinh==''||soLuong==''||giaNhap==''||idSanPham==null||maHang==null||tenHang==null||donViTinh==null||soLuong==null||giaNhap==null)
             {
                 alert('Vui lòng điền đầy đủ thông tin');
@@ -198,7 +203,7 @@
                     '<span>'+soLuong+'</span>'+
                 '</td>'+
                 '<td>'+
-                    '<input type="text" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
                     '<span>'+giaNhap+'</span>'+
                 '</td>'+
                 '<td style="text-align:left;">'+
@@ -206,14 +211,11 @@
                 '</td>'+
                 '</tr>';
 
-                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);
-
-                //$('input[name="phieu-nhap[ngayNhap]"]').val();
+                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);                
                 $('input[name="phieu-nhap[idUserNv][userId]"]').val(1);
 
             template = template.replace(/__index__/g, soDong);
             $('#tbNhapHang tbody').append(template);
-
             return false;
         });
 
@@ -328,4 +330,22 @@
         return false;
       });
     });
+    </script>
+    <script>
+        luuNhapHangFunction=function()
+        {
+
+            var soDong = $('#tbNhapHang > tbody > tr').length; 
+            if(soDong==0)
+            {
+                alert('Không có sản phẩm trong danh sách nhập!');
+                return false;
+            }
+            else
+            {                
+                document.getElementById('formNhapHang').submit();
+                return true;
+            }                
+        }
+
     </script>
