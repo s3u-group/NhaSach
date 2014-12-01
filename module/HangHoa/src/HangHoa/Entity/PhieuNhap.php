@@ -33,6 +33,15 @@
 		*/
 		private $ngayNhap;
 
+		/**
+		 * @ORM\Column(type="integer")
+		 */
+
+		// status =0: là chưa thanh toán
+		// status !=0: là đã thanh toán
+
+		private $status; 
+
 
 		/**
 		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac", cascade={"persist"})
@@ -128,7 +137,22 @@
 		public function getIdUserNv()
 		{
 			return $this->idUserNv;
-		}		
+		}	
+
+		// mặt đinh status=0;
+		// nếu setStatus();// có truyền tham số thì status bằng tham số đã truyền
+
+		public function setStatus($status=null)
+		{
+			if($status==null)
+				$status=0;
+			$this->status=$status;
+		}	
+
+		public function getStatus()
+		{
+			return $this->status;
+		}	
 	}
 	
 

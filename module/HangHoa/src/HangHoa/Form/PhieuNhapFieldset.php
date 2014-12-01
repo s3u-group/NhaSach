@@ -30,6 +30,11 @@ class PhieuNhapFieldset extends Fieldset implements InputFilterProviderInterface
          ));
 
         $this->add(array(
+             'name' => 'status',
+             'type' => 'Hidden',
+         ));
+
+        $this->add(array(
              'name' => 'maPhieuNhap',
              'type' => 'Text',
              'options' => array(
