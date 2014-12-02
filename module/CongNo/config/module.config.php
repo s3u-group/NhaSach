@@ -40,7 +40,7 @@ return array(
 		),        
 	),    
 
-	/*'doctrine' => array(
+	'doctrine' => array(
         'driver' => array(
             'cong_no_annotation_driver' => array(
                 'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
@@ -57,5 +57,5 @@ return array(
                 )
             )
         )
-    ),*/
+    ),
 );

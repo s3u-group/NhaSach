@@ -50,9 +50,9 @@
 
 
 		/**
-		* @ORM\Column(name="ngay_xuat_phieu_thu", type="date")
+		* @ORM\Column(name="ngay_thanh_toan", type="date")
 		*/
-		private $ngayXuatPhieuThu;
+		private $ngayThanhToan;
 
 
 
@@ -96,14 +96,24 @@
 			return $this->lyDo;
 		}
 
-		public function setNgayXuatPhieuThu($ngayXuatPhieuThu)
+		public function setSoTien($soTien)
 		{
-			$this->ngayXuatPhieuThu=$ngayXuatPhieuThu;
+			$this->soTien=$soTien;
 		}
 
-		public function getNgayXuatphieuThu()
+		public function getSoTien()
 		{
-			return $this->ngayXuatPhieuThu;
+			return $this->soTien;
+		}
+
+		public function setNgayThanhToan($ngayThanhToan)
+		{
+			$this->ngayThanhToan=$ngayThanhToan;
+		}
+
+		public function getNgayThanhToan()
+		{
+			return $this->ngayThanhToan;
 		}
 	}
 	

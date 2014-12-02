@@ -43,14 +43,14 @@
 		private $lyDo;
 
 		/**
-		* @ORM\Column(name="soTien",type="float")
+		* @ORM\Column(name="so_tien",type="float")
 		*/
 		private $soTien;
 
 		/**
-		* @ORM\Column(name="ngay_xuat_phieu_chi", type="date")
+		* @ORM\Column(name="ngay_thanh_toan", type="date")
 		*/
-		private $ngayXuatPhieuChi;
+		private $ngayThanhToan;
 
 
 
@@ -93,14 +93,28 @@
 			return $this->lyDo;
 		}
 
-		public function setNgayXuatPhieuChi($ngayXuatPhieuChi)
+
+
+		public function setSoTien($soTien)
 		{
-			$this->ngayXuatPhieuChi=$ngayXuatPhieuChi;
+			$this->soTien=$soTien;
 		}
 
-		public function getNgayXuatphieuChi()
+		public function getSoTien()
 		{
-			return $this->ngayXuatPhieuChi;
+			return $this->soTien;
+		}
+
+
+
+		public function setNgayThanhToan($ngayThanhToan)
+		{
+			$this->ngayThanhToan=$ngayThanhToan;
+		}
+
+		public function getNgayThanhToan()
+		{
+			return $this->ngayThanhToan;
 		}
 	}
 	
