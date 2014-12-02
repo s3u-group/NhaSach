@@ -60,23 +60,31 @@
                         <div id="khach-hang-search-result"></div>
                     </div> 
                 </div>
-                <div class="panel panel-info" hidden="true" id="thongTinChiTiet"> 
-                    
+                <div class="panel panel-info" hidden="true" id="thongTinChiTiet">                    
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Ngày đầu kì</h3> 
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" id="ngayDauKi">                        
                     </div>
+
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Nợ đầu kì</h3> 
+                    </div> 
+                    <div class="panel-body" id="noDauKi">
+                    </div>
+
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ phát sinh</h3> 
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" id="noPhatSinh">
                     </div>
-                    <div class="panel-heading"> 
+
+                    <div class="panel-heading" id="no"> 
                         <h3 class="panel-title">Nợ cuối kì</h3> 
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" id="noCuoiKi">
                     </div>
+
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Thanh toán</h3>
                     </div> 
@@ -89,8 +97,9 @@
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Số dư</h3> 
                     </div> 
-                    <div class="panel-body">
+                    <div class="panel-body" id="soDu">
                     </div>
+
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Ngày thanh toán</h3> 
                     </div> 
@@ -166,7 +175,6 @@
             return false;
         });
 
-        
         $('#khach-hang-search-result').on('click', '.list-group-item', function(){
 
             var id = $(this).find('span:eq(0)').text(); 
@@ -185,27 +193,16 @@
                 data:{
                     'idDoiTac':id
                 },
-                success:function(data){
-
-                    $.each(data, function(key,val){
-
-                        //$('#khach-hang-search-result').empty(); //lam rong khung ket qua
-
-                        /*var pos = $('#tenKhachHang').position(); //lấy tọa độ của ô tên khách hàng
-                        $('#khach-hang-search-result').css({
-                            position:'absolute',
-                            top:pos.top + 35,
-                            left:pos.left,
-                            'z-index': 100 // đặt search-result lên layout ngoài nhất
-                        });*/
-                        /*$.each(data, function(key, val){
-                            $('#khach-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span></div>');
-                        })*/
-                    });
-                
+                success:function(data){                
+                $('#ngayDauKi').text(data.ngayDauKi);
+                $('#noDauKi').text(data.noDauKi);
+                $('#noPhatSinh').text(data.noPhatSinh);
+                $('#noCuoiKi').text(data.noCuoiKi);
                 }
             });
 //./Hiển thị, chọn khách hàng
+
+//
         });
     })
    

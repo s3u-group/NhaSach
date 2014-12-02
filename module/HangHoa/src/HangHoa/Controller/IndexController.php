@@ -501,7 +501,7 @@
       if($tenKhachHang)
       {
         $entityManager=$this->getEntityManager();
-        $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.hoTen LIKE :ten');
+        $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.loaiDoiTac=45 AND kh.hoTen LIKE :ten');
         $query->setParameter('ten','%'.$tenKhachHang.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $khachHangs = $query->getResult(); // array of CmsArticle objects 
         foreach ($khachHangs as $khachHang) {

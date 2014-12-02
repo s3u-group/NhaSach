@@ -124,7 +124,8 @@ namespace CongNo\Controller;
       {
         $entityManager=$this->getEntityManager();
         $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
-        $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $query->setParameter('idDoiTac',$idDoiTac);
+        
         $congNos = $query->getResult(); // array of CmsArticle objects 
 
         // nếu đã có công nợ trước với hệ thống
@@ -145,7 +146,7 @@ namespace CongNo\Controller;
         }
 
         // lấy nợ phát sinh hoaDon
-        $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\hoaDon hd WHERE hd.status=0 and hd.idDoiTac= :idDoiTac');
+        $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac= :idDoiTac');
         $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $hoaDons=$query->getResult();
 
