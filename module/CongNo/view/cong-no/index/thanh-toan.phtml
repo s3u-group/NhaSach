@@ -1,207 +1,109 @@
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Công nợ</title>
-</head>
+<?php
+    $this->headTitle('Thanh toán');
+    $form->setAttribute('action', $this->url('cong_no/crud', array('action' => 'thanhToan')));
+     $form->setAttribute('role','form');
+     $form->setAttribute('id','formThanhToan');
+     $form->setAttribute('class','form-horizontal');
+     $form->prepare();
+     echo $this->form()->openTag($form);
+     echo $this->formHidden($form->get('idKhachHang'));
+?>
+<style type="text/css">    
+    #khach-hang-search-result{ cursor:pointer;}
+</style>
 <div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                        <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
-                         / Công nợ /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                        
-                        <!-- <li>
-                            <a href="#">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li> -->
-                    </ul>
-                </div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Thanh toán /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">                    
+                </ul>
             </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Công nợ</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>   
-                                    <a href="<?php echo $this->url('cong_no/crud', array('action'=>'thanhToan')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Thanh Toán</button></a>                                 
-                                </div>
-                                
-                            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Thanh toán</h1>
                         </div>
-                    </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#1" role="tab" data-toggle="tab">Điểm bán</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#2" role="tab" data-toggle="tab">Cơ quan</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#3" role="tab" data-toggle="tab">Trường học</a>
-                            </li>
-                            <li role="presentation">
-                                <a href="#4" role="tab" data-toggle="tab">Bán lẻ</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row">
-                                        <table id="dataTables-example" class="">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Khách hàng</th>
-                                                <th>Ngày đầu kì</th>
-                                                <th>Đầu kì</th>
-                                                <th>Phát sinh</th>
-                                                <th>Cuối kì</th>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="chiTietCongNo.html">Trường Đại học Trà Vinh</a></td>
-                                                    <td>25/10/2014</td>
-                                                    <td>12.000.000</td>
-                                                    <td>5.000.000</td>
-                                                    <td>17.000.000</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
                                 </div>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>   
+                                <a href="<?php echo $this->url('cong_no/crud', array('action'=>'thanhToan')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Thanh Toán</button></a>                                 
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="1">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="2">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="3">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
-                            <div role="tabpanel" class="tab-pane" id="4">
-                                <p class="note">Dữ liệu tại đây</p>
-                            </div>
+                            
                         </div>
-                    </div>
+                    </div>                    
+                </div>                
+                <div class="panel panel-info"> 
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Tên khách hàng</h3> 
+                    </div> 
+                    <div class="panel-body"> 
+                        <?php
+                            $form->get('khachHang')->setAttribute('class','h5a-input form-control input-sm');                                
+                            echo $this->formElement($form->get('khachHang'));
+                        ?> 
+                        <div id="khach-hang-search-result"></div>
+                    </div> 
                 </div>
+                <div class="panel panel-info" hidden="true" id="thongTinChiTiet"> 
+                    
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Ngày đầu kì</h3> 
+                    </div> 
+                    <div class="panel-body">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Nợ phát sinh</h3> 
+                    </div> 
+                    <div class="panel-body">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Nợ cuối kì</h3> 
+                    </div> 
+                    <div class="panel-body">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Thanh toán</h3>
+                    </div> 
+                    <div class="panel-body">
+                        <?php
+                            $form->get('thanhToan')->setAttribute('class','h5a-input form-control input-sm');                                
+                            echo $this->formElement($form->get('thanhToan'));
+                        ?>
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Số dư</h3> 
+                    </div> 
+                    <div class="panel-body">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Ngày thanh toán</h3> 
+                    </div> 
+                    <div class="panel-body">
+                    </div>                    
+                </div>                
             </div>
         </div>
     </div>
+</div>
+<?php
+    echo $this->form()->closeTag();
+?>
     <!-- /.container -->
 
     <!-- jQuery -->
@@ -224,5 +126,80 @@
             "bInfo": true,
             "bAutoWidth": true
         });
+
+        var xhr;
+//Hiển thị, chọn khách hàng
+        $('#tenKhachHang').keyup(function(){
+            var tenKhachHang=$(this).val();
+
+            if(xhr && xhr.readyState != 4){
+                xhr.abort(); //huy lenh ajax truoc do
+            }
+
+            xhr = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchKhachHang')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'tenKhachHang':tenKhachHang
+                },
+                success:function(data){
+                    $.each(data, function(key,val){
+                        $('#khach-hang-search-result').empty(); //lam rong khung ket qua
+
+                        var pos = $('#tenKhachHang').position(); //lấy tọa độ của ô tên khách hàng
+                        $('#khach-hang-search-result').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+                        $.each(data, function(key, val){
+                            $('#khach-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span></div>');
+                        })
+                    });
+                }
+            });
+            return false;
+        });
+
+        $('#khach-hang-search-result').on('click', '.list-group-item', function(){
+
+            var id = $(this).find('span:eq(0)').text(); 
+            var ten = $(this).find('span:eq(1)').text();            
+
+
+            $('#idKhachhang').val(id);
+            $('#tenKhachHang').val(ten);
+            $('#khach-hang-search-result').empty();
+            $('#thongTinChiTiet').show();
+
+            /*var xhr1 = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchCongNo')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'idDoiTac':id
+                },
+                success:function(data){
+
+                    $.each(data, function(key,val){*/
+
+                        //$('#khach-hang-search-result').empty(); //lam rong khung ket qua
+
+                        /*var pos = $('#tenKhachHang').position(); //lấy tọa độ của ô tên khách hàng
+                        $('#khach-hang-search-result').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });*/
+                        /*$.each(data, function(key, val){
+                            $('#khach-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span></div>');
+                        })*/
+                    /*});
+                }*/
+        });
+//./Hiển thị, chọn khách hàng
     });
     </script>
