@@ -6,7 +6,24 @@
      $form->setAttribute('class','form-horizontal');
      $form->prepare();
      echo $this->form()->openTag($form);
-     echo $this->formHidden($form->get('idNhaCungCap'));
+     echo $this->formHidden($form->get('phieu-chi')->get('idPhieuChi'));
+     echo $this->formHidden($form->get('phieu-chi')->get('idUserNv'));
+
+     $form->get('phieu-chi')->get('ngayThanhToan')->setAttribute('hidden','true');
+     $form->get('phieu-chi')->get('ngayThanhToan')->setAttribute('value', date("Y-m-d"));
+     echo $this->formElement($form->get('phieu-chi')->get('ngayThanhToan'));
+     
+
+     $congNo=$form->get('phieu-chi')->get('idCongNo');
+     echo $this->formHidden($congNo->get('idCongNo'));
+
+     echo $this->formHidden($congNo->get('idDoiTac'));
+
+     $congNo->get('ki')->setAttribute('hidden','true');
+     echo $this->formHidden($congNo->get('ki'));
+     echo $this->formHidden($congNo->get('noDauKi'));
+     echo $this->formHidden($congNo->get('noPhatSinh'));
+
 ?>
 <style type="text/css">    
     #nha-cung-cap-search-result{ cursor:pointer;}
@@ -56,6 +73,7 @@
                         <?php
                             $form->get('tenNhaCungCap')->setAttribute('class','h5a-input form-control input-sm');                                
                             echo $this->formElement($form->get('tenNhaCungCap'));
+                            
                         ?> 
                         <div id="nha-cung-cap-search-result"></div>
                     </div> 
@@ -71,13 +89,13 @@
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ đầu kì</h3> 
                     </div> 
-                    <div class="panel-body" id="noDauKi">
+                    <div class="panel-body" id="noDauKiView">
                     </div>
 
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ phát sinh</h3> 
                     </div> 
-                    <div class="panel-body" id="noPhatSinh">
+                    <div class="panel-body" id="noPhatSinhView">
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ cuối kì</h3> 
@@ -89,21 +107,41 @@
                     </div> 
                     <div class="panel-body">
                         <?php
-                            $form->get('thanhToan')->setAttribute('class','h5a-input form-control input-sm');                                
-                            echo $this->formElement($form->get('thanhToan'));
+                            $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
+                            echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
                         ?>
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Số dư</h3> 
                     </div> 
-                    <div class="panel-body" id="soDu">
+                    <div class="panel-body">
+                        <span  id="soDu"></span>
+                        <?php
+                            $congNo->get('duNo')->setAttribute('hidden','true');
+                            echo $this->formHidden($congNo->get('duNo'));  
+                        ?>
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Ngày thanh toán</h3> 
                     </div> 
                     <div class="panel-body">
                         <?php echo date("d/m/Y"); ?>
-                    </div>                    
+                    </div> 
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Lý do</h3> 
+                    </div> 
+                    <div class="panel-body">
+                        <?php 
+                            $form->get('phieu-chi')->get('lyDo')->setAttribute('class','h5a-input form-control input-sm'); 
+                            echo $this->formElement($form->get('phieu-chi')->get('lyDo')); 
+                        ?>
+                    </div>   
+                    <div class="panel-body">                       
+                        <?php 
+                            $form->get('submitbutton')->setAttribute('class','full btn h5a-btn btn-success');
+                            echo $this->formElement($form->get('submitbutton')); 
+                        ?>                     
+                    </div>                 
                 </div>                
             </div>
         </div>
@@ -181,7 +219,7 @@
             var ten = $(this).find('span:eq(1)').text();            
 
 
-            $('#idNhaCungCap').val(id);
+            $('#idDoiTac').val(id);
             $('#tenNhaCungCap').val(ten);
             $('#nha-cung-cap-search-result').empty();
             $('#thongTinChiTiet').show();
@@ -200,13 +238,52 @@
                     var noPhatSinh=data.noPhatSinh;
                     var noCuoiKi=data.noCuoiKi;
                     $('#ngayDauKi').text(ngayDauKi);
-                    $('#noDauKi').text(noDauKi);
-                    $('#noPhatSinh').text(noPhatSinh);
+                    $('#ki').val(ngayDauKi);
+                    $('#noDauKi').val(noDauKi);// cái này để lưu vào cơ sở dữ liệu
+                    $('#noPhatSinh').val(noPhatSinh);// cái này để lưu vào cơ sở dữ liệu
+                    $('#noDauKiView').text(noDauKi);// cái này để hiển thị chơi thôi
+                    $('#noPhatSinhView').text(noPhatSinh);// cái này để hiển thị chơi thôi
                     $('#noCuoiKi').text(noCuoiKi);
+
+
+                    $('#soTien').change(function(){                    
+                        var tienThanhToan=$(this).val();
+                        if(tienThanhToan<=data.noCuoiKi)
+                        {
+                            $('#duNo').text(data.noCuoiKi-tienThanhToan);
+                            $('#soDu').text(data.noCuoiKi-tienThanhToan);
+                        }
+                        else
+                        {
+                            alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                            $('#duNo').val('');
+                            $('#soTien').val(0);
+                            $('#soDu').text(data.noCuoiKi);
+                        }
+                    });
+                    $('#soTien').keyup(function(){                    
+                        var tienThanhToan=$(this).val();
+                        if(tienThanhToan<=data.noCuoiKi)
+                        {
+                            $('#duNo').val(data.noCuoiKi-tienThanhToan);
+                            $('#soDu').text(data.noCuoiKi-tienThanhToan);
+                        }
+                        else
+                        {
+                            alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                            $('#duNo').val('');
+                            $('#soTien').val(0);
+                            $('#soDu').text(data.noCuoiKi);
+                        }
+                    });
                 
                 }
             });
 //./Hiển thị, chọn khách hàng
+        });
+
+        $('#thanhToan').keyup(function(){
+            alert('phan văn thanh');
         });
     })
    

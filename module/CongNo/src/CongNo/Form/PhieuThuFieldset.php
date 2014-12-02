@@ -15,7 +15,7 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
         parent::__construct('phieu-thu');
 
         $this->setHydrator(new DoctrineHydrator($objectManager))
-             ->setObject(new PhieuChi());
+             ->setObject(new PhieuThu());
 
         $this->add(array(
              'name' => 'idPhieuThu',

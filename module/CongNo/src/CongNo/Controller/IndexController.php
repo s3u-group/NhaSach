@@ -8,6 +8,8 @@ namespace CongNo\Controller;
  use Zend\ServiceManager\ServiceManager;
  use CongNo\Form\ThanhToanForm;
  use CongNo\Form\ThanhToanNhaCungCapForm;
+ use CongNo\Form\PhieuChiFieldset;
+ use CongNo\Entity\PhieuChi;
 
  class IndexController extends AbstractActionController
  {
@@ -181,10 +183,44 @@ namespace CongNo\Controller;
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();     
       $form= new ThanhToanNhaCungCapForm($entityManager); 
+      $phieuChi=new PhieuChi();
+      $form->bind($phieuChi);
+
+      $request=$this->getRequest();
+      if($request->isPost())
+      {
+        
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+
+          $phieuChi->setIdUserNv($user);
+          $idDoiTac=$phieuChi->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
+          
+
+          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac='.$idDoiTac);
+          $phieuNhaps=$query->getResult();
+
+          foreach ($phieuNhaps as $phieuNhap) {
+            $phieuNhap->setStatus(1);
+            $entityManager->flush();
+          }
+
+          $entityManager->persist($phieuChi);
+
+          $entityManager->flush();
+          return $this->redirect()->toRoute('cong_no/crud', array(
+             'action' => 'congNoNhaCungCap',
+          ));
+          
+        }
+      }
+
       return array(
         'form'=>$form,
       );
-      die(var_dump('Form thanh toan cong no voi nha cung cap'));
   }
 
   public function searchNhaCungCapAction()

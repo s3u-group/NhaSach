@@ -24,7 +24,7 @@
 
 
 		/**
-		* @ORM\OneToOne(targetEntity="CongNo\Entity\CongNo")
+		* @ORM\OneToOne(targetEntity="CongNo\Entity\CongNo", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_cong_no", referencedColumnName="id_cong_no")
 		*/
 		private $idCongNo;
