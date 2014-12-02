@@ -1,0 +1,213 @@
+<?php
+    $this->headTitle('Thanh toán công nợ vs Nhà cung cấp');
+    $form->setAttribute('action', $this->url('cong_no/crud', array('action' => 'thanhToanNhaCungCap')));
+     $form->setAttribute('role','form');
+     $form->setAttribute('id','formThanhToan');
+     $form->setAttribute('class','form-horizontal');
+     $form->prepare();
+     echo $this->form()->openTag($form);
+     echo $this->formHidden($form->get('idNhaCungCap'));
+?>
+<style type="text/css">    
+    #nha-cung-cap-search-result{ cursor:pointer;}
+</style>
+<div class="container">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Thanh toán /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Thanh toán</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>   
+                                <a href="<?php echo $this->url('cong_no/crud', array('action'=>'thanhToanNhaCungCap')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Thanh Toán</button></a>                                 
+                            </div>
+                            
+                        </div>
+                    </div>                    
+                </div>                
+                <div class="panel panel-info"> 
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Tên nhà cung cấp</h3> 
+                    </div> 
+                    <div class="panel-body"> 
+                        <?php
+                            $form->get('tenNhaCungCap')->setAttribute('class','h5a-input form-control input-sm');                                
+                            echo $this->formElement($form->get('tenNhaCungCap'));
+                        ?> 
+                        <div id="nha-cung-cap-search-result"></div>
+                    </div> 
+                </div>
+                <div class="panel panel-info" hidden="true" id="thongTinChiTiet"> 
+                    
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Ngày đầu kì</h3> 
+                    </div> 
+                    <div class="panel-body" id="ngayDauKi">
+                    </div>
+
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Nợ đầu kì</h3> 
+                    </div> 
+                    <div class="panel-body" id="noDauKi">
+                    </div>
+
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Nợ phát sinh</h3> 
+                    </div> 
+                    <div class="panel-body" id="noPhatSinh">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Nợ cuối kì</h3> 
+                    </div> 
+                    <div class="panel-body" id="noCuoiKi">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Thanh toán</h3>
+                    </div> 
+                    <div class="panel-body">
+                        <?php
+                            $form->get('thanhToan')->setAttribute('class','h5a-input form-control input-sm');                                
+                            echo $this->formElement($form->get('thanhToan'));
+                        ?>
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Số dư</h3> 
+                    </div> 
+                    <div class="panel-body" id="soDu">
+                    </div>
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Ngày thanh toán</h3> 
+                    </div> 
+                    <div class="panel-body">
+                        <?php echo date("d/m/Y"); ?>
+                    </div>                    
+                </div>                
+            </div>
+        </div>
+    </div>
+</div>
+<?php
+    echo $this->form()->closeTag();
+?>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+
+        var xhr; 
+        var xhrSearchCongNoKhachHang;
+//Hiển thị, chọn khách hàng
+        $('#tenNhaCungCap').keyup(function(){
+            $('#nha-cung-cap-search-result').empty();
+            $('#thongTinChiTiet').hide();
+            var tenNhaCungCap=$(this).val();
+
+            if(xhr && xhr.readyState != 4){
+                xhr.abort(); //huy lenh ajax truoc do
+            }
+
+            xhr = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchNhaCungCap')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'tenNhaCungCap':tenNhaCungCap
+                },
+                success:function(data){
+                    $.each(data, function(key,val){
+                        $('#nha-cung-cap-search-result').empty(); //lam rong khung ket qua
+
+                        var pos = $('#tenNhaCungCap').position(); //lấy tọa độ của ô tên khách hàng
+                        $('#nha-cung-cap-search-result').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+                        $.each(data, function(key, val){
+                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idNhaCungCap+'</span><span>'+val.tenNhaCungCap+'</span></div>');
+                        })
+                    });
+                }
+            });
+            return false;
+        });
+
+        
+        $('#nha-cung-cap-search-result').on('click', '.list-group-item', function(){
+
+            var id = $(this).find('span:eq(0)').text(); 
+            var ten = $(this).find('span:eq(1)').text();            
+
+
+            $('#idNhaCungCap').val(id);
+            $('#tenNhaCungCap').val(ten);
+            $('#nha-cung-cap-search-result').empty();
+            $('#thongTinChiTiet').show();
+
+            xhrSearchCongNoKhachHang = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchCongNoNhaCungCap')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'idDoiTac':id
+                },
+                success:function(data){
+                   
+                    var ngayDauKi=data.ngayDauKi;
+                    var noDauKi=data.noDauKi;
+                    var noPhatSinh=data.noPhatSinh;
+                    var noCuoiKi=data.noCuoiKi;
+                    $('#ngayDauKi').text(ngayDauKi);
+                    $('#noDauKi').text(noDauKi);
+                    $('#noPhatSinh').text(noPhatSinh);
+                    $('#noCuoiKi').text(noCuoiKi);
+                
+                }
+            });
+//./Hiển thị, chọn khách hàng
+        });
+    })
+   
+    </script>
