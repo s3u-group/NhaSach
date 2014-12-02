@@ -127,9 +127,12 @@
             "bAutoWidth": true
         });
 
-        var xhr;
+        var xhr; 
+        var xhrSearchCongNoKhachHang;
 //Hiển thị, chọn khách hàng
         $('#tenKhachHang').keyup(function(){
+            $('#khach-hang-search-result').empty();
+            $('#thongTinChiTiet').hide();
             var tenKhachHang=$(this).val();
 
             if(xhr && xhr.readyState != 4){
@@ -163,6 +166,7 @@
             return false;
         });
 
+        
         $('#khach-hang-search-result').on('click', '.list-group-item', function(){
 
             var id = $(this).find('span:eq(0)').text(); 
@@ -174,8 +178,8 @@
             $('#khach-hang-search-result').empty();
             $('#thongTinChiTiet').show();
 
-            /*var xhr1 = $.ajax({
-                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchCongNo')); ?>',
+            xhrSearchCongNoKhachHang = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchCongNoKhachHang')); ?>',
                 type:'POST',
                 dataType:'json',
                 data:{
@@ -183,7 +187,7 @@
                 },
                 success:function(data){
 
-                    $.each(data, function(key,val){*/
+                    $.each(data, function(key,val){
 
                         //$('#khach-hang-search-result').empty(); //lam rong khung ket qua
 
@@ -197,9 +201,12 @@
                         /*$.each(data, function(key, val){
                             $('#khach-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span></div>');
                         })*/
-                    /*});
-                }*/
-        });
+                    });
+                
+                }
+            });
 //./Hiển thị, chọn khách hàng
-    });
+        });
+    })
+   
     </script>
