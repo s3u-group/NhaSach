@@ -24,7 +24,7 @@
 
 
 		/**
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac", cascade={"persist"})
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\DoiTac")
 		* @ORM\JoinColumn(name="id_doi_tac", referencedColumnName="id_doi_tac")
 		*/
 		private $idDoiTac;

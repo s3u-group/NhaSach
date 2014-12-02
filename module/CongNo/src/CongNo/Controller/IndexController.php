@@ -8,6 +8,9 @@ namespace CongNo\Controller;
  use Zend\ServiceManager\ServiceManager;
  use CongNo\Form\ThanhToanForm;
  use CongNo\Entity\PhieuThu;
+ use CongNo\Form\ThanhToanNhaCungCapForm;
+ use CongNo\Form\PhieuChiFieldset;
+ use CongNo\Entity\PhieuChi;
 
  class IndexController extends AbstractActionController
  {
@@ -79,6 +82,23 @@ namespace CongNo\Controller;
       $entityManager=$this->getEntityManager();     
       $form= new ThanhToanForm($entityManager);
       $phieuThu= new PhieuThu();
+      $form->bind($phieuThu);
+
+      $request=$this->getRequest();      
+      if($request->isPost())
+      {
+        var_dump($request->getPost());
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+          $phieuThu->setIdUserNv($user);
+
+          $entityManager->persist($phieuThu);
+          $entityManager->flush();
+          return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
+        }        
+      }      
       return array(
         'form'=>$form,
       );
@@ -174,10 +194,141 @@ namespace CongNo\Controller;
     return $json;
   }
 
+
+
+  // -----------------------------------------------------------------------------
   public function thanhToanNhaCungCapAction()
   {
       $this->layout('layout/giaodien');
-      die(var_dump('Form thanh toan cong no voi nha cung cap'));
+      $entityManager=$this->getEntityManager();     
+      $form= new ThanhToanNhaCungCapForm($entityManager); 
+      $phieuChi=new PhieuChi();
+      $form->bind($phieuChi);
+
+      $request=$this->getRequest();
+      if($request->isPost())
+      {
+        die(var_dump($request->getPost()));
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+
+          $phieuChi->setIdUserNv($user);
+          $idDoiTac=$phieuChi->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
+          
+
+          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac='.$idDoiTac);
+          $phieuNhaps=$query->getResult();
+
+          foreach ($phieuNhaps as $phieuNhap) {
+            $phieuNhap->setStatus(1);
+            $entityManager->flush();
+          }
+
+          $entityManager->persist($phieuChi);
+
+          $entityManager->flush();
+          return $this->redirect()->toRoute('cong_no/crud', array(
+             'action' => 'congNoNhaCungCap',
+          ));
+          
+        }
+      }
+
+      return array(
+        'form'=>$form,
+      );
+  }
+
+  public function searchNhaCungCapAction()
+  {
+    $response=array();
+
+    $request=$this->getRequest();
+    if($request->isXmlHttpRequest())
+    {
+      $data=$request->getPost();
+      $tenNhaCungCap=$data['tenNhaCungCap'];
+      if($tenNhaCungCap)
+      {
+        $entityManager=$this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.loaiDoiTac=46 and kh.hoTen LIKE :ten');
+        $query->setParameter('ten','%'.$tenNhaCungCap.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $nhaCungCaps = $query->getResult(); // array of CmsArticle objects 
+        foreach ($nhaCungCaps as $nhaCungCap) {
+          $response[]=array(
+            'idNhaCungCap'=>$nhaCungCap->getIdDoiTac(),
+            'tenNhaCungCap'=>$nhaCungCap->getHoTen(),            
+          );
+        }
+      }
+    }
+
+    $json = new JsonModel($response);
+    return $json;
+  }
+
+  public function searchCongNoNhaCungCapAction()
+  {
+    $response=array();
+
+    $request=$this->getRequest();
+    if($request->isXmlHttpRequest())
+    {
+      $data=$request->getPost();
+      $idDoiTac=$data['idDoiTac'];
+      if($idDoiTac)
+      {
+        $entityManager=$this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
+        $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $congNos = $query->getResult(); // array of CmsArticle objects 
+
+        // nếu đã có công nợ trước với hệ thống
+        if($congNos)
+        {
+          $ngayDauKi=$congNos[0]->getNgayThanhToan()->format('Y-m-d');
+          $noDauKi=$congNos[0]->getIdCongNo()->getDuNo();
+          
+        }
+        else// khách hàng mới tạo chưa có công nợ với hệ thống lần nào
+        {
+          // nợ đầu kỳ
+          $noDauKi=0;
+          $dT=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+
+          // lấy ngày đăng ký làm ngày đầu kỳ
+          $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+        }
+
+        // lấy nợ phát sinh hoaDon
+        $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac= :idDoiTac');
+        $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $phieuNhaps=$query->getResult();
+
+        
+        $noPhatSinh=0;
+        foreach ($phieuNhaps as $phieuNhap) {
+          foreach ($phieuNhap->getCtPhieuNhaps() as $ctPhieuNhap) {
+            $noPhatSinh+=(float)$ctPhieuNhap->getGiaNhap()*(float)$ctPhieuNhap->getSoLuong();
+          }
+        }
+
+        // tính nợ cuối kỳ
+        $noCuoiKi=(float)$noDauKi+(float)$noPhatSinh;
+        $response=array(
+          'ngayDauKi'=>$ngayDauKi,
+          'noDauKi'=>$noDauKi,
+          'noPhatSinh'=>$noPhatSinh,
+          'noCuoiKi'=>$noCuoiKi,
+        );
+      }
+    }
+
+    $json = new JsonModel($response);
+    return $json;
   } 
  }
 ?>

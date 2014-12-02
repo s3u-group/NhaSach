@@ -50,7 +50,7 @@
 		private $idDoiTac;
 
 		/**
-		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTPhieuNhap", mappedBy="id_phieu_nhap", cascade={"persist"})
+		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTPhieuNhap", mappedBy="idPhieuNhap", cascade={"persist"})
 		 */
 		private $ctPhieuNhaps;
 

@@ -8,6 +8,7 @@ use Zend\Form\Element;
 use Zend\Form\Form;
 use CongNo\Entity\CongNo;
 
+
 class CongNoFieldset extends Fieldset implements InputFilterProviderInterface
 {
     public function __construct(ObjectManager $objectManager)
@@ -25,6 +26,9 @@ class CongNoFieldset extends Fieldset implements InputFilterProviderInterface
         $this->add(array(
              'name' => 'idDoiTac',
              'type' => 'Hidden',
+             'attributes'=>array(
+                'id'=>'idDoiTac',                
+            ),
         ));
 
         $this->add(array(
@@ -33,7 +37,7 @@ class CongNoFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(                 
              ),
              'attributes'=>array(
-             	'id'=>'ki'                
+             	'id'=>'ki',                
             ),
          ));        
 

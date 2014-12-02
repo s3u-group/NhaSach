@@ -24,10 +24,15 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
         $congNoFieldset->setName('idCongNo');
         $this->add($congNoFieldset);
 
-        $systemUserFieldset = new SystemUserFieldset($objectManager);
+        /*$systemUserFieldset = new SystemUserFieldset($objectManager);
         $systemUserFieldset->setUseAsBaseFieldset(true);
         $systemUserFieldset->setName('idUserNv');        
-        $this->add($systemUserFieldset);
+        $this->add($systemUserFieldset);*/
+
+        $this->add(array(
+             'name' => 'idUserNv',
+             'type' => 'Hidden',
+        ));
 
         $this->add(array(
              'name' => 'idPhieuThu',
@@ -59,7 +64,8 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'ngayThanhToan',
              'type' => 'Date',             
              'attributes'=>array(               
-                'id'=>'ngayThanhToan',
+                'id'=>'ngayThanhToan',                
+                'class'=>'h5a-input form-control input-sm',
             ),
         ));        
     }

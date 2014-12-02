@@ -7,46 +7,56 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
-use CongNo\Form\PhieuThuFieldset;
+use CongNo\Form\PhieuChiFieldset;
 
 
-class ThanhToanForm extends Form
+class ThanhToanNhaCungCapForm extends Form
 {
     public function __construct(ObjectManager $objectManager)
     {
-        parent::__construct('thanh-toan');
+        parent::__construct('thanh-toan-nha-cung-cap');
                
         $this->setHydrator(new DoctrineHydrator($objectManager));
 
-        $phieuThuFieldset = new PhieuThuFieldset($objectManager);
-        $phieuThuFieldset->setUseAsBaseFieldset(true);
-        $this->add($phieuThuFieldset);
+        // Add the user fieldset, and set it as the base fieldset
+        $phieuChiFieldset = new PhieuChiFieldset($objectManager);
+        $phieuChiFieldset->setUseAsBaseFieldset(true);
+        $this->add($phieuChiFieldset);
 
-        /*$this->add(array(
-             'name' => 'idKhachHang',
+       /* $this->add(array(
+             'name' => 'idNhaCungCap',
              'type' => 'hidden',
              'attributes'=>array(  
-                'id'=>'idKhachhang'            
+                'id'=>'idNhaCungCap'            
             ),
-         ));
-        */
+         ));*/
+
+        /*$this->add(array(
+             'name' => 'thanhToan',
+             'type' => 'Number',
+             'attributes'=>array(  
+                'id'=>'thanhToan',
+                'min'=>0,            
+            ),
+         ));*/
+
         $this->add(array(
-             'name' => 'khachHang',
+             'name' => 'tenNhaCungCap',
              'type' => 'Text',
              'attributes'=>array(
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm', 
-                'placeholder'=>'Nhập tên khách hàng',   
-                'id'=>'tenKhachHang',
+                'placeholder'=>'Nhập tên nhà cung cấp',   
+                'id'=>'tenNhaCungCap',
                 'autocomplete'=>'off',
             ),
          ));
 
         $this->add(array(
-             'name' => 'submit',
+             'name' => 'submitbutton',
              'type' => 'Submit',
              'attributes' => array(
-                 'value' => 'Go',
+                 'value' => 'Lưu',
                  'id' => 'submitbutton',
              ),
          ));

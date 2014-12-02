@@ -7,6 +7,8 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use CongNo\Entity\PhieuChi;
+use CongNo\Form\CongNoFieldset;
+use Zend\ServiceManager\ServiceManager;
 
 class PhieuChiFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -22,10 +24,10 @@ class PhieuChiFieldset extends Fieldset implements InputFilterProviderInterface
              'type' => 'Hidden',
         ));
 
-        $this->add(array(
-             'name' => 'idCongNo',
-             'type' => 'Hidden',
-        ));
+        $congNoFieldset = new CongNoFieldset($objectManager);
+        $congNoFieldset->setUseAsBaseFieldset(true);
+        $congNoFieldset->setName('idCongNo');
+        $this->add($congNoFieldset);      
         
         $this->add(array(
              'name' => 'idUserNv',
@@ -34,7 +36,7 @@ class PhieuChiFieldset extends Fieldset implements InputFilterProviderInterface
 
         $this->add(array(
              'name' => 'lyDo',
-             'type' => 'Text',
+             'type' => 'TextArea',
              'options' => array(                 
              ),
              'attributes'=>array(
@@ -57,6 +59,12 @@ class PhieuChiFieldset extends Fieldset implements InputFilterProviderInterface
                 'id'=>'ngayThanhToan',
             ),
         ));        
+    }
+    public function getInputFilterSpecification()
+    {
+        return array(
+          
+        );
     }
 }
 ?>
