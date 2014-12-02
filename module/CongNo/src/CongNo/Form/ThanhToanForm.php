@@ -7,6 +7,7 @@ use Zend\Form\Form;
 use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\InputFilter\InputFilter;
+use CongNo\Form\PhieuThuFieldset;
 
 class ThanhToanForm extends Form
 {
@@ -16,6 +17,10 @@ class ThanhToanForm extends Form
                
         $this->setHydrator(new DoctrineHydrator($objectManager));
 
+        $phieuThuFieldset = new PhieuThuFieldset($objectManager);
+        $phieuThuFieldset->setUseAsBaseFieldset(true);
+        $this->add($phieuThuFieldset);
+
         $this->add(array(
              'name' => 'idKhachHang',
              'type' => 'hidden',
@@ -23,16 +28,7 @@ class ThanhToanForm extends Form
                 'id'=>'idKhachhang'            
             ),
          ));
-
-        $this->add(array(
-             'name' => 'thanhToan',
-             'type' => 'Number',
-             'attributes'=>array(  
-                'id'=>'thanhToan',
-                'min'=>0,            
-            ),
-         ));
-
+        
         $this->add(array(
              'name' => 'khachHang',
              'type' => 'Text',

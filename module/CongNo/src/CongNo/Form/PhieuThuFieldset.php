@@ -7,6 +7,8 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use CongNo\Entity\PhieuThu;
+use CongNo\Form\CongNoFieldset;
+use HangHoa\Form\SystemUserFieldset;
 
 class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -15,30 +17,31 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
         parent::__construct('phieu-thu');
 
         $this->setHydrator(new DoctrineHydrator($objectManager))
-             ->setObject(new PhieuChi());
+             ->setObject(new PhieuThu());
+
+        $congNoFieldset = new CongNoFieldset($objectManager);
+        $congNoFieldset->setUseAsBaseFieldset(true);
+        $congNoFieldset->setName('idCongNo');
+        $this->add($congNoFieldset);
+
+        $systemUserFieldset = new SystemUserFieldset($objectManager);
+        $systemUserFieldset->setUseAsBaseFieldset(true);
+        $systemUserFieldset->setName('idUserNv');        
+        $this->add($systemUserFieldset);
 
         $this->add(array(
              'name' => 'idPhieuThu',
-             'type' => 'Hidden',
-        ));
-
-        $this->add(array(
-             'name' => 'idCongNo',
-             'type' => 'Hidden',
-        ));
-
-        $this->add(array(
-             'name' => 'idUserNv',
-             'type' => 'Hidden',
-        ));
+             'type' => 'Hidden',             
+        ));        
 
         $this->add(array(
              'name' => 'lyDo',
-             'type' => 'Text',
+             'type' => 'TextArea',
              'options' => array(                 
              ),
              'attributes'=>array(
-                'id'=>'lyDo'                
+                'id'=>'lyDo',
+                'class'=>'h5a-input form-control input-sm',               
             ),
          ));
 
@@ -47,9 +50,11 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
              'type' => 'Number',             
              'attributes'=>array(                
                 'id'=>'soTien',
+                'min'=>0,
+                'class'=>'h5a-input form-control input-sm',
             ),
         ));
-
+        
         $this->add(array(
              'name' => 'ngayThanhToan',
              'type' => 'Date',             
@@ -57,6 +62,12 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
                 'id'=>'ngayThanhToan',
             ),
         ));        
+    }
+     public function getInputFilterSpecification()
+    {
+        return array(
+          
+        );
     }
 }
 ?>

@@ -7,6 +7,7 @@ namespace CongNo\Controller;
  use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
  use Zend\ServiceManager\ServiceManager;
  use CongNo\Form\ThanhToanForm;
+ use CongNo\Entity\PhieuThu;
 
  class IndexController extends AbstractActionController
  {
@@ -76,7 +77,8 @@ namespace CongNo\Controller;
  	{
     	$this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();     
-      $form= new ThanhToanForm($entityManager); 
+      $form= new ThanhToanForm($entityManager);
+      $phieuThu= new PhieuThu();
       return array(
         'form'=>$form,
       );

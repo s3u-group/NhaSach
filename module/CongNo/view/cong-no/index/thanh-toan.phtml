@@ -7,6 +7,13 @@
      $form->prepare();
      echo $this->form()->openTag($form);
      echo $this->formHidden($form->get('idKhachHang'));
+     echo $this->formHidden($form->get('phieu-thu')->get('idPhieuThu'));
+     die(var_dump($form->get('phieu-thu')->get('idUserNv')->get('userId')));
+     echo $this->formHidden($form->get('phieu-thu')->get('idCongNo')->get('idCongNo'));
+     echo $this->formHidden($form->get('phieu-thu')->get('idUserNv'));
+
+     $currentDate = new \ DateTime(null, new \ DateTimeZone('Asia/Ho_Chi_Minh'));     
+     $ngayHienTai= $currentDate->format('d-m-Y');
 ?>
 <style type="text/css">    
     #khach-hang-search-result{ cursor:pointer;}
@@ -90,13 +97,12 @@
                     </div> 
                     <div class="panel-body">
                         <?php
-                            $form->get('thanhToan')->setAttribute('class','h5a-input form-control input-sm');                                
-                            echo $this->formElement($form->get('thanhToan'));
-                        ?>
+                            echo $this->formElement($form->get('phieu-thu')->get('soTien'));
+                        ?>                        
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Số dư</h3> 
-                    </div> 
+                    </div>
                     <div class="panel-body" id="soDu">
                     </div>
 
@@ -104,7 +110,21 @@
                         <h3 class="panel-title">Ngày thanh toán</h3> 
                     </div> 
                     <div class="panel-body">
-                    </div>                    
+                        <?php echo $ngayHienTai;?>
+                    </div>
+
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Lý do</h3> 
+                    </div> 
+                    <div class="panel-body">
+                        <?php
+                            echo $this->formElement($form->get('phieu-thu')->get('lyDo'));
+                        ?>
+                    </div>
+
+                    <div class="col-sm-3">
+                        <button type="submit" class="btn h5a-btn btn-primary full" onclick=""><i class="fa fa-print"></i> Lưu</button>
+                    </div>
                 </div>                
             </div>
         </div>
@@ -198,11 +218,37 @@
                 $('#noDauKi').text(data.noDauKi);
                 $('#noPhatSinh').text(data.noPhatSinh);
                 $('#noCuoiKi').text(data.noCuoiKi);
+
+            //Thanh toán
+                $('#soTien').change(function(){                    
+                    var tienThanhToan=$(this).val();
+                    if(tienThanhToan<=data.noCuoiKi)
+                    {
+                        $('#soDu').text(data.noCuoiKi-tienThanhToan);
+                    }
+                    else
+                    {
+                        alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                        $('#soDu').text('');
+                    }
+                });
+                $('#soTien').keyup(function(){                    
+                    var tienThanhToan=$(this).val();
+                    if(tienThanhToan<=data.noCuoiKi)
+                    {
+                        $('#soDu').text(data.noCuoiKi-tienThanhToan);
+                    }
+                    else
+                    {
+                        alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                        $('#soDu').text('');
+                    }
+                });
+            //Thanh toán
                 }
             });
+alert(data.noCuoiKi);
 //./Hiển thị, chọn khách hàng
-
-//
         });
     })
    

@@ -61,5 +61,11 @@ class CongNoFieldset extends Fieldset implements InputFilterProviderInterface
             ),
         ));
     }
+    public function getInputFilterSpecification()
+    {
+        return array(
+          
+        );
+    }
 }
 ?>
