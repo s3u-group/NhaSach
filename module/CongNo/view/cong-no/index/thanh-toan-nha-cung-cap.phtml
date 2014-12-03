@@ -17,11 +17,17 @@
      $congNo=$form->get('phieu-chi')->get('idCongNo');
      echo $this->formHidden($congNo->get('idCongNo'));
 
+     $congNo->get('idDoiTac')->setAttribute('value',$thongTinDoiTac->getIdDoiTac());
      echo $this->formHidden($congNo->get('idDoiTac'));
 
      $congNo->get('ki')->setAttribute('hidden','true');
+     $congNo->get('ki')->setAttribute('value',$response['ngayDauKi']);
      echo $this->formHidden($congNo->get('ki'));
+
+     $congNo->get('noDauKi')->setAttribute('value',$response['noDauKi']);
      echo $this->formHidden($congNo->get('noDauKi'));
+
+     $congNo->get('noPhatSinh')->setAttribute('value',$response['noPhatSinh']);
      echo $this->formHidden($congNo->get('noPhatSinh'));
 
 ?>
@@ -70,37 +76,36 @@
                         <h3 class="panel-title">Tên nhà cung cấp</h3> 
                     </div> 
                     <div class="panel-body"> 
-                        <?php
-                            $form->get('tenNhaCungCap')->setAttribute('class','h5a-input form-control input-sm');                                
-                            echo $this->formElement($form->get('tenNhaCungCap'));
-                            
-                        ?> 
-                        <div id="nha-cung-cap-search-result"></div>
+                        <?php echo $thongTinDoiTac->getHoTen(); ?>
                     </div> 
                 </div>
-                <div class="panel panel-info" hidden="true" id="thongTinChiTiet"> 
+                <div class="panel panel-info" id="thongTinChiTiet"> 
                     
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Ngày đầu kì</h3> 
                     </div> 
-                    <div class="panel-body" id="ngayDauKi">
+                    <div class="panel-body">
+                        <?php echo $response['ngayDauKi']; ?>
                     </div>
 
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ đầu kì</h3> 
                     </div> 
-                    <div class="panel-body" id="noDauKiView">
+                    <div class="panel-body">
+                        <?php echo $response['noDauKi']; ?>
                     </div>
 
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ phát sinh</h3> 
                     </div> 
-                    <div class="panel-body" id="noPhatSinhView">
+                    <div class="panel-body">
+                        <?php echo $response['noPhatSinh']; ?>
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ cuối kì</h3> 
                     </div> 
                     <div class="panel-body" id="noCuoiKi">
+                        <?php echo $response['noCuoiKi']; ?>
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Thanh toán</h3>
@@ -108,6 +113,7 @@
                     <div class="panel-body">
                         <?php
                             $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
+                            $form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );
                             echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
                         ?>
                     </div>
@@ -118,6 +124,7 @@
                         <span id="soDu"></span>
                         <?php
                             $congNo->get('duNo')->setAttribute('hidden','true');
+                            $congNo->get('duNo')->setAttribute('value',$response['noCuoiKi']);
                             echo $this->formHidden($congNo->get('duNo'));  
                         ?>
                     </div>
@@ -139,6 +146,7 @@
                     <div class="panel-body">                       
                         <?php 
                             $form->get('submitbutton')->setAttribute('class','full btn h5a-btn btn-success');
+
                             echo $this->formElement($form->get('submitbutton')); 
                         ?>                     
                     </div>                 
@@ -164,127 +172,51 @@
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
     $(document).ready(function() {
-        $('#dataTables-example').dataTable({
-            "pagingType": "simple",
-            "bPaginate": true,
-            "bLengthChange": true,
-            "bFilter": true,
-            "bInfo": true,
-            "bAutoWidth": true
-        });
 
-        var xhr; 
-        var xhrSearchCongNoKhachHang;
-//Hiển thị, chọn khách hàng
-        $('#tenNhaCungCap').keyup(function(){
-            $('#nha-cung-cap-search-result').empty();
-            $('#thongTinChiTiet').hide();
-            var tenNhaCungCap=$(this).val();
-
-            if(xhr && xhr.readyState != 4){
-                xhr.abort(); //huy lenh ajax truoc do
+        $('#submitbutton').click(function(){
+            var soTienThanhToan=parseInt($('#soTien').val());// là số tiền thanh toán nhập zô
+            if(soTienThanhToan==0||soTienThanhToan==''||soTienThanhToan==null)
+            {
+                alert('Bạn chưa nhập số tiền thanh toán!');
+                return false;
             }
-
-            xhr = $.ajax({
-                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchNhaCungCap')); ?>',
-                type:'POST',
-                dataType:'json',
-                data:{
-                    'tenNhaCungCap':tenNhaCungCap
-                },
-                success:function(data){
-                    $.each(data, function(key,val){
-                        $('#nha-cung-cap-search-result').empty(); //lam rong khung ket qua
-
-                        var pos = $('#tenNhaCungCap').position(); //lấy tọa độ của ô tên khách hàng
-                        $('#nha-cung-cap-search-result').css({
-                            position:'absolute',
-                            top:pos.top + 35,
-                            left:pos.left,
-                            'z-index': 100 // đặt search-result lên layout ngoài nhất
-                        });
-                        $.each(data, function(key, val){
-                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idNhaCungCap+'</span><span>'+val.tenNhaCungCap+'</span></div>');
-                        })
-                    });
-                }
-            });
-            return false;
+            return true;
+            
         });
-
-        
-        $('#nha-cung-cap-search-result').on('click', '.list-group-item', function(){
-
-            var id = $(this).find('span:eq(0)').text(); 
-            var ten = $(this).find('span:eq(1)').text();            
-
-
-            $('#idDoiTac').val(id);
-            $('#tenNhaCungCap').val(ten);
-            $('#nha-cung-cap-search-result').empty();
-            $('#thongTinChiTiet').show();
-
-            xhrSearchCongNoKhachHang = $.ajax({
-                url:'<?php echo $this->url('cong_no/crud', array('action'=>'searchCongNoNhaCungCap')); ?>',
-                type:'POST',
-                dataType:'json',
-                data:{
-                    'idDoiTac':id
-                },
-                success:function(data){
-                   
-                    var ngayDauKi=data.ngayDauKi;
-                    var noDauKi=data.noDauKi;
-                    var noPhatSinh=data.noPhatSinh;
-                    var noCuoiKi=data.noCuoiKi;
-                    $('#ngayDauKi').text(ngayDauKi);
-                    $('#ki').val(ngayDauKi);
-                    $('#noDauKi').val(noDauKi);// cái này để lưu vào cơ sở dữ liệu
-                    $('#noPhatSinh').val(noPhatSinh);// cái này để lưu vào cơ sở dữ liệu
-                    $('#noDauKiView').text(noDauKi);// cái này để hiển thị chơi thôi
-                    $('#noPhatSinhView').text(noPhatSinh);// cái này để hiển thị chơi thôi
-                    $('#noCuoiKi').text(noCuoiKi);
-
-
-                    $('#soTien').change(function(){                    
-                        var tienThanhToan=$(this).val();
-                        if(tienThanhToan<=data.noCuoiKi)
-                        {
-                            $('#duNo').text(data.noCuoiKi-tienThanhToan);
-                            $('#soDu').text(data.noCuoiKi-tienThanhToan);
-                        }
-                        else
-                        {
-                            alert('Số tiền thanh toán lớn hơn số dư cuối kì');
-                            $('#duNo').val('');
-                            $('#soTien').val(0);
-                            $('#soDu').text(data.noCuoiKi);
-                        }
-                    });
-                    $('#soTien').keyup(function(){                    
-                        var tienThanhToan=$(this).val();
-                        if(tienThanhToan<=data.noCuoiKi)
-                        {
-                            $('#duNo').val(data.noCuoiKi-tienThanhToan);
-                            $('#soDu').text(data.noCuoiKi-tienThanhToan);
-                        }
-                        else
-                        {
-                            alert('Số tiền thanh toán lớn hơn số dư cuối kì');
-                            $('#duNo').val('');
-                            $('#soTien').val(0);
-                            $('#soDu').text(data.noCuoiKi);
-                        }
-                    });
-                
-                }
-            });
-//./Hiển thị, chọn khách hàng
+               
+        $('#soTien').change(function(){   
+            var noCuoiKi=parseInt($('#noCuoiKi').text());                  
+            var tienThanhToan=parseInt($(this).val());
+            if(tienThanhToan<=noCuoiKi)
+            {
+                $('#duNo').val(noCuoiKi-tienThanhToan);
+                $('#soDu').text(noCuoiKi-tienThanhToan);
+            }
+            else
+            {
+                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                $('#duNo').val('');
+                $('#soTien').val(0);
+                $('#soDu').text(noCuoiKi);
+            }
         });
-
-        $('#thanhToan').keyup(function(){
-            alert('phan văn thanh');
-        });
-    })
+        $('#soTien').keyup(function(){    
+            var noCuoiKi=parseInt($('#noCuoiKi').text());                  
+            var tienThanhToan=parseInt($(this).val());
+            if(tienThanhToan<=noCuoiKi)
+            {
+                $('#duNo').val(noCuoiKi-tienThanhToan);
+                $('#soDu').text(noCuoiKi-tienThanhToan);
+            }
+            else
+            {
+                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                $('#duNo').val('');
+                $('#soTien').val(0);
+                $('#soDu').text(noCuoiKi);
+            }
+        });                
+               
+    });
    
     </script>

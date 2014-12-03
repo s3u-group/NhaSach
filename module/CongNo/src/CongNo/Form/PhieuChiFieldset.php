@@ -36,7 +36,7 @@ class PhieuChiFieldset extends Fieldset implements InputFilterProviderInterface
 
         $this->add(array(
              'name' => 'lyDo',
-             'type' => 'TextArea',
+             'type' => 'Text',
              'options' => array(                 
              ),
              'attributes'=>array(

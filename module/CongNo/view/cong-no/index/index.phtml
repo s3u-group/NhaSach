@@ -72,31 +72,25 @@
                                         <table id="" class="dataTables-example">
                                             <thead>
                                                 <th><input type="checkbox"/></th>
-                                                <th>Khách hàng</th>
+                                                <th>Nhà cung cấp</th>
                                                 <th>Ngày đầu kì</th>
                                                 <th>Đầu kì</th>
                                                 <th>Phát sinh</th>
                                                 <th>Cuối kì</th>
-                                                <th>Thanh toán</th>
-                                                <th>Số dư</th>
-                                                <th>Ngày thanh toán</th>
                                             </thead>
                                             <tbody>
                                             <?php 
                                                 
-                                                foreach ($congNos as $congNo) { 
+                                                foreach ($response as $rp) { 
                                                 ?>
                                                     <tr>
                                                         <td><input type="checkbox"/></td>
-                                                        <td><a href="chiTietCongNo.html"><?php  echo $congNo[0]->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></a></td>
-                                                        <td><?php  echo $congNo[0]->getIdCongNo()->getKi()->format('d-m-Y'); ?></td>
-                                                        <td><?php  echo $congNo[0]->getIdCongNo()->getNoDauKi(); ?></td>
-                                                        <td><?php  echo $congNo[0]->getIdCongNo()->getNoPhatSinh(); ?></td>
-                                                        <?php $noCuoiKi=(float)$congNo[0]->getIdCongNo()->getNoDauKi()+(float)$congNo[0]->getIdCongNo()->getNoPhatSinh(); ?>
-                                                        <td><?php echo $noCuoiKi; ?></td>
-                                                        <td><?php  echo $congNo[0]->getSoTien(); ?></td>
-                                                        <td><?php echo $congNo[0]->getIdCongNo()->getDuNo(); ?></td>
-                                                        <td><?php echo $congNo[0]->getNgayThanhToan()->format('d-m-Y'); ?></td>
+                                                        <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
+                                                        <td><?php  echo $rp['ngayDauKi']; ?></td>
+                                                        <td><?php  echo $rp['noDauKi']; ?></td>
+                                                        <td><?php  echo $rp['noPhatSinh']; ?></td>
+                                                        <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                        
                                                     </tr>
                                                 <?php    
                                                 }
@@ -116,38 +110,32 @@
                                             <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
                                             <thead>
                                                 <th><input type="checkbox"/></th>
-                                                <th>Khách hàng</th>
+                                                <th>Nhà cung cấp</th>
                                                 <th>Ngày đầu kì</th>
                                                 <th>Đầu kì</th>
                                                 <th>Phát sinh</th>
                                                 <th>Cuối kì</th>
-                                                <th>Thanh toán</th>
-                                                <th>Số dư</th>
-                                                <th>Ngày thanh toán</th>
                                             </thead>
                                             <tbody>
                                             <?php 
                                                 
-                                                foreach ($congNos as $congNo) { 
-                                                    if($congNo[0]->getIdCongNo()->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId()==$kenhPhanPhoi['termTaxonomyId'])
+                                                foreach ($response as $rp) { 
+                                                    if($kenhPhanPhoi['termTaxonomyId']==$rp['idKenhPhanPhoi'])
                                                     {
-                                                ?>
+                                                    ?>
                                                         <tr>
                                                             <td><input type="checkbox"/></td>
-                                                            <td><a href="chiTietCongNo.html"><?php  echo $congNo[0]->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></a></td>
-                                                            <td><?php  echo $congNo[0]->getIdCongNo()->getKi()->format('d-m-Y'); ?></td>
-                                                            <td><?php  echo $congNo[0]->getIdCongNo()->getNoDauKi(); ?></td>
-                                                            <td><?php  echo $congNo[0]->getIdCongNo()->getNoPhatSinh(); ?></td>
-                                                            <?php $noCuoiKi=(float)$congNo[0]->getIdCongNo()->getNoDauKi()+(float)$congNo[0]->getIdCongNo()->getNoPhatSinh(); ?>
-                                                            <td><?php echo $noCuoiKi; ?></td>
-                                                            <td><?php  echo $congNo[0]->getSoTien(); ?></td>
-                                                            <td><?php echo $congNo[0]->getIdCongNo()->getDuNo(); ?></td>
-                                                            <td><?php echo $congNo[0]->getNgayThanhToan()->format('d-m-Y'); ?></td>
+                                                            <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
+                                                            <td><?php  echo $rp['ngayDauKi']; ?></td>
+                                                            <td><?php  echo $rp['noDauKi']; ?></td>
+                                                            <td><?php  echo $rp['noPhatSinh']; ?></td>
+                                                            <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                            
                                                         </tr>
-                                                <?php  
-                                                    }  
+                                                    <?php    
+                                                    }
                                                 }
-                                            ?>
+                                                ?>
                                             </tbody>
                                         </table>
                                         </p>
