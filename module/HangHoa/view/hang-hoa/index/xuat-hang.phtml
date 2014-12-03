@@ -196,7 +196,7 @@ $this->headTitle($title);
                     </table>
                     <div class="row">
                         <div class="col-sm-3">
-                            <a href=""><button class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
+                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>"><button type="button" class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
                         </div>
                         <div class="col-sm-3 pull-right">
                             <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button>

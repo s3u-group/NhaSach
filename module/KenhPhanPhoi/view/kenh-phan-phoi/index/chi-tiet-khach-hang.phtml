@@ -47,7 +47,7 @@
                 <img class="pull-left img-circle" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" width="40px" height="40px" alt="Ảnh đại diện"> <?php echo $khachHang->getHoTen(); ?>
             </h1>
             <div class="btn-group pull-right">
-                <a href="<?php echo $this->url('kenh_phan_phoi/crud', array('action'=>'xoaKhachHang','id'=>$khachHang->getIdDoiTac())); ?>" class="btn h5a-btn btn-danger btn-xs"><i class="fa fa-times"></i> Xóa khách hàng</a> 
+                <a href="<?php echo $this->url('kenh_phan_phoi/crud', array('action'=>'xoaKhachHang','id'=>$khachHang->getIdDoiTac())); ?>" class="btn h5a-btn btn-danger btn-xs" onclick="return xacNhanXoa()"><i class="fa fa-times"></i> Xóa khách hàng</a> 
                 <!-- <a class="btn h5a-btn btn-primary btn-xs"><i class="fa fa-refresh"></i> Refresh Item</a> -->
             </div>
             <p>
@@ -325,4 +325,15 @@
             "bAutoWidth": true
         });
     });
-    </script>
+</script>
+
+<script language="JavaScript">
+    function xacNhanXoa() {
+      var xacNhan=confirm("Bạn thật sự muốn xóa khách hàng này?");
+      if(xacNhan==true)
+      {
+        return true;
+      }
+      return false;
+    }
+</script>

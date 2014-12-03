@@ -82,12 +82,14 @@
                                             <tbody>
                                             <?php
                                                 foreach($donHangs as $donHang)
-                                                { ?>
+                                                {?>
                                                 <tr>
                                                     <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html"><?php echo '#'.$donHang->getMaHoaDon(); ?></a></td>
+                                                    <td>
+                                                        <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$donHang->getIdHoaDon()));?>"><?php echo '#'.$donHang->getMaHoaDon(); ?></a>
+                                                    </td>
                                                     <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
-                                                    <td><a href="khachHang.html"><?php $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
+                                                    <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$donHang->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
                                                     <td>
                                                     <?php 
                                                         if($donHang->getStatus()==0)
