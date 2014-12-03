@@ -710,6 +710,124 @@
     }
   }
 
+  public function importBangGiaAction()
+  {
+    $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();
+    $sanPham=new SanPham();
+    $form= new CreateSanPhamForm($entityManager);
+    /*$form->bind($sanPham);
+
+    $request = $this->getRequest();        
+    if($request->isPost())
+    {
+      $post = array_merge_recursive(
+        $request->getPost()->toArray(),
+        $request->getFiles()->toArray()
+      );
+
+      $fileType=$post['file']['type'];     
+      if($fileType=='application/vnd.ms-excel')
+      {
+        $objPHPExcel = new PHPExcel();
+        $tmpName=$post['file']['tmp_name'];
+        $objLoad = PHPExcel_IOFactory::load($tmpName);        
+
+        $listMaSanPham=array();
+        $taxonomyLoai=$this->TaxonomyFunction();
+        $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
+        foreach ($objLoad->getWorksheetIterator() as $worksheet) {
+            //$worksheetTitle     = $worksheet->getTitle();
+            $highestRow         = $worksheet->getHighestRow(); // e.g. 10
+            $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'            
+            $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+            for ($row = 2; $row <= $highestRow; ++ $row) {
+                //echo '<tr>';
+                for ($col = 2; $col < $highestColumnIndex; ++ $col) {
+                    
+                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                    if($col==2)
+                    {
+                      $maSanPham = $cell->getValue();
+                    }
+                    if($col==3)
+                    {
+                      $soLuong = $cell->getValue();
+                    }
+                    if($col==4)
+                    {
+                      $giaNhap = $cell->getValue();
+                    }                    
+                }
+                $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
+                $SanPhams = $query->getResult();                    
+                //die(var_dump($maSanPham));
+                if($SanPhams)
+                {
+                  foreach ($SanPhams as $SanPham)
+                  {
+                  //Cập nhật bảng SẢN PHẨM
+                    $tonKho=(int)($SanPham->getTonKho())+$soLuong;
+                    $SanPham->setTonKho($tonKho);
+                    $SanPham->setGiaNhap($giaNhap);
+                    $entityManager->flush();
+
+                  //Cập nhật bảng CHI TIẾT PHIẾU NHẬP
+                    $idSanPham=$SanPham->getIdSanPham();
+                    $query = $entityManager->createQuery('SELECT pn FROM HangHoa\Entity\CTPhieuNhap pn WHERE pn.idSanPham ='.$idSanPham);
+                    $PhieuNhaps = $query->getResult();
+                    foreach ($PhieuNhaps as $PhieuNhap)
+                    {
+                      $PhieuNhap->setSoLuong($soLuong);
+                      $PhieuNhap->setGiaNhap($giaNhap);
+                      $entityManager->flush();                      
+                    }
+                  //Cập nhật bảng GIÁ XUẤT
+                    // đưa vào taxonomy dạng slug
+                    
+                    foreach ($kenhPhanPhois as $kenhPhanPhoi) 
+                    {
+                      if($kenhPhanPhoi['cap']>0)
+                      {
+
+                        $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
+                        $giaXuats = $query->getResult();
+                        foreach ($giaXuats as $giaXuat) {  
+                          $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                          $giaXuat->setGiaXuat($gx);
+                          $entityManager->flush();
+                        }
+                      }
+                    }
+
+                  }                  
+                }
+                else
+                {
+                  //lưu lại các mã sản phẩm chưa có trong CSDL->xuất thông báo     
+                  $listMaSanPham[]=$maSanPham;                  
+                }                
+            }
+        }
+        return array(
+          'listMaSanPham' => $listMaSanPham,
+          'import'=>1,
+        ); 
+      }
+      else
+      {
+        return array(
+          'listMaSanPham' => array(),
+          'import'=>0,         
+        );
+      }
+    }
+    else
+    {
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+    }*/
+  }
+
   public function exportHangHoaAction()
   {
     $entityManager=$this->getEntityManager();
@@ -893,6 +1011,31 @@
 
     return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));                                  
 
+  }
+
+  public function xoaSanPhamAction()
+  {
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();      
+      $id=(int)$this->params()->fromRoute('id',0);
+      if(!$id)
+      {
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+      }
+      $entityManager=$this->getEntityManager();
+      $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id);
+      if($sanPham->getHinhAnh()!='photo_default.png')
+      {        
+        /*$mask =__ROOT_PATH__.'/public/img/'.$sanPham->getHinhAnh();
+        array_map( "unlink", glob( $mask ));*/
+      }      
+      if(!$sanPham)
+      {
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+      }
+      //$entityManager->remove($sanPham);      
+      //$entityManager->flush();      
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
   }
   
  }

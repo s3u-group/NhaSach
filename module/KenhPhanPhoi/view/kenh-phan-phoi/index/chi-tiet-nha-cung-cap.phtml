@@ -47,7 +47,7 @@
                 <img class="pull-left img-circle" src="<?php echo $this->basePath(); ?>/img/<?php echo $nhaCungCap->getHinhAnh(); ?>" width="40px" height="40px" alt="Ảnh đại diện"> <?php echo $nhaCungCap->getHoTen(); ?>
             </h1>
             <div class="btn-group pull-right">
-                <a href="<?php echo $this->url('kenh_phan_phoi/crud', array('action'=>'xoaNhaCungCap','id'=>$nhaCungCap->getIdDoiTac())); ?>" class="btn h5a-btn btn-danger btn-xs"><i class="fa fa-times"></i> Xóa nhà cung cấp</a> 
+                <a href="<?php echo $this->url('kenh_phan_phoi/crud', array('action'=>'xoaNhaCungCap','id'=>$nhaCungCap->getIdDoiTac())); ?>" class="btn h5a-btn btn-danger btn-xs" onclick="return xacNhanXoa()"><i class="fa fa-times"></i> Xóa nhà cung cấp</a> 
                 <!-- <a class="btn h5a-btn btn-primary btn-xs"><i class="fa fa-refresh"></i> Refresh Item</a> -->
             </div>
             <p>
@@ -326,5 +326,16 @@
             "bAutoWidth": true
         });
     });
-    $("#editor").summernote({height:150});
-    </script>
+$("#editor").summernote({height:150});
+</script>
+
+<script language="JavaScript">
+    function xacNhanXoa() {
+      var xacNhan=confirm("Bạn thật sự muốn xóa khách hàng này?");
+      if(xacNhan==true)
+      {
+        return true;
+      }
+      return false;
+    }
+</script>
