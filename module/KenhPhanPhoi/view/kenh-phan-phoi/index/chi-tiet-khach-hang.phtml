@@ -161,6 +161,7 @@
                                                 <td>
                                                 <?php
                                                     $khachHangElement->get('moTa')->setAttribute('class','form-control h5a-input');
+                                                     $khachHangElement->get('moTa')->setAttribute('id','editor');
                                                     $khachHangElement->get('moTa')->setAttribute('rows','6');
                                                     echo $this->formElement($khachHangElement->get('moTa'));
                                                 ?> 
@@ -314,6 +315,9 @@
 <!-- DataTables JavaScript -->
 <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
+<!-- editor -->
+<script src="<?php echo $this->basePath();?>/js/summernote.min.js"></script>
+
 <script>
     $(document).ready(function() {
         $('#dataTables-example').dataTable({
@@ -325,4 +329,5 @@
             "bAutoWidth": true
         });
     });
+    $("#editor").summernote({height:150});
     </script>
