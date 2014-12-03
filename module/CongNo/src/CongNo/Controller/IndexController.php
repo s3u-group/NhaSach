@@ -86,13 +86,22 @@ namespace CongNo\Controller;
 
       $request=$this->getRequest();      
       if($request->isPost())
-      {
-        var_dump($request->getPost());
+      {        
         $form->setData($request->getPost());
         if($form->isValid())
         {
+          die(var_dump($request->getPost()));
           $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
           $phieuThu->setIdUserNv($user);
+          $idDoiTac=$phieuThu->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
+
+          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac='.$idDoiTac);
+          $hoaDons=$query->getResult();
+
+          foreach ($hoaDons as $hoaDon) {
+            $hoaDon->setStatus(1);
+            $entityManager->flush();
+          }
 
           $entityManager->persist($phieuThu);
           $entityManager->flush();
