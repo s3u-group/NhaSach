@@ -64,10 +64,10 @@ class PhieuNhap extends \HangHoa\Entity\PhieuNhap implements \Doctrine\ORM\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'maPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'ngayNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idUserNv');
+            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'maPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'ngayNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'status', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idUserNv');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'maPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'ngayNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idUserNv');
+        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'maPhieuNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'ngayNhap', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'status', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\PhieuNhap' . "\0" . 'idUserNv');
     }
 
     /**
@@ -173,6 +173,50 @@ class PhieuNhap extends \HangHoa\Entity\PhieuNhap implements \Doctrine\ORM\Proxy
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function onPrePersist()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'onPrePersist', array());
+
+        return parent::onPrePersist();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getCtPhieuNhaps()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getCtPhieuNhaps', array());
+
+        return parent::getCtPhieuNhaps();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function addCtPhieuNhaps($ctPhieuNhaps)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'addCtPhieuNhaps', array($ctPhieuNhaps));
+
+        return parent::addCtPhieuNhaps($ctPhieuNhaps);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function removeCtPhieuNhaps($ctPhieuNhaps)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'removeCtPhieuNhaps', array($ctPhieuNhaps));
+
+        return parent::removeCtPhieuNhaps($ctPhieuNhaps);
+    }
+
     /**
      * {@inheritDoc}
      */
@@ -285,6 +329,28 @@ class PhieuNhap extends \HangHoa\Entity\PhieuNhap implements \Doctrine\ORM\Proxy
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIdUserNv', array());
 
         return parent::getIdUserNv();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setStatus($status = NULL)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setStatus', array($status));
+
+        return parent::setStatus($status);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getStatus()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getStatus', array());
+
+        return parent::getStatus();
     }
 
 }
