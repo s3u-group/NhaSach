@@ -7,6 +7,7 @@ namespace CongNo\Controller;
  use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
  use Zend\ServiceManager\ServiceManager;
  use CongNo\Form\ThanhToanForm;
+ use CongNo\Entity\PhieuThu;
  use CongNo\Form\ThanhToanNhaCungCapForm;
  use CongNo\Form\PhieuChiFieldset;
  use CongNo\Entity\PhieuChi;
@@ -79,7 +80,34 @@ namespace CongNo\Controller;
  	{
     	$this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();     
-      $form= new ThanhToanForm($entityManager); 
+      $form= new ThanhToanForm($entityManager);
+      $phieuThu= new PhieuThu();
+      $form->bind($phieuThu);
+
+      $request=$this->getRequest();      
+      if($request->isPost())
+      {        
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+          die(var_dump($request->getPost()));
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+          $phieuThu->setIdUserNv($user);
+          $idDoiTac=$phieuThu->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
+
+          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac='.$idDoiTac);
+          $hoaDons=$query->getResult();
+
+          foreach ($hoaDons as $hoaDon) {
+            $hoaDon->setStatus(1);
+            $entityManager->flush();
+          }
+
+          $entityManager->persist($phieuThu);
+          $entityManager->flush();
+          return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
+        }        
+      }      
       return array(
         'form'=>$form,
       );
@@ -189,7 +217,7 @@ namespace CongNo\Controller;
       $request=$this->getRequest();
       if($request->isPost())
       {
-        
+        die(var_dump($request->getPost()));
         $form->setData($request->getPost());
         if($form->isValid())
         {

@@ -27,7 +27,7 @@ class CongNoFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'idDoiTac',
              'type' => 'Hidden',
              'attributes'=>array(
-                'id'=>'idDoiTac'                
+                'id'=>'idDoiTac',                
             ),
         ));
 
@@ -37,7 +37,7 @@ class CongNoFieldset extends Fieldset implements InputFilterProviderInterface
              'options' => array(                 
              ),
              'attributes'=>array(
-             	'id'=>'ki'                
+             	'id'=>'ki',                
             ),
          ));        
 

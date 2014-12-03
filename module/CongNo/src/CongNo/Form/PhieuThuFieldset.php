@@ -7,6 +7,8 @@ use Zend\InputFilter\InputFilterProviderInterface;
 use Zend\Form\Element;
 use Zend\Form\Form;
 use CongNo\Entity\PhieuThu;
+use CongNo\Form\CongNoFieldset;
+use HangHoa\Form\SystemUserFieldset;
 
 class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
 {
@@ -17,15 +19,15 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
         $this->setHydrator(new DoctrineHydrator($objectManager))
              ->setObject(new PhieuThu());
 
-        $this->add(array(
-             'name' => 'idPhieuThu',
-             'type' => 'Hidden',
-        ));
+        $congNoFieldset = new CongNoFieldset($objectManager);
+        $congNoFieldset->setUseAsBaseFieldset(true);
+        $congNoFieldset->setName('idCongNo');
+        $this->add($congNoFieldset);
 
-        $this->add(array(
-             'name' => 'idCongNo',
-             'type' => 'Hidden',
-        ));
+        /*$systemUserFieldset = new SystemUserFieldset($objectManager);
+        $systemUserFieldset->setUseAsBaseFieldset(true);
+        $systemUserFieldset->setName('idUserNv');        
+        $this->add($systemUserFieldset);*/
 
         $this->add(array(
              'name' => 'idUserNv',
@@ -33,12 +35,18 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
         ));
 
         $this->add(array(
+             'name' => 'idPhieuThu',
+             'type' => 'Hidden',             
+        ));        
+
+        $this->add(array(
              'name' => 'lyDo',
-             'type' => 'Text',
+             'type' => 'TextArea',
              'options' => array(                 
              ),
              'attributes'=>array(
-                'id'=>'lyDo'                
+                'id'=>'lyDo',
+                'class'=>'h5a-input form-control input-sm',               
             ),
          ));
 
@@ -47,16 +55,25 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
              'type' => 'Number',             
              'attributes'=>array(                
                 'id'=>'soTien',
+                'min'=>0,
+                'class'=>'h5a-input form-control input-sm',
             ),
         ));
-
+        
         $this->add(array(
              'name' => 'ngayThanhToan',
              'type' => 'Date',             
              'attributes'=>array(               
-                'id'=>'ngayThanhToan',
+                'id'=>'ngayThanhToan',                
+                'class'=>'h5a-input form-control input-sm',
             ),
         ));        
+    }
+     public function getInputFilterSpecification()
+    {
+        return array(
+          
+        );
     }
 }
 ?>

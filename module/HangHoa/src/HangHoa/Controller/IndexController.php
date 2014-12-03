@@ -398,12 +398,9 @@
       $post = array_merge_recursive(
               $request->getPost()->toArray(),
               $request->getFiles()->toArray()
-          ); 
-      //var_dump($sanPham);
-      $form->setData($request->getPost()); 
-      //var_dump($form);
-      if ($form->isValid()){
-        //die(var_dump($sanPham));
+          );       
+      $form->setData($request->getPost());       
+      if ($form->isValid()){        
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
         $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
@@ -559,6 +556,7 @@
             'tenSanPham'=>$sanPham->getTenSanPham(),
             'donViTinh'=>$sanPham->getDonViTinh(),
             'tonKho'=>$sanPham->getTonKho(),
+            'giaNhap'=>$sanPham->getGiaNhap(),
             'giaXuat'=>$giaXuat,
           );
         }

@@ -6,7 +6,23 @@
      $form->setAttribute('class','form-horizontal');
      $form->prepare();
      echo $this->form()->openTag($form);
-     echo $this->formHidden($form->get('idKhachHang'));
+     
+     echo $this->formHidden($form->get('phieu-thu')->get('idPhieuThu'));
+     
+     $congNo=$form->get('phieu-thu')->get('idCongNo');
+     echo $this->formHidden($congNo->get('idCongNo'));
+
+     echo $this->formHidden($congNo->get('idDoiTac'));
+     $congNo->get('ki')->setAttribute('hidden','true');
+     echo $this->formHidden($congNo->get('ki'));
+
+     echo $this->formHidden($congNo->get('noDauKi'));
+     echo $this->formHidden($congNo->get('noPhatSinh'));
+
+     echo $this->formHidden($form->get('phieu-thu')->get('idUserNv'));
+
+     $form->get('phieu-thu')->get('ngayThanhToan')->setAttribute('value', date("Y-m-d"));
+     echo $this->formHidden($form->get('phieu-thu')->get('ngayThanhToan'));     
 ?>
 <style type="text/css">    
     #khach-hang-search-result{ cursor:pointer;}
@@ -70,13 +86,13 @@
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ đầu kì</h3> 
                     </div> 
-                    <div class="panel-body" id="noDauKi">
+                    <div class="panel-body" id="noDauKiForm">
                     </div>
 
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Nợ phát sinh</h3> 
                     </div> 
-                    <div class="panel-body" id="noPhatSinh">
+                    <div class="panel-body" id="noPhatSinhForm">
                     </div>
 
                     <div class="panel-heading" id="no"> 
@@ -90,21 +106,39 @@
                     </div> 
                     <div class="panel-body">
                         <?php
-                            $form->get('thanhToan')->setAttribute('class','h5a-input form-control input-sm');                                
-                            echo $this->formElement($form->get('thanhToan'));
-                        ?>
+                            echo $this->formElement($form->get('phieu-thu')->get('soTien'));
+                        ?>                        
                     </div>
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Số dư</h3> 
-                    </div> 
-                    <div class="panel-body" id="soDu">
+                    </div>
+                    <div class="panel-body">
+                        <span  id="soDu"></span>
+                        <?php
+                            $congNo->get('duNo')->setAttribute('hidden','true');
+                            echo $this->formHidden($congNo->get('duNo'));  
+                        ?>
                     </div>
 
                     <div class="panel-heading"> 
                         <h3 class="panel-title">Ngày thanh toán</h3> 
                     </div> 
+                    <div class="panel-body">                        
+                        <?php echo date("d/m/Y"); ?>
+                    </div>
+
+                    <div class="panel-heading"> 
+                        <h3 class="panel-title">Lý do</h3> 
+                    </div> 
                     <div class="panel-body">
-                    </div>                    
+                        <?php
+                            echo $this->formElement($form->get('phieu-thu')->get('lyDo'));
+                        ?>
+                    </div>
+
+                    <div class="panel-body col-sm-3">
+                        <button type="submit" class="btn h5a-btn btn-primary full" onclick=""><i class="fa fa-print"></i> Lưu</button>
+                    </div>
                 </div>                
             </div>
         </div>
@@ -181,7 +215,7 @@
             var ten = $(this).find('span:eq(1)').text();            
 
 
-            $('#idKhachhang').val(id);
+            $('#idDoiTac').val(id);
             $('#tenKhachHang').val(ten);
             $('#khach-hang-search-result').empty();
             $('#thongTinChiTiet').show();
@@ -193,16 +227,52 @@
                 data:{
                     'idDoiTac':id
                 },
-                success:function(data){                
+                success:function(data){  
+
                 $('#ngayDauKi').text(data.ngayDauKi);
-                $('#noDauKi').text(data.noDauKi);
-                $('#noPhatSinh').text(data.noPhatSinh);
+                $('#noDauKiForm').text(data.noDauKi);
+                $('#noPhatSinhForm').text(data.noPhatSinh);
                 $('#noCuoiKi').text(data.noCuoiKi);
+
+                $('#ki').val(data.ngayDauKi);
+                $('#noDauKi').val(data.noDauKi);
+                $('#noPhatSinh').val(data.noPhatSinh);
+
+            //Thanh toán
+                $('#soTien').change(function(){                    
+                    var tienThanhToan=$(this).val();
+                    if(tienThanhToan<=data.noCuoiKi)
+                    {
+                        $('#soDu').text(data.noCuoiKi-tienThanhToan);
+                        $('#duNo').val(data.noCuoiKi-tienThanhToan);
+                    }
+                    else
+                    {
+                        alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                        $('#soDu').text(data.noCuoiKi);
+                        $('#duNo').val(data.noCuoiKi);
+                        $('#soTien').val(0);
+                    }
+                });
+                $('#soTien').keyup(function(){                    
+                    var tienThanhToan=$(this).val();
+                    if(tienThanhToan<=data.noCuoiKi)
+                    {
+                        $('#soDu').text(data.noCuoiKi-tienThanhToan);
+                        $('#duNo').val(data.noCuoiKi-tienThanhToan);
+                    }
+                    else
+                    {
+                        alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                        $('#soDu').text(data.noCuoiKi);
+                        $('#duNo').val(data.noCuoiKi);
+                        $('#soTien').val(0);
+                    }
+                });
+            //Thanh toán
                 }
             });
 //./Hiển thị, chọn khách hàng
-
-//
         });
     })
    
