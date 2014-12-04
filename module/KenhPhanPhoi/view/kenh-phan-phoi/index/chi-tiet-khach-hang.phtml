@@ -81,28 +81,28 @@
                                 <table class="item">
                                     <tbody>
                                         <tr>
-                                            <td><i class="fa fa-key"></i> Họ Tên</td>
+                                            <td><i class="fa fa-user"></i> Họ Tên</td>
                                             <td><?php echo $khachHang->getHoTen(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td>Địa chỉ</td>
+                                            <td><i class="fa fa-home"></i>Địa chỉ</td>
                                             <td><?php echo $khachHang->getDiaChi(); ?></td>
                                         </tr>
                                         
                                         <tr>
-                                            <td><i class="fa fa-user"></i> Di động</td>
+                                            <td><i class="fa fa-mobile-phone"></i> Di động</td>
                                             <td class="green"><?php echo $khachHang->getDiDong(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-tag"></i> Điện thoại cố định</td>
+                                            <td class="col-sm-4" ><i class="fa fa-phone"></i> Điện thoại cố định</td>
                                             <td><?php echo $khachHang->getDienThoaiCoDinh(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-arrows"></i> Email: </td>
+                                            <td><i class="fa fa-envelope-o fa-fw"></i> Email: </td>
                                             <td class="red"><?php echo $khachHang->getEmail(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-edit"></i>Twitter: </td>
+                                            <td><i class="fa fa-twitter"></i>Twitter: </td>
                                             <td>
                                                 <?php echo $khachHang->getTwitter(); ?>
                                             </td>
@@ -111,11 +111,7 @@
                                         <tr>
                                             <td><i class="fa fa-globe"></i> Website</td>
                                             <td><a href=""><?php echo $khachHang->getWebsite(); ?></a></td>
-                                        </tr>
-                                        <tr>
-                                            <td><i class="fa fa-twitter"></i> Twitter</td>
-                                            <td><a href="http://www.twitter.com/sharedesk">@sharedesk</a></td>
-                                        </tr>
+                                        </tr>                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -260,14 +256,11 @@
                                                 <input type="submit" class="full btn h5a-btn btn-success" value="Lưu Thay Đổi"/>
                                                 </td>
                                             </tr>
-                                            
-
                                         </tbody>
                                     </table>
                             <?php echo $this->form()->closeTag(); ?>
                             </div>
                             <div class="col-md-6">
-
                             </div>
                         </div>
                     </div>

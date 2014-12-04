@@ -59,37 +59,40 @@
                             </div>
                             <div class="col-md-6">
                                 <h4>Sản phẩm: <?php echo $sanPhams->getTenSanPham(); ?></h4>
-                                <h4 class="underline">More Info</h4>
+                                <h4 class="underline">Thông tin chi tiết</h4>
                                 <table class="item">
                                     <tbody>
                                         <tr>
-                                            <td><i class="fa fa-key"></i> ID: <?php echo $sanPhams->getIdSanPham(); ?></td>
-                                            <td></td>
+                                            <td> ID: </td>
+                                            <td><?php echo $sanPhams->getIdSanPham(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td>Tên sản phẩm: <?php echo $sanPhams->getTenSanPham(); ?></td>
-                                            <td></td>
+                                            <td>Tên sản phẩm: </td>
+                                            <td><?php echo $sanPhams->getTenSanPham(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-arrows"></i> Mã sản phẩm: <?php echo $sanPhams->getMaSanPham(); ?></td>
-                                            <td class="red"></td>
+                                            <td> Mã sản phẩm: </td>
+                                            <td class="red"><?php echo $sanPhams->getMaSanPham(); ?></td>
                                         </tr>                                  
                                         <tr>
-                                            <td>Mô tả: <?php echo $sanPhams->getMoTa(); ?></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td><i class="fa fa-edit"></i>Loại: <?php echo $sanPhams->getIdLoai()->getTermId()->getName(); ?></td>
-                                            <td>         
+                                            <td>Mô tả: </td>
+                                            <td>
+                                                <?php
+                                                    echo $sanPhams->getMoTa(); 
+                                                ?>
                                             </td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-cog"></i> Nhãn: <?php echo $sanPhams->getNhan(); ?></td>
-                                            <td></td>
+                                            <td>Loại: </td>
+                                            <td><?php echo $sanPhams->getIdLoai()->getTermId()->getName(); ?></td>
                                         </tr>
                                         <tr>
-                                            <td><i class="fa fa-globe"></i> Đơn vị tính: <?php echo $sanPhams->getIdDonViTinh()->getTermId()->getName(); ?></td>
-                                            <td></td>
+                                            <td>Nhãn: </td>
+                                            <td><?php echo $sanPhams->getNhan(); ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Đơn vị tính: </td>
+                                            <td><?php echo $sanPhams->getIdDonViTinh()->getTermId()->getName(); ?></td>
                                         </tr>
                                         <tr>
                                             <td>Thông tin khác</td>
@@ -248,6 +251,9 @@
 <!-- DataTables JavaScript -->
 <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
+<!-- editor -->
+<script src="<?php echo $this->basePath();?>/js/summernote.min.js"></script>
+
 <script>
 $(document).ready(function() {
     $('#dataTables-example').dataTable({
@@ -259,6 +265,7 @@ $(document).ready(function() {
         "bAutoWidth": true
     });
 });
+$("#editor").summernote({height:150});
 </script>
 <script language="JavaScript">
     function xacNhanXoa() {
