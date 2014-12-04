@@ -17,6 +17,15 @@ if($import==1)
 				<?php }?>
 			</table>		
 		</div>
+		<div class="page-footer">
+            <div class="row bottom20">
+                <div class="col-sm-7 col-sm-offset-3">
+                    <div class="col-sm-5 col-sm-offset-3">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>"><button type="button" class="btn h5a-btn btn-primary full">Trở về</button></a>                        
+                    </div>
+                </div>
+            </div>
+        </div>
 	<?php }	
 	if(count($listMaSanPham)==0)
 	{?>

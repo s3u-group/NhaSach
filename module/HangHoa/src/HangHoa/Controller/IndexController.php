@@ -202,15 +202,17 @@
   {
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();
+    $form= new FileForm($entityManager);
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
 
     $taxonomyLoai=$this->TaxonomyFunction();
-    $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+    $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
 
 
     return array(
        'sanPhams'=>$sanPhams,
        'kenhPhanPhois'=>$kenhPhanPhois,
+       'form'=>$form,
      );
 
   }
@@ -224,7 +226,7 @@
     $form->bind($phieuNhap);
     $request = $this->getRequest();
     if($request->isPost())
-    {            
+    {      
       $form->setData($request->getPost());      
       if($form->isValid())
       {
@@ -623,7 +625,7 @@
             $highestRow         = $worksheet->getHighestRow(); // e.g. 10
             $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'            
             $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-            for ($row = 2; $row <= $highestRow; ++ $row) {
+            for ($row = 3; $row <= $highestRow; ++ $row) {
                 //echo '<tr>';
                 for ($col = 2; $col < $highestColumnIndex; ++ $col) {
                     
@@ -671,7 +673,6 @@
                     {
                       if($kenhPhanPhoi['cap']>0)
                       {
-
                         $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
                         $giaXuats = $query->getResult();
                         foreach ($giaXuats as $giaXuat) {  
@@ -715,9 +716,6 @@
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $sanPham=new SanPham();
-    $form= new CreateSanPhamForm($entityManager);
-    /*$form->bind($sanPham);
-
     $request = $this->getRequest();        
     if($request->isPost())
     {
@@ -736,83 +734,94 @@
         $listMaSanPham=array();
         $taxonomyLoai=$this->TaxonomyFunction();
         $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
-        foreach ($objLoad->getWorksheetIterator() as $worksheet) {
-            //$worksheetTitle     = $worksheet->getTitle();
-            $highestRow         = $worksheet->getHighestRow(); // e.g. 10
-            $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'            
-            $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-            for ($row = 2; $row <= $highestRow; ++ $row) {
-                //echo '<tr>';
-                for ($col = 2; $col < $highestColumnIndex; ++ $col) {
-                    
-                    $cell = $worksheet->getCellByColumnAndRow($col, $row);
-                    if($col==2)
-                    {
-                      $maSanPham = $cell->getValue();
-                    }
-                    if($col==3)
-                    {
-                      $soLuong = $cell->getValue();
-                    }
-                    if($col==4)
-                    {
-                      $giaNhap = $cell->getValue();
-                    }                    
-                }
-                $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
-                $SanPhams = $query->getResult();                    
-                //die(var_dump($maSanPham));
-                if($SanPhams)
+        foreach ($objLoad->getWorksheetIterator() as $worksheet) {            
+          $highestRow         = $worksheet->getHighestRow();
+          $highestColumn      = $worksheet->getHighestColumn();
+          $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);            
+          for ($row = 3; $row <= $highestRow; ++ $row) {
+            $listGiaXuat=array();
+            for ($col = 2; $col < $highestColumnIndex; ++ $col) {                    
+                $cell = $worksheet->getCellByColumnAndRow($col, $row);
+                if($col==2)
                 {
-                  foreach ($SanPhams as $SanPham)
-                  {
-                  //Cập nhật bảng SẢN PHẨM
-                    $tonKho=(int)($SanPham->getTonKho())+$soLuong;
-                    $SanPham->setTonKho($tonKho);
-                    $SanPham->setGiaNhap($giaNhap);
-                    $entityManager->flush();
+                  $maSanPham = $cell->getValue();
+                }                    
+                if($col==3)
+                {
+                  $giaNhap = $cell->getValue();
+                }
+                if($col>3)
+                {
+                  $listGiaXuat[] = $cell->getValue();
+                }                  
+            }
+            if(trim($giaNhap)==''||$giaNhap==null)
+            {
+              $listMaSanPham[]=$maSanPham;              
+            }
+            else
+            {
+              $soGiaXuat=count($listGiaXuat);              
+              $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
+              $SanPhams = $query->getResult();              
+              if($SanPhams)
+              {
+                foreach ($SanPhams as $SanPham)
+                {                  
+                  $idSanPham=$SanPham->getIdSanPham();               
+                  $SanPham->setGiaNhap($giaNhap);
+                  $entityManager->flush();
+                  $i=0;
 
-                  //Cập nhật bảng CHI TIẾT PHIẾU NHẬP
-                    $idSanPham=$SanPham->getIdSanPham();
-                    $query = $entityManager->createQuery('SELECT pn FROM HangHoa\Entity\CTPhieuNhap pn WHERE pn.idSanPham ='.$idSanPham);
-                    $PhieuNhaps = $query->getResult();
-                    foreach ($PhieuNhaps as $PhieuNhap)
+                  foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+                    if($kenhPhanPhoi['cap']>0)
                     {
-                      $PhieuNhap->setSoLuong($soLuong);
-                      $PhieuNhap->setGiaNhap($giaNhap);
-                      $entityManager->flush();                      
-                    }
-                  //Cập nhật bảng GIÁ XUẤT
-                    // đưa vào taxonomy dạng slug
-                    
-                    foreach ($kenhPhanPhois as $kenhPhanPhoi) 
-                    {
-                      if($kenhPhanPhoi['cap']>0)
-                      {
-
-                        $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
-                        $giaXuats = $query->getResult();
-                        foreach ($giaXuats as $giaXuat) {  
-                          $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
-                          $giaXuat->setGiaXuat($gx);
-                          $entityManager->flush();
+                      $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
+                      $giaXuats = $query->getResult();
+                      foreach ($giaXuats as $giaXuat) 
+                      {  
+                        if($i<$soGiaXuat)
+                        {
+                          if($listGiaXuat[$i]!=null||$listGiaXuat[$i]!='')
+                          {
+                            $giaXuat->setGiaXuat($listGiaXuat[$i]);
+                          }
+                          else
+                          {
+                            if($giaXuat->getGiaXuat()==0)
+                            {
+                              $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                              $giaXuat->setGiaXuat($gx);
+                            }                            
+                          }
                         }
-                      }
+                        else
+                        {
+                          if($giaXuat->getGiaXuat()==0)
+                            {
+                              $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                              $giaXuat->setGiaXuat($gx);
+                            }
+                        }                          
+                        $entityManager->flush();
+                        $i++;                        
+                      }                      
                     }
-
                   }                  
                 }
-                else
-                {
-                  //lưu lại các mã sản phẩm chưa có trong CSDL->xuất thông báo     
-                  $listMaSanPham[]=$maSanPham;                  
-                }                
+              }
+              else
+              {
+                //lưu lại các mã sản phẩm chưa có trong CSDL->xuất thông báo     
+                $listMaSanPham[]=$maSanPham;                  
+              } 
             }
-        }
+          }
+        }        
         return array(
           'listMaSanPham' => $listMaSanPham,
           'import'=>1,
-        ); 
+        );
       }
       else
       {
@@ -824,8 +833,8 @@
     }
     else
     {
-      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
-    }*/
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));
+    }
   }
 
   public function exportHangHoaAction()
