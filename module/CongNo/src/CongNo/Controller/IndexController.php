@@ -101,7 +101,6 @@ namespace CongNo\Controller;
       return array('response'=>$response, 'kenhPhanPhois'=>$kenhPhanPhois);
   }
 
-
   public function thanhToanAction()
   {
       $this->layout('layout/giaodien');
@@ -134,7 +133,7 @@ namespace CongNo\Controller;
         }        
       }    
 
-       $id = (int) $this->params()->fromRoute('id', 0);
+      $id = (int) $this->params()->fromRoute('id', 0);
       if (!$id) {
           return $this->redirect()->toRoute('cong_no/crud', array(
               'action' => 'index',
@@ -152,9 +151,6 @@ namespace CongNo\Controller;
         'response'=>$response,
       );
   }
-
-
-  
 
   public function searchCongNoKhachHang($idDoiTac)
   {
@@ -207,17 +203,10 @@ namespace CongNo\Controller;
           'noCuoiKi'=>$noCuoiKi,
         );
       }
-    
-
     return $response;
   }
 
-
-
-
 //-----------------------------------------------------------------  	
-
-
   public function congNoNhaCungCapAction()
   {
       $this->layout('layout/giaodien');
@@ -289,18 +278,10 @@ namespace CongNo\Controller;
       return array('response'=>$response);
   }
 
-
- 	
-
-
-
   public function thanhToanNhaCungCapAction()
   {
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
-
-
-
       $form= new ThanhToanNhaCungCapForm($entityManager); 
       $phieuChi=new PhieuChi();
       $form->bind($phieuChi);
@@ -344,8 +325,7 @@ namespace CongNo\Controller;
           ));
       }  
 
-      $response=$this->searchCongNoNhaCungCap($id);
-      //die(var_dump($response));
+      $response=$this->searchCongNoNhaCungCap($id);      
 
       $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
 
@@ -355,7 +335,6 @@ namespace CongNo\Controller;
         'response'=>$response,
       );
   }
-
 
   public function searchCongNoNhaCungCap($idDoiTac)
   {
