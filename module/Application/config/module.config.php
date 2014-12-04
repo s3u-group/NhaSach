@@ -76,6 +76,12 @@ return array(
             'Application\Controller\Index' => 'Application\Controller\IndexController'
         ),
     ),
+
+    'controller_plugins' => array(
+        'invokables' => array(
+            'export_excel' => 'Application\Controller\Plugin\ExportExcel', 
+    )), 
+
     'view_manager' => array(
         'display_not_found_reason' => true,
         'display_exceptions'       => true,

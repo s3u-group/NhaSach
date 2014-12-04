@@ -25,6 +25,7 @@
  
  use PHPExcel;
  use PHPExcel_IOFactory;
+ use PHPExcel_Writer_Excel5;
 
  use PHPExcel_Cell;
  use PHPExcel_Cell_DataType;
@@ -840,10 +841,7 @@
   public function exportHangHoaAction()
   {
     $entityManager=$this->getEntityManager();
-
-    $filename='data_hang_hoa.xlsx';
-
-    
+ 
     /** Error reporting */
     error_reporting(E_ALL);
     ini_set('display_errors', TRUE); 
@@ -856,6 +854,16 @@
     
     $objPHPExcel = new PHPExcel();
 
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");;
+    header("Content-Disposition: attachment;filename=data_hang_hoa.xls"); 
+    header("Content-Transfer-Encoding: binary ");
+
+    
     // Set document properties
     
     $objPHPExcel->getProperties()->setCreator("Maarten Balliauw")
@@ -908,8 +916,8 @@
     $callStartTime = microtime(true);
 
     
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-    $objWriter->save(str_replace('.php', '.xlsx', $filename));   
+    $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);    //  (I want the output for 2003)
+    $objWriter->save('php://output'); 
 
     return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));                                  
 
@@ -919,20 +927,28 @@
   {
     $entityManager=$this->getEntityManager();
 
-    $filename='data_bang_gia.xlsx';
-
     
     /** Error reporting */
     error_reporting(E_ALL);
     ini_set('display_errors', TRUE); 
     ini_set('display_startup_errors', TRUE); 
-    date_default_timezone_set('Europe/London');
+    date_default_timezone_set('Asia/Ho_Chi_Minh');
 
     define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
     // Create new PHPExcel object
     
     $objPHPExcel = new PHPExcel();
+
+    header("Pragma: public");
+    header("Expires: 0");
+    header("Cache-Control: must-revalidate, post-check=0, pre-check=0"); 
+    header("Content-Type: application/force-download");
+    header("Content-Type: application/octet-stream");
+    header("Content-Type: application/download");;
+    header("Content-Disposition: attachment;filename=data_bang_gia.xls"); 
+    header("Content-Transfer-Encoding: binary ");
+
 
     // Set document properties
     
@@ -1015,8 +1031,9 @@
     $callStartTime = microtime(true);
 
     
-    $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-    $objWriter->save(str_replace('.php', '.xlsx', $filename));   
+    
+     $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);    //  (I want the output for 2003)
+     $objWriter->save('php://output');
 
     return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));                                  
 
