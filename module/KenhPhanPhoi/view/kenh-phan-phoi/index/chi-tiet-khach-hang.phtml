@@ -279,11 +279,17 @@
                                         <th><input type="checkbox"/></th>
                                         <th>Ngày</th>
                                         <th>Giao dịch</th>
+                                        <th>Diễn giải</th>
                                     </thead>
                                     <tbody>
+                                <!-- mở cái này ra để xài theo lịch sử giao dịch
                                     <?php
                                     foreach ($lichSuGiaoDichs as $lichSuGiaoDich) 
-                                    {?>
+                                    {
+                                        if($lichSuGiaoDich->getIdHoaDon())
+                                        {                                       
+                                        
+                                    ?>
                                        <tr>
                                             <td><input type="checkbox"/></td>
                                             <td><?php  echo $lichSuGiaoDich->getNgayXuat()->format('d/m/Y'); ?></td>
@@ -292,8 +298,44 @@
                                                     echo '<a href="'.$this->url('kenh_phan_phoi/crud', array('action'=>'chiTietDonHang', 'id'=>$lichSuGiaoDich->getIdHoaDon())).'">#'.$lichSuGiaoDich->getMaHoaDon(); 
                                                 ?>
                                             </td>
+                                            <td>Diễn giải</td>
                                         </tr>
-                                    <?php } ?>
+                                    <?php } 
+                                    }
+                                    ?>
+                                -->
+
+                                    <?php
+                                    foreach ($hoaDons as $hoaDon) { ?>
+                                        <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><?php  echo $hoaDon->getNgayXuat()->format('d/m/Y'); ?></td>
+                                            <td>
+                                                <?php                                                 
+                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud', array('action'=>'chiTietDonHang', 'id'=>$hoaDon->getIdHoaDon())).'">#'.$hoaDon->getMaHoaDon(); 
+                                                ?>
+                                            </td>
+                                            <td><span class="label label-warning">Mua hàng</span></td>
+                                        </tr>
+                                    <?php                                        
+                                    }
+                                    ?>
+
+                                    <?php
+                                    foreach ($phieuThus as $phieuThu) { ?>
+                                        <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><?php  echo $phieuThu->getNgayThanhToan()->format('d/m/Y'); ?></td>
+                                            <td>
+                                                <?php                                                 
+                                                    echo /*'<a href="'.$this->url('cong_no/crud', array('action'=>'chiTietPhieuThu', 'id'=>$phieuThu->getIdPhieuThu())).'">'.*/$phieuThu->getSoTien(); 
+                                                ?>
+                                            </td>
+                                            <td><span class="label label-success">Đã thanh toán</span></td>
+                                        </tr>
+                                    <?php                                        
+                                    }
+                                    ?>
                                         
                                     </tbody>
                                 </table>

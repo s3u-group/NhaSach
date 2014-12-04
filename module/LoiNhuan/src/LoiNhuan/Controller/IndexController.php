@@ -34,8 +34,6 @@
 	    	'donHangs'=>$donHangs,
 	    	'kenhPhanPhois'=>$kenhPhanPhois,
 	    );
-	      
-
 	}
 
 
@@ -274,6 +272,15 @@
 	    	'kenhPhanPhois'=>$kenhPhanPhois,
 	    	'doanhThus'=>$doanhThus,
 	    );
+	}
+
+	public function chiTietDoanhThuAction()
+	{
+		$this->layout('layout/giaodien');
+	    $entityManager=$this->getEntityManager();
+
+	    
+
 	}
 
   

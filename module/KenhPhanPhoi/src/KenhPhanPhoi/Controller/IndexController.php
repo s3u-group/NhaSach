@@ -261,9 +261,21 @@
       $taxonomyFunction=$this->TaxonomyFunction();
       $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
 
+      //var_dump('Hóa đơn---------------------');
+      $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.idDoiTac='.$id.' ORDER BY hd.ngayXuat DESC');
+      $hoaDons=$query->getResult();     
+      //var_dump($hoaDons);
 
-      $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.idDoiTac='.$id);
+      //var_dump('Phiếu thu---------------------');
+      $query=$entityManager->createQuery('SELECT pt FROM CongNo\Entity\PhieuThu pt, CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt  WHERE pt.idCongNo=cn.idCongNo and cn.idDoiTac=dt.idDoiTac and dt.idDoiTac='.$id.' ORDER BY pt.ngayThanhToan DESC');
+      $phieuThus=$query->getResult();
+      //var_dump($phieuThus);
+      //die(var_dump('stop'));
+
+
+      /*$query=$entityManager->createQuery('SELECT hd, pt FROM HangHoa\Entity\HoaDon hd, CongNo\Entity\PhieuThu pt, CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt  WHERE pt.idCongNo=cn.idCongNo and cn.idDoiTac=dt.idDoiTac and hd.idDoiTac=dt.idDoiTac and dt.idDoiTac='.$id.' ORDER BY hd.ngayXuat DESC, pt.ngayThanhToan DESC');
       $lichSuGiaoDichs=$query->getResult();
+      die(var_dump($lichSuGiaoDichs));*/
 
       $khachHang=$khachHangs[0];
       $form= new ThemKhachHangForm($entityManager);
@@ -300,7 +312,9 @@
               'form'=>$form,
               'khachHang'=>$khachHang,
               'kenhPhanPhois'=>$kenhPhanPhois,
-              'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+              //'lichSuGiaoDichs'=>$lichSuGiaoDichs, // nếu muốn xài lịch sử giao dịch thì mở cái lịch sử $lichSuGiaoDichs ở phía trên ra. và qua form view chi-tiet-khach-hang.phtml mở cái foreach($lichSuGiaoDich as..) ra
+              'hoaDons'=>$hoaDons,
+              'phieuThus'=>$phieuThus,
               'coKiemTraTrung'=>1,
             );
           }
@@ -312,7 +326,9 @@
         'form'=>$form,
         'khachHang'=>$khachHang,
         'kenhPhanPhois'=>$kenhPhanPhois,
-        'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+        //'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+        'hoaDons'=>$hoaDons,
+        'phieuThus'=>$phieuThus,
         'coKiemTraTrung'=>0,
       );
   }
@@ -340,8 +356,15 @@
       $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
 
 
+
+      //var_dump('Phiếu thu---------------------');
+      $query=$entityManager->createQuery('SELECT pc FROM CongNo\Entity\PhieuChi pc, CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt  WHERE pc.idCongNo=cn.idCongNo and cn.idDoiTac=dt.idDoiTac and dt.idDoiTac='.$id.' ORDER BY pc.ngayThanhToan DESC');
+      $phieuChis=$query->getResult();
+      //var_dump($phieuThus);
+      //die(var_dump($phieuChis));
+
       $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.idDoiTac='.$id);
-      $lichSuGiaoDichs=$query->getResult();
+      $phieuNhaps=$query->getResult();
 
       $nhaCungCap=$khachHangs[0];
       $form= new ThemKhachHangForm($entityManager);
@@ -381,7 +404,9 @@
               'form'=>$form,
               'nhaCungCap'=>$nhaCungCap,
               'kenhPhanPhois'=>$kenhPhanPhois,
-              'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+              //'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+              'phieuChis'=>$phieuChis,
+              'phieuNhaps'=>$phieuNhaps,
               'coKiemTraTrung'=>1,
             );
 
@@ -395,7 +420,9 @@
         'form'=>$form,
         'nhaCungCap'=>$nhaCungCap,
         'kenhPhanPhois'=>$kenhPhanPhois,
-        'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+        //'lichSuGiaoDichs'=>$lichSuGiaoDichs,
+        'phieuChis'=>$phieuChis,
+        'phieuNhaps'=>$phieuNhaps,
         'coKiemTraTrung'=>0,
       );
   }
