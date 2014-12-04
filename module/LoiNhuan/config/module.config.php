@@ -37,8 +37,9 @@ return array(
 	'view_manager' => array(
 		'template_path_stack' => array(
 			'loi_nhuan' => __DIR__ . '/../view'
-		),        
-	),   
+		),  
+	), 
+    
 
     'controller_plugins' => array(
         'invokables' => array(

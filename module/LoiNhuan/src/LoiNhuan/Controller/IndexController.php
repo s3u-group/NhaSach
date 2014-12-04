@@ -63,11 +63,11 @@
 
 	    	$thoiGianTam=explode('-', $namThang);
 	    	$thoiGian=$thoiGianTam[2].'-'.$thoiGianTam[1].'-'.$thoiGianTam[0];
-
-
+	    	$idThoiGian=(int)$thoiGianTam[0].$thoiGianTam[1].$thoiGianTam[2];
 	    	$doanhThus[]=array(
 	    		'thoiGian'=>$thoiGian,
 	    		'chiTietDoanhThus'=>$hD,
+	    		'idThoiGian'=>$idThoiGian,
 	    	);
 	    	
 	    }
@@ -110,11 +110,13 @@
 
 	    	$thoiGianTam=explode('-', $namThang);
 	    	$thoiGian=$thoiGianTam[1].'-'.$thoiGianTam[0];
+	    	$idThoiGian=(int)$thoiGianTam[0].$thoiGianTam[1];
 
 
 	    	$doanhThus[]=array(
 	    		'thoiGian'=>$thoiGian,
 	    		'chiTietDoanhThus'=>$hD,
+	    		'idThoiGian'=>$idThoiGian,
 	    	);
 	    	
 	    }
@@ -169,10 +171,12 @@
 	    	if($hDQuy1)
 	    	{
 	    		$thoiGian='Quý 1 - '.$namThang;
+	    		$idThoiGian=$namThang.'01';
 
 		    	$doanhThus[]=array(
 		    		'thoiGian'=>$thoiGian,
 		    		'chiTietDoanhThus'=>$hDQuy1,
+		    		'idThoiGian'=>$idThoiGian,
 		    	);
 	    	}
 
@@ -182,10 +186,12 @@
 	    	if($hDQuy2)
 	    	{
 	    		$thoiGian='Quý 2 - '.$namThang;
+	    		$idThoiGian=$namThang.'02';
 	    		
 		    	$doanhThus[]=array(
 		    		'thoiGian'=>$thoiGian,
 		    		'chiTietDoanhThus'=>$hDQuy2,
+		    		'idThoiGian'=>$idThoiGian,
 		    	);
 	    	}
 
@@ -196,10 +202,12 @@
 	    	if($hDQuy3)
 	    	{
 	    		$thoiGian='Quý 3 - '.$namThang;
+	    		$idThoiGian=$namThang.'03';
 	    		
 		    	$doanhThus[]=array(
 		    		'thoiGian'=>$thoiGian,
 		    		'chiTietDoanhThus'=>$hDQuy3,
+		    		'idThoiGian'=>$idThoiGian,
 		    	);
 	    	}
 
@@ -209,10 +217,12 @@
 	    	if($hDQuy4)
 	    	{
 	    		$thoiGian='Quý 4 - '.$namThang;
+	    		$idThoiGian=$namThang.'04';
 	    		
 		    	$doanhThus[]=array(
 		    		'thoiGian'=>$thoiGian,
 		    		'chiTietDoanhThus'=>$hDQuy4,
+		    		'idThoiGian'=>$idThoiGian,
 		    	);
 	    	}	    	
 	    	
@@ -254,11 +264,12 @@
 	    	$hD=$query->getResult();
 
 	    	$thoiGian=$namThang;
-
+	    	$idThoiGian=(int)$namThang;
 
 	    	$doanhThus[]=array(
 	    		'thoiGian'=>$thoiGian,
 	    		'chiTietDoanhThus'=>$hD,
+	    		'idThoiGian'=>$idThoiGian,
 	    	);
 	    	
 	    }
@@ -274,15 +285,185 @@
 	    );
 	}
 
-	public function chiTietDoanhThuAction()
+	public function chiTietDoanhThuNgayAction()
 	{
 		$this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
+	    $id = (int) $this->params()->fromRoute('id', 0);
+	    if (!$id) {
+	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
+	            'action' => 'index',
+	        ));
+	    }  
+
+	    $thoiGian=(string)$id;
+	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
+	    $m=$thoiGian[4].$thoiGian[5];
+	    $d=$thoiGian[6].$thoiGian[7];
+	    $idKenhPhanPhoi=(int)$thoiGian[8].$thoiGian[9];
+	    $thoiGian=$y.'-'.$m.'-'.$d;
+
+	    // kiểm tra nếu dữ liệu gửi qua thuộc kênh nào thì mình chỉ select theo kênh đó. còn nếu idkenhphanphoi=00 thì select tất cả
+	    if((int)$idKenhPhanPhoi!=00)
+	    {
+	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat = \''.trim($thoiGian).'\'');
+	    }
+	    else
+	    {
+	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat = \''.trim($thoiGian).'\'');
+	    }
 	    
+	    $hoaDons=$query->getResult();
+	   	return array('hoaDons'=>$hoaDons);
 
 	}
 
-  
+	public function chiTietDoanhThuThangAction()
+	{
+		$this->layout('layout/giaodien');
+	    $entityManager=$this->getEntityManager();
+
+	    $id = (int) $this->params()->fromRoute('id', 0);
+	    if (!$id) {
+	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
+	            'action' => 'index',
+	        ));
+	    }  
+
+	    $thoiGian=(string)$id;
+	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
+	    $m=$thoiGian[4].$thoiGian[5];
+	    $idKenhPhanPhoi=(int)$thoiGian[6].$thoiGian[7];	    
+	    $thoiGian=$y.'-'.$m;
+
+	    $strStart=$thoiGian.'-01';
+    	$strEnd=$thoiGian.'-31';
+
+    	if((int)$idKenhPhanPhoi!=00)
+	    {
+	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat >= \''.trim($strStart).'\''.' and hd.ngayXuat<= \''.trim($strEnd).'\'');
+	    }
+	    else
+	    {
+	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat >= \''.trim($strStart).'\''.' and hd.ngayXuat<= \''.trim($strEnd).'\'');
+	    }
+
+    	
+    	$hoaDons=$query->getResult();
+
+	   	return array('hoaDons'=>$hoaDons);
+
+	}  
+
+	public function chiTietDoanhThuQuyAction()
+	{
+		$this->layout('layout/giaodien');
+	    $entityManager=$this->getEntityManager();
+
+	    $id = (int) $this->params()->fromRoute('id', 0);
+	    if (!$id) {
+	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
+	            'action' => 'index',
+	        ));
+	    }  
+
+	    $thoiGian=(string)$id;
+	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
+	    $quy=(int)$thoiGian[4].$thoiGian[5];
+	    $idKenhPhanPhoi=(int)$thoiGian[6].$thoiGian[7];
+	    $thoiGian=$y;
+	    if($quy==01)
+	    {
+	    	$batDauQuy1=$thoiGian.'-01-01';
+    		$ketThucQuy1=$thoiGian.'-3-31';
+    		// kiểm tra nếu dữ liệu gửi qua thuộc kênh nào thì mình chỉ select theo kênh đó. còn nếu idkenhphanphoi=00 thì select tất cả
+		    if((int)$idKenhPhanPhoi!=00)
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat >= \''.trim($batDauQuy1).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy1).'\'');
+		    }
+		    else
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat >= \''.trim($batDauQuy1).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy1).'\'');
+		    }
+	    }
+	    if($quy==02)
+	    {
+	    	$batDauQuy2=$thoiGian.'-4-01';
+    		$ketThucQuy2=$thoiGian.'-6-30';
+    		if((int)$idKenhPhanPhoi!=00)
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat >= \''.trim($batDauQuy2).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy2).'\'');
+		    }
+		    else
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat >= \''.trim($batDauQuy2).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy2).'\'');
+		    }
+	    }
+	    if($quy==03)
+	    {
+	    	$batDauQuy3=$thoiGian.'-7-01';
+    		$ketThucQuy3=$thoiGian.'-9-30';
+    		if((int)$idKenhPhanPhoi!=00)
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat >= \''.trim($batDauQuy3).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy3).'\'');
+		    }
+		    else
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat >= \''.trim($batDauQuy3).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy3).'\'');
+		    }
+	    }
+	    if($quy==04)
+	    {
+	    	$batDauQuy4=$thoiGian.'-10-01';
+    		$ketThucQuy4=$thoiGian.'-12-31';
+    		if((int)$idKenhPhanPhoi!=00)
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat >= \''.trim($batDauQuy4).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy4).'\'');
+		    }
+		    else
+		    {
+		    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat >= \''.trim($batDauQuy4).'\''.' and hd.ngayXuat<= \''.trim($ketThucQuy4).'\'');
+		    }
+	    }
+	    
+	    $hoaDons=$query->getResult();
+	   	return array('hoaDons'=>$hoaDons);
+
+	}
+
+	public function chiTietDoanhThuNamAction()
+	{
+		$this->layout('layout/giaodien');
+	    $entityManager=$this->getEntityManager();
+
+	    $id = (int) $this->params()->fromRoute('id', 0);
+	    if (!$id) {
+	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
+	            'action' => 'index',
+	        ));
+	    }  
+
+	    $thoiGian=(string)$id;
+	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
+	    $idKenhPhanPhoi=(int)$thoiGian[4].$thoiGian[5];
+	    $thoiGian=$y;
+	    $strStart=$thoiGian.'-01-01';
+	    $strEnd=$thoiGian.'-12-31';
+
+	    // kiểm tra nếu dữ liệu gửi qua thuộc kênh nào thì mình chỉ select theo kênh đó. còn nếu idkenhphanphoi=00 thì select tất cả
+	    if((int)$idKenhPhanPhoi!=00)
+	    {
+	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd, HangHoa\Entity\DoiTac dt WHERE hd.idDoiTac=dt.idDoiTac and dt.idKenhPhanPhoi='.$idKenhPhanPhoi.' and hd.ngayXuat >= \''.trim($strStart).'\''.' and hd.ngayXuat<= \''.trim($strEnd).'\'');
+	    }
+	    else
+	    {
+	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.ngayXuat >= \''.trim($strStart).'\''.' and hd.ngayXuat<= \''.trim($strEnd).'\'');
+	    }
+	    
+	    $hoaDons=$query->getResult();
+	   	return array('hoaDons'=>$hoaDons);
+
+	}
  }
 ?>
