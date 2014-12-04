@@ -11,17 +11,17 @@
                          / Doanh thu /
                     </span>
                     <ul class="nav h5a-sidenav nav-list accordion">
-                                            
+                        <li>
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                                <i class="fa fa-flag-checkered"></i> Doanh thu
+                            </a>
+                        </li>                  
                         <li>
                             <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
                                 <i class="fa fa-cubes"></i> Đơn hàng
                             </a>
                         </li>
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
@@ -51,7 +51,8 @@
                                             <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoNam')); ?>">Theo năm</a></li>
                                         </ul>
                                     </div>
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDoanhThuTheoQuy')); ?>">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                                 </div>
                             </div>
                         </div>

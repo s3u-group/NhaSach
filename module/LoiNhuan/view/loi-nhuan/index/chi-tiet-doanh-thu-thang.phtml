@@ -10,17 +10,17 @@
                          / Doanh thu /
                     </span>
                     <ul class="nav h5a-sidenav nav-list accordion">
-                                            
+                        <li>
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                                <i class="fa fa-flag-checkered"></i> Doanh thu
+                            </a>
+                        </li>            
                         <li>
                             <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
                                 <i class="fa fa-cubes"></i> Đơn hàng
                             </a>
                         </li>
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>
+                        
                     </ul>
                 </div>
             </div>
