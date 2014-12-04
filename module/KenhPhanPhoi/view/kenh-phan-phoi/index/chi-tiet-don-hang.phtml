@@ -1,7 +1,27 @@
 <?php
     $this->headTitle('Chi tiết đơn hàng');
-
 ?>
+<style type="text/css">   
+    @media print {
+        .col-sm-3 {display: none;}
+        .form-group{display: none;}
+        .col-md-2{display: none;}
+        .col-sm-6{margin-top: -80px}
+        .pull-right{display: none;}        
+        .tb{width: 900px; margin-left: -10px; margin-top: -30px;}
+        .td{width: 80px;}        
+        table {display: table;}
+        .dataTables_length{display: none;}
+        .dataTables_filter{display: none;}
+        .dataTables_info{display: none;}
+        #dataTables-example_paginate{display: none;}
+        .sorting_asc{display: none;}
+        .sorting_1 {display: none;}
+        #link{display: none;}
+        .lb{display: block;}
+        #destination-search{display: none;}        
+    }
+</style>
 
 <div class="container">
         <div class="row">
@@ -53,16 +73,16 @@
                                             <i class="fa fa-chevron-right"></i>
                                         </button>
                                     </div>
-                                     <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'exportExcel'));?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                                        <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return inDonHangFunction();">In đơn hàng</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="box">   
                         
-                        <table>
+                        <table class="tb">
                             <tr>
-                                <td>
+                                <td class="td">
                                     <b>Họ tên: </b>
                                 </td>
                                 <td>                                    
@@ -82,7 +102,7 @@
                                 <td>
                                     <?php echo $hoaDon->getIdDoiTac()->getDiDong(); ?>
                                 </td>
-                                <td>
+                                <td class="td1">
                                     <b>Điện thoại cố định: </b>
                                 </td>
                                 <td>
@@ -95,7 +115,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <b>Email:  </b>
+                                    <b>Email:</b>
                                 </td>
                                 <td>
                                     <?php echo $hoaDon->getIdDoiTac()->getEmail(); ?>
@@ -132,7 +152,7 @@
                                             foreach ($chiTietHoaDons as $chiTietHoaDon) {
                                                 echo '<tr>';
                                                     echo '<td><input type="checkbox"/></td>';
-                                                    echo '<td><a href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a></td>';
+                                                    echo '<td><a id="link" href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a><label hidden="true" class="lb">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</label></td>';
                                                     echo '<td>'.$chiTietHoaDon->getGia().'</td>';
                                                     echo '<td>'.$chiTietHoaDon->getSoLuong().'</td>';
                                                     echo '<td>'.$chiTietHoaDon->getGia()*$chiTietHoaDon->getSoLuong().'</td>';
@@ -150,7 +170,7 @@
                 </div>
             </div>
         </div>
-    </div>
+</div>
     <!-- /.container -->
 
     <!-- jQuery -->
@@ -174,4 +194,9 @@
             "bAutoWidth": true
         });
     });
+
+    inDonHangFunction=function()
+    {
+        window.print();        
+    }
     </script>

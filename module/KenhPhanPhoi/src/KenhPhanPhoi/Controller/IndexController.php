@@ -483,6 +483,7 @@
                                               ->setSize(10);
 
 // canh chỉnh trong phpexcel: chỉnh mà cho border
+                                              
     $styleArray = array(
        'borders' => array(
              'outline' => array(

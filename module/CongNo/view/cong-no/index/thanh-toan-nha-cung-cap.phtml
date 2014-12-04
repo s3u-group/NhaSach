@@ -43,7 +43,12 @@
                     <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
                      / Thanh toán /
                 </span>
-                <ul class="nav h5a-sidenav nav-list accordion">                    
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
+                            <i class="glyphicon glyphicon-save"></i> Công nợ NCC
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
