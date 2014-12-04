@@ -1,13 +1,6 @@
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Doanh thu</title>
-</head>
+<?php 
+    echo $this->headTitle('Doanh thu');
+?>
 
 <div class="container">
         <div class="row">
@@ -98,7 +91,13 @@
                                             <?php
                                             foreach ($doanhThus as $doanhThu) { ?>
                                                 <tr>
-                                                    <td><?php echo $doanhThu['thoiGian']; ?></td>
+                                                    <td>
+                                                        <!-- nếu tất cả thì id sẽ có số 00 ở phía sau có nghỉa là tất cả -->
+                                                        <?php $id=(int)$doanhThu['idThoiGian'].'00'; ?>
+                                                        <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuNgay','id'=>$id)); ?>">
+                                                            <?php echo $doanhThu['thoiGian']; ?>
+                                                        </a>
+                                                    </td>
                                                     <td><?php echo (string)count($doanhThu['chiTietDoanhThus']); ?></td>
                                                     <?php 
                                                         $tongDoanhThu=0;
@@ -163,7 +162,12 @@
                                                     {
                                                     ?>
                                                         <tr>
-                                                            <td><?php echo $doanhThu['thoiGian']; ?></td>
+                                                            <td>
+                                                                <?php $id=(int)$doanhThu['idThoiGian'].$kenhPhanPhoi['termTaxonomyId']; ?>
+                                                                <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuNgay','id'=>$id)); ?>">
+                                                                    <?php echo $doanhThu['thoiGian']; ?>
+                                                                </a>
+                                                            </td>
                                                             <td><?php echo $soDonHang; ?></td>
                                                             <td><?php echo $tongDoanhThu; ?></td>
                                                             <td><?php echo $tongLoiNhuan; ?></td>

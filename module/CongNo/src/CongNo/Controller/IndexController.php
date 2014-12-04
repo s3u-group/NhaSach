@@ -32,14 +32,18 @@ namespace CongNo\Controller;
 
 
       // lấy những đối tác thuộc loại khách hàng có công nợ với hệ thống
-      $query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=45');
+      
+      /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=45');
+      $doiTacs=$query->getResult();*/
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
       $response=array();
       foreach ($doiTacs as $doiTac) 
       {   
-        $idDoiTac=$doiTac['idDoiTac'];  
+        //$idDoiTac=$doiTac['idDoiTac'];  
+        $idDoiTac=$doiTac->getIdDoiTac();
         if($idDoiTac)
         {
 
@@ -214,14 +218,17 @@ namespace CongNo\Controller;
 
 
       // lấy những đối tác thuộc loại khách hàng có công nợ với hệ thống
-      $query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=46');
+      /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=46');
+      $doiTacs=$query->getResult();*/
+
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=46');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
       $response=array();
       foreach ($doiTacs as $doiTac) 
       {   
-        $idDoiTac=$doiTac['idDoiTac'];  
+        $idDoiTac=$doiTac->getIdDoiTac();  
         if($idDoiTac)
         {
 

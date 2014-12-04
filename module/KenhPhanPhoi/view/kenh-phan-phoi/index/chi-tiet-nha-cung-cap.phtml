@@ -272,9 +272,10 @@
                                         <th><input type="checkbox"/></th>
                                         <th>Ngày</th>
                                         <th>Giao dịch</th>
+                                        <th>Diễn giải</th>
                                     </thead>
                                     <tbody>
-                                    <?php
+                                    <!--<?php
                                     foreach ($lichSuGiaoDichs as $lichSuGiaoDich) 
                                     {?>
                                        <tr>
@@ -287,7 +288,37 @@
                                             </td>
                                         </tr>
                                     <?php } ?>
-                                        
+                                     -->
+                                     <?php
+                                    foreach ($phieuNhaps as $phieuNhap) 
+                                    {?>
+                                       <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><?php  echo $phieuNhap->getNgayNhap()->format('d/m/Y'); ?></td>
+                                            <td>
+                                                <?php                                                 
+                                                    echo '<a href="'.$this->url('kenh_phan_phoi/crud', array('action'=>'chiTietPhieuNhap', 'id'=>$phieuNhap->getIdPhieuNhap())).'">#'.$phieuNhap->getMaPhieuNhap(); 
+                                                ?>
+                                            </td>
+                                            <td><span class="label label-warning">Nhập hàng</span></td>
+                                        </tr>
+                                    <?php } ?>
+
+                                    <?php
+                                    foreach ($phieuChis as $phieuChi) 
+                                    {?>
+                                       <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><?php  echo $phieuChi->getNgayThanhToan()->format('d/m/Y'); ?></td>
+                                            <td>
+                                                <?php                                                 
+                                                    echo /*'<a href="'.$this->url('kenh_phan_phoi/crud', array('action'=>'chiTietPhieuChi', 'id'=>$phieuChi->getIdPhieuChi())).'">#'.*/$phieuChi->getSoTien(); 
+                                                ?>
+                                            </td>
+                                            <td><span class="label label-success">Đã thanh toán</span></td>
+                                        </tr>
+                                    <?php } ?>
+                                           
                                     </tbody>
                                 </table>
                             </div>

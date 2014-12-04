@@ -73,7 +73,22 @@
                                                 ?>
                                                     <tr>
                                                         <td><input type="checkbox"/></td>
-                                                        <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToanNhaCungCap','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
+                                                        <td>
+                                                            <?php 
+                                                            if((float)$rp['noCuoiKi']>0)
+                                                            {
+                                                            ?>
+                                                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToanNhaCungCap','id'=>$rp['idDoiTac'])); ?>">
+                                                                    <?php  echo $rp['hoTenDoiTac']; ?>
+                                                                </a>
+                                                            <?php
+                                                            }
+                                                            else
+                                                            {
+                                                                echo $rp['hoTenDoiTac'];
+                                                            }
+                                                            ?>
+                                                        </td>
                                                         <td><?php  echo $rp['ngayDauKi']; ?></td>
                                                         <td><?php  echo $rp['noDauKi']; ?></td>
                                                         <td><?php  echo $rp['noPhatSinh']; ?></td>
