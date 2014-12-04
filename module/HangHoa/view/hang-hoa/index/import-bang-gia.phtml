@@ -1,0 +1,44 @@
+<?php
+$this->headTitle('Bảng giá');
+if($import==1)
+{
+	if(count($listMaSanPham)>0)	
+	{ ?>	
+		<div align="center">
+			<h3>DANH SÁCH CÁC MÃ SẢN PHẨM KHÔNG THỂ IMPORT BẢNG GIÁ</h3>
+			<table>
+				<?php
+				$i=0;
+				foreach ($listMaSanPham as $list) {?>
+					<tr>
+						<td><?php echo ++$i; ?>.</td>
+						<td><?php echo $list; ?></td>
+					</tr>			
+				<?php }?>
+			</table>			
+		</div>		
+		<div class="page-footer">
+            <div class="row bottom20">
+                <div class="col-sm-7 col-sm-offset-3">
+                    <div class="col-sm-5 col-sm-offset-3">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bangGia'));?>"><button type="button" class="btn h5a-btn btn-primary full">Trở về</button></a>                        
+                    </div>
+                </div>
+            </div>
+        </div>
+	<?php }	
+	if(count($listMaSanPham)==0)
+	{?>
+		<script type="text/javascript">
+			alert('Import thành công');	
+			window.history.back(-1);
+		</script>
+	<?php }
+}
+else
+{ ?>
+	<script type="text/javascript">
+		alert('Tập tin import không hợp lệ!');	
+		window.history.back(-1);
+	</script>
+<?php }?>
