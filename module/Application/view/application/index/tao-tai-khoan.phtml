@@ -1,0 +1,223 @@
+<?php
+    echo $this->headTitle('Tạo tài khoản');
+    $form->setAttribute('action', $this->url('application/default', array('controller'=>'Index','action' => 'taoTaiKhoan')));
+    $form->setAttribute('role','form');
+    $form->prepare();
+    echo $this->form()->openTag($form);
+    $systemUser=$form->get('system-user');
+    echo $this->formHidden($systemUser->get('userId'));
+    $systemUser->get('state')->setAttribute('value',0);
+    echo $this->formHidden($systemUser->get('state'));
+    $systemUser->get('username')->setAttribute('value','');
+    echo $this->formHidden($systemUser->get('username'));
+?>
+<div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                <div class="h5a-sidebar affix">
+                    <span class="breadcrumb row">
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
+                        <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
+                         / Thêm khách hàng /
+                    </span>
+                    <ul class="nav h5a-sidenav nav-list accordion">                        
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                                <i class="glyphicon glyphicon-open"></i> Khách hàng
+                            </a>
+                        </li> 
+                        <li>
+                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                                <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                            </a>
+                        </li>                 
+                        <li>
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                                <i class="fa fa-cubes"></i> Đơn hàng
+                            </a>
+                        </li>
+                        <li>
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                                <i class="fa fa-flag-checkered"></i> Doanh thu
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10" role="main">
+                <div class="h5a-docs-section">
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h1>TẠO TÀI KHOẢN</h1>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="pull-right">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">                        
+                            <h4 class="underline">More Info</h4>
+                            <table class="item">
+                                <tbody>                              
+                                    <tr>
+                                        <td>
+                                            Họ tên
+                                        </td>
+                                        <td>                                            
+                                            <?php 
+                                                $systemUser->get('hoTen')->setAttribute('class','h5a-input form-control input-sm');
+                                                echo $this->formElement($systemUser->get('hoTen')); 
+                                            ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Email
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('email')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('email')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Mật khẩu
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('password')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('password')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Xác nhận lại mật khẩu
+                                        </td>
+                                        <td>
+                                            <?php $form->get('passwordVerify')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($form->get('passwordVerify')); ?>
+                                       </td>                                        
+                                    </tr>
+                                    <?php
+                                    if($ktMatKhau==1)
+                                    {?>
+                                        <tr>
+                                            <td>
+
+                                            </td>
+                                            <td>
+                                                <span>Xác nhận mật khẩu không đúng</span>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    <tr>
+                                        <td>
+                                            Tên hiển thị
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('displayName')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('displayName')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Địa chỉ
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('diaChi')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('diaChi')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Mô tả
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('moTa')->setAttribute('id','editor'); ?>
+                                            <?php echo $this->formElement($systemUser->get('moTa')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Điện thoại
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('dienThoaiCoDinh')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('dienThoaiCoDinh')); ?>
+                                        </td>                                        
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            Di động
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('diDong')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('diDong')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            Twitter
+                                        </td>
+                                        <td>
+                                            <?php $systemUser->get('twitter')->setAttribute('class','h5a-input form-control input-sm'); ?>
+                                            <?php echo $this->formElement($systemUser->get('twitter')); ?>
+                                        </td>                                        
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                    </div>
+                    <div class="page-footer">
+                        <div class="row bottom20">
+                            <div class="col-sm-6 col-sm-offset-6">
+                                <div class="pull-right">
+                                    <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php echo $this->form()->closeTag() ?>
+
+ <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Summernot JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/summernote.min.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+
+    $("#editor").summernote({height:150});
+    </script>
+       

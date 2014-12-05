@@ -80,9 +80,9 @@ class Module
                 'type' => 'TextArea',
                 'options' => array(
                     'label' => 'Description',                  
-                ),
+                ), 
                 'attributes'=>array(
-                    'id'=>'editor',
+                    //'id'=>'editor',
                 ),
             ));
 

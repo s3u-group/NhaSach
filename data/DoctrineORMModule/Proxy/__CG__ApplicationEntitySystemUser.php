@@ -64,10 +64,10 @@ class SystemUser extends \Application\Entity\SystemUser implements \Doctrine\ORM
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hinhAnh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'website', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'loaiTaiKhoan', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
+            return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hinhAnh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'website', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'loaiTaiKhoan', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
+        return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
     }
 
     /**
@@ -422,50 +422,6 @@ class SystemUser extends \Application\Entity\SystemUser implements \Doctrine\ORM
     /**
      * {@inheritDoc}
      */
-    public function setHinhAnh($hinhAnh)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setHinhAnh', array($hinhAnh));
-
-        return parent::setHinhAnh($hinhAnh);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getHinhAnh()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getHinhAnh', array());
-
-        return parent::getHinhAnh();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setWebsite($website)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setWebsite', array($website));
-
-        return parent::setWebsite($website);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getWebsite()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getWebsite', array());
-
-        return parent::getWebsite();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function setTwitter($twitter)
     {
 
@@ -483,28 +439,6 @@ class SystemUser extends \Application\Entity\SystemUser implements \Doctrine\ORM
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'getTwitter', array());
 
         return parent::getTwitter();
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setLoaiTaiKhoan($loaiTaiKhoan)
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setLoaiTaiKhoan', array($loaiTaiKhoan));
-
-        return parent::setLoaiTaiKhoan($loaiTaiKhoan);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getLoaiTaiKhoan()
-    {
-
-        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getLoaiTaiKhoan', array());
-
-        return parent::getLoaiTaiKhoan();
     }
 
     /**

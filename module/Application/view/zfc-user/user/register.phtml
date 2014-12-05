@@ -53,123 +53,42 @@ $form->setAttribute('method', 'post');
                             </div>
                             <div class="col-sm-6">
                                 <div class="pull-right">
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                    <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu -->
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="row">                        
                             <h4 class="underline">More Info</h4>
-                            <table class="item">
-                                <tbody>
-                                   <!--  <tr>
-                                        <td>Họ tên</td>
-                                        <td>  
-                                                                                                         
-                                        <input type="text" class="h5a-input form-control input-sm" name="hoTen" id="form-field-1">          
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Email</td>
-                                        <td>  
-                                                                                                         
-                                        <input type="email" class="h5a-input form-control input-sm" name="username" id="form-field-1">          
-                                        </td>
-                                    </tr>
-                                
-                                    <tr>
-                                        <td>Tên đăng nhập</td>
-                                        <td>                                                                   
-                                        <input type="text" class="h5a-input form-control input-sm" name="username" id="form-field-1">          
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mật khẩu</td>
-                                        <td>                                                                   
-                                        <input type="password" class="h5a-input form-control input-sm" name="password" id="form-field-1">          
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Nhập lại mật khẩu</td>
-                                        <td>                                                                   
-                                        <input type="password" class="h5a-input form-control input-sm" name="passwordVerify" id="form-field-1">          
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <td>Tên hiển thị</td>
-                                        <td>  
-                                                                                                         
-                                        <input type="text" class="h5a-input form-control input-sm" name="displayName" id="form-field-1">          
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Địa chỉ</td>
-                                        <td>
-                                              <input type="text" class="h5a-input form-control input-sm" name="diaChi" id="form-field-1">  
-                                              <input type="hidden" name="state" value="0">          
-                                                                         
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mô tả</td>
-                                        <td>                                         
-                                        <input type="TextArea" class="form-control h5a" id="editor" row="5">
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hình ảnh</td>
-                                        <td>                                        
-                                            <input type="file" class="h5a-btn btn btn-primary">
-                                        </td>
-                                    </tr>                                    
-                                    
-                                    <tr>
-                                        <td>Di động</td>
-                                        <td>                                        
-                                            <input type="number" name="diDong" class="h5a-input form-control input-sm" id="form-field-1">                       
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Điện thoại cố định</td>
-                                        <td>                                       
-                                            <input type="number" name="dienThoaiCoDinh" class="h5a-input form-control input-sm" id="form-field-1">
-                                        </td>
-                                    </tr>
-
-
-                                    <tr>
-                                        <td>Twitter</td>
-                                        <td>                                        
-                                            <input type="number" name="twitter" class="h5a-input form-control input-sm" id="form-field-1">                                       
-                                        </td>
-                                    </tr> -->
+                            <table class="item" style="width:60%;">
+                                <tbody>                              
 
                                     <?php foreach ($form as $element): ?>
                                     <tr>
                                     <?php if (!$element instanceof Zend\Form\Element\Button): ?>
-                                        <td>
+                                        <td width="15%">
                                           <span><label for="email" style="width:150px;"><?php echo $this->formLabel($element) ?></label></span>
                                         </td>
                                     <?php endif ?>
                                     <?php if ($element instanceof Zend\Form\Element\Button): ?> 
-                                            
-                                        <td>
-                                            <?php $element->setAttribute('class','btn btn-primary');?>
-                                            <?php echo $this->formButton($element); ?>
+                                        <td> </td>   
+                                        <td style="text-align:right;">
+                                            <?php //$element->setAttribute('class','btn btn-primary');?>
+                                            <?php //echo $this->formButton($element); ?>
+                                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                               
                                         </td>
                                     <?php elseif ($element instanceof Zend\Form\Element\Captcha): ?>
-                                        <td>   
+                                        <td width="85%">   
                                              <?php $element->setAttribute('class','form-control');?> 
                                              <?php echo $this->formCaptcha($element); ?>
                                              <?php echo $this->formElementErrors($element); ?>
 
                                         </td>
                                     <?php else: ?>
-                                        <td>
+                                        <td  width="85%">
                                           <?php $element->setAttribute('class','form-control');?>
                                           <?php echo $this->formInput($element); ?>
                                           <?php echo  $this->formElementErrors($element); ?>
@@ -184,8 +103,8 @@ $form->setAttribute('method', 'post');
                         <div class="row bottom20">
                             <div class="col-sm-6 col-sm-offset-6">
                                 <div class="pull-right">
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                    <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button> -->
                                 </div>
                             </div>
                         </div>
