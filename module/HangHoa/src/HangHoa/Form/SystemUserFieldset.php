@@ -117,13 +117,6 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
          ));
 
          $this->add(array(
-             'name' => 'website',
-             'type' => 'Text',
-             'options' => array(                 
-             ),             
-         ));
-
-         $this->add(array(
              'name' => 'twitter',
              'type' => 'Text',
              'options' => array(                 

@@ -131,4 +131,59 @@ return array(
             ),
         ),
     ),
+
+    //phân quyền 
+    
+     /*'bjyauthorize'=>array(
+
+        'guards'=>array(
+            'BjyAuthorize\Guard\Controller'=>array(
+                
+                array(
+                    'controller'=>array('zfcuser'),                   
+                    'roles'     =>array(),
+                ),
+
+               
+
+                array(
+                    'controller'=>array('CongNo\Controller\Index'),
+                    'action'    =>array('index'),
+                    'roles'     =>array('nguoi-dung'),
+                ),
+
+                array(
+                    'controller'=>array('HangHoa\Controller\Index'),
+                    'action'    =>array('index'),
+                    'roles'     =>array('nguoi-dung'),
+                ),
+
+                array(
+                    'controller'=>array('KenhPhanPhoi\Controller\Index'),
+                    'action'    =>array('index'),
+                    'roles'     =>array('nguoi-dung'),
+                ),
+
+                array(
+                    'controller'=>array('LoiNhuan\Controller\Index'),
+                    'action'    =>array('index'),
+                    'roles'     =>array('nguoi-dung'),
+                ),
+
+                array(
+                    'controller'=>array('S3UTaxonomy\Controller\Index'),
+                    //'action'    =>array(),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),
+
+                array(
+                    'controller'=>array('S3UTaxonomy\Controller\Taxonomy'),
+                    //'action'    =>array(),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),
+              
+            ),
+        ),
+    ),*/
+   
 );

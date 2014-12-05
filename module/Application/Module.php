@@ -35,6 +35,98 @@ class Module
             $user->addRole($defaultUserRole);//
             
         });
+
+        //  form register
+        $events = $e->getApplication()->getEventManager()->getSharedManager();
+
+        $events->attach('ZfcUser\Form\Register','init', function($e) {
+            $form = $e->getTarget();
+            // Do what you please with the form instance ($form)    
+              
+            $form->add(array(
+                'name' => 'displayName',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'Display Name ',
+                ),
+            ));
+
+            $form->add(array(
+                'name' => 'hoTen',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'Full Name ',
+                ),
+            ));
+
+            $form->add(array(
+                'name' => 'diaChi',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'Address',
+                ),
+            ));
+
+            /*$form->add(array(
+                'name' => 'state',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'state',
+                    'value'=>0,
+                ),
+            ));*/
+            $form->add(array(
+                'name' => 'moTa',
+                'type' => 'TextArea',
+                'options' => array(
+                    'label' => 'Description',                  
+                ),
+                'attributes'=>array(
+                    'id'=>'editor',
+                ),
+            ));
+
+            $form->add(array(
+                'name' => 'dienThoaiCoDinh',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'Home Phone',                  
+                ),
+            ));
+
+             $form->add(array(
+                'name' => 'diDong',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'Phone Numeber',                
+                ),
+            ));
+
+            $form->add(array(
+                'name' => 'twitter',
+                'type' => 'Text',
+                'options' => array(
+                    'label' => 'Twitter',                  
+                ),
+            ));
+        
+        });
+
+
+        $events->attach('ZfcUser\Form\RegisterFilter','init', function($e) {
+           
+        });
+
+        $zfcServiceEvents->attach('register', function($e) {
+            $user = $e->getParam('user');  // User account object
+            $form = $e->getParam('form');  // Form object
+            
+        });
+
+        $zfcServiceEvents->attach('register.post', function($e) {
+            $user = $e->getParam('user');
+        });
+
     }
 
     public function getConfig()

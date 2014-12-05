@@ -21,9 +21,7 @@
 		* @ORM\GeneratedValue
 		*/
 		private $id;
-
-
-
+		
 		/**
 		* @ORM\Column
 		*/
@@ -63,7 +61,7 @@
 		/**
 		* @ORM\Column(type="smallint",length=6)
 		*/
-		private $state;
+		private $state=0;
 
 
 		/**
@@ -73,42 +71,27 @@
 
 
 		/**
-		* @ORM\Column(name="dien_thoai_co_dinh", type="integer")
+		* @ORM\Column(name="dien_thoai_co_dinh", length=12)
 		*/
 		private $dienThoaiCoDinh;
 
 
 		/**
-		* @ORM\Column(name="di_dong", type="integer")
+		* @ORM\Column(name="di_dong", length=12)
 		*/
 		private $diDong;
 
 
-		/**
+		/*
 		* @ORM\Column(name="hinh_anh")
 		*/
-		private $hinhAnh;
-
-
-		/**
-		* @ORM\Column(name="website")
-		*/
-		private $website;
+		//private $hinhAnh;
 
 
 		/**
 		* @ORM\Column(name="twitter")
 		*/
 		private $twitter;
-
-
-
-		
-		/**
-		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
-		* @ORM\JoinColumn(name="loai_tai_khoan", referencedColumnName="term_taxonomy_id")
-		*/
-		private $loaiTaiKhoan;
 
 
 		/**
@@ -184,7 +167,7 @@
 			return $this->hoTen;
 		}
 
-
+		
 		public function setDiaChi($diaChi)
 		{
 			$this->diaChi=$diaChi;
@@ -246,24 +229,14 @@
 		}
 
 
-		public function setHinhAnh($hinhAnh)
+		/*public function setHinhAnh($hinhAnh)
 		{
 			$this->hinhAnh=$hinhAnh;
 		}
 		public function getHinhAnh()
 		{
 			return $this->hinhAnh;
-		}
-
-
-		public function setWebsite($website)
-		{
-			$this->website=$website;
-		}
-		public function getWebsite()
-		{
-			return $this->website;
-		}
+		}*/
 
 
 		public function setTwitter($twitter)
@@ -273,16 +246,6 @@
 		public function getTwitter()
 		{
 			return $this->twitter;
-		}
-
-
-		public function setLoaiTaiKhoan($loaiTaiKhoan)
-		{
-			$this->loaiTaiKhoan=$loaiTaiKhoan;
-		}
-		public function getLoaiTaiKhoan()
-		{
-			return $this->loaiTaiKhoan;
 		}
 
 
