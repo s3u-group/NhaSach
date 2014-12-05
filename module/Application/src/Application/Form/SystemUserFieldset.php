@@ -1,6 +1,6 @@
 <?php
 
-namespace HangHoa\Form;
+namespace Application\Form;
 
 use Doctrine\Common\Persistence\ObjectManager;
 use DoctrineModule\Stdlib\Hydrator\DoctrineObject as DoctrineHydrator;
@@ -31,8 +31,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
              'options' => array(
                  'label' => 'Tên đăng nhập',
              ),
-             'attributes'=>array(                
-                'class'   => 'h5a-input form-control input-sm',
+             'attributes'=>array(               
                 'placeholder'=>'Tên đăng nhập',
             ),
          )); 
@@ -43,7 +42,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
              'options' => array(
                  'label' => 'Mật khẩu',
              ),
-             
+             'attributes'=>array('required'=>'required'),
          ));
 
          $this->add(array(
@@ -75,13 +74,14 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
         ));
 
        
-         /*$this->add(array(
+         $this->add(array(
              'name' => 'email',
              'type' => '\Zend\Form\Element\Email',
              'options' => array(
                  'label' => 'Email',
              ),
-         ));*/
+             'attributes'=>array('required'=>'required'),
+         ));
 
          $this->add(array(
              'name' => 'state',
@@ -109,13 +109,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
              ),             
          ));
 
-         $this->add(array(
-             'name' => 'hinhAnh',
-             'type' => 'Zend\Form\Element\File',
-             'options' => array(                 
-             ),             
-         ));
-
+         
          $this->add(array(
              'name' => 'twitter',
              'type' => 'Text',
@@ -123,16 +117,7 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
              ),             
          ));
 
-         
-         /*$this->add(array(
-             'name' => 'loaiTaiKhoan',
-             'type' => '\Zend\Form\Element\Select',
-             'options' => array(
-                 'label' => 'Loại',
-                 'empty_option'=>'----------Chọn Loại tài khoản----------',
-                 'disable_inarray_validator' => true,
-             ),
-         ));*/
+        
 
     }
 
