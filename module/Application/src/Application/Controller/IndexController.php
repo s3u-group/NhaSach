@@ -11,8 +11,6 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use ZfcUser\Options\UserServiceOptionsInterface;
-use Zend\Crypt\Password\Bcrypt;
 
 use Application\Entity\SystemUser;
 use Application\Form\SystemUserFieldset;
