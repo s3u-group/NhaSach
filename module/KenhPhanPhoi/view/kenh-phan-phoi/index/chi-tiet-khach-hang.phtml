@@ -1,42 +1,41 @@
 <?php $this->headTitle('Thông tin khách hàng'); ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                        <a href="<?php echo $this->url('kenh_phan_phoi');?>">/ Khách hàng</a>
-                         / #xxx /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                        <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                                <i class="glyphicon glyphicon-open"></i> Khách hàng
-                            </a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                                <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
-                            </a>
-                        </li>               
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    
-            </div>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('kenh_phan_phoi');?>">/ Khách hàng</a>
+                 / #xxx /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                        <i class="glyphicon glyphicon-open"></i> Khách hàng
+                    </a>
+                </li> 
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                    </a>
+                </li>               
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-cubes"></i> Đơn hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    </a>
+                </li>
+            </ul>
         </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            
+    </div>
 </div>
 <!-- /.container -->
 

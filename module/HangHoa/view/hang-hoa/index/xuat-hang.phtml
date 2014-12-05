@@ -32,177 +32,170 @@ $this->headTitle($title);
     #search-result{cursor:pointer;}
 </style>
 
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
-                         / Xuất hàng /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
-                                <i class="fa fa-cubes"></i> Danh sách hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>">
-                                <i class="fa fa-download"></i> Nhập hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
-                                <i class="fa fa-upload"></i> Xuất hàng
-                            </a>
-                        </li>
-                    </ul>
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
+                 / Xuất hàng /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
+                        <i class="fa fa-cubes"></i> Danh sách hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>">
+                        <i class="fa fa-download"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
+                        <i class="fa fa-upload"></i> Xuất hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Xuất hàng</h1>
+                    </div>
+                   
                 </div>
             </div>
 
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Xuất hàng</h1>
-                            </div>
-                           
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-3">Khách hàng</label>
+                        <div class="col-sm-7">
+                            <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="Trường Đại học Trà Vinh">-->
+                        <?php
+                            $hoaDon = $form->get('hoa-don');
+                            echo $this->formHidden($form->get('idKhachHang'));
+                            echo $this->formHidden($form->get('idSanPham'));
+                            echo $this->formHidden($form->get('donViTinh'));
+                            echo $this->formRow($form->get('khachHang'));
+                            echo $this->formHidden($hoaDon->get('idDoiTac')->get('idDoiTac'));
+                            echo $this->formHidden($hoaDon->get('status'));
+                            //echo $this->formCollection($hoaDon->get('ctHoaDons'));
+                        ?>
+                        <input type='hidden' name="" />
+                        <div id="search-result"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-4">Địa chỉ</label>
+                        <div class="col-sm-7">
+                            <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="Số 126 Quốc lộ 53, khóm 4, phường 5, Tp.Trà Vinh, tỉnh Trà Vinh">-->
+                        <?php
+                            echo $this->formRow($form->get('diaChi'));
+                        ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 box">
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
+                        <div class="col-sm-7">
+                            <!--<input type="text" id="form-field-1" placeholder="Mã hàng" class="h5a-input form-control input-sm">-->
+                        <?php
+                            echo $this->formRow($form->get('maHang'));
+                        ?>
+                        <div id="san-pham-search-result"></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
+                        <div class="col-sm-7">
+                            <!--<input type="text" id="form-field-2" placeholder="Tên hàng" class="h5a-input form-control input-sm">-->
+                        <?php
+                            echo $this->formRow($form->get('tenHang'));
+                        ?>
                         </div>
                     </div>
 
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-3">Khách hàng</label>
-                                <div class="col-sm-7">
-                                    <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="Trường Đại học Trà Vinh">-->
-                                <?php
-                                    $hoaDon = $form->get('hoa-don');
-                                    echo $this->formHidden($form->get('idKhachHang'));
-                                    echo $this->formHidden($form->get('idSanPham'));
-                                    echo $this->formHidden($form->get('donViTinh'));
-                                    echo $this->formRow($form->get('khachHang'));
-                                    echo $this->formHidden($hoaDon->get('idDoiTac')->get('idDoiTac'));
-                                    echo $this->formHidden($hoaDon->get('status'));
-                                    //echo $this->formCollection($hoaDon->get('ctHoaDons'));
-                                ?>
-                                <input type='hidden' name="" />
-                                <div id="search-result"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-4">Địa chỉ</label>
-                                <div class="col-sm-7">
-                                    <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="Số 126 Quốc lộ 53, khóm 4, phường 5, Tp.Trà Vinh, tỉnh Trà Vinh">-->
-                                <?php
-                                    echo $this->formRow($form->get('diaChi'));
-                                ?>
-                                </div>
-                            </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
+                        <div class="col-sm-7">
+                            <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="120">-->
+                        <?php
+                            echo $this->formRow($form->get('soLuong'));
+                        ?>
                         </div>
-                        <div class="col-sm-6 box">
-                            <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-1">Mã hàng</label>
-                                <div class="col-sm-7">
-                                    <!--<input type="text" id="form-field-1" placeholder="Mã hàng" class="h5a-input form-control input-sm">-->
-                                <?php
-                                    echo $this->formRow($form->get('maHang'));
-                                ?>
-                                <div id="san-pham-search-result"></div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
-                                <div class="col-sm-7">
-                                    <!--<input type="text" id="form-field-2" placeholder="Tên hàng" class="h5a-input form-control input-sm">-->
-                                <?php
-                                    echo $this->formRow($form->get('tenHang'));
-                                ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
-                                <div class="col-sm-7">
-                                    <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="120">-->
-                                <?php
-                                    echo $this->formRow($form->get('soLuong'));
-                                ?>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-4 right" for="form-field-4">Giá xuất</label>
-                                <div class="col-sm-7">
-                                    <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="325.000">-->
-                                <?php
-                                    echo $this->formRow($form->get('giaXuat'));
-                                ?>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <div class="col-sm-10 col-sm-offset-1">
-                                    <input type="hidden" id="tonKho"/>
-                                    <input type="hidden" id="kenhPhanPhoi" value=""/>
-                                    <input type="hidden" id="giaXuat" value=""/>
-                                    <button id="btnThemHang" class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
-                                </div>
-                            </div>
-
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-4">Giá xuất</label>
+                        <div class="col-sm-7">
+                            <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="325.000">-->
+                        <?php
+                            echo $this->formRow($form->get('giaXuat'));
+                        ?>
                         </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-sm-10 col-sm-offset-1">
+                            <input type="hidden" id="tonKho"/>
+                            <input type="hidden" id="kenhPhanPhoi" value=""/>
+                            <input type="hidden" id="giaXuat" value=""/>
+                            <button id="btnThemHang" class="btn h5a-btn btn-primary full">Thêm vào đơn hàng</button>
+                        </div>
+                    </div>
 
                 </div>
 
-            </div>
         </div>
+
+    </div>
 </div>
-
-<div class="container">
-        <div id="h5a-container" class="h5a-container">
-        </div>
-        <div class="row">
-            <div class="col-md-2">
-
-            </div>
-            <div class="col-md-10">
-                <!-- print -->
-                <h1 class="print" style="color:red;" hidden="true">THÔNG TIN KHÁCH HÀNG</h1>
-                <span class="printHoTen" id="printHoTen" hidden="true">Họ tên: </span>
-                <span class="printDiaChi" id="printDiaChi" hidden="true" style="margin-left:0px">Địa chỉ: </span>
-                <span class="printNgayXuat" hidden="true">Ngày xuất: <?php echo date("d/m/Y"); ?> </span> 
-                <h1 class="print" style="color:red;" hidden="true">HÓA ĐƠN</h1>
-            <!-- close print -->
-                
-                <h1>Danh sách xuất</h1>
-               
-                <div class="box">
-                    <table id="tbXuatHang" class="invoice pricelist bottom20">
-                        <thead>
-                            <tr>
-                                <th>Sản phẩm</th>
-                                <th>Đơn vị tính</th>
-                                <th>Số lượng</th>
-                                <th>Giá xuất</th>
-                                <th class="an" id="btnHuy">Hủy</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>"><button type="button" class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
-                        </div>
-                        <div class="col-sm-3 pull-right">
-                            <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button>
-                        </div>
-                    </div>
+<div id="h5a-container" class="h5a-container"></div>
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-10">
+        <!-- print -->
+        <h1 class="print" style="color:red;" hidden="true">THÔNG TIN KHÁCH HÀNG</h1>
+        <span class="printHoTen" id="printHoTen" hidden="true">Họ tên: </span>
+        <span class="printDiaChi" id="printDiaChi" hidden="true" style="margin-left:0px">Địa chỉ: </span>
+        <span class="printNgayXuat" hidden="true">Ngày xuất: <?php echo date("d/m/Y"); ?> </span> 
+        <h1 class="print" style="color:red;" hidden="true">HÓA ĐƠN</h1>
+    <!-- close print -->
+        
+        <h1>Danh sách xuất</h1>
+       
+        <div class="box">
+            <table id="tbXuatHang" class="invoice pricelist bottom20">
+                <thead>
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Đơn vị tính</th>
+                        <th>Số lượng</th>
+                        <th>Giá xuất</th>
+                        <th class="an" id="btnHuy">Hủy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            <div class="row">
+                <div class="col-sm-3">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>"><button type="button" class="btn h5a-btn btn-danger full"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
+                </div>
+                <div class="col-sm-3 pull-right">
+                    <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button>
                 </div>
             </div>
         </div>
+    </div>
+</div>
     
-</div>
+<!-- </div> -->
 <?php echo $this->form()->closeTag(); ?>
     <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>

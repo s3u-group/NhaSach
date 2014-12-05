@@ -1,109 +1,149 @@
 <?php echo $this->headTitle('Công nợ'); ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                        <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
-                         / Công nợ /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                        
-                        <li>
-                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
-                                <i class="glyphicon glyphicon-open"></i> Công nợ Khách hàng
-                            </a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
-                                <i class="glyphicon glyphicon-save"></i> Công nợ NCC
-                            </a>
-                        </li>                 
-                        
-                    </ul>
-                </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Công nợ /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            <i class="glyphicon glyphicon-open"></i> Công nợ Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
+                            <i class="glyphicon glyphicon-save"></i> Công nợ NCC
+                        </a>
+                    </li>                 
+                    
+                </ul>
             </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Công nợ khách hàng</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
-                                    <!-- <a href="<?php echo $this->url('cong_no/crud', array('action'=>'thanhToan')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Thanh Toán</button></a> -->
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Công nợ khách hàng</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
                                 </div>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                <!-- <a href="<?php echo $this->url('cong_no/crud', array('action'=>'thanhToan')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Thanh Toán</button></a> -->
                             </div>
                         </div>
                     </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                            <?php 
-                            foreach ($kenhPhanPhois as $kenhPhanPhoi) { 
-                                if($kenhPhanPhoi['cap']>0)
-                                {
-                            ?>
-                                    <li role="presentation">
-                                        <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo $kenhPhanPhoi['termId']['name'] ?></a>
-                                    </li>
-                            <?php
-                                }
+                </div>
+                <div class="box">
+                    <ul class="nav nav-tabs" role="tablist" id="myTab">
+                        <li role="presentation" class="active">
+                            <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                        </li>
+                        <?php 
+                        foreach ($kenhPhanPhois as $kenhPhanPhoi) { 
+                            if($kenhPhanPhoi['cap']>0)
+                            {
+                        ?>
+                                <li role="presentation">
+                                    <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo $kenhPhanPhoi['termId']['name'] ?></a>
+                                </li>
+                        <?php
                             }
-                            ?>                            
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row">
-                                        <table id="" class="dataTables-example">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Khách hàng</th>
-                                                <th>Ngày đầu kì</th>
-                                                <th>Đầu kì</th>
-                                                <th>Phát sinh</th>
-                                                <th>Cuối kì</th>
-                                            </thead>
-                                            <tbody>
-                                            <?php 
-                                                
-                                                foreach ($response as $rp) { 
+                        }
+                        ?>                            
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="home">
+                            <div class="container">
+                                <div class="row">
+                                    <table id="" class="dataTables-example">
+                                        <thead>
+                                            <th><input type="checkbox"/></th>
+                                            <th>Khách hàng</th>
+                                            <th>Ngày đầu kì</th>
+                                            <th>Đầu kì</th>
+                                            <th>Phát sinh</th>
+                                            <th>Cuối kì</th>
+                                        </thead>
+                                        <tbody>
+                                        <?php 
+                                            
+                                            foreach ($response as $rp) { 
+                                            ?>
+                                                <tr>
+                                                    <td><input type="checkbox"/></td>
+                                                    <td>
+                                                        <?php 
+                                                        if((float)$rp['noCuoiKi']>0)
+                                                        {
+                                                        ?>
+                                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>">
+                                                        <?php 
+                                                        }
+                                                        ?>
+                                                                <?php  echo $rp['hoTenDoiTac']; ?>
+                                                        <?php 
+                                                        if((float)$rp['noCuoiKi']>0)
+                                                        {
+                                                        ?>
+                                                            </a>
+                                                        <?php
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><?php  echo $rp['ngayDauKi']; ?></td>
+                                                    <td><?php  echo $rp['noDauKi']; ?></td>
+                                                    <td><?php  echo $rp['noPhatSinh']; ?></td>
+                                                    <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                    
+                                                </tr>
+                                            <?php    
+                                            }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <?php 
+                        foreach ($kenhPhanPhois as $kenhPhanPhoi) { 
+                            if($kenhPhanPhoi['cap']>0)
+                            {
+                        ?>
+                                <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
+                                    <p class="note">
+                                        <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
+                                        <thead>
+                                            <th><input type="checkbox"/></th>
+                                            <th>Nhà cung cấp</th>
+                                            <th>Ngày đầu kì</th>
+                                            <th>Đầu kì</th>
+                                            <th>Phát sinh</th>
+                                            <th>Cuối kì</th>
+                                        </thead>
+                                        <tbody>
+                                        <?php 
+                                            
+                                            foreach ($response as $rp) { 
+                                                if($kenhPhanPhoi['termTaxonomyId']==$rp['idKenhPhanPhoi'])
+                                                {
                                                 ?>
                                                     <tr>
                                                         <td><input type="checkbox"/></td>
-                                                        <td>
-                                                            <?php 
-                                                            if((float)$rp['noCuoiKi']>0)
-                                                            {
-                                                            ?>
-                                                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>">
-                                                            <?php 
-                                                            }
-                                                            ?>
-                                                                    <?php  echo $rp['hoTenDoiTac']; ?>
-                                                            <?php 
-                                                            if((float)$rp['noCuoiKi']>0)
-                                                            {
-                                                            ?>
-                                                                </a>
-                                                            <?php
-                                                            }
-                                                            ?>
-                                                        </td>
+                                                        <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
                                                         <td><?php  echo $rp['ngayDauKi']; ?></td>
                                                         <td><?php  echo $rp['noDauKi']; ?></td>
                                                         <td><?php  echo $rp['noPhatSinh']; ?></td>
@@ -112,62 +152,21 @@
                                                     </tr>
                                                 <?php    
                                                 }
+                                            }
                                             ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
+                                    </p>
                                 </div>
-                            </div>
-                            <?php 
-                            foreach ($kenhPhanPhois as $kenhPhanPhoi) { 
-                                if($kenhPhanPhoi['cap']>0)
-                                {
-                            ?>
-                                    <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
-                                        <p class="note">
-                                            <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Nhà cung cấp</th>
-                                                <th>Ngày đầu kì</th>
-                                                <th>Đầu kì</th>
-                                                <th>Phát sinh</th>
-                                                <th>Cuối kì</th>
-                                            </thead>
-                                            <tbody>
-                                            <?php 
-                                                
-                                                foreach ($response as $rp) { 
-                                                    if($kenhPhanPhoi['termTaxonomyId']==$rp['idKenhPhanPhoi'])
-                                                    {
-                                                    ?>
-                                                        <tr>
-                                                            <td><input type="checkbox"/></td>
-                                                            <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
-                                                            <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                            <td><?php  echo $rp['noDauKi']; ?></td>
-                                                            <td><?php  echo $rp['noPhatSinh']; ?></td>
-                                                            <td><?php  echo $rp['noCuoiKi']; ?></td>
-                                                            
-                                                        </tr>
-                                                    <?php    
-                                                    }
-                                                }
-                                                ?>
-                                            </tbody>
-                                        </table>
-                                        </p>
-                                    </div>
-                            <?php
-                                }
+                        <?php
                             }
-                            ?>
-                        </div>
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div>    
     <!-- /.container -->
 
     <!-- jQuery -->

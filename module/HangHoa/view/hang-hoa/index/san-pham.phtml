@@ -8,24 +8,22 @@
      $sanPham=$form->get('san-pham');
 ?>
 
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
-                         / #xxx /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                </div>
-            </div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
+                 / #xxx /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+            </ul>
         </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+        </div>
+    </div>
 </div>
 <!-- /.container -->
 <div class="container h5a-container gray">

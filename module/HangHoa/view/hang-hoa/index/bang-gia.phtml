@@ -1,150 +1,149 @@
 <?php
     $this->headTitle('Bảng giá');
 ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
-                         / Bảng giá /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
-                                <i class="fa fa-cubes"></i> Danh sách hàng
-                            </a>
-                        </li>
-                        <li>
-                            <!-- <a href="nhapHang.html"> -->
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>">
-                                <i class="fa fa-download"></i> Nhập hàng
-                            </a>
-                        </li>
-                        <li>
-                            <!-- <a href="xuatHang.html"> -->
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
-                                <i class="fa fa-upload"></i> Xuất hàng
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Bảng giá</h1>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
+                 / Bảng giá /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
+                        <i class="fa fa-cubes"></i> Danh sách hàng
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="nhapHang.html"> -->
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>">
+                        <i class="fa fa-download"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="xuatHang.html"> -->
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
+                        <i class="fa fa-upload"></i> Xuất hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Bảng giá</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="btn-group ">
-                                        <?php
-                                            $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'importBangGia')));
-                                            $form->setAttribute('role','form');
-                                            $form->setAttribute('name','frmImport');
-                                            $form->setAttribute('style','margin-top: 0px;margin-bottom:0px;');
-                                            $form->prepare();
-                                            echo $this->form()->openTag($form);
-                                            $file=$form->get('file');                                        
-                                            $file->setAttribute('style','display:none');
-                                            $file->setAttribute('onchange','return hamSubmit();');       
-                                            echo $this->formElement($file);
-                                        ?>
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" >Import</button>
-                                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'exportBangGia')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
-                                        <?php
-                                            echo $this->form()->closeTag();
-                                        ?>
-                                    </div>
-                                </div>
+                            <div class="btn-group ">
+                                <?php
+                                    $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'importBangGia')));
+                                    $form->setAttribute('role','form');
+                                    $form->setAttribute('name','frmImport');
+                                    $form->setAttribute('style','margin-top: 0px;margin-bottom:0px;');
+                                    $form->prepare();
+                                    echo $this->form()->openTag($form);
+                                    $file=$form->get('file');                                        
+                                    $file->setAttribute('style','display:none');
+                                    $file->setAttribute('onchange','return hamSubmit();');       
+                                    echo $this->formElement($file);
+                                ?>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" >Import</button>
+                                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'exportBangGia')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                                <?php
+                                    echo $this->form()->closeTag();
+                                ?>
                             </div>
                         </div>
                     </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row">
-                                        <table id="dataTables-example" class="">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Sản phẩm</th>
-                                                <th>ĐVT</th>
-                                                <th>Giá nhập</th>
-                                                <?php 
-                                                    //die(var_dump($kenhPhanPhois));
-                                                    foreach ($kenhPhanPhois as $kenhPhanPhoi)
-                                                    {
-                                                        if($kenhPhanPhoi['cap']>0)
-                                                        {
-                                                            echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
-                                                        }                                                        
-                                                    }
-                                                ?>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                                foreach($sanPhams as $sanPham)
+                </div>
+            </div>
+            <div class="box">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row">
+                                <table id="dataTables-example" class="">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>
+                                        <th>Sản phẩm</th>
+                                        <th>ĐVT</th>
+                                        <th>Giá nhập</th>
+                                        <?php 
+                                            //die(var_dump($kenhPhanPhois));
+                                            foreach ($kenhPhanPhois as $kenhPhanPhoi)
+                                            {
+                                                if($kenhPhanPhoi['cap']>0)
                                                 {
-                                                    echo '<tr>';
-                                                    echo '<td><input type="checkbox"/></td>';
+                                                    echo '<th>'.$kenhPhanPhoi['termId']['name'].'</th>';
+                                                }                                                        
+                                            }
+                                        ?>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    //die(var_dump($sanPhams));
+                                        foreach($sanPhams as $sanPham)
+                                        {
+                                            echo '<tr>';
+                                            echo '<td><input type="checkbox"/></td>';
 
-                                                    echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
+                                            echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
 
 
-                                                    echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
+                                            echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
+                                            echo '<td>';
+                                            if($sanPham->getGiaNhap()==0)
+                                            {
+                                                echo 'Chưa nhập';
+                                            }
+                                            else
+                                            {
+                                                echo $sanPham->getGiaNhap();
+                                            }
+                                            echo '</td>';
+
+                                            foreach($kenhPhanPhois as $kenhPhanPhoi)
+                                            {
+                                                if($kenhPhanPhoi['cap']>0)
+                                                {
                                                     echo '<td>';
-                                                    if($sanPham->getGiaNhap()==0)
-                                                    {
-                                                        echo 'Chưa nhập';
-                                                    }
-                                                    else
-                                                    {
-                                                        echo $sanPham->getGiaNhap();
-                                                    }
-                                                    echo '</td>';
-
-                                                    foreach($kenhPhanPhois as $kenhPhanPhoi)
-                                                    {
-                                                        if($kenhPhanPhoi['cap']>0)
+                                                        $giaXuat=$this->InGiaXuat($sanPham->getIdSanPham(), $kenhPhanPhoi['termTaxonomyId']);
+                                                        if($sanPham->getGiaNhap()==0)
                                                         {
-                                                            echo '<td>';
-                                                                $giaXuat=$this->InGiaXuat($sanPham->getIdSanPham(), $kenhPhanPhoi['termTaxonomyId']);
-                                                                if($sanPham->getGiaNhap()==0)
-                                                                {
-                                                                    echo 'Chưa có';
-                                                                }
-                                                                else
-                                                                {
-                                                                    echo $giaXuat;
-                                                                }
+                                                            echo 'Chưa có';
+                                                        }
+                                                        else
+                                                        {
+                                                            echo $giaXuat;
+                                                        }
 
-                                                            echo '</td>';                                                           
-                                                        } 
-                                                    }
-                                                    echo '</tr>';
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
+                                                    echo '</td>';                                                           
+                                                } 
+                                            }
+                                            echo '</tr>';
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -152,47 +151,48 @@
             </div>
         </div>
     </div>
+</div>    
 
-    <!-- jQuery -->
-    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
 
-    <!-- DataTables JavaScript -->
-    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable({
-            "pagingType": "simple",
-            "bPaginate": true,
-            "bLengthChange": true,
-            "bFilter":true,
-            "bInfo": true,
-            "bAutoWidth": true
-        });
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#dataTables-example').dataTable({
+        "pagingType": "simple",
+        "bPaginate": true,
+        "bLengthChange": true,
+        "bFilter":true,
+        "bInfo": true,
+        "bAutoWidth": true
     });
+});
 
-    Import=function()
-    {
-        document.getElementById('file').click();   
-        return false;     
+Import=function()
+{
+    document.getElementById('file').click();   
+    return false;     
+}
+hamSubmit=function(){
+    var valueFile=document.getElementById('file').value;
+    if(valueFile)
+    {               
+        document.frmImport.submit();
+        return true;           
     }
-    hamSubmit=function(){
-        var valueFile=document.getElementById('file').value;
-        if(valueFile)
-        {               
-            document.frmImport.submit();
-            return true;           
-        }
-    }
-    $('#btPrev').click(function(){
-        document.getElementById('dataTables-example_previous').click();
-    });
+}
+$('#btPrev').click(function(){
+    document.getElementById('dataTables-example_previous').click();
+});
 
-    $('#btNext').click(function(){
-        document.getElementById('dataTables-example_next').click();
-    });
-    </script>
+$('#btNext').click(function(){
+    document.getElementById('dataTables-example_next').click();
+});
+</script>

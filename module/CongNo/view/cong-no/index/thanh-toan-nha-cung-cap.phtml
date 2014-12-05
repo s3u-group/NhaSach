@@ -34,148 +34,148 @@
 <style type="text/css">    
     #nha-cung-cap-search-result{ cursor:pointer;}
 </style>
-<div class="container">
-    <div class="row">
-        <div class="col-md-2">
-            <div class="h5a-sidebar affix">
-                <span class="breadcrumb row">
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
-                     / Thanh toán /
-                </span>
-                <ul class="nav h5a-sidenav nav-list accordion">
-                    <li>
-                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
-                            <i class="glyphicon glyphicon-save"></i> Công nợ NCC
-                        </a>
-                    </li>
-                </ul>
-            </div>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                 / Thanh toán /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+                <li>
+                    <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
+                        <i class="glyphicon glyphicon-save"></i> Công nợ NCC
+                    </a>
+                </li>
+            </ul>
         </div>
-        <div class="col-md-10" role="main">
-            <div class="h5a-docs-section">
-                <div class="page-header">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h1>Thanh toán</h1>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Thanh toán</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                                     
                         </div>
-                        <div class="col-sm-6">
-                            <div class="pull-right">
-                                         
-                            </div>
-                            
-                        </div>
-                    </div>                    
-                </div>
-
-                <div class="panel-info col-sm-12" style="margin-bottom:15px; text-align:center;"> 
-                    <div class="panel-heading"> 
-                        <h3 class="panel-title">Tên nhà cung cấp: <?php echo $thongTinDoiTac->getHoTen(); ?>  </h3> 
-                    </div>                     
-                </div><br>
-
-                <div class="col-sm-6">
-                    <div class="panel panel-info">
-                        <div class="panel-body"> 
-                            <h3 class="panel-title">Ngày đầu kì: <?php echo $response['ngayDauKi']; ?></h3>
-                        </div> 
+                        
                     </div>
-
-                    <div class="panel panel-info">
-                        <div class="panel-body"> 
-                            <h3 class="panel-title">
-                            Nợ đầu kì: <?php echo $response['noDauKi']; ?>
-                            </h3>
-                        </div>
-                    </div>
-
-                    <div class="panel panel-info">
-                        <div class="panel-body"> 
-                            <h3 class="panel-title">Nợ phát sinh: <?php echo $response['noPhatSinh']; ?></h3> 
-                        </div> 
-                    </div>
-
-                    <div class="panel panel-info">
-                        <div class="panel-body" style="padding-bottom: 8px;"> 
-                            <div>
-                                <h3 class="panel-title" style="width: 90px;">Lý do: </h3>
-                            </div> 
-                            <div style="margin-top: -23px; margin-left: 55px;">
-                                <?php 
-                                    $form->get('phieu-chi')->get('lyDo')->setAttribute('class','h5a-input form-control input-sm'); 
-                                    echo $this->formElement($form->get('phieu-chi')->get('lyDo')); 
-                                ?>
-                            </div>                           
-                        </div>
-                    </div>
-                </div> 
-
-                <div class="col-sm-6">
-                    <div class="panel panel-info">
-                        <div class="panel-body"> 
-                            <h3 class="panel-title">Ngày thanh toán: <?php echo date("d/m/Y"); ?></h3> 
-                        </div> 
-                    </div>
-
-                    <div class="panel panel-info">
-                        <div class="panel-body"> 
-                            <h3 class="panel-title">
-                            Nợ cuối kì: <span id="noCuoiKi"><?php echo $response['noCuoiKi']; ?></span>
-                            </h3>
-                        </div>
-                    </div>
-                    
-                    <div class="panel panel-info">
-                        <div class="panel-body" style="padding-bottom: 8px;"> 
-                            <div>
-                                <h3 class="panel-title" style="width: 90px;">Thanh toán: </h3>
-                            </div> 
-                            <div style="margin-top: -23px; margin-left: 95px;">
-                                <?php
-                                    $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
-                                    if((float)$response['noCuoiKi']<=0)
-                                    {
-                                        $form->get('phieu-chi')->get('soTien')->setAttribute('disabled',true);
-                                    }
-                                    $form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );
-                                    echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
-                                ?>
-                            </div>                           
-                        </div> 
-                    </div>
-                
-                    <div class="panel panel-info">
-                        <div class="panel-body"> 
-                            <h3 class="panel-title">
-                            Số dư: <span  id="soDu"></span>
-                            <?php
-                                $congNo->get('duNo')->setAttribute('hidden','true');
-                                $congNo->get('duNo')->setAttribute('value',$response['noCuoiKi']);
-                                echo $this->formHidden($congNo->get('duNo'));
-                            ?>
-                            </h3>
-                        </div>
-                    </div>
-                </div>
-
-
-                <div >
-                    <div class="panel-body"> 
-                        <button type="submit" class="full btn h5a-btn btn-success" id="submitbutton"
-                        <?php 
-                            if((float)$response['noCuoiKi']<=0)
-                            {
-                                echo 'disabled';
-                            }
-                        ?>
-                        >
-                            <i class="fa fa-print"></i> Lưu</button>
-                    </div>
-                </div>               
+                </div>                    
             </div>
+
+            <div class="panel-info col-sm-12" style="margin-bottom:15px; text-align:center;"> 
+                <div class="panel-heading"> 
+                    <h3 class="panel-title">Tên nhà cung cấp: <?php echo $thongTinDoiTac->getHoTen(); ?>  </h3> 
+                </div>                     
+            </div><br>
+
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-body"> 
+                        <h3 class="panel-title">Ngày đầu kì: <?php echo $response['ngayDauKi']; ?></h3>
+                    </div> 
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-body"> 
+                        <h3 class="panel-title">
+                        Nợ đầu kì: <?php echo $response['noDauKi']; ?>
+                        </h3>
+                    </div>
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-body"> 
+                        <h3 class="panel-title">Nợ phát sinh: <?php echo $response['noPhatSinh']; ?></h3> 
+                    </div> 
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-body" style="padding-bottom: 8px;"> 
+                        <div>
+                            <h3 class="panel-title" style="width: 90px;">Lý do: </h3>
+                        </div> 
+                        <div style="margin-top: -23px; margin-left: 55px;">
+                            <?php 
+                                $form->get('phieu-chi')->get('lyDo')->setAttribute('class','h5a-input form-control input-sm'); 
+                                echo $this->formElement($form->get('phieu-chi')->get('lyDo')); 
+                            ?>
+                        </div>                           
+                    </div>
+                </div>
+            </div> 
+
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-body"> 
+                        <h3 class="panel-title">Ngày thanh toán: <?php echo date("d/m/Y"); ?></h3> 
+                    </div> 
+                </div>
+
+                <div class="panel panel-info">
+                    <div class="panel-body"> 
+                        <h3 class="panel-title">
+                        Nợ cuối kì: <span id="noCuoiKi"><?php echo $response['noCuoiKi']; ?></span>
+                        </h3>
+                    </div>
+                </div>
+                
+                <div class="panel panel-info">
+                    <div class="panel-body" style="padding-bottom: 8px;"> 
+                        <div>
+                            <h3 class="panel-title" style="width: 90px;">Thanh toán: </h3>
+                        </div> 
+                        <div style="margin-top: -23px; margin-left: 95px;">
+                            <?php
+                                $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
+                                if((float)$response['noCuoiKi']<=0)
+                                {
+                                    $form->get('phieu-chi')->get('soTien')->setAttribute('disabled',true);
+                                }
+                                $form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );
+                                echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
+                            ?>
+                        </div>                           
+                    </div> 
+                </div>
+            
+                <div class="panel panel-info">
+                    <div class="panel-body"> 
+                        <h3 class="panel-title">
+                        Số dư: <span  id="soDu"></span>
+                        <?php
+                            $congNo->get('duNo')->setAttribute('hidden','true');
+                            $congNo->get('duNo')->setAttribute('value',$response['noCuoiKi']);
+                            echo $this->formHidden($congNo->get('duNo'));
+                        ?>
+                        </h3>
+                    </div>
+                </div>
+            </div>
+
+
+            <div >
+                <div class="panel-body"> 
+                    <button type="submit" class="full btn h5a-btn btn-success" id="submitbutton"
+                    <?php 
+                        if((float)$response['noCuoiKi']<=0)
+                        {
+                            echo 'disabled';
+                        }
+                    ?>
+                    >
+                        <i class="fa fa-print"></i> Lưu</button>
+                </div>
+            </div>               
         </div>
     </div>
 </div>
+
 <?php
     echo $this->form()->closeTag();
 ?>

@@ -1,5 +1,5 @@
 <?php
- $this->headTitle('Thêm khách hàng');
+ $this->headTitle('Thêm nhà cung cấp');
 
  $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'themNhaCungCap')));
  $form->setAttribute('role','form');
@@ -16,202 +16,200 @@ $idKenhPhanPhoi->setAttribute('value','39');
 echo $this->formHidden($idKenhPhanPhoi);
 ?>
 
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
-                        <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
-                         / Thêm khách hàng /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                                <i class="glyphicon glyphicon-open"></i> Khách hàng
-                            </a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                                <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
-                            </a>
-                        </li>                 
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Thêm nhà cung cấp</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
-                                </div>
-                            </div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
+                <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
+                 / Thêm khách hàng /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                        <i class="glyphicon glyphicon-open"></i> Khách hàng
+                    </a>
+                </li> 
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                    </a>
+                </li>                 
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-cubes"></i> Đơn hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Thêm nhà cung cấp</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
                         </div>
                     </div>
-                    <div class="row">                        
-                            <h4 class="underline">More Info</h4>
-                            <table class="item">
-                                <tbody>
-                                    <?php
-                                        if($ktTonTaiNhaCungCap==1)
-                                        {
-                                            echo '<tr>';
-                                                echo '<td></td>';
-                                                echo '<td><span class="label label-warning">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
-                                            echo '<tr>';
-                                        }
-                                    ?>
-                                    <tr>
-                                        <td>Tên nhà cung cấp</td>
-                                        <td>
-                                        <?php 
-                                            $hoTen=$khachHang->get('hoTen');
-                                            $hoTen->setAttribute('class','h5a-input form-control input-sm');
-                                            $hoTen->setAttribute('placeholder','Họ tên nhà cung cấp');
-                                            $hoTen->setAttribute('id','form-field-1');
-                                            echo $this->formElement($hoTen);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Địa chỉ nhà cung cấp</td>
-                                        <td>
-                                        <?php 
-                                            $diaChi=$khachHang->get('diaChi');
-                                            $diaChi->setAttribute('class','h5a-input form-control input-sm');
-                                            $diaChi->setAttribute('placeholder','Địa nhà cung cấp');
-                                            $diaChi->setAttribute('id','form-field-1');
-                                            echo $this->formElement($diaChi);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Mô tả</td>
-                                        <td>
-                                            
-                                        <?php 
-                                            $moTa=$khachHang->get('moTa');
-                                            $moTa->setAttribute('class','form-control h5a');
-                                            $moTa->setAttribute('placeholder','Mô tả nhà cung cấp');
-                                            $moTa->setAttribute('id','editor');
-                                            $moTa->setAttribute('rows','5');
-                                            echo $this->formElement($moTa);
-                                        ?>   
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Hình ảnh</td>
-                                        <td>
-                                        <?php 
-                                            $hinhAnh=$khachHang->get('hinhAnh');        
-                                            $hinhAnh->setAttribute('placeholder','Chọn hình ảnh');
-                                            $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
-                                            echo $this->formElement($hinhAnh);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
+                </div>
+            </div>
+            <div class="row">                        
+                    <h4 class="underline">More Info</h4>
+                    <table class="item">
+                        <tbody>
+                            <?php
+                                if($ktTonTaiNhaCungCap==1)
+                                {
+                                    echo '<tr>';
+                                        echo '<td></td>';
+                                        echo '<td><span class="label label-warning">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
+                                    echo '<tr>';
+                                }
+                            ?>
+                            <tr>
+                                <td>Tên nhà cung cấp</td>
+                                <td>
+                                <?php 
+                                    $hoTen=$khachHang->get('hoTen');
+                                    $hoTen->setAttribute('class','h5a-input form-control input-sm');
+                                    $hoTen->setAttribute('placeholder','Họ tên nhà cung cấp');
+                                    $hoTen->setAttribute('id','form-field-1');
+                                    echo $this->formElement($hoTen);
+                                ?>                                           
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Địa chỉ nhà cung cấp</td>
+                                <td>
+                                <?php 
+                                    $diaChi=$khachHang->get('diaChi');
+                                    $diaChi->setAttribute('class','h5a-input form-control input-sm');
+                                    $diaChi->setAttribute('placeholder','Địa nhà cung cấp');
+                                    $diaChi->setAttribute('id','form-field-1');
+                                    echo $this->formElement($diaChi);
+                                ?>                                           
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Mô tả</td>
+                                <td>
                                     
+                                <?php 
+                                    $moTa=$khachHang->get('moTa');
+                                    $moTa->setAttribute('class','form-control h5a');
+                                    $moTa->setAttribute('placeholder','Mô tả nhà cung cấp');
+                                    $moTa->setAttribute('id','editor');
+                                    $moTa->setAttribute('rows','5');
+                                    echo $this->formElement($moTa);
+                                ?>   
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Hình ảnh</td>
+                                <td>
+                                <?php 
+                                    $hinhAnh=$khachHang->get('hinhAnh');        
+                                    $hinhAnh->setAttribute('placeholder','Chọn hình ảnh');
+                                    $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
+                                    echo $this->formElement($hinhAnh);
+                                ?>                                           
+                                </td>
+                            </tr>
+                            
 
-                                    <tr>
-                                        <td>Địa chỉ email</td>
-                                        <td>
-                                        <?php 
-                                            $email=$khachHang->get('email');
-                                            $email->setAttribute('class','h5a-input form-control input-sm');
-                                            $email->setAttribute('placeholder','Địa chỉ email');
-                                            $email->setAttribute('id','form-field-1');
-                                            echo $this->formElement($email);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Di động</td>
-                                        <td>
-                                        <?php 
-                                            $diDong=$khachHang->get('diDong');
-                                            $diDong->setAttribute('class','h5a-input form-control input-sm');
-                                            $diDong->setAttribute('placeholder','Điện thoại di động');
-                                            $diDong->setAttribute('id','form-field-1');
-                                            echo $this->formElement($diDong);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>Địa chỉ email</td>
+                                <td>
+                                <?php 
+                                    $email=$khachHang->get('email');
+                                    $email->setAttribute('class','h5a-input form-control input-sm');
+                                    $email->setAttribute('placeholder','Địa chỉ email');
+                                    $email->setAttribute('id','form-field-1');
+                                    echo $this->formElement($email);
+                                ?>                                           
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Di động</td>
+                                <td>
+                                <?php 
+                                    $diDong=$khachHang->get('diDong');
+                                    $diDong->setAttribute('class','h5a-input form-control input-sm');
+                                    $diDong->setAttribute('placeholder','Điện thoại di động');
+                                    $diDong->setAttribute('id','form-field-1');
+                                    echo $this->formElement($diDong);
+                                ?>                                           
+                                </td>
+                            </tr>
 
 
-                                    <tr>
-                                        <td>Điện thoại cố định</td>
-                                        <td>
-                                        <?php 
-                                            $dienThoaiCoDinh=$khachHang->get('dienThoaiCoDinh');
-                                            $dienThoaiCoDinh->setAttribute('class','h5a-input form-control input-sm');
-                                            $dienThoaiCoDinh->setAttribute('placeholder','Điện thoại cố định');
-                                            $dienThoaiCoDinh->setAttribute('id','form-field-1');
-                                            echo $this->formElement($dienThoaiCoDinh);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>Điện thoại cố định</td>
+                                <td>
+                                <?php 
+                                    $dienThoaiCoDinh=$khachHang->get('dienThoaiCoDinh');
+                                    $dienThoaiCoDinh->setAttribute('class','h5a-input form-control input-sm');
+                                    $dienThoaiCoDinh->setAttribute('placeholder','Điện thoại cố định');
+                                    $dienThoaiCoDinh->setAttribute('id','form-field-1');
+                                    echo $this->formElement($dienThoaiCoDinh);
+                                ?>                                           
+                                </td>
+                            </tr>
 
-                                    <tr>
-                                        <td>Website</td>
-                                        <td>
-                                        <?php 
-                                            $website=$khachHang->get('website');
-                                            $website->setAttribute('class','h5a-input form-control input-sm');
-                                            $website->setAttribute('placeholder','Website');
-                                            $website->setAttribute('id','form-field-1');
-                                            echo $this->formElement($website);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>Website</td>
+                                <td>
+                                <?php 
+                                    $website=$khachHang->get('website');
+                                    $website->setAttribute('class','h5a-input form-control input-sm');
+                                    $website->setAttribute('placeholder','Website');
+                                    $website->setAttribute('id','form-field-1');
+                                    echo $this->formElement($website);
+                                ?>                                           
+                                </td>
+                            </tr>
 
-                                    <tr>
-                                        <td>Twitter</td>
-                                        <td>
-                                        <?php 
-                                            $twitter=$khachHang->get('twitter');
-                                            $twitter->setAttribute('class','h5a-input form-control input-sm');
-                                            $twitter->setAttribute('placeholder','Twitter');
-                                            $twitter->setAttribute('id','form-field-1');
-                                            echo $this->formElement($twitter);
-                                        ?>                                           
-                                        </td>
-                                    </tr>
+                            <tr>
+                                <td>Twitter</td>
+                                <td>
+                                <?php 
+                                    $twitter=$khachHang->get('twitter');
+                                    $twitter->setAttribute('class','h5a-input form-control input-sm');
+                                    $twitter->setAttribute('placeholder','Twitter');
+                                    $twitter->setAttribute('id','form-field-1');
+                                    echo $this->formElement($twitter);
+                                ?>                                           
+                                </td>
+                            </tr>
 
-                                    
-                                </tbody>
-                            </table>
-                    </div>
-                    <div class="page-footer">
-                        <div class="row bottom20">
-                            <div class="col-sm-6 col-sm-offset-6">
-                                <div class="pull-right">
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
-                                </div>
-                            </div>
+                            
+                        </tbody>
+                    </table>
+            </div>
+            <div class="page-footer">
+                <div class="row bottom20">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <div class="pull-right">
+                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- /.container -->
+</div>
+<!-- /.container -->
 
     <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
