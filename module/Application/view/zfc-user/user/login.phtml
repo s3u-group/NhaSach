@@ -1,7 +1,7 @@
-<h1><?php echo $this->translate('Sign In'); ?></h1>
+<h1><?php echo $this->translate('Đăng nhập'); ?></h1>
 
 <?php
-echo 'phanv antha hdkaksdjgak djkgashdkjghskd gksjadghskdfjghskdfhjkg dfjkgskdjfskdfjskdfj';
+$this->layout('layout/giaodien');
 $form = $this->loginForm;
 $form->prepare();
 $form->setAttribute('action', $this->url('zfcuser/login'));
@@ -23,11 +23,20 @@ $form->setAttribute('method', 'post');
             <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
         <?php endif ?>
 
-        <dd><?php echo $this->formButton($form->get('submit')) ?></dd>
+        <dd>
+            <?php                
+                echo $this->formButton($form->get('submit')); 
+            ?>
+        </dd>
     </dl>
 
 <?php echo $this->form()->closeTag() ?>
 
-<?php if ($this->enableRegistration) : ?>
-<?php echo $this->translate('Not registered?'); ?> <a href="<?php echo $this->url('zfcuser/register') . ($this->redirect ? '?redirect='.$this->redirect : '') ?>"><?php echo $this->translate('Sign up!'); ?></a>
-<?php endif; ?>
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>

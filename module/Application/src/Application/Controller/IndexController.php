@@ -13,10 +13,19 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
 class IndexController extends AbstractActionController
-{
+{  
+
     public function indexAction()
     {
     	$this->layout('layout/giaodien');
         return new ViewModel();
     }
+    
+    public function loginAction()
+    {
+      $this->layout('layout/giaodien');
+       return $this->forward()->dispatch('zfcuser', array(
+           'action' => 'login'
+       ));
+    }    
 }
