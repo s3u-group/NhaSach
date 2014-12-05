@@ -19,144 +19,143 @@
 <?php
     $this->headTitle('Hàng hóa');
 ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                         / Hàng hóa /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>                            
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bangGia'));?>">                                 
-                                <i class="fa fa-list-alt"></i> Bảng giá
-                            </a>
-                        </li>
-                        <li>
-                            <!-- <a href="nhapHang.html"> -->
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>"> 
-                                <i class="fa fa-download"></i> Nhập hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
-                                <i class="fa fa-upload"></i> Xuất hàng
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Hàng hóa</h1>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                 / Hàng hóa /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>                            
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bangGia'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Bảng giá
+                    </a>
+                </li>
+                <li>
+                    <!-- <a href="nhapHang.html"> -->
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>"> 
+                        <i class="fa fa-download"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
+                        <i class="fa fa-upload"></i> Xuất hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Hàng hóa</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">                                    
+                            <div class="btn-group ">
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
                             </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">                                    
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
-                                    </div>
-                                    <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Quản lý tồn kho</button> -->
-                                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'themSanPham'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
-                                </div>
+                            <div class="btn-group ">
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
                             </div>
+                            <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Quản lý tồn kho</button> -->
+                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'themSanPham'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
                         </div>
                     </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row bottom20">                                        
-                                        <?php
-                                            // gửi tới form loc hang hóa
-                                            $url=$this->url('hang_hoa/crud', array('action' => 'locHangHoa'));
-                                        ?>
-                                        <form method="post" action="<?php echo $url; ?>" onSubmit="return functionKiemTraDieuKienLoc();">
-                                        <div class="input-group has-feedback">
-                                            <div class="input-group-btn">                                       
-                                                <button type="button" class="btn btn-default h5a-btn dropdown-toggle" data-toggle="dropdown">Lọc sản phẩm <span class="caret"></span></button>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a onclick="functionLocTheoLoaiHang();" >Loại hàng</a></li>
-                                                    <li><a onclick="functionLocTheoNhanHang();">Nhãn hàng</a></li>
-                                                </ul>
-                                            </div><!-- /btn-group -->
-                                            
-                                            <input type="text" class="form-control h5a-input" id="dieuKienLoc" name="dieuKienLoc"> 
-                                            <i class="glyphicon glyphicon-search form-control-feedback"></i>
-                                            <input type="submit" id="locTheoLoaiHang" name="locHangHoa" hidden="true" value="locTheoLoaiHang"> 
-                                            <input type="submit" id="locTheoNhanHang" name="locHangHoa" hidden="true" value="locTheoNhanHang"> 
-                                        </div>
-                                        </form> 
-                                    </div>
-
-                                    <div class="row">
-                                        <table id="dataTables-example" class="">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Sản phẩm</th>
-                                                <th>Tồn kho</th>
-                                                <th>Loại</th>
-                                                <th>Nhãn hàng</th>
-                                            </thead>
-                                            <tbody> 
-                                            <!-- lấy dữ liệu và xuất ra form  -->
-                                            <?php foreach ($sanPhams as $sanPham) {?>                
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
-                                                    <td><?php echo $sanPham->getTonKho(); ?></td>
-                                                    <td><?php echo $sanPham->getIdLoai()->getTermId()->getName(); ?></td>
-                                                    <td><?php echo $sanPham->getNhan(); ?></td>
-                                                </tr>
-                                            <?php } ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row bottom20">                                        
+                                <?php
+                                    // gửi tới form loc hang hóa
+                                    $url=$this->url('hang_hoa/crud', array('action' => 'locHangHoa'));
+                                ?>
+                                <form method="post" action="<?php echo $url; ?>" onSubmit="return functionKiemTraDieuKienLoc();">
+                                <div class="input-group has-feedback">
+                                    <div class="input-group-btn">                                       
+                                        <button type="button" class="btn btn-default h5a-btn dropdown-toggle" data-toggle="dropdown">Lọc sản phẩm <span class="caret"></span></button>
+                                        <ul class="dropdown-menu" role="menu">
+                                            <li><a onclick="functionLocTheoLoaiHang();" >Loại hàng</a></li>
+                                            <li><a onclick="functionLocTheoNhanHang();">Nhãn hàng</a></li>
+                                        </ul>
+                                    </div><!-- /btn-group -->
+                                    
+                                    <input type="text" class="form-control h5a-input" id="dieuKienLoc" name="dieuKienLoc"> 
+                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+                                    <input type="submit" id="locTheoLoaiHang" name="locHangHoa" hidden="true" value="locTheoLoaiHang"> 
+                                    <input type="submit" id="locTheoNhanHang" name="locHangHoa" hidden="true" value="locTheoNhanHang"> 
                                 </div>
+                                </form> 
+                            </div>
+
+                            <div class="row">
+                                <table id="dataTables-example" class="">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>
+                                        <th>Sản phẩm</th>
+                                        <th>Tồn kho</th>
+                                        <th>Loại</th>
+                                        <th>Nhãn hàng</th>
+                                    </thead>
+                                    <tbody> 
+                                    <!-- lấy dữ liệu và xuất ra form  -->
+                                    <?php foreach ($sanPhams as $sanPham) {?>                
+                                        <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
+                                            <td><?php echo $sanPham->getTonKho(); ?></td>
+                                            <td><?php echo $sanPham->getIdLoai()->getTermId()->getName(); ?></td>
+                                            <td><?php echo $sanPham->getNhan(); ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 </div>
 
-    <!-- jQuery -->
-    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
 
-    <!-- DataTables JavaScript -->
-    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable({
-            "pagingType": "simple",
-            "bPaginate": true,
-            "bLengthChange": true,
-            "bFilter":false,
-            "bInfo": true,
-            "bAutoWidth": true
-        });
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#dataTables-example').dataTable({
+        "pagingType": "simple",
+        "bPaginate": true,
+        "bLengthChange": true,
+        "bFilter":false,
+        "bInfo": true,
+        "bAutoWidth": true
     });
-    </script>
+});
+</script>

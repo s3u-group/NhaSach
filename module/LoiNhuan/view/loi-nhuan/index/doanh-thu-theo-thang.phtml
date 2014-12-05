@@ -1,195 +1,193 @@
 <?php 
     echo $this->headTitle('Doanh thu theo tháng');
 ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
-                         / Doanh thu /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>                 
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li>
-                        
-                    </ul>
+<div class="row">
+<div class="col-md-2">
+    <div class="h5a-sidebar affix">
+        <span class="breadcrumb row">
+            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
+             / Doanh thu /
+        </span>
+        <ul class="nav h5a-sidenav nav-list accordion">
+            <li>
+                <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                    <i class="fa fa-flag-checkered"></i> Doanh thu
+                </a>
+            </li>                 
+            <li>
+                <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                    <i class="fa fa-cubes"></i> Đơn hàng
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+</div>
+<div class="col-md-10" role="main">
+    <div class="h5a-docs-section">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h1>Doanh thu</h1>
                 </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Doanh thu</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="h5a-btn btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Loại thống kê <span class="caret"></span></button>
-                                        <ul class="dropdown-menu" role="menu">
-                                            <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index')); ?>">Theo ngày</a></li>
-                                            <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoThang')); ?>">Theo tháng</a></li>
-                                            <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoQuy')); ?>">Theo quý</a></li>
-                                            <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoNam')); ?>">Theo năm</a></li>
-                                        </ul>
-                                    </div>
-                                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDoanhThuTheoThang')); ?>">
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
-                                </div>
-                            </div>
+                <div class="col-sm-6">
+                    <div class="pull-right">
+                        <div class="btn-group ">
+                            <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                <i class="fa fa-chevron-left"></i>
+                            </button>                                    
+                            <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                <i class="fa fa-chevron-right"></i>
+                            </button>
                         </div>
-                    </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                            <?php 
-                            foreach ($kenhPhanPhois as $kenhPhanPhoi) {
-                                if($kenhPhanPhoi['cap']>0)
-                                { ?>
-                                    <li role="presentation">
-                                        <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo $kenhPhanPhoi['termId']['name']; ?></a>
-                                    </li>
-                                <?php 
-                                }
-                            }
-                            ?>
-                           
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row">
-                                        <table class="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Thời gian</th>
-                                                    <th>Số đơn hàng</th>
-                                                    <th>Doanh thu</th>
-                                                    <th>Lợi nhuận</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            foreach ($doanhThus as $doanhThu) { ?>
-                                                <tr>
-                                                    <td>
-                                                        <?php $id=(int)$doanhThu['idThoiGian'].'00'; ?>
-                                                        <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuThang','id'=>$id)); ?>">
-                                                            <?php echo $doanhThu['thoiGian']; ?>
-                                                        </a>
-                                                    </td>
-                                                    <td><?php echo (string)count($doanhThu['chiTietDoanhThus']); ?></td>
-                                                    <?php 
-                                                        $tongDoanhThu=0;
-                                                        $tongNguonVon=0;
-                                                        $tongLoiNhuan=0;
-                                                        foreach ($doanhThu['chiTietDoanhThus'] as $chiTietDoanhThu) {
-                                                            foreach ($chiTietDoanhThu->getCtHoaDons() as $ctHoaDon) {
-                                                                $tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                                $tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
-                                                            }
-                                                        }
-                                                        $tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
-                                                    ?>
-                                                    <td><?php echo $tongDoanhThu; ?></td>
-                                                    <td><?php echo $tongLoiNhuan; ?></td>
-                                                </tr>
-                                            <?php
-                                            }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php
-                            foreach ($kenhPhanPhois as $kenhPhanPhoi) {
-                                if($kenhPhanPhoi['cap']>0)
-                                { ?>                                    
-                                    <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
-                                        <p class="note"><?php echo $kenhPhanPhoi['termId']['name']; ?>
-                                            <table class="dataTables-example">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Thời gian</th>
-                                                        <th>Số đơn hàng</th>
-                                                        <th>Doanh thu</th>
-                                                        <th>Lợi nhuận</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                <?php
-                                                foreach ($doanhThus as $doanhThu) { ?>
-                                                    <?php 
-                                                        $soDonHang=0;
-                                                        $tongDoanhThu=0;
-                                                        $tongNguonVon=0;
-                                                        $tongLoiNhuan=0;
-                                                        
-                                                        foreach ($doanhThu['chiTietDoanhThus'] as $chiTietDoanhThu) {                                                                
-                                                            if($chiTietDoanhThu->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId()==$kenhPhanPhoi['termTaxonomyId'])
-                                                            {
-                                                                $soDonHang++;
-                                                                foreach ($chiTietDoanhThu->getCtHoaDons() as $ctHoaDon) {
-                                                                    $tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                                    $tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
-                                                                }
-                                                            }
-                                                            
-                                                        }
-                                                        $tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
-                                                    if($soDonHang>0)
-                                                    {
-                                                    ?>
-                                                        <tr>
-                                                            <td>
-                                                                <?php $id=(int)$doanhThu['idThoiGian'].$kenhPhanPhoi['termTaxonomyId']; ?>
-                                                                <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuThang','id'=>$id)); ?>">
-                                                                    <?php echo $doanhThu['thoiGian']; ?>
-                                                                </a>
-                                                            </td>
-                                                            <td><?php echo $soDonHang; ?></td>
-                                                            <td><?php echo $tongDoanhThu; ?></td>
-                                                            <td><?php echo $tongLoiNhuan; ?></td>
-                                                        </tr>
-                                                <?php
-                                                    }
-                                                }
-                                                ?>
-                                                </tbody>
-                                            </table>
-                                        </p>
-                                    </div>
-                                <?php 
-                                }
-                            }
-                            ?>
+                        <div class="btn-group">
+                            <button class="h5a-btn btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Loại thống kê <span class="caret"></span></button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index')); ?>">Theo ngày</a></li>
+                                <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoThang')); ?>">Theo tháng</a></li>
+                                <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoQuy')); ?>">Theo quý</a></li>
+                                <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoNam')); ?>">Theo năm</a></li>
+                            </ul>
                         </div>
+                        <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDoanhThuTheoThang')); ?>">
+                        <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="box">
+            <ul class="nav nav-tabs" role="tablist" id="myTab">
+                <li role="presentation" class="active">
+                    <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                </li>
+                <?php 
+                foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+                    if($kenhPhanPhoi['cap']>0)
+                    { ?>
+                        <li role="presentation">
+                            <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo $kenhPhanPhoi['termId']['name']; ?></a>
+                        </li>
+                    <?php 
+                    }
+                }
+                ?>
+               
+            </ul>
+            <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="container">
+                        <div class="row">
+                            <table class="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Thời gian</th>
+                                        <th>Số đơn hàng</th>
+                                        <th>Doanh thu</th>
+                                        <th>Lợi nhuận</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php
+                                foreach ($doanhThus as $doanhThu) { ?>
+                                    <tr>
+                                        <td>
+                                            <?php $id=(int)$doanhThu['idThoiGian'].'00'; ?>
+                                            <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuThang','id'=>$id)); ?>">
+                                                <?php echo $doanhThu['thoiGian']; ?>
+                                            </a>
+                                        </td>
+                                        <td><?php echo (string)count($doanhThu['chiTietDoanhThus']); ?></td>
+                                        <?php 
+                                            $tongDoanhThu=0;
+                                            $tongNguonVon=0;
+                                            $tongLoiNhuan=0;
+                                            foreach ($doanhThu['chiTietDoanhThus'] as $chiTietDoanhThu) {
+                                                foreach ($chiTietDoanhThu->getCtHoaDons() as $ctHoaDon) {
+                                                    $tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+                                                    $tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                }
+                                            }
+                                            $tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
+                                        ?>
+                                        <td><?php echo $tongDoanhThu; ?></td>
+                                        <td><?php echo $tongLoiNhuan; ?></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <?php
+                foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+                    if($kenhPhanPhoi['cap']>0)
+                    { ?>                                    
+                        <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
+                            <p class="note"><?php echo $kenhPhanPhoi['termId']['name']; ?>
+                                <table class="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Thời gian</th>
+                                            <th>Số đơn hàng</th>
+                                            <th>Doanh thu</th>
+                                            <th>Lợi nhuận</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach ($doanhThus as $doanhThu) { ?>
+                                        <?php 
+                                            $soDonHang=0;
+                                            $tongDoanhThu=0;
+                                            $tongNguonVon=0;
+                                            $tongLoiNhuan=0;
+                                            
+                                            foreach ($doanhThu['chiTietDoanhThus'] as $chiTietDoanhThu) {                                                                
+                                                if($chiTietDoanhThu->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId()==$kenhPhanPhoi['termTaxonomyId'])
+                                                {
+                                                    $soDonHang++;
+                                                    foreach ($chiTietDoanhThu->getCtHoaDons() as $ctHoaDon) {
+                                                        $tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+                                                        $tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                    }
+                                                }
+                                                
+                                            }
+                                            $tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
+                                        if($soDonHang>0)
+                                        {
+                                        ?>
+                                            <tr>
+                                                <td>
+                                                    <?php $id=(int)$doanhThu['idThoiGian'].$kenhPhanPhoi['termTaxonomyId']; ?>
+                                                    <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuThang','id'=>$id)); ?>">
+                                                        <?php echo $doanhThu['thoiGian']; ?>
+                                                    </a>
+                                                </td>
+                                                <td><?php echo $soDonHang; ?></td>
+                                                <td><?php echo $tongDoanhThu; ?></td>
+                                                <td><?php echo $tongLoiNhuan; ?></td>
+                                            </tr>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </p>
+                        </div>
+                    <?php 
+                    }
+                }
+                ?>
+            </div>
+        </div>
     </div>
-    <!-- /.container -->
+</div>
+</div>
+<!-- /.container -->
 
     <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>

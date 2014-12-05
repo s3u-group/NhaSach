@@ -1,102 +1,101 @@
 <?php 
-    echo $this->headTitle('Chi tiết doanh thu');
+    echo $this->headTitle('Chi tiết doanh thu ngày');
 ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
-                         / Doanh thu /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>                  
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li>
-                        
-                    </ul>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
+                 / Doanh thu /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    </a>
+                </li>                  
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-cubes"></i> Đơn hàng
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Chi tiết doanh thu</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Chi tiết doanh thu</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-
-                                </div>
+            <div class="box">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row">
+                                <table class="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Mã đơn hàng</th>
+                                            <th>Khách hàng</th>
+                                            <th>Doanh thu</th>
+                                            <th>Lợi nhuận</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach ($hoaDons as $hoaDon) {
+                                    ?>   
+                                        <tr>
+                                            <td>
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>">#<?php echo $hoaDon->getMaHoaDon(); ?>
+                                                </a>
+                                            </td>
+                                            <td>
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>">
+                                                    <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
+                                                </a>
+                                            </td>
+                                            <?php
+                                                $doanhThu=0; $von=0; $loiNhuan=0;
+                                                foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+                                                    $doanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+                                                    $von+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                }
+                                                $loiNhuan=$doanhThu-$von;
+                                            ?>
+                                            <td> <?php echo $doanhThu; ?></td>
+                                            <td><?php echo $loiNhuan; ?></td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>                                                
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
-                    </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row">
-                                        <table class="dataTables-example">
-                                            <thead>
-                                                <tr>
-                                                    <th>Mã đơn hàng</th>
-                                                    <th>Khách hàng</th>
-                                                    <th>Doanh thu</th>
-                                                    <th>Lợi nhuận</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                            foreach ($hoaDons as $hoaDon) {
-                                            ?>   
-                                                <tr>
-                                                    <td>
-                                                        <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>">#<?php echo $hoaDon->getMaHoaDon(); ?>
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>">
-                                                            <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
-                                                        </a>
-                                                    </td>
-                                                    <?php
-                                                        $doanhThu=0; $von=0; $loiNhuan=0;
-                                                        foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
-                                                            $doanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                            $von+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
-                                                        }
-                                                        $loiNhuan=$doanhThu-$von;
-                                                    ?>
-                                                    <td> <?php echo $doanhThu; ?></td>
-                                                    <td><?php echo $loiNhuan; ?></td>
-                                                </tr>
-                                            <?php
-                                            }
-                                            ?>                                                
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>                            
-                        </div>
-                    </div>
+                    </div>                            
                 </div>
             </div>
         </div>
     </div>
-    <!-- /.container -->
+</div>
+<!-- /.container -->
 
     <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>

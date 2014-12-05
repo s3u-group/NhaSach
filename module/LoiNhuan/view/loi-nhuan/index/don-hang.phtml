@@ -1,96 +1,164 @@
 <?php 
     echo $this->headTitle('Đơn hàng');
 ?>
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
-                        <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
-                         / Đơn hàng /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li>
-                        
-                    </ul>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
+                <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
+                 / Đơn hàng /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-cubes"></i> Đơn hàng
+                    </a>
+                </li>
+                
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Đơn hàng</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDonHang')); ?>">
+                             <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>Đơn hàng</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <div class="btn-group ">
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-left"></i>
-                                        </button>                                    
-                                        <button type="button" class="h5a-btn btn btn-default btn-sm">
-                                            <i class="fa fa-chevron-right"></i>
-                                        </button>
-                                    </div>
-                                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDonHang')); ?>">
-                                     <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
-                                </div>
+            <div class="box">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                    </li>
+                    <?php 
+                        foreach($kenhPhanPhois as $kenhPhanPhoi)
+                        { 
+                            if($kenhPhanPhoi['cap']>0)
+                            {
+                        ?>
+                                <li role="presentation">
+                                    <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo  $kenhPhanPhoi['termId']['name']; ?></a>
+                                </li>
+                        <?php 
+                            }
+                        }
+                    ?>                            
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row">
+                                <table id="" class="dataTables-example">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>
+                                        <th>Đơn hàng</th>
+                                        <th>Ngày</th>
+                                        <th>Khách hàng</th>
+                                        <th>Thanh toán</th>
+                                        <th>Tổng tiền</th>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        foreach($donHangs as $donHang)
+                                        {?>
+                                        <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td>
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$donHang->getIdHoaDon()));?>"><?php echo '#'.$donHang->getMaHoaDon(); ?></a>
+                                            </td>
+                                            <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
+                                            <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$donHang->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
+                                            <td>
+                                            <?php 
+                                                if($donHang->getStatus()==0)
+                                                {
+                                                    ?>
+                                                    <span class="label label-warning">
+                                                        Ghi nợ
+                                                    </span>
+                                                    <?php
+                                                }
+                                                else
+                                                {
+                                                    ?>
+                                                    <span class="label label-success">Đã thanh toán
+                                                    </span>
+                                                    <?php
+                                                }
+                                            ?>
+                                            </td>
+                                            <td>
+                                            <?php
+                                                $tongTien=0;
+                                                foreach ($donHang->getCtHoaDons() as $ctHoaDon) {
+                                                    $tongTien+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+                                                }
+                                                echo $tongTien;
+                                            ?>
+                                            </td>
+                                        </tr>
+                                        <?php
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <div class="box">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active">
-                                <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                            </li>
-                            <?php 
-                                foreach($kenhPhanPhois as $kenhPhanPhoi)
-                                { 
-                                    if($kenhPhanPhoi['cap']>0)
-                                    {
-                                ?>
-                                        <li role="presentation">
-                                            <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo  $kenhPhanPhoi['termId']['name']; ?></a>
-                                        </li>
-                                <?php 
-                                    }
-                                }
-                            ?>                            
-                        </ul>
-                        <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="home">
-                                <div class="container">
-                                    <div class="row">
-                                        <table id="" class="dataTables-example">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Đơn hàng</th>
-                                                <th>Ngày</th>
-                                                <th>Khách hàng</th>
-                                                <th>Thanh toán</th>
-                                                <th>Tổng tiền</th>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                                foreach($donHangs as $donHang)
-                                                {?>
+
+                    
+                    <?php 
+                        foreach($kenhPhanPhois as $kenhPhanPhoi)
+                        { 
+                            if($kenhPhanPhoi['cap']>0)
+                            {
+                        ?>
+                                <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
+                                    <p class="note">
+                                        <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>
+                                        <th>Đơn hàng</th>
+                                        <th>Ngày</th>
+                                        <th>Khách hàng</th>
+                                        <th>Thanh toán</th>
+                                        <th>Tổng tiền</th>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                        foreach($donHangs as $donHang)
+                                        { 
+                                            if($donHang->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId()==$kenhPhanPhoi['termTaxonomyId'])
+                                            {
+                                        ?>
                                                 <tr>
                                                     <td><input type="checkbox"/></td>
-                                                    <td>
-                                                        <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$donHang->getIdHoaDon()));?>"><?php echo '#'.$donHang->getMaHoaDon(); ?></a>
-                                                    </td>
+                                                    <td><a href="khachHang.html"><?php echo '#'.$donHang->getMaHoaDon(); ?></a></td>
                                                     <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
-                                                    <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$donHang->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
+                                                    <td><a href="khachHang.html"><?php $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
                                                     <td>
                                                     <?php 
                                                         if($donHang->getStatus()==0)
@@ -120,94 +188,25 @@
                                                     ?>
                                                     </td>
                                                 </tr>
-                                                <?php
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        <?php
+                                            }
+                                        }
+                                    ?>
+                                    </tbody>
+                                </table>
+                                    </p>
                                 </div>
-                            </div>
-
-                            
-                            <?php 
-                                foreach($kenhPhanPhois as $kenhPhanPhoi)
-                                { 
-                                    if($kenhPhanPhoi['cap']>0)
-                                    {
-                                ?>
-                                        <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
-                                            <p class="note">
-                                                <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
-                                            <thead>
-                                                <th><input type="checkbox"/></th>
-                                                <th>Đơn hàng</th>
-                                                <th>Ngày</th>
-                                                <th>Khách hàng</th>
-                                                <th>Thanh toán</th>
-                                                <th>Tổng tiền</th>
-                                            </thead>
-                                            <tbody>
-                                            <?php
-                                                foreach($donHangs as $donHang)
-                                                { 
-                                                    if($donHang->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId()==$kenhPhanPhoi['termTaxonomyId'])
-                                                    {
-                                                ?>
-                                                        <tr>
-                                                            <td><input type="checkbox"/></td>
-                                                            <td><a href="khachHang.html"><?php echo '#'.$donHang->getMaHoaDon(); ?></a></td>
-                                                            <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
-                                                            <td><a href="khachHang.html"><?php $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
-                                                            <td>
-                                                            <?php 
-                                                                if($donHang->getStatus()==0)
-                                                                {
-                                                                    ?>
-                                                                    <span class="label label-warning">
-                                                                        Ghi nợ
-                                                                    </span>
-                                                                    <?php
-                                                                }
-                                                                else
-                                                                {
-                                                                    ?>
-                                                                    <span class="label label-success">Đã thanh toán
-                                                                    </span>
-                                                                    <?php
-                                                                }
-                                                            ?>
-                                                            </td>
-                                                            <td>
-                                                            <?php
-                                                                $tongTien=0;
-                                                                foreach ($donHang->getCtHoaDons() as $ctHoaDon) {
-                                                                    $tongTien+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                                }
-                                                                echo $tongTien;
-                                                            ?>
-                                                            </td>
-                                                        </tr>
-                                                <?php
-                                                    }
-                                                }
-                                            ?>
-                                            </tbody>
-                                        </table>
-                                            </p>
-                                        </div>
-                                <?php 
-                                    }
-                                }
-                            ?>  
-                            
-                        </div>
-                    </div>
+                        <?php 
+                            }
+                        }
+                    ?>  
+                    
                 </div>
             </div>
         </div>
     </div>
-    <!-- /.container -->
+</div>
+<!-- /.container -->
 
     <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
