@@ -41,6 +41,10 @@ use DateTimeZone;
   
  	public function indexAction()
  	{
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
   	$this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->findAll(); 
@@ -59,6 +63,10 @@ use DateTimeZone;
   // đã sửa tên biến
   public function nhaCungCapAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->findAll(); 
@@ -73,6 +81,10 @@ use DateTimeZone;
 
   public function chiTietDonHangAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $id = (int) $this->params()->fromRoute('id', 0);
       if (!$id) {
@@ -92,6 +104,10 @@ use DateTimeZone;
   // đã sửa tên biến
   public function chiTietPhieuNhapAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $id = (int) $this->params()->fromRoute('id', 0);
       if (!$id) {
@@ -109,6 +125,10 @@ use DateTimeZone;
 
  	public function themKhachHangAction()
  	{
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     	$this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -179,6 +199,10 @@ use DateTimeZone;
   //đã sửa tên biến
   public function themNhaCungCapAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -248,7 +272,10 @@ use DateTimeZone;
 
   public function chiTietKhachHangAction()
   {
-
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -342,7 +369,10 @@ use DateTimeZone;
   // đã sửa tên biến
   public function chiTietNhaCungCapAction()
   {
-
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -434,6 +464,10 @@ use DateTimeZone;
 
   public function xoaKhachHangAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -458,6 +492,10 @@ use DateTimeZone;
   // sửa tên biến
   public function xoaNhaCungCapAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -481,6 +519,10 @@ use DateTimeZone;
 
   public function exportKhachHangAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
     $objPHPExcel = new PHPExcel();
@@ -500,6 +542,10 @@ use DateTimeZone;
 
   public function exportNhaCungCapAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
     $objPHPExcel = new PHPExcel();
@@ -521,6 +567,10 @@ use DateTimeZone;
   // fieldName this is array, it have 5 column
   public function data($objPHPExcel, $loaiDoiTac, $tieuDe, $fieldName)
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $entityManager=$this->getEntityManager();
 
     $query=$entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac='.$loaiDoiTac);
@@ -553,8 +603,5 @@ use DateTimeZone;
     }
 
   }
-
- 
-
 }
 ?>

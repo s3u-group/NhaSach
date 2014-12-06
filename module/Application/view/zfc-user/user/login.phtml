@@ -1,35 +1,69 @@
-<h1><?php echo $this->translate('Đăng nhập'); ?></h1>
-
 <?php
-$this->layout('layout/giaodien');
-$form = $this->loginForm;
-$form->prepare();
-$form->setAttribute('action', $this->url('zfcuser/login'));
-$form->setAttribute('method', 'post');
+    $this->headTitle('Đăng nhập');
+    $this->layout('layout/giaodien');
+    $form = $this->loginForm;
+    $form->prepare();
+    $form->setAttribute('action', $this->url('zfcuser/login'));
+    $form->setAttribute('method', 'post');
 ?>
+<div class="container" style="margin-top: 50px;">
+    <div class="col-sm-3">
+    </div>
 
-<?php echo $this->form()->openTag($form) ?>
+    <div class="col-sm-6">
+        <div>
+            <div >
+                <label style="font-size:40px; margin-bottom:-5px;">Đăng Nhập</label>
+            </div>        
+        </div>
+        <div>
+            <div class="col-sm-3">
+            </div>
+            <div class="col-sm-7">
+                <?php echo $this->form()->openTag($form); ?>
+                <div class="form-group">
+                    <?php                        
+                        $email=$form->get('identity');
+                        $email->setAttribute('class','form-control');
+                        $email->setAttribute('required','required');
+                        $email->setAttribute('placeholder','Nhập email');
+                        echo $this->formLabel($email);
+                        echo $this->formInput($email);
+                    ?>
+                </div>
+                <div class="form-group">
+                    <?php
+                        $pass=$form->get('credential');
+                        $pass->setAttribute('class','form-control');
+                        $pass->setAttribute('required','required');
+                        $pass->setAttribute('placeholder','Nhập mật khẩu');
+                        echo $this->formLabel($pass);
+                        echo $this->formInput($pass);
+                    ?>
+                    <?php if ($this->redirect): ?>
+                        <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
+                    <?php endif ?>
+                </div>
+                <?php                    
+                    if($this->formElementErrors($form->get('identity')))
+                    {?>                        
+                        <div class="form-group badge red col-sm-12">
+                          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>Email hoặc mật khẩu vừa nhập không chính xác.                          
+                        </div>                       
+                <?php } ?>
 
-    <dl class="zend_form">
-        <?php echo $this->formElementErrors($form->get('identity')) ?>
+                <?php
+                    $form->get('submit')->setAttribute('class','btn btn-primary col-sm-12');
+                    echo $this->formButton($form->get('submit')); 
+                ?>
+                <a href="#">Quên mật khẩu</a>
+            </div>
+        </div>
+    </div>
 
-        <dt><?php echo $this->formLabel($form->get('identity')) ?></dt>
-        <dd><?php echo $this->formInput($form->get('identity')) ?></dd>
-
-        <dt><?php echo $this->formLabel($form->get('credential')) ?></dt>
-        <dd><?php echo $this->formInput($form->get('credential')) ?></dd>
-
-        <?php if ($this->redirect): ?>
-            <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
-        <?php endif ?>
-
-        <dd>
-            <?php                
-                echo $this->formButton($form->get('submit')); 
-            ?>
-        </dd>
-    </dl>
-
+    <div class="col-sm-3">
+    </div>    
+</div>
 <?php echo $this->form()->closeTag() ?>
 
 <!-- jQuery -->

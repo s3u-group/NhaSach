@@ -55,13 +55,21 @@
   
  	public function indexAction()
  	{
-    $this->layout('layout/giaodien');    
+    $this->layout('layout/giaodien');
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }    
  	}
   
 
   public function hangHoaAction()
   {
-    $this->layout('layout/giaodien'); 
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
+    $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();    
     $form= new FileForm($entityManager);
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
@@ -73,6 +81,10 @@
 
   public function locHangHoaAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();      
     $request=$this->getRequest();
@@ -119,6 +131,10 @@
   // xem chi tiết sản phẩm
   public function sanPhamAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
      $id = (int) $this->params()->fromRoute('id', 0);
      if (!$id) {
          return $this->redirect()->toRoute('hang_hoa/crud', array(
@@ -201,6 +217,10 @@
 
   public function bangGiaAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();
     $form= new FileForm($entityManager);
@@ -220,6 +240,10 @@
 
   public function nhapHangAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();     
     $form= new CreateNhapHangForm($entityManager);    
@@ -315,6 +339,10 @@
   // set lại id user nhân viên
   public function xuatHangAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();     
     $form= new XuatHoaDonForm($entityManager);
@@ -380,7 +408,10 @@
 
   public function themSanPhamAction()
   {
-
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien'); 
 
     $entityManager=$this->getEntityManager();
@@ -491,6 +522,10 @@
 
   public function searchKhachHangAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $response=array();
 
     $request=$this->getRequest();
@@ -522,6 +557,10 @@
 
   public function searchSanPhamAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $response=array();
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
@@ -571,6 +610,10 @@
 
   public function searchNhaCungCapAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $response=array();
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
@@ -597,6 +640,10 @@
 
   public function importHangHoaAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $sanPham=new SanPham();
@@ -714,6 +761,10 @@
 
   public function importBangGiaAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $sanPham=new SanPham();
@@ -840,6 +891,10 @@
 
   public function exportHangHoaAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $entityManager=$this->getEntityManager();
  
     /** Error reporting */
@@ -925,6 +980,10 @@
 
   public function exportBangGiaAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
     $entityManager=$this->getEntityManager();
 
     
@@ -1041,6 +1100,10 @@
 
   public function xoaSanPhamAction()
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();      
       $id=(int)$this->params()->fromRoute('id',0);
