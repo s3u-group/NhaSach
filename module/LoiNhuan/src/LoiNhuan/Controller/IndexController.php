@@ -44,12 +44,14 @@ use DateTimeZone;
 
 	public function donHangAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
 	     if(!$this->zfcUserAuthentication()->hasIdentity())
 	     {
 	       return $this->redirect()->toRoute('application');
 	     }
 	     //====================================================================================
+
 	    $this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -69,12 +71,14 @@ use DateTimeZone;
 	// index là doanh thu theo ngày
 	public function indexAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -127,6 +131,7 @@ use DateTimeZone;
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -175,12 +180,14 @@ use DateTimeZone;
 
 	public function doanhThuTheoQuyAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -288,12 +295,14 @@ use DateTimeZone;
 
 	public function doanhThuTheoNamAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -339,12 +348,14 @@ use DateTimeZone;
 
 	public function chiTietDoanhThuNgayAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -379,12 +390,14 @@ use DateTimeZone;
 
 	public function chiTietDoanhThuThangAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -422,12 +435,14 @@ use DateTimeZone;
 
 	public function chiTietDoanhThuQuyAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -504,12 +519,14 @@ use DateTimeZone;
 
 	public function chiTietDoanhThuNamAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -544,12 +561,14 @@ use DateTimeZone;
 
 	public function exportDoanhThuTheoNgayAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$entityManager=$this->getEntityManager();
 	    // tham số thức nhất cho hàm exportExcel
 	    $objPHPExcel = new PHPExcel();
@@ -570,6 +589,7 @@ use DateTimeZone;
 
 	public function dataDoanhThuTheoNgay()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
@@ -577,6 +597,7 @@ use DateTimeZone;
      }
      //====================================================================================
 	    
+
 	    $entityManager=$this->getEntityManager();
 
 	    $donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
@@ -613,12 +634,14 @@ use DateTimeZone;
 
 	public function exportDoanhThuTheoThangAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$entityManager=$this->getEntityManager();
 	    // tham số thức nhất cho hàm exportExcel
 	    $objPHPExcel = new PHPExcel();
@@ -639,12 +662,14 @@ use DateTimeZone;
 
 	public function dataDoanhThuTheoThang()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $entityManager=$this->getEntityManager();
 
 	    $donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
@@ -684,12 +709,14 @@ use DateTimeZone;
 
 	public function exportDoanhThuTheoQuyAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$entityManager=$this->getEntityManager();
 	    // tham số thức nhất cho hàm exportExcel
 	    $objPHPExcel = new PHPExcel();
@@ -710,12 +737,14 @@ use DateTimeZone;
 
 	public function dataDoanhThuTheoQuy()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $entityManager=$this->getEntityManager();
 
 	    $donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
@@ -814,12 +843,14 @@ use DateTimeZone;
 
 	public function exportDoanhThuTheoNamAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$entityManager=$this->getEntityManager();
 	    // tham số thức nhất cho hàm exportExcel
 	    $objPHPExcel = new PHPExcel();
@@ -840,12 +871,14 @@ use DateTimeZone;
 
 	public function dataDoanhThuTheoNam()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $entityManager=$this->getEntityManager();
 
 	    $donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
@@ -882,7 +915,10 @@ use DateTimeZone;
 
 	public function data($objPHPExcel, $tieuDe, $fieldName, $doanhThus)
 	{
-		
+		if(!$this->zfcUserAuthentication()->hasIdentity())
+	    {
+	      return $this->redirect()->toRoute('zfcuser');
+	    }
 
 	    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
 	    $objPHPExcel->getActiveSheet()->mergeCells('A2:D2');
@@ -920,12 +956,14 @@ use DateTimeZone;
 
 	public function exportDonHangAction()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 		$entityManager=$this->getEntityManager();
 	    // tham số thức nhất cho hàm exportExcel
 	    $objPHPExcel = new PHPExcel();
@@ -946,12 +984,14 @@ use DateTimeZone;
 
 	public function dataDonHang()
 	{
+
 		// kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
 	    $this->layout('layout/giaodien');
 	    $entityManager=$this->getEntityManager();
 
@@ -964,7 +1004,10 @@ use DateTimeZone;
 	}
 	public function dataExportDonHang($objPHPExcel, $tieuDe, $fieldName, $donHangs)
 	{
-		
+		if(!$this->zfcUserAuthentication()->hasIdentity())
+	    {
+	      return $this->redirect()->toRoute('zfcuser');
+	    }
 
 	    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
 	    $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
@@ -1008,7 +1051,5 @@ use DateTimeZone;
 
 	      }
 	}
-
-
  }
 ?>

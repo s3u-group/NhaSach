@@ -34,6 +34,7 @@ namespace CongNo\Controller;
  
   public function indexAction()
   {
+
     // kiểm tra đăng nhập==================================================================
       if(!$this->zfcUserAuthentication()->hasIdentity())
       {
@@ -120,12 +121,14 @@ namespace CongNo\Controller;
 
   public function thanhToanAction()
   {
+
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();     
       $form= new ThanhToanForm($entityManager);
@@ -178,6 +181,10 @@ namespace CongNo\Controller;
 
   public function searchCongNoKhachHang($idDoiTac)
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       $response=array();
    
       if($idDoiTac)
@@ -233,12 +240,14 @@ namespace CongNo\Controller;
 //-----------------------------------------------------------------  	
   public function congNoNhaCungCapAction()
   {
+
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -313,12 +322,14 @@ namespace CongNo\Controller;
 
   public function thanhToanNhaCungCapAction()
   {
+
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
       $form= new ThanhToanNhaCungCapForm($entityManager); 
@@ -378,6 +389,10 @@ namespace CongNo\Controller;
 
   public function searchCongNoNhaCungCap($idDoiTac)
   {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
       if($idDoiTac)
       {
         $entityManager=$this->getEntityManager();

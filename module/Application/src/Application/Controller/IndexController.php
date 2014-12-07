@@ -39,7 +39,11 @@ class IndexController extends AbstractActionController
       }
       //====================================================================================
     	$this->layout('layout/giaodien');
-        return new ViewModel();
+      if($this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('hang_hoa');
+      }
+      return new ViewModel();
     }
     
     public function loginAction()
