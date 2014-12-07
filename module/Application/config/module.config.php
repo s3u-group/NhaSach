@@ -213,12 +213,6 @@ return array(
                     'roles'     =>array('nguoi-dung','khach'),
                 ),
 
-                /*array(
-                    'controller'=>array('zfcuser'),  
-                    'action'    =>array('register'),                 
-                    'roles'     =>array('nguoi-dung'),
-                ),*/
-
                 array(
                     'controller'=>array('Application\Controller\Index'),
                     'action'    =>array('index','login'),
