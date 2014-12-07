@@ -32,6 +32,12 @@ use DateTimeZone;
   
   public function getEntityManager()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
      if(!$this->entityManager)
      {
       $this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -41,6 +47,12 @@ use DateTimeZone;
   
  	public function indexAction()
  	{
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
   	$this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->findAll(); 
@@ -59,6 +71,12 @@ use DateTimeZone;
   // đã sửa tên biến
   public function nhaCungCapAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->findAll(); 
@@ -73,6 +91,12 @@ use DateTimeZone;
 
   public function chiTietDonHangAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $id = (int) $this->params()->fromRoute('id', 0);
       if (!$id) {
@@ -92,6 +116,12 @@ use DateTimeZone;
   // đã sửa tên biến
   public function chiTietPhieuNhapAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $id = (int) $this->params()->fromRoute('id', 0);
       if (!$id) {
@@ -109,6 +139,12 @@ use DateTimeZone;
 
  	public function themKhachHangAction()
  	{
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     	$this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -179,6 +215,12 @@ use DateTimeZone;
   //đã sửa tên biến
   public function themNhaCungCapAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -248,6 +290,12 @@ use DateTimeZone;
 
   public function chiTietKhachHangAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
 
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
@@ -342,7 +390,12 @@ use DateTimeZone;
   // đã sửa tên biến
   public function chiTietNhaCungCapAction()
   {
-
+      // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -434,6 +487,12 @@ use DateTimeZone;
 
   public function xoaKhachHangAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -458,6 +517,12 @@ use DateTimeZone;
   // sửa tên biến
   public function xoaNhaCungCapAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
       if(!$id)
@@ -481,6 +546,12 @@ use DateTimeZone;
 
   public function exportKhachHangAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
     $objPHPExcel = new PHPExcel();
@@ -500,6 +571,12 @@ use DateTimeZone;
 
   public function exportNhaCungCapAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
     $objPHPExcel = new PHPExcel();

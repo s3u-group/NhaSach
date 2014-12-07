@@ -32,12 +32,24 @@ class IndexController extends AbstractActionController
 
     public function indexAction()
     {
+      // kiểm tra đăng nhập==================================================================
+      if($this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('hang_hoa');
+      }
+      //====================================================================================
     	$this->layout('layout/giaodien');
         return new ViewModel();
     }
     
     public function loginAction()
     {
+      // kiểm tra đăng nhập==================================================================
+      if($this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('hang_hoa');
+      }
+      //====================================================================================
       $this->layout('layout/giaodien');
        return $this->forward()->dispatch('zfcuser', array(
            'action' => 'login'

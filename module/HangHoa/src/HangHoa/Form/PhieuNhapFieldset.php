@@ -11,7 +11,7 @@ use Zend\Form\Form;
 use HangHoa\Entity\PhieuNhap;
 use HangHoa\Form\ChiTietPhieuNhapFieldset;
 use HangHoa\Form\DoiTacFieldset;
-use HangHoa\Form\SystemUserFieldset;
+use Application\Form\SystemUserFieldset;
 use DateTime;
 use DateTimeZone;
 

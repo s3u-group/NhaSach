@@ -46,6 +46,12 @@
   
   public function getEntityManager()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
      if(!$this->entityManager)
      {
       $this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -55,12 +61,24 @@
   
  	public function indexAction()
  	{
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien');    
  	}
   
 
   public function hangHoaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();    
     $form= new FileForm($entityManager);
@@ -73,6 +91,12 @@
 
   public function locHangHoaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();      
     $request=$this->getRequest();
@@ -119,6 +143,12 @@
   // xem chi tiết sản phẩm
   public function sanPhamAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
      $id = (int) $this->params()->fromRoute('id', 0);
      if (!$id) {
          return $this->redirect()->toRoute('hang_hoa/crud', array(
@@ -184,10 +214,7 @@
             }
           }
         }
-        else
-        {
-          die(var_dump($form->getMessages()));
-        }
+        
      } 
      return array(
        'sanPhams'=>$sanPhams,
@@ -201,6 +228,12 @@
 
   public function bangGiaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();
     $form= new FileForm($entityManager);
@@ -220,6 +253,14 @@
 
   public function nhapHangAction()
   {
+
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();     
     $form= new CreateNhapHangForm($entityManager);    
@@ -228,6 +269,7 @@
     $request = $this->getRequest();
     if($request->isPost())
     {      
+
       $form->setData($request->getPost());      
       if($form->isValid())
       {
@@ -239,8 +281,9 @@
         { 
           $giaNhap=$cTPhieuNhap->getGiaNhap();
           $soLuong=$cTPhieuNhap->getSoLuong();
+          $idUserNv=$this->zfcUserAuthentication()->getIdentity();
           //Cập nhật Phiếu Nhập
-          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find($idUserNv);
           $phieuNhap->setIdUserNv($user);
           $entityManager->persist($phieuNhap);
           $entityManager->flush();
@@ -305,6 +348,7 @@
           }
         }         
       }
+     
       
     }
     return array(       
@@ -315,6 +359,12 @@
   // set lại id user nhân viên
   public function xuatHangAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();     
     $form= new XuatHoaDonForm($entityManager);
@@ -326,6 +376,9 @@
       $form->setData($request->getPost());      
       if($form->isValid()){
         //die(var_dump($hoaDon));
+        $idUserNv=$this->zfcUserAuthentication()->getIdentity();
+        $user=$entityManager->getRepository('Application\Entity\SystemUser')->find($idUserNv);
+        $hoaDon->setIdUserNv($user);
         foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
           //var_dump($chiTietHoaDon);
           $soLuongXuat=$chiTietHoaDon->getSoLuong();
@@ -380,6 +433,12 @@
 
   public function themSanPhamAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
 
     $this->layout('layout/giaodien'); 
 
@@ -477,20 +536,14 @@
 
   }
 
- 	public function addAction()
- 	{
- 	}
-
- 	public function editAction()
- 	{   
- 	}
-
- 	public function deleteAction()
- 	{        
-  }
-
   public function searchKhachHangAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $response=array();
 
     $request=$this->getRequest();
@@ -522,6 +575,12 @@
 
   public function searchSanPhamAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $response=array();
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
@@ -571,6 +630,12 @@
 
   public function searchNhaCungCapAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $response=array();
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
@@ -597,6 +662,12 @@
 
   public function importHangHoaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $sanPham=new SanPham();
@@ -714,6 +785,12 @@
 
   public function importBangGiaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $sanPham=new SanPham();
@@ -840,6 +917,12 @@
 
   public function exportHangHoaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $entityManager=$this->getEntityManager();
  
     /** Error reporting */
@@ -925,6 +1008,12 @@
 
   public function exportBangGiaAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
     $entityManager=$this->getEntityManager();
 
     
@@ -1041,6 +1130,12 @@
 
   public function xoaSanPhamAction()
   {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();      
       $id=(int)$this->params()->fromRoute('id',0);
