@@ -104,7 +104,7 @@ $settings = array(
      *
      * Accepted values: boolean true or false
      */
-    // 'login_after_registration' => false,
+     'login_after_registration' => false,
 
     /**
      * Registration Form Captcha
@@ -156,7 +156,7 @@ $settings = array(
      * Accepted values: A valid route name within your application
      *
      */
-    //'login_redirect_route' => 'hang_hoa',
+    'login_redirect_route' => 'hang_hoa',
 
     /**
      * Logout Redirect Route
@@ -166,7 +166,7 @@ $settings = array(
      * Default value: 'zfcuser/login'
      * Accepted values: A valid route name within your application
      */
-    'logout_redirect_route' => 'home',
+    'logout_redirect_route' => 'application',
 
     /**
      * Password Security

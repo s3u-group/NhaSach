@@ -93,6 +93,7 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'layout/giaodien'        => __DIR__ . '/../view/layout/giao-dien.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -215,7 +216,7 @@ return array(
 
                 array(
                     'controller'=>array('Application\Controller\Index'),
-                    'action'    =>array('index','login'),
+                    //'action'    =>array('index','login'),
                     'roles'     =>array('khach','nguoi-dung'),
                 ),  
 
@@ -246,7 +247,7 @@ return array(
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Index'),
-                    'action'    =>array('index','edit'),
+                    'action'    =>array('index'),
                     'roles'     =>array('nguoi-dung'),
                 ),
 
