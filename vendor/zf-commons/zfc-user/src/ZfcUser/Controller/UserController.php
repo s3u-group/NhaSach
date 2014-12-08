@@ -167,7 +167,7 @@ class UserController extends AbstractActionController
     public function registerAction()
     {
         // if the user is logged in, we don't need to register
-        if ($this->zfcUserAuthentication()->hasIdentity()) {
+        if (!$this->zfcUserAuthentication()->hasIdentity()) {
             // redirect to the login redirect route
             return $this->redirect()->toRoute($this->getOptions()->getLoginRedirectRoute());
         }

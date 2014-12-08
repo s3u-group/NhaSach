@@ -38,9 +38,9 @@ return array(
 		'template_path_stack' => array(
 			'hang_hoa' => __DIR__ . '/../view'
 		),
-        'template_map'=>array(
+        /*'template_map'=>array(
             'layout/giaodien'        => __DIR__ . '/../view/layout/giao-dien.phtml',
-        ),
+        ),*/
 	),
 
     'view_helpers'=>array(

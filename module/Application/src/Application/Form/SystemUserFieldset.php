@@ -74,14 +74,14 @@ class SystemUserFieldset extends Fieldset implements InputFilterProviderInterfac
         ));
 
        
-         $this->add(array(
+         /*$this->add(array(
              'name' => 'email',
              'type' => '\Zend\Form\Element\Email',
              'options' => array(
                  'label' => 'Email',
              ),
-             'attributes'=>array('required'=>'required'),
-         ));
+             
+         ));*/
 
          $this->add(array(
              'name' => 'state',

@@ -93,6 +93,7 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'layout/giaodien'        => __DIR__ . '/../view/layout/giao-dien.phtml',
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -132,58 +133,132 @@ return array(
         ),
     ),
 
-    //phân quyền 
+    /*//phân quyền theo zfcuser
     
-     /*'bjyauthorize'=>array(
+     'bjyauthorize'=>array(
 
         'guards'=>array(
-            'BjyAuthorize\Guard\Controller'=>array(
+            'BjyAuthorize\Guard\Controller'=>array(                
                 
                 array(
-                    'controller'=>array('zfcuser'),                   
-                    'roles'     =>array(),
+                    'controller'=>array('zfcuser'),  
+                    'action'    =>array('login'),                 
+                    'roles'     =>array('khach'),
                 ),
 
-               
+                array(
+                    'controller'=>array('zfcuser'),  
+                    'action'    =>array('register','index','logout'),                 
+                    'roles'     =>array('nguoi-dung'),
+                ),
+
+                array(
+                    'controller'=>array('Application\Controller\Index'),
+                    'action'    =>array('index','login'),
+                    'roles'     =>array('khach'),
+                ),  
 
                 array(
                     'controller'=>array('CongNo\Controller\Index'),
-                    'action'    =>array('index'),
+                    'action'    =>array('index','thanhToan','congNoNhaCungCap','thanhToanNhaCungCap'),
+                    'roles'     =>array('nguoi-dung'),
+                ),              
+               
+                array(
+                    'controller'=>array('HangHoa\Controller\Index'),
+                    'action'    =>array('index','hangHoa','locHangHoa','sanPham','bangGia','nhapHang','xuatHang','themSanPham','searchKhachHang','searchSanPham','searchNhaCungCap','importHangHoa','importBangGia','exportHangHoa','exportBangGia','xoaSanPham'),
                     'roles'     =>array('nguoi-dung'),
                 ),
 
-                array(
-                    'controller'=>array('HangHoa\Controller\Index'),
-                    'action'    =>array('index'),
-                    'roles'     =>array('nguoi-dung'),
-                ),
+                
+                
 
                 array(
                     'controller'=>array('KenhPhanPhoi\Controller\Index'),
-                    'action'    =>array('index'),
+                    'action'    =>array('index','nhaCungCap','chiTietDonHang','chiTietPhieuNhap','themKhachHang','themNhaCungCap','chiTietKhachHang','chiTietNhaCungCap','xoaKhachHang','xoaNhaCungCap','exportKhachHang','exportNhaCungCap'),
                     'roles'     =>array('nguoi-dung'),
                 ),
 
                 array(
                     'controller'=>array('LoiNhuan\Controller\Index'),
-                    'action'    =>array('index'),
+                    'action'    =>array('index','donHang','doanhThuTheoThang','doanhThuTheoQuy','doanhThuTheoNam','chiTietDoanhThuNgay','chiTietDoanhThuThang','chiTietDoanhThuQuy','chiTietDoanhThuNam','exportDoanhThuTheoNgay','exportDoanhThuTheoThang','exportDoanhThuTheoQuy','exportDoanhThuTheoNam','exportDonHang'),
                     'roles'     =>array('nguoi-dung'),
                 ),
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Index'),
-                    //'action'    =>array(),
-                    'roles'     =>array('nguoi-dung','khach'),
+                    'action'    =>array('index','edit'),
+                    'roles'     =>array('nguoi-dung'),
                 ),
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Taxonomy'),
-                    //'action'    =>array(),
-                    'roles'     =>array('nguoi-dung','khach'),
+                    'action'    =>array('taxonomyIndex','taxonomyEdit','taxonomyAdd'),
+                    'roles'     =>array('nguoi-dung'),
                 ),
               
             ),
         ),
     ),*/
+
+    //phân quyền theo chuyển hướng
+    
+     'bjyauthorize'=>array(
+
+        'guards'=>array(
+            'BjyAuthorize\Guard\Controller'=>array(                
+                
+                array(
+                    'controller'=>array('zfcuser'),  
+                    //'action'    =>array('index','login','logout'),                 
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),
+
+                array(
+                    'controller'=>array('Application\Controller\Index'),
+                    //'action'    =>array('index','login'),
+                    'roles'     =>array('khach','nguoi-dung'),
+                ),  
+
+                array(
+                    'controller'=>array('CongNo\Controller\Index'),
+                    //'action'    =>array('index','thanhToan','congNoNhaCungCap','thanhToanNhaCungCap'),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),              
+               
+                array(
+                    'controller'=>array('HangHoa\Controller\Index'),
+                    //'action'    =>array('index','hangHoa','locHangHoa','sanPham','bangGia','nhapHang','xuatHang','themSanPham','searchKhachHang','searchSanPham','searchNhaCungCap','importHangHoa','importBangGia','exportHangHoa','exportBangGia','xoaSanPham'),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),               
+                
+
+                array(
+                    'controller'=>array('KenhPhanPhoi\Controller\Index'),
+                    //'action'    =>array('index','nhaCungCap','chiTietDonHang','chiTietPhieuNhap','themKhachHang','themNhaCungCap','chiTietKhachHang','chiTietNhaCungCap','xoaKhachHang','xoaNhaCungCap','exportKhachHang','exportNhaCungCap'),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),
+
+                array(
+                    'controller'=>array('LoiNhuan\Controller\Index'),
+                    //'action'    =>array('index','donHang','doanhThuTheoThang','doanhThuTheoQuy','doanhThuTheoNam','chiTietDoanhThuNgay','chiTietDoanhThuThang','chiTietDoanhThuQuy','chiTietDoanhThuNam','exportDoanhThuTheoNgay','exportDoanhThuTheoThang','exportDoanhThuTheoQuy','exportDoanhThuTheoNam','exportDonHang'),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),
+
+                array(
+                    'controller'=>array('S3UTaxonomy\Controller\Index'),
+                    'action'    =>array('index'),
+                    'roles'     =>array('nguoi-dung'),
+                ),
+
+                array(
+                    'controller'=>array('S3UTaxonomy\Controller\Taxonomy'),
+                    'action'    =>array('taxonomyIndex','taxonomyEdit','taxonomyAdd'),
+                    'roles'     =>array('nguoi-dung'),
+                ),
+              
+            ),
+        ),
+    ),
    
 );

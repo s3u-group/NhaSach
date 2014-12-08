@@ -138,17 +138,43 @@
                             </li>
                             <li class="divider"></li>
                             <li class="dropdown-header">Quick Adds</li>
+                            <?php if($this->zfcUserIdentity()){ ?>
+                            <li>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themKhachHang')); ?>"><i class="fa fa-tag"></i> Thêm khách hàng</a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themNhaCungCap')); ?>"><i class="fa fa-tag"></i> Add Product</a>
+                            </li>
+                            <?php if((int)$this->zfcUserIdentity()->getId()==1) { ?>
+                                <li>
+                                    <a href="<?php echo $this->url('zfcuser/register',array('action'=>'register')); ?>"><i class="fa fa-user"></i> Add User</a>
+                                </li>
+                            <?php } if((int)$this->zfcUserIdentity()->getId()!=1) { ?>
+                                    <li>
+                                        <a href="#"><i class="fa fa-user"></i> Add User</a>
+                                    </li>
+                            <?php } ?>
+                            <li class="divider"></li>
+                            <li class="dropdown-header">Settings</li>
+                            <li>
+                                <a href="<?php echo $this->url('zfcuser/logout',array('action'=>'logout'));?>"><i class="fa fa-signout"></i> Log out</a>
+                            </li>
+                            <?php } else { ?>
                             <li>
                                 <a href="#"><i class="fa fa-tag"></i> Add Product</a>
                             </li>
                             <li>
                                 <a href="#"><i class="fa fa-user"></i> Add User</a>
                             </li>
+
                             <li class="divider"></li>
                             <li class="dropdown-header">Settings</li>
                             <li>
-                                <a href="<?php echo $this->url('zfcuser/logout',array('action'=>'logout'));?>"><i class="fa fa-signout"></i> Log out</a>
+                                <a href="#"><i class="fa fa-signout"></i> Log out</a>
                             </li>
+                            <?php } ?>
+                            
+                            
                         </ul>
                     </li>
                 </ul>

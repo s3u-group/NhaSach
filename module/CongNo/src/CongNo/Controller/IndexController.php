@@ -18,6 +18,13 @@ namespace CongNo\Controller;
   
   public function getEntityManager()
   {
+     // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
      if(!$this->entityManager)
      {
       $this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
@@ -27,10 +34,13 @@ namespace CongNo\Controller;
  
   public function indexAction()
   {
-    if(!$this->zfcUserAuthentication()->hasIdentity())
-    {
-      return $this->redirect()->toRoute('zfcuser');
-    }
+
+    // kiểm tra đăng nhập==================================================================
+      if(!$this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('application');
+      }
+    //====================================================================================
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -111,10 +121,14 @@ namespace CongNo\Controller;
 
   public function thanhToanAction()
   {
-    if(!$this->zfcUserAuthentication()->hasIdentity())
-    {
-      return $this->redirect()->toRoute('zfcuser');
-    }
+
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();     
       $form= new ThanhToanForm($entityManager);
@@ -127,7 +141,8 @@ namespace CongNo\Controller;
         $form->setData($request->getPost());
         if($form->isValid())
         {
-          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+          $idUserNv=$this->zfcUserAuthentication()->getIdentity();
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find($idUserNv);
           $phieuThu->setIdUserNv($user);
           $idDoiTac=$phieuThu->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
 
@@ -225,10 +240,14 @@ namespace CongNo\Controller;
 //-----------------------------------------------------------------  	
   public function congNoNhaCungCapAction()
   {
-    if(!$this->zfcUserAuthentication()->hasIdentity())
-    {
-      return $this->redirect()->toRoute('zfcuser');
-    }
+
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -303,10 +322,14 @@ namespace CongNo\Controller;
 
   public function thanhToanNhaCungCapAction()
   {
-    if(!$this->zfcUserAuthentication()->hasIdentity())
-    {
-      return $this->redirect()->toRoute('zfcuser');
-    }
+
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
       $form= new ThanhToanNhaCungCapForm($entityManager); 
@@ -319,7 +342,8 @@ namespace CongNo\Controller;
         $form->setData($request->getPost());
         if($form->isValid())
         {
-          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+          $idUserNv=$this->zfcUserAuthentication()->getIdentity();
+          $user=$entityManager->getRepository('Application\Entity\SystemUser')->find($idUserNv);
 
           $phieuChi->setIdUserNv($user);
           $idDoiTac=$phieuChi->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
