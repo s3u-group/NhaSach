@@ -69,6 +69,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
                  'empty_option'=>'----------Chọn Loại Sản Phẩm----------',
                  'disable_inarray_validator' => true,
              ),
+             'attributes'=>array('required'=>'required'),
          ));
 
         $this->add(array(
@@ -89,6 +90,7 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
                  'empty_option'=>'----------Chọn Đơn Vị Tính----------',
                  'disable_inarray_validator' => true,                 
              ),
+             'attributes'=>array('required'=>'required'),
          ));
 
          $this->add(array(

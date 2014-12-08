@@ -14,8 +14,7 @@ $this->headTitle($title);
     @media print {       
         .col-sm-3 {display: none;}
 
-        .form-group{display: none;
-        }
+        .form-group{display: none;}
 
         .col-md-2{display: none;}
         h1{display: none;}
@@ -69,6 +68,11 @@ $this->headTitle($title);
                     </div>
                    
                 </div>
+                <?php if($coKiemTraXuatHang==1) { ?>
+                        <div class="alert alert-success" role="alert">
+                          Xuất hàng thành công!
+                        </div>
+                    <?php } ?>
             </div>
 
                 <div class="col-sm-6">

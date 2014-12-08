@@ -354,13 +354,19 @@
           {
             //Có lỗi trong quá trình cập nhật Sản Phẩm
           }
-        }         
+        } 
+        return array(       
+         'form' =>$form,  
+         'coKiemTraPhieuNhap'=>1,
+       );  
+
       }
      
       
     }
     return array(       
-       'form' =>$form,       
+       'form' =>$form, 
+       'coKiemTraPhieuNhap'=>0,      
      );
   }   
 
@@ -432,12 +438,10 @@
         $hoaDon->setMaHoaDon($newMaHoaDon);
 
         $entityManager->flush();
-        return $this->redirect()->toRoute('hang_hoa/crud', array(
-             'action' => 'xuatHang',
-         ));
+        return array('form'=>$form,'coKiemTraXuatHang'=>1);
       }      
     }
-    return array('form'=>$form);
+    return array('form'=>$form,'coKiemTraXuatHang'=>0);
   }
 
   public function themSanPhamAction()
@@ -666,6 +670,7 @@
           $response[]=array(
             'idDoiTac'=>$ncc->getIdDoiTac(),
             'hoTen'=>$ncc->getHoTen(),
+            'diaChi'=>$ncc->getDiaChi(),
           );
         }
       }
@@ -997,17 +1002,37 @@
     $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
     $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();
-    foreach ($sanPhams as $key=>$sanPham) {
-      //die(var_dump($sanPham));
-      $index=$key+5;
-      $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())
-                                    ->setCellValue('B'.$index, $sanPham->getMaSanPham())
-                                    ->setCellValue('C'.$index, $sanPham->getTonKho())
-                                    ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
-                                    ->setCellValue('E'.$index, $sanPham->getNhan());
-      $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    if($this->getRequest()->getPost()['coLocSanPham'])
+    {
+      if($this->getRequest()->getPost()['idSanPham'])
+      {
+        foreach ($this->getRequest()->getPost()['idSanPham'] as $key => $idSanPham) {
+          $index=$key+5;
+          $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($idSanPham);
+          $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())
+                                        ->setCellValue('B'.$index, $sanPham->getMaSanPham())
+                                        ->setCellValue('C'.$index, $sanPham->getTonKho())
+                                        ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
+                                        ->setCellValue('E'.$index, $sanPham->getNhan());
+          $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+        
+        }
+      }
     }
+    else
+    {    
 
+      foreach ($sanPhams as $key=>$sanPham) {
+        //die(var_dump($sanPham));
+        $index=$key+5;
+        $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())
+                                      ->setCellValue('B'.$index, $sanPham->getMaSanPham())
+                                      ->setCellValue('C'.$index, $sanPham->getTonKho())
+                                      ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
+                                      ->setCellValue('E'.$index, $sanPham->getNhan());
+        $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+      }
+    }
     // Rename worksheet    
     $objPHPExcel->getActiveSheet()->setTitle('data_hang_hoa');
     // Set active sheet index to the first sheet, so Excel opens this as the first sheet

@@ -12,6 +12,22 @@ namespace CongNo\Controller;
  use CongNo\Form\PhieuChiFieldset;
  use CongNo\Entity\PhieuChi;
 
+
+use PHPExcel;
+use PHPExcel_IOFactory;
+use PHPExcel_Writer_Excel5;
+use PHPExcel_Cell;
+use PHPExcel_Cell_DataType;
+use PHPExcel_Shared_Date;
+use PHPExcel_Style_NumberFormat;
+use PHPExcel_Style_Color;
+use PHPExcel_RichText;
+use PHPExcel_Style_Border;
+use PHPExcel_Style_Alignment;
+use PHPExcel_Style_Fill;
+use PHPExcel_Style_Font;
+use DateTime;
+use DateTimeZone;
  class IndexController extends AbstractActionController
  {
  	private $entityManager;
@@ -441,5 +457,318 @@ namespace CongNo\Controller;
       }
     return $response;
   } 
+
+
+  public function exportCongNoKhachHangAction()
+  {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
+    $entityManager=$this->getEntityManager();
+    // tham số thức nhất cho hàm exportExcel
+    $objPHPExcel = new PHPExcel();
+    // tham số thức 2 cho hàm exportExcel
+    $fileName='cong_no_khach_hang';
+    // tham số thức 3 cho hàm exportExcel là dữ liệu (data)
+    $data=$this->dataExportCongNoKhachHang();
+    
+
+    $tieuDe='DANH SÁCH CÔNG NỢ VỚI KHÁCH HÀNG';
+    $fieldName=array(0=>'Khách hàng',1=>'Ngày đầu kì',2=>'Đầu kì',3=>'Phát sinh',4=>'Cuối kì',5=>'Kênh phân phối');
+
+    $PI_ExportExcel=$this->ExportExcel();
+    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->data($objPHPExcel, $tieuDe, $fieldName, $data));
+
+
+  }
+
+
+
+
+
+  // fieldName this is array, it have 5 column
+  public function data($objPHPExcel, $tieuDe, $fieldName, $data)
+  {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
+    $entityManager=$this->getEntityManager();
+
+    
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
+    $objPHPExcel->getActiveSheet()->mergeCells('A2:F2');
+    $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A2:F2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                                  
+   
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A4', $fieldName[0])
+                                  ->setCellValue('B4', $fieldName[1])
+                                  ->setCellValue('C4', $fieldName[2])
+                                  ->setCellValue('D4', $fieldName[3])
+                                  ->setCellValue('E4', $fieldName[4])
+                                  ->setCellValue('F4', $fieldName[5])
+                                  ->getStyle('A4:F4')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A4:F4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    $taxonomyKenhPhanPhoi=$this->TaxonomyFunction();
+    $kenhPhanPhois=$taxonomyKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+      
+    
+    foreach ($data['response'] as $index => $response) {
+      $dong=$index+5;
+
+      $objPHPExcel->getActiveSheet()->setCellValue('A'.$dong, $response['hoTenDoiTac']);
+      $objPHPExcel->getActiveSheet()->setCellValue('B'.$dong, $response['ngayDauKi']);
+      $objPHPExcel->getActiveSheet()->setCellValue('C'.$dong, $response['noDauKi']);
+      $objPHPExcel->getActiveSheet()->setCellValue('D'.$dong, $response['noPhatSinh']);
+      $objPHPExcel->getActiveSheet()->setCellValue('E'.$dong, $response['noCuoiKi']);
+      foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+        if($kenhPhanPhoi['termTaxonomyId']==$response['idKenhPhanPhoi'])
+        {
+          $objPHPExcel->getActiveSheet()->setCellValue('F'.$dong, $kenhPhanPhoi['termId']['name']);
+        }
+      }
+      
+    }
+  }
+
+  public function dataExportCongNoKhachHang()
+  {
+
+    // kiểm tra đăng nhập==================================================================
+      if(!$this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('application');
+      }
+    //====================================================================================
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
+
+
+      // lấy những đối tác thuộc loại khách hàng có công nợ với hệ thống
+      
+      /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=45');
+      $doiTacs=$query->getResult();*/
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=45');
+      $doiTacs=$query->getResult();
+
+      // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
+      $response=array();
+      foreach ($doiTacs as $doiTac) 
+      {   
+        //$idDoiTac=$doiTac['idDoiTac'];  
+        $idDoiTac=$doiTac->getIdDoiTac();
+        if($idDoiTac)
+        {
+
+          $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+          
+
+          $entityManager=$this->getEntityManager();
+          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
+          $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+          $congNos = $query->getResult(); // array of CmsArticle objects 
+
+          // nếu đã có công nợ trước với hệ thống
+          if($congNos)
+          {
+            $ngayDauKi=$congNos[0]->getNgayThanhToan()->format('Y-m-d');
+            $noDauKi=$congNos[0]->getIdCongNo()->getDuNo();
+            
+          }
+          else// khách hàng mới tạo chưa có công nợ với hệ thống lần nào
+          {
+            // nợ đầu kỳ
+            $noDauKi=0;
+            $dT=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+
+            // lấy ngày đăng ký làm ngày đầu kỳ
+            $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+          }
+
+          // lấy nợ phát sinh hoaDon
+          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac= :idDoiTac');
+          $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+          $hoaDons=$query->getResult();
+
+          
+          $noPhatSinh=0;
+          foreach ($hoaDons as $hoaDon) {
+            foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+              $noPhatSinh+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+            }
+          }
+
+          // tính nợ cuối kỳ
+          $noCuoiKi=(float)$noDauKi+(float)$noPhatSinh;
+          $response[]=array(
+            'idKenhPhanPhoi'=>$thongTinDoiTac->getIdKenhPhanPhoi()->getTermTaxonomyId(),
+            'idDoiTac'=>$idDoiTac,
+            'hoTenDoiTac'=>$thongTinDoiTac->getHoTen(),
+            'ngayDauKi'=>$ngayDauKi,
+            'noDauKi'=>$noDauKi,
+            'noPhatSinh'=>$noPhatSinh,
+            'noCuoiKi'=>$noCuoiKi,
+          );
+        }
+      }
+
+      return array('response'=>$response);
+  }
+
+
+
+
+  public function exportCongNoNhaCungCapAction()
+  {
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
+    $entityManager=$this->getEntityManager();
+    // tham số thức nhất cho hàm exportExcel
+    $objPHPExcel = new PHPExcel();
+    // tham số thức 2 cho hàm exportExcel
+    $fileName='cong_no_nha_cung_cap';
+    // tham số thức 3 cho hàm exportExcel là dữ liệu (data)
+    $data=$this->dataExportCongNoNhaCungCap();
+    
+
+    $tieuDe='DANH SÁCH CÔNG NỢ VỚI NHÀ CUNG CẤP';
+    $fieldName=array(0=>'Tên nhà cung cấp',1=>'Ngày đầu kì',2=>'Đầu kì',3=>'Phát sinh',4=>'Cuối kì');
+
+    $PI_ExportExcel=$this->ExportExcel();
+    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->dataNhaCungCap($objPHPExcel, $tieuDe, $fieldName, $data));
+
+
+  }
+
+  public function dataNhaCungCap($objPHPExcel, $tieuDe, $fieldName, $data)
+  {
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('zfcuser');
+    }
+    $entityManager=$this->getEntityManager();
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
+    $objPHPExcel->getActiveSheet()->mergeCells('A2:E2');
+    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A2:E2')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+                                  
+   
+
+    $objPHPExcel->getActiveSheet()->setCellValue('A4', $fieldName[0])
+                                  ->setCellValue('B4', $fieldName[1])
+                                  ->setCellValue('C4', $fieldName[2])
+                                  ->setCellValue('D4', $fieldName[3])
+                                  ->setCellValue('E4', $fieldName[4])
+                                  ->getStyle('A4:E4')->getFont()->setBold(true);
+    $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+
+    
+    foreach ($data['response'] as $index => $response) {
+      $dong=$index+5;
+
+      $objPHPExcel->getActiveSheet()->setCellValue('A'.$dong, $response['hoTenDoiTac']);
+      $objPHPExcel->getActiveSheet()->setCellValue('B'.$dong, $response['ngayDauKi']);
+      $objPHPExcel->getActiveSheet()->setCellValue('C'.$dong, $response['noDauKi']);
+      $objPHPExcel->getActiveSheet()->setCellValue('D'.$dong, $response['noPhatSinh']);
+      $objPHPExcel->getActiveSheet()->setCellValue('E'.$dong, $response['noCuoiKi']);
+      
+    }
+  }
+
+  public function dataExportCongNoNhaCungCap()
+  {
+
+    // kiểm tra đăng nhập==================================================================
+     if(!$this->zfcUserAuthentication()->hasIdentity())
+     {
+       return $this->redirect()->toRoute('application');
+     }
+     //====================================================================================
+
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
+
+
+      // lấy những đối tác thuộc loại khách hàng có công nợ với hệ thống
+      /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=46');
+      $doiTacs=$query->getResult();*/
+
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=46');
+      $doiTacs=$query->getResult();
+
+      // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
+      $response=array();
+      foreach ($doiTacs as $doiTac) 
+      {   
+        $idDoiTac=$doiTac->getIdDoiTac();  
+        if($idDoiTac)
+        {
+
+          $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+          
+
+          $entityManager=$this->getEntityManager();
+          $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
+          $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+          $congNos = $query->getResult(); // array of CmsArticle objects 
+
+          // nếu đã có công nợ trước với hệ thống
+          if($congNos)
+          {
+            $ngayDauKi=$congNos[0]->getNgayThanhToan()->format('Y-m-d');
+            $noDauKi=$congNos[0]->getIdCongNo()->getDuNo();
+            
+          }
+          else// khách hàng mới tạo chưa có công nợ với hệ thống lần nào
+          {
+            // nợ đầu kỳ
+            $noDauKi=0;
+            $dT=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+
+            // lấy ngày đăng ký làm ngày đầu kỳ
+            $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+          }
+
+          // lấy nợ phát sinh hoaDon
+          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac= :idDoiTac');
+          $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+          $phieuNhaps=$query->getResult();
+
+          
+          $noPhatSinh=0;
+          foreach ($phieuNhaps as $phieuNhap) {
+            foreach ($phieuNhap->getCtPhieuNhaps() as $ctPhieuNhap) {
+              $noPhatSinh+=(float)$ctPhieuNhap->getGiaNhap()*(float)$ctPhieuNhap->getSoLuong();
+            }
+          }
+
+          // tính nợ cuối kỳ
+          $noCuoiKi=(float)$noDauKi+(float)$noPhatSinh;
+          $response[]=array(
+            'idDoiTac'=>$idDoiTac,
+            'hoTenDoiTac'=>$thongTinDoiTac->getHoTen(),
+            'ngayDauKi'=>$ngayDauKi,
+            'noDauKi'=>$noDauKi,
+            'noPhatSinh'=>$noPhatSinh,
+            'noCuoiKi'=>$noCuoiKi,
+          );
+        }
+      }
+      return array('response'=>$response);
+  }
  }
 ?>

@@ -1,110 +1,125 @@
-<?php $this->layout('layout/giaodien');?>
-<?php
-if (!$this->enableRegistration) {
-    print "Registration is disabled";
-    return;
-}
-$form = $this->registerForm;
-$form->prepare();
-$form->setAttribute('action', $this->url('zfcuser/register'));
-$form->setAttribute('method', 'post');
-?>
-<?php echo $this->form()->openTag($form) ?>
+<?php $this->layout('layout/giaodien');
 
-<div class="container">
-        <div class="row">
-            <div class="col-md-2">
-                <div class="h5a-sidebar affix">
-                    <span class="breadcrumb row">
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
-                        <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
-                         / Thêm khách hàng /
-                    </span>
-                    <ul class="nav h5a-sidenav nav-list accordion">                        
-                        <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                                <i class="glyphicon glyphicon-open"></i> Khách hàng
-                            </a>
-                        </li> 
-                        <li>
-                            <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                                <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
-                            </a>
-                        </li>                 
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                                <i class="fa fa-cubes"></i> Đơn hàng
-                            </a>
-                        </li>
-                        <li>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                                <i class="fa fa-flag-checkered"></i> Doanh thu
-                            </a>
-                        </li>
-                    </ul>
+if(!$this->zfcUserIdentity()||$this->zfcUserIdentity()->getId()!=1)
+{?>
+    <br>
+    <span class="badge red" align="center"></span>
+    <div class="alert alert-danger" role="alert">
+      Bạn không có quyền tạo tài khoản user, bạn cần phải 
+      
+      <a href="<?php echo $this->url('application'); ?>" class="alert-link"><?php if(!$this->zfcUserIdentity()) { echo 'Đăng nhập'; } else {echo 'Trang chủ';}?></a>
+    </div>
+<?php    
+}
+else
+{
+
+    if (!$this->enableRegistration) {
+        print "Registration is disabled";
+        return;
+    }
+    $form = $this->registerForm;
+    $form->prepare();
+    $form->setAttribute('action', $this->url('zfcuser/register'));
+    $form->setAttribute('method', 'post');
+    ?>
+    <?php echo $this->form()->openTag($form) ?>
+
+    <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="h5a-sidebar affix">
+                        <span class="breadcrumb row">
+                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
+                            <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
+                             / Thêm khách hàng /
+                        </span>
+                        <ul class="nav h5a-sidenav nav-list accordion">                        
+                            <li>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                                    <i class="glyphicon glyphicon-open"></i> Khách hàng
+                                </a>
+                            </li> 
+                            <li>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                                    <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                                </a>
+                            </li>                 
+                            <li>
+                                <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                                    <i class="fa fa-cubes"></i> Đơn hàng
+                                </a>
+                            </li>
+                            <li>
+                                <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                                    <i class="fa fa-flag-checkered"></i> Doanh thu
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-            <div class="col-md-10" role="main">
-                <div class="h5a-docs-section">
-                    <div class="page-header">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h1>TẠO TÀI KHOẢN</h1>
-                            </div>
-                            <div class="col-sm-6">
-                                <div class="pull-right">
-                                    <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu -->
+                <div class="col-md-10" role="main">
+                    <div class="h5a-docs-section">
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <h1>TẠO TÀI KHOẢN</h1>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div class="pull-right">
+                                        <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                        <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">                        
-                            <h4 class="underline">More Info</h4>
-                            <table class="item" style="width:60%;">
-                                <tbody>                              
+                        <div class="row">                        
+                                <h4 class="underline">More Info</h4>
+                                <table class="item" style="width:60%;">
+                                    <tbody>                              
 
-                                    <?php foreach ($form as $element): ?>
-                                    <tr>
-                                    <?php if (!$element instanceof Zend\Form\Element\Button): ?>
-                                        <td width="15%">
-                                          <span><label for="email" style="width:150px;"><?php echo $this->formLabel($element) ?></label></span>
-                                        </td>
-                                    <?php endif ?>
-                                    <?php if ($element instanceof Zend\Form\Element\Button): ?> 
-                                        <td> </td>   
-                                        <td style="text-align:right;">
-                                            <?php //$element->setAttribute('class','btn btn-primary');?>
-                                            <?php //echo $this->formButton($element); ?>
-                                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
-                               
-                                        </td>
-                                    <?php elseif ($element instanceof Zend\Form\Element\Captcha): ?>
-                                        <td width="85%">   
-                                             <?php $element->setAttribute('class','form-control');?> 
-                                             <?php echo $this->formCaptcha($element); ?>
-                                             <?php echo $this->formElementErrors($element); ?>
+                                        <?php foreach ($form as $element): ?>
+                                        <tr>
+                                        <?php if (!$element instanceof Zend\Form\Element\Button): ?>
+                                            <td width="15%">
+                                              <span><label for="email" style="width:150px;"><?php echo $this->formLabel($element) ?></label></span>
+                                            </td>
+                                        <?php endif ?>
+                                        <?php if ($element instanceof Zend\Form\Element\Button): ?> 
+                                            <td> </td>   
+                                            <td style="text-align:right;">
+                                                <?php //$element->setAttribute('class','btn btn-primary');?>
+                                                <?php //echo $this->formButton($element); ?>
+                                                <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                        <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                                   
+                                            </td>
+                                        <?php elseif ($element instanceof Zend\Form\Element\Captcha): ?>
+                                            <td width="85%">   
+                                                 <?php $element->setAttribute('class','form-control');?> 
+                                                 <?php echo $this->formCaptcha($element); ?>
+                                                 <?php echo $this->formElementErrors($element); ?>
 
-                                        </td>
-                                    <?php else: ?>
-                                        <td  width="85%">
-                                          <?php $element->setAttribute('class','form-control');?>
-                                          <?php echo $this->formInput($element); ?>
-                                          <?php echo  $this->formElementErrors($element); ?>
-                                        </td>
-                                    <?php endif ?>
-                                    <tr>
-                                <?php endforeach ?>
-                                </tbody>
-                            </table>
-                    </div>
-                    <div class="page-footer">
-                        <div class="row bottom20">
-                            <div class="col-sm-6 col-sm-offset-6">
-                                <div class="pull-right">
-                                    <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                                    <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button> -->
+                                            </td>
+                                        <?php else: ?>
+                                            <td  width="85%">
+                                              <?php $element->setAttribute('class','form-control');?>
+                                              <?php echo $this->formInput($element); ?>
+                                              <?php echo  $this->formElementErrors($element); ?>
+                                            </td>
+                                        <?php endif ?>
+                                        <tr>
+                                    <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                        </div>
+                        <div class="page-footer">
+                            <div class="row bottom20">
+                                <div class="col-sm-6 col-sm-offset-6">
+                                    <div class="pull-right">
+                                        <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                                        <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -112,14 +127,15 @@ $form->setAttribute('method', 'post');
                 </div>
             </div>
         </div>
-    </div>
 
-    
-    <?php if ($this->redirect): ?>
-        <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
-    <?php endif ?> 
-<?php echo $this->form()->closeTag() ?>
-
+        
+        <?php if ($this->redirect): ?>
+            <input type="hidden" name="redirect" value="<?php echo $this->escapeHtml($this->redirect) ?>" />
+        <?php endif ?> 
+    <?php echo $this->form()->closeTag() ?>
+<?php
+}
+?>
  <!-- /.container -->
 
     <!-- jQuery -->

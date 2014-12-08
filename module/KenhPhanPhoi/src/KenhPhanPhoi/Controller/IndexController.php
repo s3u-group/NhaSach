@@ -290,6 +290,10 @@ use DateTimeZone;
             return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));   
           }          
         }
+        else
+        {
+          //die(var_dump($form->getMessages()));
+        }
       }
       return array(
         'form' => $form, 
