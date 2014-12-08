@@ -61,16 +61,13 @@
   
  	public function indexAction()
  	{
-
-
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
-    $this->layout('layout/giaodien');    
-
+    $this->layout('layout/giaodien');
  	}
   
 
@@ -149,7 +146,6 @@
   // xem chi tiết sản phẩm
   public function sanPhamAction()
   {
-
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
@@ -277,11 +273,9 @@
     $request = $this->getRequest();
     if($request->isPost())
     {      
-
       $form->setData($request->getPost());      
       if($form->isValid())
       {
-
         $taxonomyLoai=$this->TaxonomyFunction();
         $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');     
 
@@ -295,7 +289,6 @@
           $phieuNhap->setIdUserNv($user);
           $entityManager->persist($phieuNhap);
           $entityManager->flush();
-
 
           $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
           $y=$datetime->format('Y');          
@@ -373,7 +366,6 @@
   // set lại id user nhân viên
   public function xuatHangAction()
   {
-
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
@@ -446,7 +438,6 @@
 
   public function themSanPhamAction()
   {
-
     // kiểm tra đăng nhập==================================================================
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
@@ -690,6 +681,8 @@
      //====================================================================================
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
+    $phieuNhap= new PhieuNhap();
+    /*$chiTietPhieuNhap= new CTPhieuNhap();*/
     $sanPham=new SanPham();
     $form= new CreateSanPhamForm($entityManager);
     $form->bind($sanPham);
@@ -710,15 +703,14 @@
         $objLoad = PHPExcel_IOFactory::load($tmpName);        
 
         $listMaSanPham=array();
+        $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh'));        
         $taxonomyLoai=$this->TaxonomyFunction();
         $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
-        foreach ($objLoad->getWorksheetIterator() as $worksheet) {
-            //$worksheetTitle     = $worksheet->getTitle();
-            $highestRow         = $worksheet->getHighestRow(); // e.g. 10
-            $highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'            
+        foreach ($objLoad->getWorksheetIterator() as $worksheet) {            
+            $highestRow         = $worksheet->getHighestRow();
+            $highestColumn      = $worksheet->getHighestColumn();
             $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
-            for ($row = 3; $row <= $highestRow; ++ $row) {
-                //echo '<tr>';
+            for ($row = 3; $row <= $highestRow; ++ $row) {                
                 for ($col = 2; $col < $highestColumnIndex; ++ $col) {
                     
                     $cell = $worksheet->getCellByColumnAndRow($col, $row);
@@ -733,57 +725,113 @@
                     if($col==4)
                     {
                       $giaNhap = $cell->getValue();
-                    }                    
+                    }
+                    if($col==5)
+                    {
+                      $nhaCungCap = $cell->getValue();
+                    }
                 }
-                $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
-                $SanPhams = $query->getResult();                    
-                //die(var_dump($maSanPham));
-                if($SanPhams)
+
+                $query = $entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.hoTen =\''.trim($nhaCungCap).'\'');
+                $doiTacs = $query->getResult();
+                                
+                if(trim($maSanPham)==''||$maSanPham==null||trim($nhaCungCap)==''||$nhaCungCap==null||$doiTacs==null)
                 {
-                  foreach ($SanPhams as $SanPham)
-                  {
-                  //Cập nhật bảng SẢN PHẨM
-                    $tonKho=(int)($SanPham->getTonKho())+$soLuong;
-                    $SanPham->setTonKho($tonKho);
-                    $SanPham->setGiaNhap($giaNhap);
-                    $entityManager->flush();
-
-                  //Cập nhật bảng CHI TIẾT PHIẾU NHẬP
-                    $idSanPham=$SanPham->getIdSanPham();
-                    $query = $entityManager->createQuery('SELECT pn FROM HangHoa\Entity\CTPhieuNhap pn WHERE pn.idSanPham ='.$idSanPham);
-                    $PhieuNhaps = $query->getResult();
-                    foreach ($PhieuNhaps as $PhieuNhap)
-                    {
-                      $PhieuNhap->setSoLuong($soLuong);
-                      $PhieuNhap->setGiaNhap($giaNhap);
-                      $entityManager->flush();                      
-                    }
-                  //Cập nhật bảng GIÁ XUẤT
-                    // đưa vào taxonomy dạng slug
-                    
-                    foreach ($kenhPhanPhois as $kenhPhanPhoi) 
-                    {
-                      if($kenhPhanPhoi['cap']>0)
-                      {
-                        $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
-                        $giaXuats = $query->getResult();
-                        foreach ($giaXuats as $giaXuat) {  
-                          $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
-                          $giaXuat->setGiaXuat($gx);
-                          $entityManager->flush();
-                        }
-                      }
-                    }
-
-                  }                  
+                  $listMaSanPham[]=$maSanPham;              
                 }
                 else
                 {
-                  //lưu lại các mã sản phẩm chưa có trong CSDL->xuất thông báo     
-                  $listMaSanPham[]=$maSanPham;                  
-                }                
+                  $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
+                  $SanPhams = $query->getResult();                
+                  if($SanPhams)
+                  {
+                    foreach ($SanPhams as $SanPham)
+                    {
+                    //Cập nhật bảng SẢN PHẨM
+                      $tonKho=(int)($SanPham->getTonKho())+$soLuong;
+                      $SanPham->setTonKho($tonKho);
+                      $SanPham->setGiaNhap($giaNhap);
+                      $entityManager->flush();
+
+                    //Cập nhật bảng phiếu nhập
+                      $idUserNv=$this->zfcUserAuthentication()->getIdentity();
+                      $user=$entityManager->getRepository('Application\Entity\SystemUser')->find($idUserNv);
+                      
+                      $phieuNhap->setNgayNhap($datetime);
+
+                      foreach ($doiTacs as $doiTac) {
+                        $phieuNhap->setIdDoiTac($doiTac);                        
+                      }                       
+                      $phieuNhap->setIdUserNv($user);
+                      $phieuNhap->setStatus(0);
+                      
+                      $entityManager->persist($phieuNhap);
+                      $entityManager->flush();
+
+                      $y=$datetime->format('Y');          
+                      $m=$datetime->format('m');
+                      $mY=$m.$y[2].$y[3];
+
+                      $idPhieuNhap=$phieuNhap->getIdPhieuNhap();
+                                          
+                      if($idPhieuNhap<10)
+                      {
+                        $maPhieuNhap=$mY.'-'.'000'.$idPhieuNhap;
+                      }
+                      if($idPhieuNhap>=10&&$idPhieuNhap<100)
+                      {
+                        $maPhieuNhap=$mY.'-'.'00'.$idPhieuNhap;
+                      }
+                      if($idPhieuNhap>100&&$idPhieuNhap<1000)
+                      {
+                        $maPhieuNhap=$mY.'-'.'0'.$idPhieuNhap;
+                      }
+                      if($idPhieuNhap>1000)
+                      {
+                        $maPhieuNhap=$mY.'-'.$idPhieuNhap;
+                      }
+                      $phieuNhap->setMaPhieuNhap($maPhieuNhap);
+                      $entityManager->flush();                    
+
+                    //Cập nhật bảng CHI TIẾT PHIẾU NHẬP                    
+                                        
+                      $idSP = $entityManager->getRepository('HangHoa\Entity\SanPham')->find($SanPham->getIdSanPham());
+
+                      $idPN = $entityManager->getRepository('HangHoa\Entity\PhieuNhap')->find($idPhieuNhap);
+                      $chiTietPhieuNhap= new CTPhieuNhap();                      
+                      $chiTietPhieuNhap->setIdPhieuNhap($idPN);
+                      $chiTietPhieuNhap->setIdSanPham($idSP);
+                      $chiTietPhieuNhap->setSoLuong($soLuong);
+                      $chiTietPhieuNhap->setGiaNhap($giaNhap);
+                                          
+                      $entityManager->persist($chiTietPhieuNhap);                    
+                      $entityManager->flush();
+                                          
+                    //Cập nhật bảng GIÁ XUẤT
+                      foreach ($kenhPhanPhois as $kenhPhanPhoi) 
+                      {
+                        if($kenhPhanPhoi['cap']>0)
+                        {
+                          $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSP->getIdSanPham().' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
+                          $giaXuats = $query->getResult();
+                          foreach ($giaXuats as $giaXuat) {  
+                            $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                            $giaXuat->setGiaXuat($gx);
+                            $entityManager->flush();
+                          }
+                        }
+                      }
+
+                    }                  
+                  }
+                  else
+                  {                    
+                    $listMaSanPham[]=$maSanPham;                  
+                  }
+                }
             }
         }
+        die(var_dump('Stop'));
         return array(
           'listMaSanPham' => $listMaSanPham,
           'import'=>1,
