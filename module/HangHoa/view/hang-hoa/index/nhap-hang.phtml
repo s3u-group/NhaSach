@@ -1,3 +1,25 @@
+<style type="text/css">
+    #nha-cung-cap-search-result{ cursor:pointer;}
+    #ma-hang-search-result{ cursor:pointer;}
+    @media print {       
+        .col-sm-3 {display: none;}
+
+        .form-group{display: none;}
+
+        .col-md-2{display: none;}
+        h1{display: none;}
+        .page-header{display: none;}
+        .an{display: none;}
+        .in{display: block;}
+
+        .print{display: block; text-align: left;}
+        #h5a-container{display: none;}
+        .printHoTen {display: block;}
+        .printDiaChi {display: block;}
+        .printNgayXuat{display: block;}
+        table {display: table;}
+    }
+</style>
 <?php
      
      $this->headTitle('Nhập hàng');
@@ -20,10 +42,33 @@
      echo $this->formHidden($form->get('phieu-nhap')->get('status'));
      
 ?>
-<style type="text/css">
-    #nha-cung-cap-search-result{ cursor:pointer;}
-    #ma-hang-search-result{ cursor:pointer;}
-</style>
+
+<h2 hidden="true" class="in">THÔNG TIN PHIẾU NHẬP</h2>
+<table hidden="true" class="in">
+    <tr>
+        <td>
+            Nhà cung cấp: 
+        </td>
+        <td  id="tenNCC">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Địa chỉ: 
+        </td>
+        <td id="diaChiNCC">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            Ngày nhập: 
+        </td>
+        <td>
+            <?php echo date("d/m/Y"); ?>
+        </td>
+    </tr>
+</table>
+
 
 <div class="row">
     <div class="col-md-2">
@@ -56,12 +101,18 @@
         <div class="h5a-docs-section">
             <div class="page-header">
                 <div class="row">
+                    
                     <div class="col-sm-6">
                         <h1>Nhập hàng</h1>
                     </div>
                     <div class="col-sm-6">                                
                     </div>
                 </div>
+                <?php if($coKiemTraPhieuNhap==1) { ?>
+                        <div class="alert alert-success" role="alert">
+                          Nhập hàng thành công!
+                        </div>
+                    <?php } ?>
             </div>                 
             <div class="col-sm-6">
                 <div class="form-group">
@@ -123,6 +174,9 @@
     <div class="row">
         <div class="col-md-2">
         </div>
+        <h2 hidden="true" class="in">CHI TIẾT PHIẾU NHẬP</h2>
+        
+        
         <div class="col-md-10">
             <h1>Danh sách nhập</h1>
             <div class="box">
@@ -132,7 +186,7 @@
                         <th>Đơn vị tính</th>
                         <th>Số lượng</th>
                         <th>Giá nhập</th>
-                        <th>Hủy</th>
+                        <th class="an">Hủy</th>
                     </thead>
                     <tbody>
                     </tbody>
@@ -207,7 +261,7 @@
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
                     '<span>'+giaNhap+'</span>'+
                 '</td>'+
-                '<td style="text-align:left;">'+
+                '<td style="text-align:left;" class="an">'+
                     '<a class="btnHuy"><img src="<?php echo $this->basePath(); ?>/img/delete.png" width="30px" height="30px"></a>'+
                 '</td>'+
                 '</tr>';
@@ -309,7 +363,7 @@
                         });
 
                         $.each(data, function(key, val){
-                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span></div>');
+                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span><span class="hide">'+val.diaChi+'</span></div>');
                         })
                     });
                 }
@@ -321,8 +375,11 @@
             {
                 var idDoiTac = $(this).find('span:eq(0)').text();
                 var hoTen = $(this).find('span:eq(1)').text();
+                var diaChi = $(this).find('span:eq(2)').text();
                 $('#idNhaCungCap').val(idDoiTac); 
-                $('#nhaCungCap').val(hoTen);            
+                $('#nhaCungCap').val(hoTen);      
+                $('#tenNCC').text(hoTen);     
+                $('#diaChiNCC').text(diaChi);      
 
                 $('#nha-cung-cap-search-result').empty();
             });
@@ -348,7 +405,8 @@
                 return false;
             }
             else
-            {                
+            {  
+                window.print();              
                 document.getElementById('formNhapHang').submit();
                 return true;
             }                

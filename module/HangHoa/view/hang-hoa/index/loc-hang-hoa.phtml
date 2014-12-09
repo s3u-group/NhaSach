@@ -8,11 +8,16 @@
     }
 
     functionKiemTraDieuKienLoc = function(){
-        /*if(!document.getElementById("dieuKienLoc").value)
+        if(!document.getElementById("dieuKienLoc").value)
         {
-            alert('Vui lòng nhập điều kiện tìm kiếm!');
+            $('#thongBaoLoi').text('Chưa nhập điều kiện lọc');
             return false;
-        }*/
+        }
+        return true;
+    }
+
+    functionExport = function(){
+        document.getElementById('frmEport').submit();
         return true;
     }
 </script>
@@ -66,7 +71,7 @@
                             </div>
                             <div class="btn-group ">
                                 <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
-                                <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return functionExport();">Export</button>
                             </div>
                             <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Quản lý tồn kho</button> -->
                             <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'themSanPham'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
@@ -90,6 +95,10 @@
                                 ?>
                                 <form method="post" action="<?php echo $url; ?>" onSubmit="return functionKiemTraDieuKienLoc();">
                                 <div class="input-group has-feedback">
+                                   
+                                    
+                                    <input type="text" class="form-control h5a-input" id="dieuKienLoc" name="dieuKienLoc"> 
+                                    <!--<i class="glyphicon glyphicon-search form-control-feedback"></i>-->
                                     <div class="input-group-btn">                                       
                                         <button type="button" class="btn btn-default h5a-btn dropdown-toggle" data-toggle="dropdown">Lọc sản phẩm <span class="caret"></span></button>
                                         <ul class="dropdown-menu" role="menu">
@@ -97,29 +106,34 @@
                                             <li><a onclick="functionLocTheoNhanHang();">Nhãn hàng</a></li>
                                         </ul>
                                     </div><!-- /btn-group -->
-                                    
-                                    <input type="text" class="form-control h5a-input" id="dieuKienLoc" name="dieuKienLoc"> 
-                                    <i class="glyphicon glyphicon-search form-control-feedback"></i>
+
                                     <input type="submit" id="locTheoLoaiHang" name="locHangHoa" hidden="true" value="locTheoLoaiHang"> 
                                     <input type="submit" id="locTheoNhanHang" name="locHangHoa" hidden="true" value="locTheoNhanHang"> 
                                 </div>
+                                <span id="thongBaoLoi" class="badge red"></span>
                                 </form> 
                             </div>
 
                             <div class="row">
+                                <?php
+                                    // gửi tới form loc hang hóa
+                                    $url=$this->url('hang_hoa/crud', array('action' => 'exportHangHoa'));
+                                ?>
+                                <form method="post" action="<?php echo $url; ?>" id="frmEport">
                                 <table id="dataTables-example" class="">
                                     <thead>
                                         <th><input type="checkbox"/></th>
                                         <th>Sản phẩm</th>
                                         <th>Tồn kho</th>
                                         <th>Loại</th>
-                                        <th>Nhãn hàng</th>
+                                        <th>Nhãn hàng<input type="hidden" name="coLocSanPham" value="1"></th>
                                     </thead>
                                     <tbody> 
                                     <!-- lấy dữ liệu và xuất ra form  -->
+                                    
                                     <?php foreach ($sanPhams as $sanPham) {?>                
                                         <tr>
-                                            <td><input type="checkbox"/></td>
+                                            <td><input type="checkbox"/><input type="hidden" name="idSanPham[]" value="<?php echo $sanPham->getIdSanPham(); ?>"></td>
                                             <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
                                             <td><?php echo $sanPham->getTonKho(); ?></td>
                                             <td><?php echo $sanPham->getIdLoai()->getTermId()->getName(); ?></td>
@@ -128,6 +142,7 @@
                                     <?php } ?>
                                     </tbody>
                                 </table>
+                                </form>
                             </div>
                         </div>
                     </div>

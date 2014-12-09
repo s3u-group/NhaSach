@@ -67,15 +67,7 @@ echo $this->formHidden($idKenhPhanPhoi);
                     <h4 class="underline">More Info</h4>
                     <table class="item">
                         <tbody>
-                            <?php
-                                if($ktTonTaiNhaCungCap==1)
-                                {
-                                    echo '<tr>';
-                                        echo '<td></td>';
-                                        echo '<td><span class="label label-warning">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
-                                    echo '<tr>';
-                                }
-                            ?>
+                            
                             <tr>
                                 <td>Tên nhà cung cấp</td>
                                 <td>
@@ -88,6 +80,15 @@ echo $this->formHidden($idKenhPhanPhoi);
                                 ?>                                           
                                 </td>
                             </tr>
+                            <?php
+                                if($ktTonTaiNhaCungCap==1)
+                                {
+                                    echo '<tr>';
+                                        echo '<td></td>';
+                                        echo '<td><span class="badge red">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
+                                    echo '<tr>';
+                                }
+                            ?>
                             <tr>
                                 <td>Địa chỉ nhà cung cấp</td>
                                 <td>

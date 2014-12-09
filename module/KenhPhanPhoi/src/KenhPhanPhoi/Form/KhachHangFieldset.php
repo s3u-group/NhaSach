@@ -53,7 +53,10 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
 
           $this->add(array(
              'name' => 'email',
-             'type' => 'Email',             
+             'type' => 'Email',  
+             'attributes'=>array(
+                'required'=>'required',
+             ),           
              
          ));
 
