@@ -5,9 +5,9 @@ if(!$this->zfcUserIdentity()||$this->zfcUserIdentity()->getId()!=1)
     <br>
     <span class="badge red" align="center"></span>
     <div class="alert alert-danger" role="alert">
-      Bạn không có quyền tạo tài khoản user, bạn cần phải 
-      
-      <a href="<?php echo $this->url('application'); ?>" class="alert-link"><?php if(!$this->zfcUserIdentity()) { echo 'Đăng nhập'; } else {echo 'Trang chủ';}?></a>
+      Bạn không có quyền tạo tài khoản user, 
+
+      <a href="<?php echo $this->url('application'); ?>" class="alert-link"><?php if(!$this->zfcUserIdentity()) { echo 'Đăng nhập'; } else {echo 'trở lại Trang chủ';}?></a>
     </div>
 <?php    
 }
