@@ -95,6 +95,13 @@
 
 
 		/**
+		 * @ORM\Column(type="integer")
+		 */
+
+		private $kho;
+
+
+		/**
 	     * @var \Doctrine\Common\Collections\Collection
 	     * @ORM\ManyToMany(targetEntity="Application\Entity\Role")
 	     * @ORM\JoinTable(name="user_role_linker",
@@ -258,6 +265,16 @@
 		public function addRole($role)
 	    {
 	        $this->roles[] = $role;
+	    }
+
+	    public function setKho($kho)
+	    {
+	    	$this->kho=$kho;
+	    }
+
+	    public function getKho()
+	    {
+	    	return $this->kho;
 	    }
 
 		

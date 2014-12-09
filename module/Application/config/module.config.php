@@ -256,6 +256,12 @@ return array(
                     'action'    =>array('taxonomyIndex','taxonomyEdit','taxonomyAdd'),
                     'roles'     =>array('nguoi-dung'),
                 ),
+
+                array(
+                    'controller'=>array('Kho\Controller\Index'),
+                    //'action'    =>array('index'),
+                    'roles'     =>array('nguoi-dung','khach'),
+                ),
               
             ),
         ),

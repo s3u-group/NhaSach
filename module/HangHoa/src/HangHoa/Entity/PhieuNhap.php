@@ -50,6 +50,14 @@
 		private $idDoiTac;
 
 		/**
+		 * @ORM\Column(type="integer")
+		 */
+
+		private $kho;
+
+		
+
+		/**
 		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTPhieuNhap", mappedBy="idPhieuNhap", cascade={"persist"})
 		 */
 		private $ctPhieuNhaps;
@@ -152,7 +160,17 @@
 		public function getStatus()
 		{
 			return $this->status;
-		}	
+		}
+
+		public function setKho($kho)
+	    {
+	    	$this->kho=$kho;
+	    }
+
+	    public function getKho()
+	    {
+	    	return $this->kho;
+	    }	
 	}
 	
 

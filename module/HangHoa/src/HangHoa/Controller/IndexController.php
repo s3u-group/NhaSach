@@ -61,12 +61,12 @@
   
  	public function indexAction()
  	{
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
     $this->layout('layout/giaodien');
  	}
   
@@ -74,17 +74,23 @@
   public function hangHoaAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     //====================================================================================
+    // kiểm tra đăng nhập
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('application');
+    }
+    if($this->zfcUserAuthentication()->hasIdentity())
+    { 
+      $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+    }
+
     $this->layout('layout/giaodien'); 
 
     $entityManager=$this->getEntityManager();    
     $form= new FileForm($entityManager);
-    $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+    //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+    $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
+    $sanPhams=$query->getResult();
     return array(
       'sanPhams'=>$sanPhams,
       'form'=>$form,
@@ -94,12 +100,18 @@
   public function locHangHoaAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
     $this->layout('layout/giaodien'); 
     $entityManager=$this->getEntityManager();      
     $request=$this->getRequest();
@@ -111,7 +123,10 @@
         if($request->getPost()['locHangHoa']=='locTheoLoaiHang')
         {
           //die(var_dump('Lọc theo loại hàng'));
-          $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+          //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+
+          $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
+          $sanPhams=$query->getResult();
           foreach ($sanPhams as $sanPham) 
           {
             if($sanPham->getIdLoai()->getTermId()->getName()==$request->getPost()['dieuKienLoc'])
@@ -126,19 +141,23 @@
         elseif($request->getPost()['locHangHoa']=='locTheoNhanHang')
         {
            //die(var_dump('Lọc theo nhãn hàng'));
-          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.nhan=\''.$request->getPost()['dieuKienLoc'].'\'');
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.nhan=\''.$request->getPost()['dieuKienLoc'].'\'');
           $sanPhams = $query->getResult(); // array of CmsArticle objects    
           
         }
       }
       else
       {
-        $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
+        //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
+        $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
+        $sanPhams=$query->getResult();
       }      
     }
     else
     {
-      $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
+      //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
+      $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
+      $sanPhams=$query->getResult();
     } 
     return array('sanPhams'=>$sanPhams);
   }
@@ -146,12 +165,12 @@
   // xem chi tiết sản phẩm
   public function sanPhamAction()
   {
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
      $id = (int) $this->params()->fromRoute('id', 0);
      if (!$id) {
          return $this->redirect()->toRoute('hang_hoa/crud', array(
@@ -162,6 +181,14 @@
      $entityManager=$this->getEntityManager();     
      $form= new CreateSanPhamForm($entityManager);     
      $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id); 
+
+     // kiểm tra có sản phẩm này có thuộc kho của user hiện tại không
+     if($sanPhams->getKho()!=$this->zfcUserAuthentication()->getIdentity()->getKho())
+     {
+       return $this->redirect()->toRoute('hang_hoa/crud', array(
+             'action' => 'hangHoa',
+         ));
+     }
      $form->bind($sanPhams);
 
      $taxonomyLoai=$this->TaxonomyFunction();
@@ -232,16 +259,25 @@
   public function bangGiaAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+    $idKho=1;
+    if($this->zfcUserAuthentication()->hasIdentity())
+    { 
+      $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+    }
+
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();
     $form= new FileForm($entityManager);
-    $sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
+    //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();     
+
+    $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
+    $sanPhams=$query->getResult();
 
     $taxonomyLoai=$this->TaxonomyFunction();
     $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
@@ -258,12 +294,19 @@
   public function nhapHangAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
 
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();     
@@ -313,11 +356,12 @@
             $maPhieuNhap=$mY.'-'.$idPhieuNhap;
           }
           $phieuNhap->setMaPhieuNhap($maPhieuNhap);
+          $phieuNhap->setKho($idKho);
           $entityManager->flush();          
           
           //Cập nhật Sản Phẩm
           $idSanPham=$cTPhieuNhap->getIdSanPham()->getIdSanPham();        
-          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.idSanPham =\''.$idSanPham.'\'');
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.idSanPham =\''.$idSanPham.'\''); // SUAKHO
           $sanPhams = $query->getResult();
           if($sanPhams)
           {
@@ -438,12 +482,18 @@
 
   public function themSanPhamAction()
   {
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
 
     $this->layout('layout/giaodien'); 
 
@@ -470,7 +520,7 @@
       if ($form->isValid()){        
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
-        $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+        $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
         $query = $queryBuilder->getQuery(); 
         $maSanPham = $query->execute();
         if(!$maSanPham)
@@ -489,12 +539,13 @@
           
           $sanPham->setTonKho(0);
           $sanPham->setGiaNhap(0);
+          $sanPham->setKho($idKho);
           $entityManager->persist($sanPham);
           $entityManager->flush(); 
 
           $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
           $queryBuilder = $repository->createQueryBuilder('sp');
-          $queryBuilder->add('where','sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+          $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
           $query = $queryBuilder->getQuery(); 
           $sanPhams = $query->execute();
           
@@ -583,12 +634,18 @@
   public function searchSanPhamAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
     $response=array();
     $request=$this->getRequest();
     if($request->isXmlHttpRequest())
@@ -598,7 +655,7 @@
       if($maHang)
       {
         $entityManager=$this->getEntityManager();
-        $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham LIKE :maHang');
+        $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.maSanPham LIKE :maHang');
         $query->setParameter('maHang','%'.$maHang.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $sanPhams = $query->getResult(); // array of CmsArticle objects         
 
@@ -673,12 +730,19 @@
   public function importHangHoaAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $phieuNhap= new PhieuNhap();
@@ -741,7 +805,7 @@
                 }
                 else
                 {
-                  $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maSanPham =\''.trim($maSanPham).'\'');
+                  $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.maSanPham =\''.trim($maSanPham).'\'');
                   $SanPhams = $query->getResult();                
                   if($SanPhams)
                   {
@@ -764,6 +828,7 @@
                       }                       
                       $phieuNhap->setIdUserNv($user);
                       $phieuNhap->setStatus(0);
+                      $phieuNhap->setKho($idKho);
                       
                       $entityManager->persist($phieuNhap);
                       $entityManager->flush();
@@ -794,7 +859,7 @@
                       $entityManager->flush();                    
 
                     //Cập nhật bảng CHI TIẾT PHIẾU NHẬP                    
-                                        
+                      // SUAKHO
                       $idSP = $entityManager->getRepository('HangHoa\Entity\SanPham')->find($SanPham->getIdSanPham());
 
                       $idPN = $entityManager->getRepository('HangHoa\Entity\PhieuNhap')->find($idPhieuNhap);
@@ -830,7 +895,7 @@
                   }
                 }
             }
-        }        
+        }
         return array(
           'listMaSanPham' => $listMaSanPham,
           'import'=>1,

@@ -109,6 +109,17 @@ class Module
                     'label' => 'Twitter',                  
                 ),
             ));
+
+            $form->add(array(
+                'name' => 'kho',
+                'type' => 'Zend\Form\Element\Select', 
+                'options' => array(
+                    'label' => 'Chọn kho',  
+                    'disable_inarray_validator' => true, 
+                    'empty_option'=>'------------------------------------Chọn kho----------------------------------',               
+                ),               
+
+            ));
         
         });
 

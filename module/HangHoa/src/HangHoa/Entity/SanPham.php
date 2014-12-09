@@ -85,6 +85,25 @@
 		 */
 		private $ctPhieuNhaps;
 
+
+		/**
+		 * @ORM\Column(type="integer")
+		 */
+
+		private $kho;
+
+		public function setKho($kho)
+	    {
+	    	$this->kho=$kho;
+	    }
+
+	    public function getKho()
+	    {
+	    	return $this->kho;
+	    }
+
+
+
 		public function setIdSanPham($idSanPham)
 		{
 			$this->idSanPham=$idSanPham;
