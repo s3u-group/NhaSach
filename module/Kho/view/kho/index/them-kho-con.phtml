@@ -1,0 +1,142 @@
+<?php
+ $this->headTitle('Thêm kho');
+
+ $form->setAttribute('action', $this->url('kho/crud', array('action' => 'themKhoCon')));
+ $form->setAttribute('role','form');
+ $form->prepare();
+ echo $this->form()->openTag($form);
+
+ $kho=$form->get('kho'); 
+ echo $this->formHidden($kho->get('idKho'));   
+ 
+?>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
+                <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
+                 / Thêm khách hàng /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                        <i class="glyphicon glyphicon-open"></i> Khách hàng
+                    </a>
+                </li> 
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                    </a>
+                </li>                 
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-cubes"></i> Đơn hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Thêm kho con</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">                        
+                    
+                    <table class="item">
+                        <tbody>
+                            
+                            <tr>
+                                <td width="10%">Tên kho</td>
+                                <td width="90%">
+                                <?php 
+                                    $tenKho=$kho->get('tenKho');
+                                    $tenKho->setAttribute('class','h5a-input form-control input-sm');
+                                    $tenKho->setAttribute('placeholder','Nhập tên kho');
+                                    $tenKho->setAttribute('id','form-field-1');
+                                    echo $this->formElement($tenKho);
+                                    if($ktKhoTonTai==1)
+                                    {
+                                        
+                                        echo '<span class="badge red">Tên này đã được sử dụng, vui lòng kiểm tra lại</span>';
+                                    }
+                                ?>                                           
+                                </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Địa chỉ</td>
+                                <td>
+                                <?php 
+                                    $diaChi=$kho->get('diaChiKho');
+                                    $diaChi->setAttribute('class','h5a-input form-control input-sm');
+                                    $diaChi->setAttribute('placeholder','Địa chỉ kho');
+                                    $diaChi->setAttribute('id','form-field-1');
+                                    echo $this->formElement($diaChi);
+                                ?>                                           
+                                </td>
+                            </tr>                          
+
+                            
+                        </tbody>
+                    </table>
+            </div>
+            <div class="page-footer">
+                <div class="row bottom20">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <div class="pull-right">
+                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Summernot JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/summernote.min.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+
+    $("#editor").summernote({height:150});
+    </script>

@@ -1,0 +1,121 @@
+<?php
+     $this->headTitle('Quản lý kho');
+?>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                 / Khách hàng /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">     
+
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
+                        <i class="glyphicon glyphicon-open"></i> Khách hàng
+                    </a>
+                </li> 
+                <li>
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                    </a>
+                </li>                 
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-cubes"></i> Đơn hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Quản lý kho con</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <a  href="<?php echo $this->url('kho/crud',array('action'=>'themKhoCon'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                    </li>                                          
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row">
+                                <table id="tatCa" class="dataTables">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>                                     
+                                        <th>Tên kho</th>
+                                        <th>Địa chỉ</th>                                        
+                                    </thead>
+                                    <tbody>                                               
+                                    <?php 
+                                    	foreach ($khos as $kho) {
+                                    	?>
+                                            <tr>
+                                        		<td><input type="checkbox"/></td>
+                                        		<td><a href="<?php echo $this->url('kho/crud',array('action'=>'xemKho','id'=>$kho->getIdKho())); ?>"><?php echo $kho->getTenKho(); ?></a></td>
+                                        		<td><?php echo $kho->getDiaChiKho(); ?></td>
+                                            </tr>
+                                    	<?php
+                                    	}
+                                    ?>                                         
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>                 
+                      
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('.dataTables').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+    </script>
