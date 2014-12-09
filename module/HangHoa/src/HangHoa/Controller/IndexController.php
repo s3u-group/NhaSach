@@ -71,7 +71,7 @@
  	}
   
 
-  public function hangHoaAction()
+  public function hangHoaAction() 
   {
 
     // kiểm tra đăng nhập
@@ -410,12 +410,12 @@
   // set lại id user nhân viên
   public function xuatHangAction()
   {
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();     
     $form= new XuatHoaDonForm($entityManager);
@@ -919,12 +919,18 @@
   public function importBangGiaAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
     $sanPham=new SanPham();
