@@ -56,7 +56,7 @@ use DateTimeZone;
       {
         return $this->redirect()->toRoute('application');
       }
-    //====================================================================================
+     
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 

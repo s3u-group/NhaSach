@@ -73,6 +73,20 @@
                            Lợi nhuận
                         </a>
                     </li>
+                    <?php 
+                        if($this->zfcUserIdentity()&&$this->zfcUserIdentity()->getId()==1) 
+                        { 
+                    ?>
+                            <li>
+                                <a href="<?php echo $this->url('kho');?>">
+                                    <i class="glyphicon glyphicon-folder-open"> </i>
+                                   Kho con
+                                </a>
+                            </li>
+                    <?php
+                        }
+                    ?>
+                    
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">

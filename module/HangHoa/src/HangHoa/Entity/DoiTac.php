@@ -101,6 +101,21 @@
 		 */
 		private $ngayDangKy;
 
+		/**
+		 * @ORM\Column(type="integer")
+		 */
+
+		private $kho;
+
+		public function setKho($kho)
+	    {
+	    	$this->kho=$kho;
+	    }
+
+	    public function getKho()
+	    {
+	    	return $this->kho;
+	    }
 
 		public function setIdDoiTac($idDoiTac)
 		{

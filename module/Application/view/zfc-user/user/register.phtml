@@ -77,7 +77,7 @@ else
                                 <h4 class="underline">More Info</h4>
                                 <table class="item" style="width:60%;">
                                     <tbody>                              
-
+                                        <!--<input type="hidden" name="kho" value="2">-->
                                         <?php foreach ($form as $element): ?>
                                         <tr>
                                         <?php if (!$element instanceof Zend\Form\Element\Button): ?>
@@ -98,6 +98,15 @@ else
                                             <td width="85%">   
                                                  <?php $element->setAttribute('class','form-control');?> 
                                                  <?php echo $this->formCaptcha($element); ?>
+                                                 <?php echo $this->formElementErrors($element); ?>
+
+                                            </td>
+                                        <?php elseif ($element instanceof Zend\Form\Element\Select): ?>
+                                            <td width="85%">   
+                                                 <?php $element->setAttribute('class','form-control');?> 
+                                                 <?php $dsKho=array('1'=>'Kho 1', '2'=>'Kho 2') ?>
+                                                 <?php $element->setValueOptions($dsKho); ?>
+                                                 <?php echo $this->formElement($element); ?>
                                                  <?php echo $this->formElementErrors($element); ?>
 
                                             </td>
