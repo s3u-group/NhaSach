@@ -896,7 +896,7 @@
                 }
             }
         }
-        die(var_dump('Stop'));
+        
         return array(
           'listMaSanPham' => $listMaSanPham,
           'import'=>1,
