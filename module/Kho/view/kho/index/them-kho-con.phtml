@@ -20,26 +20,12 @@
                  / Thêm khách hàng /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
-                <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                        <i class="glyphicon glyphicon-open"></i> Khách hàng
-                    </a>
+                <li>                   
+                    <a href="<?php echo $this->url('kho');?>">
+                        <i class="glyphicon glyphicon-folder-open"> </i>
+                       Chi nhánh
+                    </a>       
                 </li> 
-                <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
-                    </a>
-                </li>                 
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
@@ -48,7 +34,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Thêm kho con</h1>
+                        <h1>Thêm chi nhánh mới</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
@@ -57,6 +43,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             <div class="row">                        
                     
@@ -64,7 +51,7 @@
                         <tbody>
                             
                             <tr>
-                                <td width="10%">Tên kho</td>
+                                <td width="10%">Tên chi nhánh</td>
                                 <td width="90%">
                                 <?php 
                                     $tenKho=$kho->get('tenKho');

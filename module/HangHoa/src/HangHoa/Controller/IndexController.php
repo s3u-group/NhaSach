@@ -778,7 +778,7 @@
         $request->getFiles()->toArray()
       );
 
-      $fileType=$post['file']['type'];     
+      $fileType=$post['file']['type'];    
       if($fileType=='application/vnd.ms-excel')
       {
         $objPHPExcel = new PHPExcel();
