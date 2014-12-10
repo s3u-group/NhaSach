@@ -34,10 +34,10 @@
                         <div class="col-sm-6">
                             <div class="pull-right">
                                 <div class="btn-group ">
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
                                         <i class="fa fa-chevron-left"></i>
                                     </button>                                    
-                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
                                         <i class="fa fa-chevron-right"></i>
                                     </button>
                                 </div>
@@ -187,7 +187,26 @@
             "bLengthChange": true,
             "bFilter": true,
             "bInfo": true,
-            "bAutoWidth": true
+            "bAutoWidth": true,
+
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ mục",
+                "zeroRecords": "Không có dữ liệu",
+                "info": "_PAGE_ / _PAGES_",
+                "infoEmpty": "",
+                "infoFiltered": "",
+                "decimal": ",",
+                "thousands": ".",
+                "search":"Tìm kiếm:",
+            }
         });
+    });
+
+    $('#btPrev').click(function(){
+    document.getElementById('dataTables-example_previous').click();
+    });
+
+    $('#btNext').click(function(){
+        document.getElementById('dataTables-example_next').click();
     });
     </script>

@@ -1,5 +1,5 @@
 <?php 
-    echo $this->headTitle('Đơn hàng');
+    echo $this->headTitle('Hóa đơn');
 ?>
 
 <div class="row">
@@ -8,7 +8,7 @@
             <span class="breadcrumb row">
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
                 <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
-                 / Đơn hàng /
+                 / Hóa đơn /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">
                 <li>
@@ -18,7 +18,12 @@
                 </li>
                 <li>
                     <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Đơn hàng
+                        <i class="fa fa-cubes"></i> Hóa đơn
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                        <i class="fa fa-tasks"></i> Phiếu nhập
                     </a>
                 </li>
                 
@@ -30,7 +35,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Đơn hàng</h1>
+                        <h1>Hóa đơn</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">

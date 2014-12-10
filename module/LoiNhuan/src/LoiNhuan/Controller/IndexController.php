@@ -66,6 +66,29 @@ use DateTimeZone;
 	    );
 	}
 
+	public function phieuNhapAction()
+	{
+
+		// kiểm tra đăng nhập==================================================================
+	     if(!$this->zfcUserAuthentication()->hasIdentity())
+	     {
+	       return $this->redirect()->toRoute('application');
+	     }
+	     //====================================================================================
+
+	    $this->layout('layout/giaodien');
+	    $entityManager=$this->getEntityManager();
+
+	    $donHangs=$entityManager->getRepository('HangHoa\Entity\PhieuNhap')->findAll();
+	    
+	    $taxonomyFunction=$this->TaxonomyFunction();
+    	$kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+	    return array(
+	    	'donHangs'=>$donHangs,
+	    	'kenhPhanPhois'=>$kenhPhanPhois,
+	    );
+	}
 
 
 	// index là doanh thu theo ngày
