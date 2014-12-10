@@ -1,7 +1,7 @@
 <?php
  $this->headTitle('Thêm kho');
 
- $form->setAttribute('action', $this->url('kho/crud', array('action' => 'themKhoCon')));
+ $form->setAttribute('action', $this->url('kho/crud', array('action' => 'suaChiNhanh','id'=>$kho->getIdKho())));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);
@@ -34,7 +34,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Thêm chi nhánh mới</h1>
+                        <h1>Sửa chi nhánh</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">

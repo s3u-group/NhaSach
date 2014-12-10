@@ -183,9 +183,15 @@ use DateTimeZone;
             $entityManager->flush();
           }
 
+          $phieuThu->setKho($idKho);
           $entityManager->persist($phieuThu);
           $entityManager->flush();
+          $this->flashMessenger()->addSuccessMessage('Thanh toán thành công!');
           return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
+        }
+        else{
+            $this->flashMessenger()->addErrorMessage('Thanh toán thất bại!');
+            return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
         }        
       }    
 
@@ -407,17 +413,23 @@ use DateTimeZone;
             $phieuNhap->setStatus(1);
             $entityManager->flush();
           }
-
+          $phieuChi->setKho($idKho);
           $entityManager->persist($phieuChi);
 
           $entityManager->flush();
+          $this->flashMessenger()->addSuccessMessage('Thanh toán thành công!');
           return $this->redirect()->toRoute('cong_no/crud', array(
              'action' => 'congNoNhaCungCap',
-          ));
-          
+          ));          
         }
         else
-          die(var_dump($form->getMessages()));
+        {
+          $this->flashMessenger()->addErrorMessage('Thanh toán thất bại!');
+          return $this->redirect()->toRoute('cong_no/crud', array(
+              'action' => 'congNoNhaCungCap',
+          ));
+        }
+       
       }
 
       $id = (int) $this->params()->fromRoute('id', 0);
@@ -430,6 +442,12 @@ use DateTimeZone;
       $response=$this->searchCongNoNhaCungCap($id);      
 
       $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
+      if($thongTinDoiTac->getKho()!=$idKho)
+      {
+        return $this->redirect()->toRoute('cong_no/crud', array(
+              'action' => 'congNoNhaCungCap',
+          ));
+      }
 
       return array(
         'form'=>$form,

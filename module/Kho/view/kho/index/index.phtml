@@ -9,28 +9,13 @@
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
                  / Khách hàng /
             </span>
-            <ul class="nav h5a-sidenav nav-list accordion">     
-
-                <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                        <i class="glyphicon glyphicon-open"></i> Khách hàng
-                    </a>
-                </li> 
-                <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
-                    </a>
-                </li>                 
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
-                    </a>
-                </li>
+            <ul class="nav h5a-sidenav nav-list accordion">    
+                <li>                   
+                    <a href="<?php echo $this->url('kho');?>">
+                        <i class="glyphicon glyphicon-folder-open"> </i>
+                       Chi nhánh
+                    </a>       
+                </li>                
             </ul>
         </div>
     </div>
@@ -39,7 +24,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Quản lý kho con</h1>
+                        <h1>Quản lý chi nhánh</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
@@ -55,6 +40,21 @@
                         </div>
                     </div>
                 </div>
+                <?php 
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                 ?>
             </div>
             <div class="box">
                 <ul class="nav nav-tabs" role="tablist" id="myTab">
@@ -69,8 +69,9 @@
                                 <table id="tatCa" class="dataTables">
                                     <thead>
                                         <th><input type="checkbox"/></th>                                     
-                                        <th>Tên kho</th>
-                                        <th>Địa chỉ</th>                                        
+                                        <th>Tên chi nhánh</th>
+                                        <th>Địa chỉ</th>        
+                                        <th>Sửa</th>                                      
                                     </thead>
                                     <tbody>                                               
                                     <?php 
@@ -78,8 +79,16 @@
                                     	?>
                                             <tr>
                                         		<td><input type="checkbox"/></td>
-                                        		<td><a href="<?php echo $this->url('kho/crud',array('action'=>'xemKho','id'=>$kho->getIdKho())); ?>"><?php echo $kho->getTenKho(); ?></a></td>
+                                        		<td>
+                                                <?php 
+                                                    if($kho->getIdKho()==1)
+                                                    {
+                                                        echo '<i class="glyphicon glyphicon-lock"></i>';
+                                                    }
+                                                ?>
+                                                    <a href="<?php echo $this->url('kho/crud',array('action'=>'xemKho','id'=>$kho->getIdKho())); ?>"><?php echo $kho->getTenKho(); ?></a></td>
                                         		<td><?php echo $kho->getDiaChiKho(); ?></td>
+                                                <td><a href="<?php echo $this->url('kho/crud',array('action'=>'suaChiNhanh','id'=>$kho->getIdKho())); ?>"><i class="glyphicon glyphicon-pencil"></i></a></td>
                                             </tr>
                                     	<?php
                                     	}
