@@ -291,7 +291,6 @@
 
   public function nhapHangAction()
   {
-
     // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
@@ -389,19 +388,13 @@
           {
             //Có lỗi trong quá trình cập nhật Sản Phẩm
           }
-        } 
-        return array(       
-         'form' =>$form,  
-         'coKiemTraPhieuNhap'=>1,
-       );  
-
+        }
+        $this->flashMessenger()->addSuccessMessage('Nhập hàng thành công!');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));        
       }
-     
-      
-    }
+    }    
     return array(       
-       'form' =>$form, 
-       'coKiemTraPhieuNhap'=>0,      
+       'form' =>$form,       
      );
   }   
 
@@ -479,10 +472,11 @@
         $hoaDon->setMaHoaDon($newMaHoaDon);
 
         $entityManager->flush();
-        return array('form'=>$form,'coKiemTraXuatHang'=>1);
+        $this->flashMessenger()->addSuccessMessage('Xuất hàng thành công!');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'xuatHang'));        
       }      
     }
-    return array('form'=>$form,'coKiemTraXuatHang'=>0);
+    return array('form'=>$form);
   }
 
   public function themSanPhamAction()
@@ -774,8 +768,10 @@
         $request->getFiles()->toArray()
       );
 
-      $fileType=$post['file']['type'];     
-      if($fileType=='application/vnd.ms-excel')
+      $fileType=$post['file']['type'];
+      $fileName=explode('.',$post['file']['name']);      
+      $type=$fileName[count($fileName)-1];      
+      if($fileType=='application/vnd.ms-excel'||$type=='xls'||$type=='xlsx')
       {
         $objPHPExcel = new PHPExcel();
         $tmpName=$post['file']['tmp_name'];
@@ -920,10 +916,7 @@
       else
       {
         $this->flashMessenger()->addSuccessMessage('Import hàng hóa không thành công! Tập tin không hợp lệ');
-        return array(
-          'listMaSanPham' => array(),
-          'import'=>0,         
-        );
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
       }
     }
     else
@@ -958,8 +951,10 @@
         $request->getFiles()->toArray()
       );
 
-      $fileType=$post['file']['type'];     
-      if($fileType=='application/vnd.ms-excel')
+      $fileType=$post['file']['type'];
+      $fileName=explode('.',$post['file']['name']);      
+      $type=$fileName[count($fileName)-1];      
+      if($fileType=='application/vnd.ms-excel'||$type=='xls'||$type=='xlsx')
       {
         $objPHPExcel = new PHPExcel();
         $tmpName=$post['file']['tmp_name'];
@@ -1056,16 +1051,12 @@
        return array(
           'listMaSanPham' => $listMaSanPham,
           'import'=>1,
-        );
-      //return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'importBangGia'));
+        );      
       }
       else
       {
         $this->flashMessenger()->addSuccessMessage('Import bảng giá không thành công! Tập tin không hợp lệ');
-        return array(
-          'listMaSanPham' => array(),
-          'import'=>0,         
-        );
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));
       }
     }
     else
