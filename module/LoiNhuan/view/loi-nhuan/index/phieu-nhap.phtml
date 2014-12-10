@@ -47,7 +47,7 @@
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDonHang')); ?>">
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportPhieuNhap')); ?>">
                              <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                         </div>
                     </div>
@@ -58,19 +58,7 @@
                     <li role="presentation" class="active">
                         <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
                     </li>
-                    <?php 
-                        foreach($kenhPhanPhois as $kenhPhanPhoi)
-                        { 
-                            if($kenhPhanPhoi['cap']>0)
-                            {
-                        ?>
-                                <li role="presentation">
-                                    <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo  $kenhPhanPhoi['termId']['name']; ?></a>
-                                </li>
-                        <?php 
-                            }
-                        }
-                    ?>                            
+                               
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
@@ -79,7 +67,7 @@
                                 <table id="" class="dataTables-example">
                                     <thead>
                                         <th><input type="checkbox"/></th>
-                                        <th>Đơn hàng</th>
+                                        <th>Phiếu nhập</th>
                                         <th>Ngày</th>
                                         <th>Khách hàng</th>
                                         <th>Thanh toán</th>
@@ -87,18 +75,18 @@
                                     </thead>
                                     <tbody>
                                     <?php
-                                        foreach($donHangs as $donHang)
+                                        foreach($phieuNhaps as $phieuNhap)
                                         {?>
                                         <tr>
                                             <td><input type="checkbox"/></td>
                                             <td>
-                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$donHang->getIdHoaDon()));?>"><?php echo '#'.$donHang->getMaHoaDon(); ?></a>
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietPhieuNhap','id'=>$phieuNhap->getIdPhieuNhap()));?>"><?php echo '#'.$phieuNhap->getMaPhieuNhap(); ?></a>
                                             </td>
-                                            <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
-                                            <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$donHang->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
+                                            <td><?php echo $phieuNhap->getNgayNhap()->format('d-m-Y'); ?></td>
+                                            <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietNhaCungCap','id'=>$phieuNhap->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $phieuNhap->getIdDoiTac()->getHoTen(); ?></a></td>
                                             <td>
                                             <?php 
-                                                if($donHang->getStatus()==0)
+                                                if($phieuNhap->getStatus()==0)
                                                 {
                                                     ?>
                                                     <span class="label label-warning">
@@ -118,8 +106,8 @@
                                             <td>
                                             <?php
                                                 $tongTien=0;
-                                                foreach ($donHang->getCtHoaDons() as $ctHoaDon) {
-                                                    $tongTien+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+                                                foreach ($phieuNhap->getCtPhieuNhaps() as $ctPhieuNhap) {
+                                                    $tongTien+=(float)$ctPhieuNhap->getGiaNhap()*(float)$ctPhieuNhap->getSoLuong();
                                                 }
                                                 echo $tongTien;
                                             ?>
@@ -134,78 +122,6 @@
                         </div>
                     </div>
 
-                    
-                    <?php 
-                        foreach($kenhPhanPhois as $kenhPhanPhoi)
-                        { 
-                            if($kenhPhanPhoi['cap']>0)
-                            {
-                        ?>
-                                <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
-                                    <p class="note">
-                                        <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
-                                    <thead>
-                                        <th><input type="checkbox"/></th>
-                                        <th>Đơn hàng</th>
-                                        <th>Ngày</th>
-                                        <th>Khách hàng</th>
-                                        <th>Thanh toán</th>
-                                        <th>Tổng tiền</th>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                        foreach($donHangs as $donHang)
-                                        { 
-                                            if($donHang->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId()==$kenhPhanPhoi['termTaxonomyId'])
-                                            {
-                                        ?>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html"><?php echo '#'.$donHang->getMaHoaDon(); ?></a></td>
-                                                    <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
-                                                    <td><a href="khachHang.html"><?php $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
-                                                    <td>
-                                                    <?php 
-                                                        if($donHang->getStatus()==0)
-                                                        {
-                                                            ?>
-                                                            <span class="label label-warning">
-                                                                Ghi nợ
-                                                            </span>
-                                                            <?php
-                                                        }
-                                                        else
-                                                        {
-                                                            ?>
-                                                            <span class="label label-success">Đã thanh toán
-                                                            </span>
-                                                            <?php
-                                                        }
-                                                    ?>
-                                                    </td>
-                                                    <td>
-                                                    <?php
-                                                        $tongTien=0;
-                                                        foreach ($donHang->getCtHoaDons() as $ctHoaDon) {
-                                                            $tongTien+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                        }
-                                                        echo $tongTien;
-                                                    ?>
-                                                    </td>
-                                                </tr>
-                                        <?php
-                                            }
-                                        }
-                                    ?>
-                                    </tbody>
-                                </table>
-                                    </p>
-                                </div>
-                        <?php 
-                            }
-                        }
-                    ?>  
-                    
                 </div>
             </div>
         </div>
