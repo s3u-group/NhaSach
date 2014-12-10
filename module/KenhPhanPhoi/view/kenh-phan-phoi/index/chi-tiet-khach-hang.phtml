@@ -19,16 +19,7 @@
                         <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
                     </a>
                 </li>               
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
-                    </a>
-                </li>
+                
             </ul>
         </div>
     </div>
@@ -43,14 +34,34 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <h1>
-                <img class="pull-left img-circle" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" width="40px" height="40px" alt="Ảnh đại diện"> <?php echo $khachHang->getHoTen(); ?>
+                <?php if($khachHang->getHinhAnh()){ ?>
+                <img class="pull-left img-circle" width="40px" height="40px" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" alt="Ảnh đại diện">
+                <?php }else { ?>
+                    <img class="pull-left img-circle" width="40px" height="40px" src="<?php echo $this->basePath(); ?>/img/photo_default.png" alt="Ảnh đại diện">
+                <?php } ?>
+                <?php echo $khachHang->getHoTen(); ?>
             </h1>
+             <?php 
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+            ?>
             <div class="btn-group pull-right">
                 <a href="<?php echo $this->url('kenh_phan_phoi/crud', array('action'=>'xoaKhachHang','id'=>$khachHang->getIdDoiTac())); ?>" class="btn h5a-btn btn-danger btn-xs" onclick="return xacNhanXoa()"><i class="fa fa-times"></i> Xóa khách hàng</a> 
                 <!-- <a class="btn h5a-btn btn-primary btn-xs"><i class="fa fa-refresh"></i> Refresh Item</a> -->
             </div>
             <p>
-            <?php echo $khachHang->getMoTa(); ?>
+            
             </p>
             <div class="tabbable">
                 <ul class="nav nav-tabs" role="tablist" id="myTab">
@@ -69,7 +80,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="thumbnail">
+                                    <?php if($khachHang->getHinhAnh()){ ?>
                                     <img class="img-responsive" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" alt="Ảnh đại diện">
+                                    <?php }else { ?>
+                                        <img class="img-responsive" src="<?php echo $this->basePath(); ?>/img/photo_default.png" alt="Ảnh đại diện">
+                                    <?php } ?>
                                     
                                 </div>
                             </div>
@@ -194,7 +209,11 @@
                                             <tr>
                                                 <td>Ảnh đại diện</td>
                                                 <td>
-                                                <img src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" width="350px" height="350px"/>
+                                                    <?php if($khachHang->getHinhAnh()){ ?>
+                                                    <img  width="350px" height="350px" src="<?php echo $this->basePath(); ?>/img/<?php echo $khachHang->getHinhAnh(); ?>" alt="Ảnh đại diện">
+                                                    <?php }else { ?>
+                                                        <img  width="350px" height="350px" src="<?php echo $this->basePath(); ?>/img/photo_default.png" alt="Ảnh đại diện">
+                                                    <?php } ?>                                                
                                                 </td>
                                             </tr>
                                             <tr>

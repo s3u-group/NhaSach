@@ -221,6 +221,7 @@ use DateTimeZone;
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
           {
+
             return array(
               'form' => $form, 
               'kenhPhanPhois'=>$kenhPhanPhois,
@@ -247,6 +248,7 @@ use DateTimeZone;
             $doiTac->setKho($idKho);
             $entityManager->persist($doiTac);
             $entityManager->flush();
+            $this->flashMessenger()->addSuccessMessage('Thêm khách hàng thành công!');
             return $this->redirect()->toRoute('kenh_phan_phoi/crud');   
           }          
         }
@@ -328,6 +330,7 @@ use DateTimeZone;
             $doiTac->setKho($idKho);
             $entityManager->persist($doiTac);
             $entityManager->flush();
+            $this->flashMessenger()->addSuccessMessage('Thêm nhà cung cấp thành công!');
             return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));   
           }          
         }
@@ -420,19 +423,14 @@ use DateTimeZone;
               $khachHang->setHinhAnh($newName);
             }   
             $entityManager->flush();
+            $this->flashMessenger()->addSuccessMessage('Cập nhật thông tin khách hàng thành công!');
+            return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$id));
           }        
           else
           {
-            $khachHang->setHoTen($request->getPost()['hoTenTruoc']);
-            return array(
-              'form'=>$form,
-              'khachHang'=>$khachHang,
-              'kenhPhanPhois'=>$kenhPhanPhois,
-              //'lichSuGiaoDichs'=>$lichSuGiaoDichs, // nếu muốn xài lịch sử giao dịch thì mở cái lịch sử $lichSuGiaoDichs ở phía trên ra. và qua form view chi-tiet-khach-hang.phtml mở cái foreach($lichSuGiaoDich as..) ra
-              'hoaDons'=>$hoaDons,
-              'phieuThus'=>$phieuThus,
-              'coKiemTraTrung'=>1,
-            );
+            $this->flashMessenger()->addErrorMessage('Cập nhật thông tin khách hàng thất bại!');
+            return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$id));
+            
           }
         }       
         
@@ -523,19 +521,14 @@ use DateTimeZone;
               $nhaCungCap->setHinhAnh($newName);
             }   
             $entityManager->flush();
+            $this->flashMessenger()->addSuccessMessage('Cập nhật thông tin khách hàng thành công!');
+            return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'chiTietNhaCungCap','id'=>$id));
           }  
           else
-          {
-            $nhaCungCap->setHoTen($request->getPost()['hoTenTruoc']);
-            return array(
-              'form'=>$form,
-              'nhaCungCap'=>$nhaCungCap,
-              'kenhPhanPhois'=>$kenhPhanPhois,
-              //'lichSuGiaoDichs'=>$lichSuGiaoDichs,
-              'phieuChis'=>$phieuChis,
-              'phieuNhaps'=>$phieuNhaps,
-              'coKiemTraTrung'=>1,
-            );
+          {            
+            $this->flashMessenger()->addErrorMessage('Cập nhật thông tin khách hàng thất bại!');
+            return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'chiTietNhaCungCap','id'=>$id));
+          
 
           }
 
@@ -578,17 +571,21 @@ use DateTimeZone;
       $doiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
       if(!$doiTac)
       {
+        $this->flashMessenger()->addErrorMessage('Xóa khách hàng thất bại! Không tìm thấy khách hàng cần xóa.');
         return $this->redirect()->toRoute('kenh_phan_phoi/crud');
       }
 
       if($doiTac->getKho()!=$idKho)
       {
+        $this->flashMessenger()->addErrorMessage('Xóa khách hàng thất bại! Không tìm thấy khách hàng cần xóa.');
         return $this->redirect()->toRoute('kenh_phan_phoi/crud');
       }
 
       $loaiDoiTac=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(0);
       $doiTac->setLoaiDoiTac($loaiDoiTac);
       $entityManager->flush();
+
+      $this->flashMessenger()->addSuccessMessage('Xóa khách hàng thành công!');
       return $this->redirect()->toRoute('kenh_phan_phoi/crud');
 
   }
@@ -619,16 +616,20 @@ use DateTimeZone;
       $doiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
       if(!$doiTac)
       {
+        $this->flashMessenger()->addErrorMessage('Xóa nhà cung cấp thất bại! Không tìm thấy nhà cung cấp cần xóa.');
         return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
       }
       if($doiTac->getKho()!=$idKho)
       {
+        $this->flashMessenger()->addErrorMessage('Xóa nhà cung cấp thất bại! Không tìm thấy nhà cung cấp cần xóa.');
         return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
       }
 
       $loaiDoiTac=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(0);
       $doiTac->setLoaiDoiTac($loaiDoiTac);
       $entityManager->flush();
+
+      $this->flashMessenger()->addSuccessMessage('Xóa nhà cung cấp thành công!');
       return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
 
   }

@@ -20,7 +20,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieuNhap'));?>">
                         <i class="fa fa-tasks"></i> Phiếu nhập
                     </a>
                 </li>
@@ -130,7 +130,7 @@
                         if($kenhPhanPhoi['cap']>0)
                         { ?>                                    
                             <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
-                                <p class="note"><?php echo $kenhPhanPhoi['termId']['name']; ?>
+                                <p class="note"><?php //echo $kenhPhanPhoi['termId']['name']; ?>
                                     <table class="dataTables-example">
                                         <thead>
                                             <tr>

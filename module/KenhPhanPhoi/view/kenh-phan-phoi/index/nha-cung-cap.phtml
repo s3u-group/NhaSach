@@ -21,16 +21,7 @@
                         <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
                     </a>
                 </li>              
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
-                    </a>
-                </li>
+                
             </ul>
         </div>
     </div>
@@ -59,6 +50,21 @@
                         </div>
                     </div>
                 </div>
+                <?php 
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                 ?>
             </div>
             <div class="box">
                 <ul class="nav nav-tabs" role="tablist" id="myTab">

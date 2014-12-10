@@ -34,12 +34,12 @@ use DateTimeZone;
   
   public function getEntityManager()
   {
-     // kiểm tra đăng nhập==================================================================
+     // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+    
 
      if(!$this->entityManager)
      {
@@ -51,7 +51,7 @@ use DateTimeZone;
   public function indexAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
       if(!$this->zfcUserAuthentication()->hasIdentity())
       {
         return $this->redirect()->toRoute('application');
@@ -145,12 +145,12 @@ use DateTimeZone;
   public function thanhToanAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     
     // kiểm tra thuộc kho nào
       $idKho=1;
       if($this->zfcUserAuthentication()->hasIdentity())
@@ -200,6 +200,10 @@ use DateTimeZone;
       
 
       $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
+      if($thongTinDoiTac->getKho()!=$idKho)
+      {
+        return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
+      }
       // die(var_dump($response));
       return array(
         'form'=>$form,
@@ -277,12 +281,12 @@ use DateTimeZone;
   public function congNoNhaCungCapAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+   
      // kiểm tra thuộc kho nào
       $idKho=1;
       if($this->zfcUserAuthentication()->hasIdentity())
@@ -365,12 +369,11 @@ use DateTimeZone;
   public function thanhToanNhaCungCapAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
      // kiểm tra thuộc kho nào
       $idKho=1;
       if($this->zfcUserAuthentication()->hasIdentity())

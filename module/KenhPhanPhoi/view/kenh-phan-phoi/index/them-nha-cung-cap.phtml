@@ -35,16 +35,6 @@ echo $this->formHidden($idKenhPhanPhoi);
                         <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
                     </a>
                 </li>                 
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Đơn hàng
-                    </a>
-                </li>
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
-                    </a>
-                </li>
             </ul>
         </div>
     </div>
@@ -77,18 +67,14 @@ echo $this->formHidden($idKenhPhanPhoi);
                                     $hoTen->setAttribute('placeholder','Họ tên nhà cung cấp');
                                     $hoTen->setAttribute('id','form-field-1');
                                     echo $this->formElement($hoTen);
+                                    if($ktTonTaiNhaCungCap==1)
+                                    {
+                                        echo '<span class="badge red">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span>';
+                                    }
                                 ?>                                           
                                 </td>
                             </tr>
-                            <?php
-                                if($ktTonTaiNhaCungCap==1)
-                                {
-                                    echo '<tr>';
-                                        echo '<td></td>';
-                                        echo '<td><span class="badge red">Nhà cung cấp vừa nhập đã tồn tại vui lòng kiểm tra lại</span></td>';
-                                    echo '<tr>';
-                                }
-                            ?>
+                                
                             <tr>
                                 <td>Địa chỉ nhà cung cấp</td>
                                 <td>
