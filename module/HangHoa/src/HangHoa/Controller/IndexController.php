@@ -915,7 +915,6 @@
                 }
             }
         }
-        
         return array(
           'listMaSanPham' => $listMaSanPham,
           'import'=>1,
