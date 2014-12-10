@@ -454,12 +454,16 @@ use DateTimeZone;
   public function chiTietNhaCungCapAction()
   {
 
-      // kiểm tra đăng nhập==================================================================
+      // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+      $idKho=1;
+     if($this->zfcUserAuthentication()->hasIdentity())
+     { 
+       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+     }
 
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
@@ -468,7 +472,7 @@ use DateTimeZone;
         return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
       }
       $entityManager=$this->getEntityManager();      
-      $query=$entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.idDoiTac='.$id.' and kh.loaiDoiTac=46');
+      $query=$entityManager->createQuery('SELECT ncc FROM HangHoa\Entity\DoiTac ncc WHERE ncc.kho='.$idKho.' and ncc.idDoiTac='.$id.' and ncc.loaiDoiTac=46');
       $khachHangs=$query->getResult();
       // nếu id khách hàng này không tồn tại
       if(!$khachHangs)
@@ -480,13 +484,13 @@ use DateTimeZone;
 
 
 
-      //var_dump('Phiếu thu---------------------');
-      $query=$entityManager->createQuery('SELECT pc FROM CongNo\Entity\PhieuChi pc, CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt  WHERE pc.idCongNo=cn.idCongNo and cn.idDoiTac=dt.idDoiTac and dt.idDoiTac='.$id.' ORDER BY pc.ngayThanhToan DESC');
+      //var_dump('Phiếu chi---------------------');
+      $query=$entityManager->createQuery('SELECT pc FROM CongNo\Entity\PhieuChi pc, CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt  WHERE pc.kho='.$idKho.' and dt.kho='.$idKho.' and pc.idCongNo=cn.idCongNo and cn.idDoiTac=dt.idDoiTac and dt.idDoiTac='.$id.' ORDER BY pc.ngayThanhToan DESC');
       $phieuChis=$query->getResult();
       //var_dump($phieuThus);
       //die(var_dump($phieuChis));
 
-      $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.idDoiTac='.$id);
+      $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.idDoiTac='.$id);
       $phieuNhaps=$query->getResult();
 
       $nhaCungCap=$khachHangs[0];
@@ -505,7 +509,7 @@ use DateTimeZone;
         $form->setData($request->getPost());
         if($form->isValid())
         {
-          $query=$entityManager->createQuery('SELECT ncc FROM HangHoa\Entity\DoiTac ncc WHERE ncc.loaiDoiTac=46 and ncc.hoTen=\''.$nhaCungCap->getHoTen().'\'');
+          $query=$entityManager->createQuery('SELECT ncc FROM HangHoa\Entity\DoiTac ncc WHERE ncc.kho='.$idKho.' and ncc.loaiDoiTac=46 and ncc.hoTen=\''.$nhaCungCap->getHoTen().'\'');
           $ktNhaCungCap=$query->getResult();
           if(!$ktNhaCungCap||($ktNhaCungCap&&$ktNhaCungCap[0]->getIdDoiTac()==$nhaCungCap->getIdDoiTac()))
           {
@@ -553,12 +557,16 @@ use DateTimeZone;
   public function xoaKhachHangAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     $idKho=1;
+     if($this->zfcUserAuthentication()->hasIdentity())
+     { 
+       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+     }
 
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
@@ -569,6 +577,11 @@ use DateTimeZone;
       $entityManager=$this->getEntityManager();
       $doiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
       if(!$doiTac)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud');
+      }
+
+      if($doiTac->getKho()!=$idKho)
       {
         return $this->redirect()->toRoute('kenh_phan_phoi/crud');
       }
@@ -585,12 +598,16 @@ use DateTimeZone;
   public function xoaNhaCungCapAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+     $idKho=1;
+     if($this->zfcUserAuthentication()->hasIdentity())
+     { 
+       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+     }
 
       $this->layout('layout/giaodien');
       $id=(int)$this->params()->fromRoute('id',0);
@@ -601,6 +618,10 @@ use DateTimeZone;
       $entityManager=$this->getEntityManager();
       $doiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
       if(!$doiTac)
+      {
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
+      }
+      if($doiTac->getKho()!=$idKho)
       {
         return $this->redirect()->toRoute('kenh_phan_phoi/crud', array('action'=>'nhaCungCap'));
       }
@@ -616,12 +637,12 @@ use DateTimeZone;
   public function exportKhachHangAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
 
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
@@ -643,12 +664,12 @@ use DateTimeZone;
   public function exportNhaCungCapAction()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+    
 
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
@@ -675,9 +696,15 @@ use DateTimeZone;
     {
       return $this->redirect()->toRoute('zfcuser');
     }
+
+    $idKho=1;
+     if($this->zfcUserAuthentication()->hasIdentity())
+     { 
+       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+     }
     $entityManager=$this->getEntityManager();
 
-    $query=$entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac='.$loaiDoiTac);
+    $query=$entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho.' and dt.loaiDoiTac='.$loaiDoiTac);
     $doiTacs=$query->getResult();
 
     $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
