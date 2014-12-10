@@ -17,7 +17,7 @@
     }
 </script>    
 <?php
-    $this->headTitle('Hàng hóa');
+    $this->headTitle('Hàng hóa');    
 ?>
 
 <div class="row">
@@ -47,12 +47,27 @@
         </div>
     </div>
     <div class="col-md-10" role="main">
+        <?php
+            $flash=$this->flashMessenger();
+            $flash->setMessageOpenFormat('<div%s>
+             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                 &times;
+             </button>
+             <ul><li>')
+             ->setMessageSeparatorString('</li><li>')
+             ->setMessageCloseString('</li></ul></div>');
+
+             echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+             echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+             echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+             echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+        ?>
         <div class="h5a-docs-section">
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
                         <h1>Hàng hóa</h1>
-                    </div>
+                    </div>                    
                     <div class="col-sm-6">
                         <div class="pull-right">                                    
                             <div class="btn-group ">
@@ -87,7 +102,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
             <div class="box">
                 <ul class="nav nav-tabs" role="tablist" id="myTab">
                     <li role="presentation" class="active">

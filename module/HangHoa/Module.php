@@ -1,6 +1,7 @@
 <?php
 
 namespace HangHoa;
+use Zend\Mvc\MvcEvent;
 
 use Zend\ModuleManager\Feature\AutoloaderProviderInterface;
 
@@ -22,6 +23,6 @@ class Module implements AutoloaderProviderInterface{
                 ),
             ),
         );
-    }
+    }    
 }
 ?>
