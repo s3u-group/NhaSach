@@ -35,17 +35,7 @@ class IndexController extends AbstractActionController
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
-      // kiểm tra nếu là tài khoản admin thì reset lại kho cho admin đó
-       /*// kiểm tra đăng nhập
-      if($this->zfcUserAuthentication()->hasIdentity()&&$this->zfcUserAuthentication()->getIdentity()->getId()==1)
-      { 
-        $admin=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
-        if($admin)
-        {
-          $admin->setKho(1);
-          $entityManager->flush();          
-        }
-      }*/
+     
       // kiểm tra đăng nhập
       if($this->zfcUserAuthentication()->hasIdentity())
       {
@@ -67,5 +57,24 @@ class IndexController extends AbstractActionController
        return $this->forward()->dispatch('zfcuser', array(
            'action' => 'login'
        ));
-    }    
+    } 
+
+    public function logoutAction()
+    {
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
+
+       // kiểm tra nếu là tài khoản admin thì reset lại kho cho admin đó
+       // kiểm tra đăng nhập
+      if($this->zfcUserAuthentication()->hasIdentity()&&$this->zfcUserAuthentication()->getIdentity()->getId()==1)
+      { 
+        $admin=$entityManager->getRepository('Application\Entity\SystemUser')->find(1);
+        if($admin)
+        {
+          $admin->setKho(1);
+          $entityManager->flush();          
+        }
+      }
+      return $this->redirect()->toRoute('zfcuser/logout',array('action'=>'logout'));
+    }   
 }

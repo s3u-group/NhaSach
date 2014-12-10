@@ -44,6 +44,20 @@ return array(
     
      ),
 
+     'view_helpers'=>array(
+        'factories'=>array(
+            
+            'get_kho' => function($sm){
+                $entityManager=$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                $getKhoHelper=new \Kho\View\Helper\GetKho();
+                $getKhoHelper->setEntityManager($entityManager);
+                return $getKhoHelper;
+            },
+        ), 
+        
+    ),     
+
+
     'doctrine' => array(
         'driver' => array(
             'kho_annotation_driver' => array(// edit

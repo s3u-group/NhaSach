@@ -56,6 +56,13 @@ use DateTimeZone;
       {
         return $this->redirect()->toRoute('application');
       }
+
+      // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
      
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
@@ -65,7 +72,7 @@ use DateTimeZone;
       
       /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();*/
-      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=45');
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho.' and dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
@@ -81,7 +88,7 @@ use DateTimeZone;
           
 
           $entityManager=$this->getEntityManager();
-          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
+          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE dt.kho='.$idKho.' and pt.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
