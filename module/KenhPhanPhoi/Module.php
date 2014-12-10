@@ -23,5 +23,6 @@ class Module implements AutoloaderProviderInterface{
             ),
         );
     }
+     
 }
 ?>
