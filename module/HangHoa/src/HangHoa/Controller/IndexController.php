@@ -78,6 +78,7 @@
     {
       return $this->redirect()->toRoute('application');
     }
+    $idKho=1;
     if($this->zfcUserAuthentication()->hasIdentity())
     { 
       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
