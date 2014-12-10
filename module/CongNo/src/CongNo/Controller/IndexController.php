@@ -56,6 +56,13 @@ use DateTimeZone;
       {
         return $this->redirect()->toRoute('application');
       }
+
+    // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
      
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
@@ -65,7 +72,7 @@ use DateTimeZone;
       
       /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();*/
-      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=45');
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho.' and dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
@@ -76,12 +83,10 @@ use DateTimeZone;
         $idDoiTac=$doiTac->getIdDoiTac();
         if($idDoiTac)
         {
-
           $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
           
-
           $entityManager=$this->getEntityManager();
-          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
+          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
@@ -103,7 +108,7 @@ use DateTimeZone;
           }
 
           // lấy nợ phát sinh hoaDon
-          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac= :idDoiTac');
+          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.status=0 and hd.idDoiTac= :idDoiTac');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $hoaDons=$query->getResult();
 
@@ -144,6 +149,12 @@ use DateTimeZone;
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+    // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
 
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();     
@@ -162,7 +173,7 @@ use DateTimeZone;
           $phieuThu->setIdUserNv($user);
           $idDoiTac=$phieuThu->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
 
-          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac='.$idDoiTac);
+          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.status=0 and hd.idDoiTac='.$idDoiTac);
           $hoaDons=$query->getResult();
 
           foreach ($hoaDons as $hoaDon) {
@@ -201,12 +212,19 @@ use DateTimeZone;
     {
       return $this->redirect()->toRoute('zfcuser');
     }
+    // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
       $response=array();
    
       if($idDoiTac)
       {
         $entityManager=$this->getEntityManager();
-        $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
+        $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
         $query->setParameter('idDoiTac',$idDoiTac);
         
         $congNos = $query->getResult(); // array of CmsArticle objects 
@@ -229,7 +247,7 @@ use DateTimeZone;
         }
 
         // lấy nợ phát sinh hoaDon
-        $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac= :idDoiTac');
+        $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.status=0 and hd.idDoiTac= :idDoiTac');
         $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $hoaDons=$query->getResult();
 
@@ -263,6 +281,12 @@ use DateTimeZone;
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+     // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
 
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
@@ -272,7 +296,7 @@ use DateTimeZone;
       /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=46');
       $doiTacs=$query->getResult();*/
 
-      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=46');
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho.' and dt.loaiDoiTac=46');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
@@ -287,7 +311,7 @@ use DateTimeZone;
           
 
           $entityManager=$this->getEntityManager();
-          $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
+          $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.kho='.$idKho.' and ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and pc.kho='.$idKho.' and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
@@ -309,7 +333,7 @@ use DateTimeZone;
           }
 
           // lấy nợ phát sinh hoaDon
-          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac= :idDoiTac');
+          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.status=0 and pn.idDoiTac= :idDoiTac');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $phieuNhaps=$query->getResult();
 
@@ -345,6 +369,12 @@ use DateTimeZone;
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+     // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
 
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
@@ -365,7 +395,7 @@ use DateTimeZone;
           $idDoiTac=$phieuChi->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
           
 
-          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac='.$idDoiTac);
+          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.status=0 and pn.idDoiTac='.$idDoiTac);
           $phieuNhaps=$query->getResult();
 
           foreach ($phieuNhaps as $phieuNhap) {
@@ -409,10 +439,17 @@ use DateTimeZone;
     {
       return $this->redirect()->toRoute('zfcuser');
     }
+    // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+
       if($idDoiTac)
       {
         $entityManager=$this->getEntityManager();
-        $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
+        $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.kho='.$idKho.' and ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and pc.kho='.$idKho.' and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
         $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $congNos = $query->getResult(); // array of CmsArticle objects 
 
@@ -434,7 +471,7 @@ use DateTimeZone;
         }
 
         // lấy nợ phát sinh hoaDon
-        $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac= :idDoiTac');
+        $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.status=0 and pn.idDoiTac= :idDoiTac');
         $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
         $phieuNhaps=$query->getResult();
 
@@ -482,13 +519,7 @@ use DateTimeZone;
 
     $PI_ExportExcel=$this->ExportExcel();
     $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->data($objPHPExcel, $tieuDe, $fieldName, $data));
-
-
   }
-
-
-
-
 
   // fieldName this is array, it have 5 column
   public function data($objPHPExcel, $tieuDe, $fieldName, $data)
@@ -548,6 +579,14 @@ use DateTimeZone;
         return $this->redirect()->toRoute('application');
       }
     //====================================================================================
+
+    // kiểm tra thuộc kho nào
+     $idKho=1;
+     if($this->zfcUserAuthentication()->hasIdentity())
+     { 
+       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+     }
+
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
 
@@ -556,7 +595,7 @@ use DateTimeZone;
       
       /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();*/
-      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=45');
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho.' and dt.loaiDoiTac=45');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
@@ -572,7 +611,7 @@ use DateTimeZone;
           
 
           $entityManager=$this->getEntityManager();
-          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
+          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
@@ -594,7 +633,7 @@ use DateTimeZone;
           }
 
           // lấy nợ phát sinh hoaDon
-          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.status=0 and hd.idDoiTac= :idDoiTac');
+          $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.status=0 and hd.idDoiTac= :idDoiTac');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $hoaDons=$query->getResult();
 
@@ -623,9 +662,6 @@ use DateTimeZone;
       return array('response'=>$response);
   }
 
-
-
-
   public function exportCongNoNhaCungCapAction()
   {
     // kiểm tra đăng nhập==================================================================
@@ -649,8 +685,6 @@ use DateTimeZone;
 
     $PI_ExportExcel=$this->ExportExcel();
     $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->dataNhaCungCap($objPHPExcel, $tieuDe, $fieldName, $data));
-
-
   }
 
   public function dataNhaCungCap($objPHPExcel, $tieuDe, $fieldName, $data)
@@ -698,6 +732,13 @@ use DateTimeZone;
        return $this->redirect()->toRoute('application');
      }
      //====================================================================================
+    
+    // kiểm tra thuộc kho nào
+     $idKho=1;
+     if($this->zfcUserAuthentication()->hasIdentity())
+     { 
+       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+     }
 
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
@@ -707,7 +748,7 @@ use DateTimeZone;
       /*$query=$entityManager->createQuery('SELECT distinct dt.idDoiTac FROM CongNo\Entity\CongNo cn, HangHoa\Entity\DoiTac dt WHERE cn.idDoiTac=dt.idDoiTac and dt.loaiDoiTac=46');
       $doiTacs=$query->getResult();*/
 
-      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.loaiDoiTac=46');
+      $query=$entityManager->createQuery('SELECT distinct dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho.' and dt.loaiDoiTac=46');
       $doiTacs=$query->getResult();
 
       // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
@@ -717,12 +758,10 @@ use DateTimeZone;
         $idDoiTac=$doiTac->getIdDoiTac();  
         if($idDoiTac)
         {
-
           $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
           
-
           $entityManager=$this->getEntityManager();
-          $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
+          $query = $entityManager->createQuery('SELECT pc FROM HangHoa\Entity\DoiTac ncc, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuChi pc  WHERE ncc.kho='.$idKho.' and ncc.idDoiTac=cn.idDoiTac and cn.idCongNo=pc.idCongNo and pc.kho='.$idKho.' and ncc.idDoiTac= :idDoiTac ORDER BY pc.ngayThanhToan DESC, pc.idPhieuChi DESC');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
@@ -744,7 +783,7 @@ use DateTimeZone;
           }
 
           // lấy nợ phát sinh hoaDon
-          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.status=0 and pn.idDoiTac= :idDoiTac');
+          $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.status=0 and pn.idDoiTac= :idDoiTac');
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $phieuNhaps=$query->getResult();
 
