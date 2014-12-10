@@ -105,7 +105,7 @@ else
                                             <td width="85%">   
                                                  <?php $element->setAttribute('class','form-control');?> 
                                                  <?php $dsKho=array('1'=>'Kho 1', '2'=>'Kho 2') ?>
-                                                 <?php $element->setValueOptions($dsKho); ?>
+                                                 <?php $element->setValueOptions($this->GetKho()); ?>
                                                  <?php echo $this->formElement($element); ?>
                                                  <?php echo $this->formElementErrors($element); ?>
 

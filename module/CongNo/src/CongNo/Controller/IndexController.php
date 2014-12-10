@@ -86,7 +86,9 @@ use DateTimeZone;
           $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
           
           $entityManager=$this->getEntityManager();
-          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');
+
+          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');        
+
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
