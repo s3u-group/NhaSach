@@ -64,10 +64,10 @@ class DoiTac extends \HangHoa\Entity\DoiTac implements \Doctrine\ORM\Proxy\Proxy
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hoTen', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diaChi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'email', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diDong', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'website', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'twitter', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'loaiDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idKenhPhanPhoi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'ngayDangKy');
+            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hoTen', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diaChi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'email', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diDong', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'website', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'twitter', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'loaiDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idKenhPhanPhoi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'ngayDangKy', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'kho');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hoTen', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diaChi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'email', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diDong', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'website', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'twitter', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'loaiDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idKenhPhanPhoi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'ngayDangKy');
+        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hoTen', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diaChi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'email', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'diDong', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'website', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'twitter', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'loaiDoiTac', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'idKenhPhanPhoi', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'ngayDangKy', '' . "\0" . 'HangHoa\\Entity\\DoiTac' . "\0" . 'kho');
     }
 
     /**
@@ -173,6 +173,28 @@ class DoiTac extends \HangHoa\Entity\DoiTac implements \Doctrine\ORM\Proxy\Proxy
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function setKho($kho)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setKho', array($kho));
+
+        return parent::setKho($kho);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getKho()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getKho', array());
+
+        return parent::getKho();
+    }
+
     /**
      * {@inheritDoc}
      */

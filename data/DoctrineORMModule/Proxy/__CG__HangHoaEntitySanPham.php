@@ -64,10 +64,10 @@ class SanPham extends \HangHoa\Entity\SanPham implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps');
+            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'kho');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps');
+        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'kho');
     }
 
     /**
@@ -173,6 +173,28 @@ class SanPham extends \HangHoa\Entity\SanPham implements \Doctrine\ORM\Proxy\Pro
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function setKho($kho)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setKho', array($kho));
+
+        return parent::setKho($kho);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getKho()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getKho', array());
+
+        return parent::getKho();
+    }
+
     /**
      * {@inheritDoc}
      */
