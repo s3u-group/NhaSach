@@ -915,7 +915,7 @@
       }
       else
       {
-        $this->flashMessenger()->addSuccessMessage('Import hàng hóa không thành công! Tập tin không hợp lệ');
+        $this->flashMessenger()->addErrorMessage('Import hàng hóa không thành công! Tập tin không hợp lệ');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
       }
     }
@@ -1055,7 +1055,7 @@
       }
       else
       {
-        $this->flashMessenger()->addSuccessMessage('Import bảng giá không thành công! Tập tin không hợp lệ');
+        $this->flashMessenger()->addErrorMessage('Import bảng giá không thành công! Tập tin không hợp lệ');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));
       }
     }
