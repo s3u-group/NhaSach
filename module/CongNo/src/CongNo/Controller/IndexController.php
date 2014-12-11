@@ -105,8 +105,19 @@ use DateTimeZone;
             $noDauKi=0;
             $dT=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
 
-            // lấy ngày đăng ký làm ngày đầu kỳ
-            $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+            // kiểm tra đối tác này có từng mua hàng ngày nào chưa
+            $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.idDoiTac='.$idDoiTac.' and hd.status=0 ORDER BY hd.idHoaDon');
+            $hoaDonDauTienCuaDoiTac=$query->getResult();
+            if($hoaDonDauTienCuaDoiTac)
+            {
+                // lấy ngày mua hàng đầu tiên
+                $ngayDauKi=$hoaDonDauTienCuaDoiTac[0]->getNgayXuat()->format('Y-m-d');
+            }
+            else
+            {
+                // lấy ngày đăng ký làm ngày đầu kỳ
+                $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+            }
           }
 
           // lấy nợ phát sinh hoaDon
@@ -340,8 +351,22 @@ use DateTimeZone;
             $noDauKi=0;
             $dT=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
 
-            // lấy ngày đăng ký làm ngày đầu kỳ
-            $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+           /* // lấy ngày đăng ký làm ngày đầu kỳ
+            $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');*/
+
+            // kiểm tra đối tác này có từng mua hàng ngày nào chưa
+            $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.idDoiTac='.$idDoiTac.' and pn.status=0 ORDER BY pn.idPhieuNhap');
+            $phieuNhapDauTienCuaDoiTac=$query->getResult();
+            if($phieuNhapDauTienCuaDoiTac)
+            {
+                // lấy ngày đăng ký làm ngày đầu kỳ
+                $ngayDauKi=$phieuNhapDauTienCuaDoiTac[0]->getNgayNhap()->format('Y-m-d');
+            }
+            else
+            {
+                // lấy ngày đăng ký làm ngày đầu kỳ
+                $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+            }
           }
 
           // lấy nợ phát sinh hoaDon
@@ -521,12 +546,12 @@ use DateTimeZone;
 
   public function exportCongNoKhachHangAction()
   {
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
 
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
@@ -687,12 +712,12 @@ use DateTimeZone;
 
   public function exportCongNoNhaCungCapAction()
   {
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
+
 
     $entityManager=$this->getEntityManager();
     // tham số thức nhất cho hàm exportExcel
@@ -749,12 +774,11 @@ use DateTimeZone;
   public function dataExportCongNoNhaCungCap()
   {
 
-    // kiểm tra đăng nhập==================================================================
+    // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
        return $this->redirect()->toRoute('application');
      }
-     //====================================================================================
     
     // kiểm tra thuộc kho nào
      $idKho=1;
@@ -831,6 +855,165 @@ use DateTimeZone;
         }
       }
       return array('response'=>$response);
+  }
+
+  public function chiTietCongNoKhachHangAction()
+  {
+    
+
+    // kiểm tra đăng nhập
+      if(!$this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('application');
+      }
+
+      // id đối tác
+      $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+          return $this->redirect()->toRoute('cong_no/crud');
+      }  
+
+
+    // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+     
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
+
+
+      // lấy những đối tác thuộc loại khách hàng có công nợ với hệ thống
+      $doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
+      if($doiTacs->getKho()!=$idKho)
+      {
+        return $this->redirect()->toRoute('cong_no/crud');
+      }
+
+
+      // duyệt qua từng đối tác là khách hàng lấy ra những dòng công nợ của từng khách hàng và sắp xếp sao cho công nợ gần có ngày xuất phiếu thu (ngày thanh toán) gần ngày hiện tại nhất nằm ở trên
+      $response=array();
+      
+        //$idDoiTac=$doiTac['idDoiTac'];  
+        $idDoiTac=$id;
+        if($idDoiTac)
+        {
+          $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+          
+          $entityManager=$this->getEntityManager();
+
+          $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');        
+
+          $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+          $congNos = $query->getResult(); // array of CmsArticle objects 
+
+          // nếu đã có công nợ trước với hệ thống
+          if($congNos)
+          {
+            $ngayDauKi=$congNos[0]->getNgayThanhToan()->format('Y-m-d');
+            $noDauKi=$congNos[0]->getIdCongNo()->getDuNo();
+
+            // lấy nợ phát sinh hoaDon
+            $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.status=0 and hd.idDoiTac= :idDoiTac');
+            $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+            $hoaDons=$query->getResult();            
+            $noPhatSinh=0;
+            foreach ($hoaDons as $hoaDon) {
+              foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+                $noPhatSinh+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+              }
+            }
+            // tính nợ cuối kỳ
+            $noCuoiKi=(float)$noDauKi+(float)$noPhatSinh;
+            $thanhToan='Chưa Thanh Toán';
+            $duNo='';
+            $ngayThanhToan='';
+
+            $response[]=array(
+                'ngayDauKi'=>$ngayDauKi,
+                'noDauKi'=>$noDauKi,
+                'noPhatSinh'=>$noPhatSinh,
+                'noCuoiKi'=>$noCuoiKi,
+                'thanhToan'=>$thanhToan,
+                'duNo'=>$duNo,
+                'ngayThanhToan'=>$ngayThanhToan,                
+              );
+
+            foreach ($congNos as $congNo) 
+            {
+              $ngayDauKi=$congNo->getIdCongNo()->getKi()->format('Y-m-d');
+              $noDauKi=$congNo->getIdCongNo()->getNoDauKi();
+              $noPhatSinh=$congNo->getIdCongNo()->getNoPhatSinh();
+              $noCuoiKi=(float)$noDauKi+(float)$noPhatSinh;
+              $duNo=$congNo->getIdCongNo()->getDuNo();
+              $thanhToan=(float)$noCuoiKi-(float)$duNo;
+              $ngayThanhToan=$congNo->getNgayThanhToan();
+
+              $response[]=array(
+                'ngayDauKi'=>$ngayDauKi,
+                'noDauKi'=>$noDauKi,
+                'noPhatSinh'=>$noPhatSinh,
+                'noCuoiKi'=>$noCuoiKi,
+                'thanhToan'=>$thanhToan,
+                'duNo'=>$duNo,
+                'ngayThanhToan'=>$ngayThanhToan,
+
+              );
+            }
+           
+          }
+          else// khách hàng mới tạo chưa có công nợ với hệ thống lần nào
+          {
+            // nợ đầu kỳ
+            $noDauKi=0;
+            $dT=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($idDoiTac);
+
+            // kiểm tra đối tác này có từng mua hàng ngày nào chưa
+            $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.idDoiTac='.$idDoiTac.' and hd.status=0 ORDER BY hd.idHoaDon');
+            $hoaDonDauTienCuaDoiTac=$query->getResult();
+            if($hoaDonDauTienCuaDoiTac)
+            {
+                // lấy ngày mua hàng đầu tiên
+                $ngayDauKi=$hoaDonDauTienCuaDoiTac[0]->getNgayXuat()->format('Y-m-d');
+            }
+            else
+            {
+                // lấy ngày đăng ký làm ngày đầu kỳ
+                $ngayDauKi=$dT->getNgayDangKy()->format('Y-m-d');
+            }
+
+            // lấy nợ phát sinh hoaDon
+            $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.status=0 and hd.idDoiTac= :idDoiTac');
+            $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+            $hoaDons=$query->getResult();            
+            $noPhatSinh=0;
+            foreach ($hoaDons as $hoaDon) {
+              foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+                $noPhatSinh+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+              }
+            }
+            // tính nợ cuối kỳ
+            $noCuoiKi=(float)$noDauKi+(float)$noPhatSinh;
+            $thanhToan='Chưa Thanh Toán';
+            $duNo='';
+            $ngayThanhToan='';
+
+            $response[]=array(
+                'ngayDauKi'=>$ngayDauKi,
+                'noDauKi'=>$noDauKi,
+                'noPhatSinh'=>$noPhatSinh,
+                'noCuoiKi'=>$noCuoiKi,
+                'thanhToan'=>$thanhToan,
+                'duNo'=>$duNo,
+                'ngayThanhToan'=>$ngayThanhToan,
+
+              );
+          }
+        }
+
+      return array('response'=>$response,'doiTac'=>$doiTacs,'hoaDons'=>$hoaDons);
   }
  }
 ?>

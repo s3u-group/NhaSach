@@ -53,6 +53,13 @@ return array(
                 $getKhoHelper->setEntityManager($entityManager);
                 return $getKhoHelper;
             },
+
+            'get_ten_kho' => function($sm){
+                $entityManager=$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                $getTenKhoHelper=new \Kho\View\Helper\GetTenKho();
+                $getTenKhoHelper->setEntityManager($entityManager);
+                return $getTenKhoHelper;
+            },
         ), 
         
     ),     

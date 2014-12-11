@@ -29,7 +29,7 @@
                 <div class="page-header">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1>Công nợ khách hàng</h1>
+                            <h1>Chi tiết công nợ</h1>
                         </div>
 
                         <div class="col-sm-6">
@@ -47,83 +47,105 @@
                             </div>
                         </div>                        
                     </div>
-                    <?php 
-                        $flash=$this->flashMessenger();
-                        $flash->setMessageOpenFormat('<div%s>
-                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                             &times;
-                         </button>
-                         <ul><li>')
-                         ->setMessageSeparatorString('</li><li>')
-                         ->setMessageCloseString('</li></ul></div>');
-
-                         echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-                         echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-                         echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-                         echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
-                     ?>
+                
                 </div>
+                &nbsp;&nbsp; Tên khách hàng: <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a>
                 <div class="box">
                     <ul class="nav nav-tabs" role="tablist" id="myTab">
                         <li role="presentation" class="active">
                             <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                        </li>
-                        <?php 
-                        foreach ($kenhPhanPhois as $kenhPhanPhoi) { 
-                            if($kenhPhanPhoi['cap']>0)
-                            {
-                        ?>
-                                <li role="presentation">
-                                    <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo $kenhPhanPhoi['termId']['name'] ?></a>
-                                </li>
-                        <?php
-                            }
-                        }
-                        ?>                            
+                        </li>                                                 
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
                             <div class="container">
+
                                 <div class="row">
                                     <table id="" class="dataTables-example">
                                         <thead>
-                                            <th><input type="checkbox"/></th>
+                                            <th>Hóa đơn</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Giá</th>
+                                            <th>Số lượng</th>
+                                            <th>Thành tiền</th>                                                
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        //die(var_dump($hoaDons));
+                                        foreach ($hoaDons as $hoaDon) {
+                                       /* ?>
+                                            <tr>
+                                                <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>"><?php echo '#'.$hoaDon->getMaHoaDon(); ?></a></td>
+                                                <td></td><td></td><td></td><td></td>
+                                            </tr>
+                                        <?php*/
+                                            foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+                                                //die(var_dump($ctHoaDon));
+                                        ?>
+                                            <tr>
+                                                <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>"><?php echo '#'.$hoaDon->getMaHoaDon(); ?></a></td>
+                                                <td><?php echo $ctHoaDon->getIdSanPham()->getTenSanPham(); ?></td>
+                                                <td><?php echo $ctHoaDon->getGia(); ?></td>
+                                                <td><?php echo $ctHoaDon->getSoLuong(); ?></td>
+                                                <td>
+                                                    <?php $thanhTien=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong(); 
+                                                        echo $thanhTien;
+                                                    ?>
+                                                </td>
+                                            </tr>
+                                        <?php  
+                                            }
+                                        }
+                                        ?>
+                                        
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <h3>Lịch sử công nợ khách hàng</h3>
+                                    <table border="1" width="100%">
+                                        <thead>
                                             <th>Khách hàng</th>
                                             <th>Ngày đầu kì</th>
                                             <th>Đầu kì</th>
                                             <th>Phát sinh</th>
                                             <th>Cuối kì</th>
+                                            <th>Thanh toán</th>
+                                            <th>Dư nợ</th>
+                                            <th>Ngày thanh toán</th>
                                         </thead>
                                         <tbody>
                                         <?php 
-                                            
                                             foreach ($response as $rp) { 
                                             ?>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
+                                                <tr>                                                    
                                                     <td>
-                                                        <?php 
-                                                        if((float)$rp['noCuoiKi']>0)
+                                                    <?php
+                                                        if($rp['noCuoiKi']>0&&$rp['thanhToan']=='Chưa Thanh Toán')
                                                         {
-                                                        ?>
-                                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>">
-                                                        <?php 
+                                                    ?>
+                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a></td>
+                                                    <?php
                                                         }
-                                                        ?>
-                                                                <?php  echo $rp['hoTenDoiTac']; ?>
-                                                        <?php 
-                                                        if((float)$rp['noCuoiKi']>0)
+                                                        else
                                                         {
-                                                        ?>
-                                                            </a>
-                                                        <?php
+                                                            echo $doiTac->getHoTen();
                                                         }
-                                                        ?>
-                                                    </td>
+                                                    ?>
                                                     <td><?php  echo $rp['ngayDauKi']; ?></td>
                                                     <td><?php  echo $rp['noDauKi']; ?></td>
                                                     <td><?php  echo $rp['noPhatSinh']; ?></td>
                                                     <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                    <td><?php  echo $rp['thanhToan']; ?></td>
+                                                    <td><?php  echo $rp['duNo']; ?></td>
+                                                    <td>
+                                                    <?php  
+                                                        if($rp['ngayThanhToan'])
+                                                        {
+                                                            echo $rp['ngayThanhToan']->format('Y-m-d');
+                                                        }
+                                                    ?>
+                                                    </td>
                                                     
                                                 </tr>
                                             <?php    
@@ -133,56 +155,7 @@
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                        <?php 
-                        foreach ($kenhPhanPhois as $kenhPhanPhoi) { 
-                            if($kenhPhanPhoi['cap']>0)
-                            {
-                        ?>
-                                <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
-                                    <p class="note">
-                                        <table id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="dataTables-example">
-                                        <thead>
-                                            <th><input type="checkbox"/></th>
-                                            <th>Nhà cung cấp</th>
-                                            <th>Ngày đầu kì</th>
-                                            <th>Đầu kì</th>
-                                            <th>Phát sinh</th>
-                                            <th>Cuối kì</th>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                            
-                                            foreach ($response as $rp) { 
-                                                if($kenhPhanPhoi['termTaxonomyId']==$rp['idKenhPhanPhoi'])
-                                                {
-                                                ?>
-                                                    <tr>
-                                                        <td><input type="checkbox"/></td>
-                                                        <td>
-                                                        <?php if((float)$rp['noCuoiKi']>0) { ?>
-                                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
-                                                        <?php } else{ ?>
-                                                        <?php echo $rp['hoTenDoiTac']; ?>
-                                                        <?php } ?>
-                                                        <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                        <td><?php  echo $rp['noDauKi']; ?></td>
-                                                        <td><?php  echo $rp['noPhatSinh']; ?></td>
-                                                        <td><?php  echo $rp['noCuoiKi']; ?></td>
-                                                        
-                                                    </tr>
-                                                <?php    
-                                                }
-                                            }
-                                            ?>
-                                        </tbody>
-                                    </table>
-                                    </p>
-                                </div>
-                        <?php
-                            }
-                        }
-                        ?>
+                        </div>                        
                     </div>
                 </div>
             </div>
