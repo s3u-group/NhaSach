@@ -281,6 +281,15 @@
 
             template = template.replace(/__index__/g, soDong);
             $('#tbNhapHang tbody').append(template);
+            var soDong = $('#tbNhapHang > tbody > tr').length; 
+            if(soDong==0)
+            {                
+                document.getElementById("nhaCungCap").disabled = false;
+            }
+            else
+            {                
+                document.getElementById("nhaCungCap").disabled = true;
+            }
             return false;
         });
 
@@ -344,6 +353,9 @@
     //./Hiển thị, chọn sản phẩm
 
     //Hiển thị, chọn nhà cung cấp
+   /* var soDong = $('#tbNhapHang > tbody > tr').length; 
+    if(soDong==0)
+    { */       
         $('#nhaCungCap').keyup(function()
         {
             var nhaCungCap=$(this).val();            
@@ -393,6 +405,11 @@
 
                 $('#nha-cung-cap-search-result').empty();
             });
+    /*}
+    else
+    {
+        document.getElementById("nhaCungCap").disabled = true;
+    }*/
     //./Hiển thị, chọn nhà cung cấp
 
     });
@@ -400,6 +417,15 @@
     $(document).ready(function(){
       $(document).on('click', '.btnHuy', function(){
         $(this).closest('tr').remove();
+        var soDong = $('#tbNhapHang > tbody > tr').length; 
+        if(soDong==0)
+        {                
+            document.getElementById("nhaCungCap").disabled = false;
+        }
+        else
+        {                
+            document.getElementById("nhaCungCap").disabled = true;
+        }
         return false;
       });
     });
