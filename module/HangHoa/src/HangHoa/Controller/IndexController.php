@@ -984,6 +984,9 @@
                   $listGiaXuat[] = $cell->getValue();
                 }                  
             }
+            /*$t='Sách';
+            var_dump($t);
+            die(var_dump(utf8_decode($t)));*/
             if(trim($giaNhap)==''||$giaNhap==null)
             {
               $listMaSanPham[]=$maSanPham;              
