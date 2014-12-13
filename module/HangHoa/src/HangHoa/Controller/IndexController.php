@@ -10,7 +10,7 @@
  use HangHoa\Entity\CTPhieuNhap;
  use HangHoa\Entity\HoaDon;
  use HangHoa\Entity\CTHoaDon;
- use HangHoa\Entity\GiaXuat;
+ use HangHoa\Entity\GiaXuat; 
  use HangHoa\Form\CreateSanPhamForm;
 
  use HangHoa\Form\XuatHoaDonForm;
@@ -87,7 +87,7 @@
     $this->layout('layout/giaodien');
 
     $entityManager=$this->getEntityManager();    
-    $form= new FileForm($entityManager);    
+    $form= new FileForm($entityManager);
     $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
     $sanPhams=$query->getResult();
     return array(
@@ -1066,7 +1066,7 @@
     {
       return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));
     }
-  }
+  }  
 
   public function exportHangHoaAction()
   {

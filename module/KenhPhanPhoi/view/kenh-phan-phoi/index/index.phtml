@@ -9,8 +9,7 @@
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
                  / Khách hàng /
             </span>
-            <ul class="nav h5a-sidenav nav-list accordion">     
-
+            <ul class="nav h5a-sidenav nav-list accordion">
                 <li>
                     <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
                         <i class="glyphicon glyphicon-open"></i> Khách hàng
@@ -35,36 +34,64 @@
                     <div class="col-sm-6">
                         <div class="pull-right">
                             <div class="btn-group ">
-                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
                                     <i class="fa fa-chevron-left"></i>
                                 </button>                                    
-                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
                             <div class="btn-group ">
-                                <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
+                                <?php
+                                    $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'importKhachHang')));
+                                    $form->setAttribute('role','form');
+                                    $form->setAttribute('name','frmImport');
+                                    $form->setAttribute('style','margin-top: 0px;margin-bottom:0px;');
+                                    $form->prepare();
+                                    echo $this->form()->openTag($form);
+                                    $file=$form->get('file');                                        
+                                    $file->setAttribute('style','display:none');
+                                    $file->setAttribute('onchange','return hamSubmit();');       
+                                    echo $this->formElement($file);
+                                ?>
+                                <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();">Import</button>
                                 <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'exportKhachHang')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                             </div>                                    
                             <a  href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themKhachHang'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
                         </div>
                     </div>
-                </div>
-                <?php 
+                </div>                
+                <?php
                     $flash=$this->flashMessenger();
                     $flash->setMessageOpenFormat('<div%s>
-                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                     <button type="button" id="btFm" class="close" data-dismiss="alert" aria-hidden="true">
                          &times;
                      </button>
                      <ul><li>')
                      ->setMessageSeparatorString('</li><li>')
                      ->setMessageCloseString('</li></ul></div>');
 
-                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
-                 ?>
+                     $error=$flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $error;
+
+                     $info=$flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $info;
+
+                     $default=$flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $default;
+
+                     $success=$flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     echo $success;                     
+                    if($error||$success||$info||$default)
+                    {
+                        echo '
+                        <script type="text/javascript">
+                            setTimeout(function(){
+                                document.getElementById("btFm").click();
+                            },5000);
+                        </script>';                        
+                    }
+                ?>
             </div>
             <div class="box">
                 <ul class="nav nav-tabs" role="tablist" id="myTab">
@@ -80,8 +107,6 @@
                                 echo '<a href="#'.$key.'" role="tab" data-toggle="tab">'.$kenhPhanPhoi['termId']['name'].'</a>';
                             echo '</li>';
                         }
-                        
-                        
                     }
                     ?>                       
                 </ul>
@@ -124,7 +149,7 @@
                                                     echo '</tr>  ';
                                                 }
                                             }
-                                        ?>                                                     
+                                        ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -213,4 +238,27 @@
             "bAutoWidth": true
         });
     });
+
+    Import=function()
+    {
+        document.getElementById('file').click();   
+        return false;     
+    }
+    hamSubmit=function(){
+        var valueFile=document.getElementById('file').value;
+        if(valueFile)
+        {               
+            document.frmImport.submit();
+            return true;           
+        }
+    }
+
+    $('#btPrev').click(function(){
+        document.getElementById('dataTables-example_previous').click();
+    });
+
+    $('#btNext').click(function(){
+        document.getElementById('dataTables-example_next').click();
+    }); 
+
     </script>

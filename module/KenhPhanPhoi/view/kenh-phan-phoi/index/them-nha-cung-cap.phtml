@@ -47,7 +47,7 @@ echo $this->formHidden($idKenhPhanPhoi);
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
-                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="button" id="btHuy1" class="h5a-btn btn btn-default btn-sm">Hủy</button>
                             <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
                         </div>
                     </div>
@@ -187,7 +187,7 @@ echo $this->formHidden($idKenhPhanPhoi);
                 <div class="row bottom20">
                     <div class="col-sm-6 col-sm-offset-6">
                         <div class="pull-right">
-                            <button type="button" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="button" id="btHuy2" class="h5a-btn btn btn-default btn-sm">Hủy</button>
                             <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu
                         </div>
                     </div>
@@ -224,4 +224,10 @@ echo $this->formHidden($idKenhPhanPhoi);
     });
 
     $("#editor").summernote({height:150});
+    $("#btHuy1").click(function(){        
+        $('#editor').code('');
+    });
+    $("#btHuy2").click(function(){
+        $('#editor').code('');
+    });
     </script>

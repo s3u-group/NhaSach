@@ -7,6 +7,7 @@ use Zend\ServiceManager\ServiceManager;
 use HangHoa\Entity\DoiTac;
 use KenhPhanPhoi\Form\ThemKhachHangForm;
 use KenhPhanPhoi\Form\KhachHangFieldset;
+use HangHoa\Form\FileForm;
 use HangHoa\Entity\CTHoaDon;
 
 use PHPExcel;
@@ -61,18 +62,19 @@ use DateTimeZone;
      }
 
   	$this->layout('layout/giaodien');
-    $entityManager=$this->getEntityManager();
-    //$doiTacs=$entityManager->getRepository('HangHoa\Entity\DoiTac')->findAll(); 
+    $entityManager=$this->getEntityManager(); 
+    $form= new FileForm($entityManager);
+
     $query=$entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.kho='.$idKho);
     $doiTacs=$query->getResult();
 
     $taxonomyFunction=$this->TaxonomyFunction();
-    $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
-
+    $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');
 
     return array(
       'kenhPhanPhois'=>$kenhPhanPhois,
       'doiTacs'=>$doiTacs,
+      'form'=>$form,
     );
 
  	}
@@ -104,8 +106,6 @@ use DateTimeZone;
     );
 
   }
-
-
 
   public function chiTietDonHangAction()
   {
@@ -347,7 +347,6 @@ use DateTimeZone;
 
   }
 
-
   public function chiTietKhachHangAction()
   {
 
@@ -447,11 +446,9 @@ use DateTimeZone;
       );
   }
 
-
   // đã sửa tên biến
   public function chiTietNhaCungCapAction()
   {
-
       // kiểm tra đăng nhập
      if(!$this->zfcUserAuthentication()->hasIdentity())
      {
@@ -590,7 +587,6 @@ use DateTimeZone;
 
   }
 
-
   // sửa tên biến
   public function xoaNhaCungCapAction()
   {
@@ -634,6 +630,53 @@ use DateTimeZone;
 
   }
 
+  public function importKhachHangAction()
+  {
+    // kiểm tra đăng nhập
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('application');
+    }
+    // kiểm tra thuộc kho nào và lấy sản phẩm thuộc kho đó theo thuộc tín: "kho"
+    $idKho=1;
+    if($this->zfcUserAuthentication()->hasIdentity())
+    { 
+      $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+    }
+
+    $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();
+    $khachHang= new DoiTac();
+    $request = $this->getRequest();        
+    if($request->isPost())
+    {
+      $post = array_merge_recursive(
+        $request->getPost()->toArray(),
+        $request->getFiles()->toArray()
+      );
+
+      $fileType=$post['file']['type'];
+      $fileName=explode('.',$post['file']['name']);      
+      $type=$fileName[count($fileName)-1];      
+      if($fileType=='application/vnd.ms-excel'||$type=='xls'||$type=='xlsx')
+      {
+        /*code*/
+      //Test-------------        
+        $this->flashMessenger()->addSuccessMessage('Import khách hàng thành công! Test, Chưa hoàn thiện');
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'index'));
+      //Test-------------
+      }
+      else
+      {
+        $this->flashMessenger()->addErrorMessage('Tập tin không hợp lệ');
+        return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'index'));
+      }      
+    }
+    else
+    {
+      return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'index'));
+    }
+  }
 
   public function exportKhachHangAction()
   {
@@ -688,7 +731,6 @@ use DateTimeZone;
 
     return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhaCungCap'));   
   }
-
 
   // fieldName this is array, it have 5 column
   public function data($objPHPExcel, $loaiDoiTac, $tieuDe, $fieldName)
