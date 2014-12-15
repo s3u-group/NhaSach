@@ -90,17 +90,33 @@
                 <?php
                     $flash=$this->flashMessenger();
                     $flash->setMessageOpenFormat('<div%s>
-                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                     <button type="button" id="btFm" class="close" data-dismiss="alert" aria-hidden="true">
                          &times;
                      </button>
                      <ul><li>')
                      ->setMessageSeparatorString('</li><li>')
                      ->setMessageCloseString('</li></ul></div>');
 
-                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     $error=$flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $error;
+
+                     $info=$flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $info;
+
+                     $default=$flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $default;
+
+                     $success=$flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     echo $success;                     
+                    if($error||$success||$info||$default)
+                    {
+                        echo '
+                        <script type="text/javascript">
+                            setTimeout(function(){
+                                document.getElementById("btFm").click();
+                            },5000);
+                        </script>';                        
+                    }
                 ?>
             </div>            
             <div class="box">

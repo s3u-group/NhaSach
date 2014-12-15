@@ -136,7 +136,7 @@ class Module
 
         $zfcServiceEvents->attach('register.post', function($e) {
             $user = $e->getParam('user');
-        });
+        });        
     }
 
     public function getConfig()
