@@ -20,6 +20,31 @@
         table {display: table;}
     }
 </style>
+<script>
+   
+    kiemTracheckbox = function(){
+        var tam=document.getElementById("loaiGia").checked;
+        if(tam)
+        {
+            // có check thì hiển thị và giá trị bằng 1
+            document.getElementById("loaiGia").value=1;
+            document.getElementById("trGiaBia").hidden=false;
+            document.getElementById("trChiecKhau").hidden=false;
+            document.getElementById('trGiaNhap').hidden=true;
+        }
+        else
+        {
+            // không có check thì ẩn và giá trị bằng 0
+            document.getElementById("loaiGia").value=0;
+            document.getElementById("trGiaBia").hidden=true;
+            document.getElementById("trChiecKhau").hidden=true;
+            document.getElementById('trGiaNhap').hidden=false;
+        }
+        return true;
+    }
+
+</script>
+
 <?php
      
      $this->headTitle('Nhập hàng');
@@ -179,13 +204,53 @@
                     </div>
                 </div>
                 <div class="form-group">
+                    <label class="col-sm-4 right" for="form-field-4"></label>
+                    <div class="col-sm-7"> 
+                         <?php                                                                  
+                            $loaiGia=$form->get('loaiGia');
+                            $loaiGia->setAttribute('id','loaiGia');
+                            $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
+                            echo $this->formElement($loaiGia);                                               
+                        ?>                                   
+                       <!--  <input type="checkbox" value="0" onChange="return kiemTracheckbox();" name="loaiChiecKhau" id="loaiChiecKhau"> -->
+                        Sản phẩm thuộc loại có giá bìa
+                    </div>
+                </div>
+                <div class="form-group" id="trGiaNhap">
                     <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
                     <div class="col-sm-7">                                    
                         <?php
+                            $form->get('giaNhap')->setAttribute('value','0');
+                            $form->get('giaNhap')->setAttribute('id','giaNhap');
+                            $form->get('giaNhap')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('giaNhap'));
                         ?>
                     </div>
                 </div>
+                <div class="form-group" id="trChiecKhau" hidden="true">
+                    <label class="col-sm-4 right" for="form-field-4">Chiếc khấu (%)</label>
+                    <div class="col-sm-7">                                    
+                        <?php
+
+                            $form->get('chiecKhau')->setAttribute('value','0');
+                            $form->get('chiecKhau')->setAttribute('id','chiecKhau');
+                            $form->get('chiecKhau')->setAttribute('class','h5a-input form-control input-sm');
+                            echo $this->formElement($form->get('chiecKhau'));
+                        ?>
+                    </div>
+                </div>
+                <div class="form-group" id="trGiaBia" hidden="true">
+                    <label class="col-sm-4 right" for="form-field-4">Giá bìa</label>
+                    <div class="col-sm-7">                                    
+                        <?php
+                            $form->get('giaBia')->setAttribute('value','0');
+                            $form->get('giaBia')->setAttribute('id','giaBia');
+                            $form->get('giaBia')->setAttribute('class','h5a-input form-control input-sm');
+                            echo $this->formElement($form->get('giaBia'));
+                        ?>
+                    </div>
+                </div>
+                
                 <div class="form-group">
                     <div class="col-sm-10 col-sm-offset-1">
                         <button type="button" id="btnNhapHang" class="btn h5a-btn btn-primary full">Nhập hàng</button>
@@ -258,6 +323,8 @@
             "bInfo": true,
             "bAutoWidth": true
         });
+        $('#loaiGia').val(0);
+        
         $('#btnNhapHang').click(function(){            
             var idSanPham=$('#idSanPham').val();
             var maHang=$('#idMaHang').val();
@@ -267,6 +334,27 @@
             var donViTinh=$('#donViTinh').val();
             var idNhaCungCap=$('#idNhaCungCap').val();
             var nhaCungCap=$('#nhaCungCap').val();
+            var loaiGia=$('#loaiGia').val();
+            var giaBia=$('#giaBia').val();
+            var chietKhau=$('#chiecKhau').val();            
+            
+            if(loaiGia==1)
+            {
+                if(giaBia==0||giaBia==''||giaBia==null||
+                   chietKhau==0||chietKhau==''||chietKhau==null)
+                {
+                    alert('Vui lòng điền đầy đủ thông tin');
+                    return false;
+                }
+                var loiNhuan=(parseFloat(giaBia)*parseFloat(chietKhau))/100;   
+                giaNhap=parseFloat(giaBia)-parseFloat(loiNhuan);
+
+            }
+            else
+            {
+                chietKhau=0;
+                giaBia=0;
+            }
 
             if(idSanPham==''||maHang==''||tenHang==''||donViTinh==''||soLuong==''||giaNhap==''||nhaCungCap==''||idNhaCungCap==''||idSanPham==null||maHang==null||tenHang==null||donViTinh==null||soLuong==null||giaNhap==null||nhaCungCap==null||idNhaCungCap==null)
             {
@@ -286,13 +374,17 @@
                 '<td>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
                     '<span>'+giaNhap+'</span>'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;loaiGia&#x5D;" value="'+loaiGia+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;giaBia&#x5D;" value="'+giaBia+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;chiecKhau&#x5D;" value="'+chietKhau+'">'+
+                    
                 '</td>'+
                 '<td style="text-align:left;" class="an">'+
                     '<a class="btnHuy"><img src="<?php echo $this->basePath(); ?>/img/delete.png" width="30px" height="30px"></a>'+
                 '</td>'+
                 '</tr>';
 
-                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);                
+                $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);
                 $('input[name="phieu-nhap[idUserNv][userId]"]').val(1);
 
             template = template.replace(/__index__/g, soDong);
@@ -343,7 +435,7 @@
                         });
 
                         $.each(data, function(key, val){
-                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span><span class="hide">'+val.donViTinh+'</span></div>');
+                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span><span class="hide">'+val.donViTinh+'</span><span class="hide">'+val.loaiGia+'</span><span class="hide">'+val.giaBia+'</span><span class="hide">'+val.chietKhau+'</span></div>');
                             // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
                         })
                     });
@@ -357,12 +449,26 @@
             var ma = $(this).find('span:eq(1)').text();
             var ten = $(this).find('span:eq(2)').text();            
             var giaNhap = $(this).find('span:eq(3)').text();
-            var donViTinh = $(this).find('span:eq(4)').text();            
+            var donViTinh = $(this).find('span:eq(4)').text();   
+            var loaiGia=$(this).find('span:eq(5)').text();   
+            var giaBia=$(this).find('span:eq(6)').text();   
+            var chietKhau=$(this).find('span:eq(7)').text();   
+            
             $('#idSanPham').val(id);
             $('#idMaHang').val(ma);
             $('#tenHang').val(ten);
             $('#giaNhap').val(giaNhap);
             $('#donViTinh').val(donViTinh);
+            $('#loaiGia').val(loaiGia);
+            $('#giaBia').val(giaBia);
+            $('#chiecKhau').val(chietKhau);
+            if(parseInt(loaiGia)==1)
+            {
+                $("#loaiGia").prop("checked", true);
+                $("#loaiGia").val(1);
+                kiemTracheckbox();
+            }
+            
 
             $('#ma-hang-search-result').empty();
         });
@@ -374,6 +480,11 @@
     { */       
         $('#nhaCungCap').keyup(function()
         {
+
+            if($('#idNhaCungCap').val()=='')
+            {
+                $('#nha-cung-cap-search-result').empty();
+            }
             var nhaCungCap=$(this).val();            
             if(xhr1 && xhr1.readyState != 4){
                 xhr1.abort(); //huy lenh ajax truoc do
@@ -411,6 +522,7 @@
 
         $('#nha-cung-cap-search-result').on('click', '.list-group-item', function()
             {
+                $('#tbNhapHang > tbody > tr').remove();
                 var idDoiTac = $(this).find('span:eq(0)').text();
                 var hoTen = $(this).find('span:eq(1)').text();
                 var diaChi = $(this).find('span:eq(2)').text();

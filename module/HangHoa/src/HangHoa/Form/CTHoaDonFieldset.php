@@ -45,6 +45,10 @@ class CTHoaDonFieldset  extends Fieldset implements InputFilterProviderInterface
          $sanPhamFieldset->remove('nhan');
          $sanPhamFieldset->remove('hinhAnh');
          $sanPhamFieldset->remove('tonKho');
+         $sanPhamFieldset->remove('loaiGia');
+         $sanPhamFieldset->remove('giaNhap');
+         $sanPhamFieldset->remove('giaBia');
+         $sanPhamFieldset->remove('chiecKhau');
          $this->add($sanPhamFieldset); 
 
          $this->add(array(

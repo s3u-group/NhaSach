@@ -49,7 +49,7 @@
                     </div>
                 
                 </div>
-                &nbsp;&nbsp; Tên khách hàng: <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a>
+                &nbsp;&nbsp; Tên nhà cung cấp: <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToanNhaCungCap','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a>
                 <div class="box">
                     <ul class="nav nav-tabs" role="tablist" id="myTab">
                         <li role="presentation" class="active">
@@ -72,17 +72,17 @@
                                         <tbody>
                                         <?php
                                         //die(var_dump($hoaDons));
-                                        foreach ($hoaDons as $hoaDon) {
+                                        foreach ($phieuNhaps as $phieuNhap) {
                                        
-                                            foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+                                            foreach ($phieuNhap->getCtPhieuNhaps() as $ctPhieuNhap) {
                                         ?>
                                             <tr>
-                                                <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>"><?php echo '#'.$hoaDon->getMaHoaDon(); ?></a></td>
-                                                <td><?php echo $ctHoaDon->getIdSanPham()->getTenSanPham(); ?></td>
-                                                <td><?php echo $ctHoaDon->getGia(); ?></td>
-                                                <td><?php echo $ctHoaDon->getSoLuong(); ?></td>
+                                                <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietPhieuNhap','id'=>$phieuNhap->getIdPhieuNhap())); ?>"><?php echo '#'.$phieuNhap->getMaPhieuNhap(); ?></a></td>
+                                                <td><?php echo $ctPhieuNhap->getIdSanPham()->getTenSanPham(); ?></td>
+                                                <td><?php echo $ctPhieuNhap->getGiaNhap(); ?></td>
+                                                <td><?php echo $ctPhieuNhap->getSoLuong(); ?></td>
                                                 <td>
-                                                    <?php $thanhTien=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong(); 
+                                                    <?php $thanhTien=(float)$ctPhieuNhap->getGiaNhap()*(float)$ctPhieuNhap->getSoLuong(); 
                                                         echo $thanhTien;
                                                     ?>
                                                 </td>
@@ -96,7 +96,7 @@
                                     </table>
                                 </div>
                                 <div class="row">
-                                    <h3>Lịch sử công nợ khách hàng</h3>
+                                    <h3>Lịch sử công nợ nhà cung cấp</h3>
                                     <table border="1" width="100%">
                                         <thead>
                                             <th>Khách hàng</th>
@@ -118,7 +118,7 @@
                                                         if($rp['noCuoiKi']>0&&$rp['thanhToan']=='Chưa Thanh Toán')
                                                         {
                                                     ?>
-                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a></td>
+                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToanNhaCungCap','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a></td>
                                                     <?php
                                                         }
                                                         else

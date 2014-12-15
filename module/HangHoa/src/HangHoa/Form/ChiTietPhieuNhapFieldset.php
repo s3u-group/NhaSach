@@ -41,7 +41,7 @@ class ChiTietPhieuNhapFieldset extends Fieldset implements InputFilterProviderIn
                 'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',
                 //'placeholder'=>'Giá nhập',
-                'min'=>0,
+                //'min'=>0,
             ),
          ));
 
@@ -59,6 +59,29 @@ class ChiTietPhieuNhapFieldset extends Fieldset implements InputFilterProviderIn
             ),
          ));
 
+        $this->add(array(
+             'type' => 'Text',
+             'name' => 'loaiGia',
+             'options' => array(
+                    'label' => 'A checkbox',                     
+             )
+         ));
+
+          $this->add(array(
+             'name' => 'giaBia',
+             'type' => 'Text',
+             'options' => array(                 
+             ),             
+         ));
+
+          $this->add(array(
+             'name' => 'chiecKhau',
+             'type' => 'Text',
+             'options' => array(                 
+             ),             
+         ));
+
+
          $sanPhamFieldset = new SanPhamFieldset($objectManager);
          $sanPhamFieldset->setUseAsBaseFieldset(true);
          $sanPhamFieldset->setName('idSanPham');
@@ -67,7 +90,11 @@ class ChiTietPhieuNhapFieldset extends Fieldset implements InputFilterProviderIn
          $sanPhamFieldset->remove('nhan');
          $sanPhamFieldset->remove('hinhAnh');
          $sanPhamFieldset->remove('tonKho');
+         //$sanPhamFieldset->remove('loaiGia');
          $this->add($sanPhamFieldset);
+
+
+         
     }
     public function getInputFilterSpecification()
     {

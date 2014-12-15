@@ -95,12 +95,39 @@ class CreateNhapHangForm extends Form
              'name' => 'giaNhap',
              'type' => 'Number',             
              'attributes'=>array(
-                'required'=>'required',
+                //'required'=>'required',
                 'class'   => 'h5a-input form-control input-sm',                
-                'min'=>0,                
+                //'min'=>0,                
                 'id'=>'giaNhap',
             ),
          ));
+
+        $this->add(array(
+             'type' => 'Zend\Form\Element\Checkbox',
+             'name' => 'loaiGia',
+             'options' => array(
+                     'label' => 'A checkbox',
+                     'use_hidden_element' => true,
+                     'checked_value' => 1,
+                     'unchecked_value' => 0,
+             )
+         ));
+
+          $this->add(array(
+             'name' => 'giaBia',
+             'type' => 'Text',
+             'options' => array(                 
+             ),             
+         ));
+
+          $this->add(array(
+             'name' => 'chiecKhau',
+             'type' => 'Text',
+             'options' => array(                 
+             ),             
+         ));
+
+
 
         $this->add(array(
              'name' => 'submit',

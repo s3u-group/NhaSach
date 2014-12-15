@@ -117,9 +117,13 @@
     if($request->isPost())
     {
       $tam=array();
-      if($request->getPost()['dieuKienLoc'])    
+      $post=$request->getPost();
+      $dieuKienLoc=$post['dieuKienLoc'];
+      $locHangHoa=$post['locHangHoa'];
+
+      if($dieuKienLoc)    
       {
-        if($request->getPost()['locHangHoa']=='locTheoLoaiHang')
+        if($locHangHoa=='locTheoLoaiHang')
         {
           //die(var_dump('Lọc theo loại hàng'));
           //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
@@ -128,7 +132,7 @@
           $sanPhams=$query->getResult();
           foreach ($sanPhams as $sanPham) 
           {
-            if($sanPham->getIdLoai()->getTermId()->getName()==$request->getPost()['dieuKienLoc'])
+            if($sanPham->getIdLoai()->getTermId()->getName()==$dieuKienLoc)
             {
               $tam[]=$sanPham;
             }
@@ -137,10 +141,10 @@
           $sanPhams=$tam;
           //die(var_dump($sanPhams));          
         }
-        elseif($request->getPost()['locHangHoa']=='locTheoNhanHang')
+        elseif($locHangHoa=='locTheoNhanHang')
         {
            //die(var_dump('Lọc theo nhãn hàng'));
-          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.nhan=\''.$request->getPost()['dieuKienLoc'].'\'');
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.nhan=\''.$dieuKienLoc.'\'');
           $sanPhams = $query->getResult(); // array of CmsArticle objects    
           
         }
@@ -237,12 +241,14 @@
               $giaXuats=$query->getResult();
               foreach ($giaXuats as $giaXuat)
               {
-                $giaXuat->setGiaXuat($request->getPost()[$kenhPhanPhoi['termTaxonomyId']]);
+                $post=$request->getPost();
+                $giaXuat->setGiaXuat($post[$kenhPhanPhoi['termTaxonomyId']]);
                 $entityManager->flush();
               }                          
             }
           }
         }
+
         
      } 
      return array(
@@ -313,16 +319,23 @@
     $request = $this->getRequest();
     if($request->isPost())
     {      
-      $form->setData($request->getPost());      
+      //die(var_dump($request->getPost()['phieu-nhap']['ctPhieuNhaps'][0]));
+      $form->setData($request->getPost());   
+
       if($form->isValid())
       {
         $taxonomyLoai=$this->TaxonomyFunction();
         $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');     
-
+        //die(var_dump($request->getPost()));
         foreach ($phieuNhap->getCtPhieuNhaps() as $cTPhieuNhap) 
         { 
+          
           $giaNhap=$cTPhieuNhap->getGiaNhap();
+          $loaiGia=$cTPhieuNhap->getIdSanPham()->getLoaiGia();
+          $giaBia=$cTPhieuNhap->getIdSanPham()->getGiaBia();
+          $chietKhau=$cTPhieuNhap->getIdSanPham()->getChiecKhau();
           $soLuong=$cTPhieuNhap->getSoLuong();
+
           $idUserNv=$this->zfcUserAuthentication()->getIdentity();
           //Cập nhật Phiếu Nhập
           $user=$entityManager->getRepository('Application\Entity\SystemUser')->find($idUserNv);
@@ -375,8 +388,17 @@
                 {
                   $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
                   $giaXuats = $query->getResult();
-                  foreach ($giaXuats as $giaXuat) {  
-                    $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                  foreach ($giaXuats as $giaXuat) { 
+                    if($loaiGia==1)
+                    {
+                      $loiNhuan=(((float)$giaBia*(float)$kenhPhanPhoi['description'])/100);
+                      $gx=(float)$giaBia-(float)$loiNhuan;
+
+                    } 
+                    else
+                    {
+                      $gx=(float)$giaNhap+(((float)$giaNhap*(float)$kenhPhanPhoi['description'])/100);
+                    }                    
                     $giaXuat->setGiaXuat($gx);
                     $entityManager->flush();
                   }
@@ -391,6 +413,13 @@
         }
         $this->flashMessenger()->addSuccessMessage('Nhập hàng thành công!');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));        
+      }
+      else
+      {
+        die(var_dump($form->getMessages()['phieu-nhap']['ctPhieuNhaps'][0]));
+        $this->flashMessenger()->addErrorMessage('Nhập hàng thất bại!');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));
+        //die(var_dump($form->getMessages()['phieu-nhap']['ctPhieuNhaps'][0]['idSanPham']['loaiChiecKhau']));
       }
     }    
     return array(       
@@ -474,7 +503,14 @@
         $entityManager->flush();
         $this->flashMessenger()->addSuccessMessage('Xuất hàng thành công!');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'xuatHang'));        
-      }      
+      } 
+      else
+      {
+        die(var_dump($form->getMessages()['hoa-don']['ctHoaDons']));
+        $this->flashMessenger()->addErrorMessage('Xuất hàng thất bại');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'xuatHang'));      
+
+      }     
     }
     return array('form'=>$form);
   }
@@ -535,9 +571,23 @@
           {
             $sanPham->setHinhAnh('photo_default.png');
           }     
-          
+
+         
           $sanPham->setTonKho(0);
-          $sanPham->setGiaNhap(0);
+          if($sanPham->getGiaNhap()==null||$sanPham->getGiaNhap()=='')
+          {
+            if($sanPham->getGiaBia()==null||$sanPham->getGiaBia()=='')
+            {
+              $sanPham->setGiaBia(0);
+            }
+            if($sanPham->getChiecKhau()==null||$sanPham->getChiecKhau()=='')
+            {
+              $sanPham->setChiecKhau(0);
+            }
+            $loiNhuan=((float)($sanPham->getChiecKhau())*(float)($sanPham->getGiaBia()))/100;
+            $giaNhap=(float)$sanPham->getGiaBia()-(float)$loiNhuan;
+            $sanPham->setGiaNhap($giaNhap);
+          }
           $sanPham->setKho($idKho);
           $entityManager->persist($sanPham);
           $entityManager->flush(); 
@@ -558,8 +608,17 @@
               $giaXuat=new GiaXuat();
               $giaXuat->setIdGiaXuat('');
               $giaXuat->setIdSanPham($sanPhams[0]->getIdSanPham());
-              $gx=(int)$sanPhams[0]->getGiaNhap()+(((int)$sanPhams[0]->getGiaNhap()*(int)$kenhPhanPhoi['description'])/100);
-              $giaXuat->setGiaXuat($gx);
+              if($sanPhams[0]->getGiaBia()&&$sanPhams[0]->getGiaBia()>0)
+              {
+                $gx=(int)$sanPhams[0]->getGiaBia()-(((int)$sanPhams[0]->getGiaBia()*(int)$kenhPhanPhoi['description'])/100);
+                $giaXuat->setGiaXuat($gx);
+              }
+              else
+              {
+                $gx=(int)$sanPhams[0]->getGiaNhap()+(((int)$sanPhams[0]->getGiaNhap()*(int)$kenhPhanPhoi['description'])/100);
+                $giaXuat->setGiaXuat($gx);
+              }
+                
               $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
               
               $entityManager->persist($giaXuat);
@@ -579,8 +638,14 @@
             'kiemTraTonTai'=>1,
           );          
         }
-      }      
+      }  
+      else
+      {
+        $this->flashMessenger()->addErrorMessage('Thêm sản phẩm thất bại!');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'themSanPham'));
+      }    
     }
+    
 
     return array(
       'form' => $form, 
@@ -687,7 +752,10 @@
             'donViTinh'=>$sanPham->getDonViTinh(),
             'tonKho'=>$sanPham->getTonKho(),
             'giaNhap'=>$sanPham->getGiaNhap(),
-            'giaXuat'=>$giaXuat,
+            'giaXuat'=>$giaXuat,     
+            'loaiGia'=>$sanPham->getLoaiGia(),
+            'giaBia' =>$sanPham->getGiaBia(),
+            'chietKhau' =>$sanPham->getChiecKhau(),
           );
         }
       }
@@ -1140,11 +1208,12 @@
                                   ->getStyle('A4:E4')->getFont()->setBold(true);
     $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-    if($this->getRequest()->getPost()['coLocSanPham'])
+    $post= $this->getRequest()->getPost();
+    if($post['coLocSanPham'])
     {
-      if($this->getRequest()->getPost()['idSanPham'])
+      if($post['idSanPham'])
       {
-        foreach ($this->getRequest()->getPost()['idSanPham'] as $key => $idSanPham) {
+        foreach ($post['idSanPham'] as $key => $idSanPham) {
           $index=$key+5;
           $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($idSanPham);
           $objPHPExcel->getActiveSheet()->setCellValue('A'.$index, $sanPham->getTenSanPham())

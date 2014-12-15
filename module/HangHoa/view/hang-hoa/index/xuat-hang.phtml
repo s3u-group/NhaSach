@@ -375,6 +375,7 @@ $this->headTitle($title);
 
         $('#search-result').on('click', '.list-group-item', function(){
 
+            $('#tbXuatHang > tbody > tr').remove();
             var id = $(this).find('span:eq(0)').text(); 
             var ten = $(this).find('span:eq(1)').text();
             var diaChi = $(this).find('span:eq(2)').text();
