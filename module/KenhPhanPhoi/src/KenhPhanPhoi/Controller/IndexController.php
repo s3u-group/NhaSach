@@ -221,7 +221,6 @@ use DateTimeZone;
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
           {
-
             return array(
               'form' => $form, 
               'kenhPhanPhois'=>$kenhPhanPhois,
@@ -248,6 +247,7 @@ use DateTimeZone;
             $doiTac->setKho($idKho);
             $entityManager->persist($doiTac);
             $entityManager->flush();
+            
             $this->flashMessenger()->addSuccessMessage('Thêm khách hàng thành công!');
             return $this->redirect()->toRoute('kenh_phan_phoi/crud');   
           }          
