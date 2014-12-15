@@ -93,12 +93,13 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'attributes'=>array('required'=>'required'),
          ));
 
+
          $this->add(array(
              'name' => 'hinhAnh',
              'type' => 'Zend\Form\Element\File',
              'options' => array( 
               )             
-         ));
+         ));        
 
         $this->add(array(
              'name' => 'tonKho',
@@ -109,10 +110,38 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
 
          $this->add(array(
              'name' => 'giaNhap',
-             'type' => 'Hidden',
+             'type' => 'Text',
+             'options' => array(    
+                //'min'=>0,
+             ),             
+         ));
+
+          $this->add(array(
+             'name' => 'giaBia',
+             'type' => 'Text',
              'options' => array(                 
              ),             
          ));
+
+          $this->add(array(
+             'name' => 'chiecKhau',
+             'type' => 'Text',
+             'options' => array(                 
+             ),             
+         ));
+
+         $this->add(array(
+             'type' => 'Zend\Form\Element\Checkbox',
+             'name' => 'loaiGia',
+             'options' => array(
+                 'label' => 'A checkbox',
+                 'use_hidden_element' => true,
+                 'checked_value' => 1,
+                 'unchecked_value' => 0,
+                 'disable_inarray_validator' => true,   
+             )
+         ));
+
     }
 
     public function getInputFilterSpecification()

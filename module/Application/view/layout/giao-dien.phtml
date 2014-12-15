@@ -93,7 +93,7 @@
                                 <i class="glyphicon glyphicon-road"></i>
                                <b>
                                     <?php 
-                                        $kho=$this->GetTenKho($this->zfcUserIdentity()->getId()); 
+                                        $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho()); 
                                         echo $kho->getTenKho();
                                     ?>
                                 </b>
@@ -113,48 +113,64 @@
                                 <?php
                                 if($this->zfcUserIdentity())
                                 {
-                                    $responses=$this->GetCongNoQuaHan($this->zfcUserIdentity()->getId());
+                                    $responses=$this->GetCongNoQuaHan($this->zfcUserIdentity()->getKho());
                                     $soDonHanQuaHan=count($responses['response']);
                                     echo $soDonHanQuaHan;
+                                }
+                                else
+                                {
+                                    echo '0';
                                 }
                                 ?>
                                 </span>
                         </a>
-                        <ul class="dropdown-menu" id="notifications">
-                            <li class="dropdown-header">
-                                <i class="fa fa-bell"></i> Thông báo
-                            </li>
+                                                
                         
                             <?php
-                            if($soDonHanQuaHan>0)
-                            { 
+                            if($this->zfcUserIdentity())
+                            { ?>
+                                <ul class="dropdown-menu" id="notifications">   
+                                <li class="dropdown-header">
+                                    <i class="fa fa-bell"></i> Thông báo
+                                </li>
+                            <?php
+
+                                if($soDonHanQuaHan>0)
+                                { 
+                                    
+                                    foreach ($responses['response'] as $response) {
+                                    ?>
+                                        <li>
+                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$response['idDoiTac'])); ?>">
+                                                <i class="image fa fa-flag"></i>
+                                                <p><i class="fa fa-clock-o"></i> 
+                                                    <small><b><?php echo $response['hoTenDoiTac']; ?></b>.</small>
+                                                    <br><small>Số ngày quá hạn: <b style="color:red"><?php echo $response['soNgayQuaHan']; ?></b>.
+                                                    <br></small>Tồng tiền chưa thanh toán: <b style="color:red"><?php echo $response['noCuoiKi']; ?></b></p>
+                                            </a>
+                                        </li>
+                                    <?php                                    
+                                    }
                                 
-                                foreach ($responses['response'] as $response) {
+                                }
+                                else
+                                {
                                 ?>
                                     <li>
-                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$response['idDoiTac'])); ?>">
-                                            <i class="image fa fa-flag"></i>
-                                            <p><i class="fa fa-clock-o"></i> 
-                                                <small><b><?php echo $response['hoTenDoiTac']; ?></b>.</small>
-                                                <br><small>Số ngày quá hạn: <b style="color:red"><?php echo $response['soNgayQuaHan']; ?></b>.
-                                                <br></small>Tồng tiền chưa thanh toán: <b style="color:red"><?php echo $response['noCuoiKi']; ?></b></p>
-                                        </a>
+                                        <p>You have no notifications.</p>
                                     </li>
-                                <?php                                    
+                                <?php
                                 }
-                            
+                                echo '</ul>';
                             }
                             else
                             {
-                            ?>
-                                <li>
-                                    <p>You have no notifications.</p>
-                                </li>
-                            <?php
+                                echo '<ul></ul>';
                             }
                             ?>
-                        </ul>
+                        
                     </li>
+                    <!--
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="fa fa-envelope-o shake"></i> <span class="badge blue">2</span>
@@ -180,6 +196,7 @@
                             </li>
                         </ul>
                     </li>
+                    -->
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             
@@ -194,17 +211,11 @@
                             }
                             ?>
                             <b class="caret"></b>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#"><i class="fa fa-edit"></i> Profile</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-lock"></i> Security</a>
-                            </li>
+                        </a>                            
+                        <?php if($this->zfcUserIdentity()){ ?>
+                        <ul class="dropdown-menu">      
                             <li class="divider"></li>
                             <li class="dropdown-header">Quick Adds</li>
-                            <?php if($this->zfcUserIdentity()){ ?>
                             <li>
                                 <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themKhachHang')); ?>"><i class="fa fa-tag"></i> Thêm khách hàng</a>
                             </li>
@@ -225,21 +236,9 @@
                             <li>
                                 <a href="<?php echo $this->url('application/default',array('controller'=>'Index','action'=>'logout'));?>"><i class="fa fa-signout"></i> Log out</a>
                             </li>
-                            <?php } else { ?>
-                            <li>
-                                <a href="#"><i class="fa fa-tag"></i> Add Product</a>
-                            </li>
-                            <li>
-                                <a href="#"><i class="fa fa-user"></i> Add User</a>
-                            </li>
-
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Settings</li>
-                            <li>
-                                <a href="#"><i class="fa fa-signout"></i> Log out</a>
-                            </li>
-                            <?php } ?>
                         </ul>
+                        <?php } ?>
+                        
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->

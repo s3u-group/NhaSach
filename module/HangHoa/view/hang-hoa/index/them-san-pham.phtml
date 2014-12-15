@@ -1,3 +1,27 @@
+<script>
+   
+    kiemTracheckbox = function(){
+        var tam=document.getElementById("loaiGia").checked;
+        if(tam)
+        {
+            // có check thì hiển thị và giá trị bằng 1
+            document.getElementById("loaiGia").value=1;
+            document.getElementById("trGiaBia").hidden=false;
+            document.getElementById("trChiecKhau").hidden=false;
+            document.getElementById('trGiaNhap').hidden=true;
+        }
+        else
+        {
+            // không có check thì ẩn và giá trị bằng 0
+            document.getElementById("loaiGia").value=0;
+            document.getElementById("trGiaBia").hidden=true;
+            document.getElementById("trChiecKhau").hidden=true;
+            document.getElementById('trGiaNhap').hidden=false;
+        }
+        return true;
+    }
+
+</script>
 <?php
  $this->headTitle('Thêm sản phẩm');
 
@@ -43,6 +67,21 @@
                         </div>
                     </div>
                 </div>
+                <?php
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                ?>
             </div>
             <div class="row">
                 <table class="item">
@@ -75,26 +114,6 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Mô tả</td>
-                            <td>                                        
-                                <?php 
-                                    $moTa=$sanPham->get('moTa');
-                                    $moTa->setAttribute('class','form-control h5a');
-                                    $moTa->setAttribute('id','editor');
-                                    echo $this->formElement($moTa);                                                
-                                ?>
-                            </td>
-                        <tr>
-                            <td>Hình ảnh</td>
-                            <td>
-                                <?php                                                
-                                    $hinhAnh=$sanPham->get('hinhAnh');
-                                    $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
-                                    echo $this->formElement($hinhAnh);                                                
-                                ?>
-                            </td>
-                        </tr>                                    
-                        <tr>
                             <td>Nhãn</td>
                             <td class="red">                                                                       
                                 <?php 
@@ -126,7 +145,72 @@
                                     echo $this->formElement($donViTinh);                                                
                                 ?>
                             </td>
+                        </tr>  
+                        <tr>
+                            <td></td>
+                            <td>
+                                <?php                                                                  
+                                    $loaiGia=$sanPham->get('loaiGia');
+                                    $loaiGia->setAttribute('id','loaiGia');
+                                    $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
+
+                                    echo $this->formElement($loaiGia);                                               
+                                ?>
+                                <!--<input type="checkbox" id='loaiChiecKhau' name="loaiChiecKhau" onChange="return kiemTracheckbox();">-->
+                                Sản phẩm thuộc loại có giá in trên bìa
+                            </td>
+                        </tr> 
+                        <tr id="trGiaNhap">
+                            <td>Giá nhập</td>
+                            <td>
+                                <?php                                                                  
+                                    $giaNhap=$sanPham->get('giaNhap');
+                                    $giaNhap->setAttribute('class','h5a-input form-control input-sm');
+                                    echo $this->formElement($giaNhap);                                               
+                                ?>
+                            </td>
+                        </tr> 
+                        <tr hidden="true" id='trGiaBia'>
+                            <td>Giá bìa</td>
+                            <td>
+                                <?php                                                                  
+                                    $giaNhap=$sanPham->get('giaBia');
+                                    $giaNhap->setAttribute('class','h5a-input form-control input-sm');
+                                    echo $this->formElement($giaNhap);                                               
+                                ?>
+                            </td>
+                        </tr> 
+                        <tr hidden='true' id='trChiecKhau'>
+                            <td>Chiếc khấu (%)</td>
+                            <td>
+                                <?php                                                                  
+                                    $chiecKhau=$sanPham->get('chiecKhau');
+                                    $chiecKhau->setAttribute('class','h5a-input form-control input-sm');
+                                    echo $this->formElement($chiecKhau);                                               
+                                ?>                               
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td>Mô tả</td>
+                            <td>                                        
+                                <?php 
+                                    $moTa=$sanPham->get('moTa');
+                                    $moTa->setAttribute('class','form-control h5a');
+                                    $moTa->setAttribute('id','editor');
+                                    echo $this->formElement($moTa);                                                
+                                ?>
+                            </td>
+                        <tr>
+                            <td>Hình ảnh</td>
+                            <td>
+                                <?php                                                
+                                    $hinhAnh=$sanPham->get('hinhAnh');
+                                    $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
+                                    echo $this->formElement($hinhAnh);                                                
+                                ?>
+                            </td>
                         </tr>                                    
+                                                         
                     </tbody>
                 </table>                            
             </div>
@@ -168,8 +252,10 @@ $(document).ready(function() {
         "bLengthChange": true,
         "bFilter": true,
         "bInfo": true,
-        "bAutoWidth": true
+        "bAutoWidth": true,
     });
+    $('#loaiGia').val(0);
+
 });
 
 $("#editor").summernote({height:150});

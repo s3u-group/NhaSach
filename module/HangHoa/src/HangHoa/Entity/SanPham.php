@@ -76,6 +76,22 @@
 		private $giaNhap;
 
 		/**
+		 * @ORM\Column(name="loai_gia", type="integer")
+		 */
+
+		private $loaiGia;
+
+		/**
+		* @ORM\Column(name="gia_bia", type="float")
+		*/
+		private $giaBia;
+
+		/**
+		* @ORM\Column(name="chiec_khau", type="float")
+		*/
+		private $chiecKhau;
+
+		/**
 		 * @ORM\OneToMany(targetEntity="HangHoa\Entity\CTHoaDon", mappedBy="id_san_pham")
 		 */
 		private $ctHoaDons;
@@ -91,6 +107,16 @@
 		 */
 
 		private $kho;
+
+		public function setLoaiGia($loaiGia)
+		{
+			$this->loaiGia=$loaiGia;
+		}
+
+		public function getLoaiGia()
+		{
+			return $this->loaiGia;
+		}
 
 		public function setKho($kho)
 	    {
@@ -206,6 +232,27 @@
 		public function getGiaNhap()
 		{
 			return $this->giaNhap;
-		}		
+		}	
+
+
+		public function setGiaBia($giaBia)
+		{
+			$this->giaBia=$giaBia;
+		}	
+
+		public function getGiaBia()
+		{
+			return $this->giaBia;
+		}
+
+		public function setChiecKhau($chiecKhau)
+		{
+			$this->chiecKhau=$chiecKhau;
+		}
+
+		public function getChiecKhau()
+		{
+			return $this->chiecKhau;
+		}
 	}
 ?>

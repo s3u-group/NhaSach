@@ -93,6 +93,7 @@
                                             <th>Đầu kì</th>
                                             <th>Phát sinh</th>
                                             <th>Cuối kì</th>
+                                            <th>Chi tiết</th>
                                         </thead>
                                         <tbody>
                                         <?php 
@@ -124,6 +125,7 @@
                                                     <td><?php  echo $rp['noDauKi']; ?></td>
                                                     <td><?php  echo $rp['noPhatSinh']; ?></td>
                                                     <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                    <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$rp['idDoiTac'])); ?>">Chi tiết</a></td>
                                                     
                                                 </tr>
                                             <?php    
@@ -149,6 +151,7 @@
                                             <th>Đầu kì</th>
                                             <th>Phát sinh</th>
                                             <th>Cuối kì</th>
+                                            <th>Chi tiết công nợ</th>
                                         </thead>
                                         <tbody>
                                         <?php 
@@ -161,15 +164,16 @@
                                                         <td><input type="checkbox"/></td>
                                                         <td>
                                                         <?php if((float)$rp['noCuoiKi']>0) { ?>
-                                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a></td>
+                                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a>
                                                         <?php } else{ ?>
                                                         <?php echo $rp['hoTenDoiTac']; ?>
                                                         <?php } ?>
+                                                        </td>
                                                         <td><?php  echo $rp['ngayDauKi']; ?></td>
                                                         <td><?php  echo $rp['noDauKi']; ?></td>
                                                         <td><?php  echo $rp['noPhatSinh']; ?></td>
                                                         <td><?php  echo $rp['noCuoiKi']; ?></td>
-                                                        
+                                                        <td><a href="<?php echo $this->url('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$rp['idDoiTac'])); ?>">Chi tiết</a></td>
                                                     </tr>
                                                 <?php    
                                                 }
