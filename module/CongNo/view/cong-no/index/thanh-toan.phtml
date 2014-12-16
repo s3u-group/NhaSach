@@ -33,100 +33,102 @@
 ?>
 <style type="text/css">    
     #khach-hang-search-result{ cursor:pointer;}
+     @media print {    
+        .in{display: block;}   
+        .khongin{display: none;}
+        
+    }
 </style>
-<div class="row">
-    <div class="col-md-2">
-        <div class="h5a-sidebar affix">
-            <span class="breadcrumb row">
-                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
-                 / Thanh toán /
-            </span>
-            <ul class="nav h5a-sidenav nav-list accordion">
-                <li>
-                    <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
-                        <i class="glyphicon glyphicon-open"></i> Công nợ Khách hàng
-                    </a>
-                </li>                    
-            </ul>
+<div class="in" hidden="true" align="center" style="font-size:13px;">
+    <table width="791px" hieght="567">
+        <tr><td width="400px">CTY CP & TB TRƯỜNG HỌC TRÀ VINH</td><td></td><td width="200px" style="text-align:right;">Mẫu số: 01 - TT</td></tr>
+        <tr><td>3A Trưng Nữ Vương Phường 1 TP .Trà Vinh</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+        <tr><td>Mã số thuế: 2100 290 521</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+        
+    </table>
+    <table width="791px" style="font-size:13px;">
+        <tr><td width="250px">&nbsp;</td><td style="font-size:16px; text-align:center;"><b>PHIẾU THU</b></td><td width="250px"><span >Số: 633</span></td></tr>
+    </table>
+    <table width="791px" style="font-size:13px;">
+        <tr>
+            <td width="541px">
+                <table >
+                    <tr><td width="240px">&nbsp;</td><td align="center" width="300px">Ngày <?php echo date("d") ?> tháng <?php echo date("m") ?> năm <?php echo date("Y") ?></td></tr>
+                    <tr><td width="240px">&nbsp;</td><td align="center" width="300px">Liên 1: Lưu</td></tr>
+                    <tr><td colspan="2"><span ><b>Họ tên người nộp tiền:</b> <?php echo $thongTinDoiTac->getHoTen(); ?></span></td></tr>
+                    <tr><td colspan="2"><span ><b>Địa chỉ:</b> <?php echo $thongTinDoiTac->getDiaChi(); ?></span></td></tr>
+                    <tr><td colspan="2"><span ><b>lý do nộp:</b> <div style="margin-top:-18px; margin-bottom:0px; margin-left:70px;" id="lyDoNop"></div></span></td></tr>
+                    
+                </table>
+            </td>
+            <td width="250px">
+                <table border="1" align="right" width="100%" height="200px" style="margin-top:0px; border-width:thin; border-style:dotted">
+                    <tr>
+                        <td height="20px" style="margin-top:0px; border-width:thin; border-style:dotted">TK Có</td><td style="margin-top:0px; border-width:thin; border-style:dotted">Số tiền</td>
+                    </tr>
+                    <tr>
+                        <td style=" border-width:thin; border-style:dotted"><div style="margin-top:-70px;">1311</div></td><td align="right" ><div style="margin-top:-70px;" id="soTienBangSo"></div></td>
+                    </tr>
+                    
+                </table>
+            </td>
+        </tr>
+        <tr><td colspan="2"><span><b>Bằng chữ:</b> <div style="margin-top:-18px; margin-bottom:0px; margin-left:70px;" class="soTienBangChu"></div></span></td></tr>
+        <tr><td colspan="2"><span>&nbsp;</span></td></tr>
+        <tr><td colspan="2"><span><i>Kèm theo:.....................................................................................................................................chứng từ gốc.</i></span></td></tr>
+        <tr><td colspan="2"><span><b>Đã nhận đủ:</b> <div style="margin-top:-18px; margin-bottom:0px; margin-left:80px;" class="soTienBangChu"></div></span></td></tr>
+        <tr><td colspan="2" align="right"><span>Ngày <?php echo date("d") ?> tháng <?php echo date("m") ?> năm <?php echo date("Y") ?></span></td></tr>
+    </table>
+    <table width="791px" style="text-align:center;">
+        <tr><td><b>Giám đốc</b></td><td><b>Kế toán trưởng</b></td><td><b>Người nộp tiền</b></td><td><b>Người lập phiếu</b></td><td><b>Thủ quỹ</b></td></tr>
+        <tr><td>(Ký, họ tên, đóng dấu)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td></tr>
+        <tr><td colspan="5" height="50px"></td></tr>
+        <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b><?php echo $thongTinDoiTac->getHoTen(); ?></b></td><td><b>Huỳnh Đức Thương</b></td><td><b>Dương Thị Hồng Thắm</b></td></tr>
+    </table>
+</div>
+<div class="khongin">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Thanh toán /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            <i class="glyphicon glyphicon-open"></i> Công nợ Khách hàng
+                        </a>
+                    </li>                    
+                </ul>
+            </div>
         </div>
-    </div>
-    <div class="col-md-10" role="main">
-        <div class="h5a-docs-section">
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h1>Thanh toán</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="pull-right">
-                            
-                                                         
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Thanh toán</h1>
                         </div>
-                        
-                    </div>
-                </div>                    
-            </div>   
-
-            <div class="panel-info col-sm-12" style="margin-bottom:15px; text-align:center;"> 
-                <div class="panel-heading"> 
-                    <h3 class="panel-title">Tên khách hàng: <?php echo $thongTinDoiTac->getHoTen(); ?>  </h3> 
-                </div>                     
-            </div><br>
-
-            <div class="col-sm-6">
-                <div class="panel panel-info">                    
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">Ngày đầu kì: <?php echo $response['ngayDauKi']; ?></h3>
-                    </div> 
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">
-                        Nợ đầu kì: <?php echo $response['noDauKi']; ?>
-                        </h3>
-                    </div>
-                </div>
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">Nợ phát sinh: <?php echo $response['noPhatSinh']; ?></h3> 
-                    </div> 
-                </div>
-                <div class="panel panel-info">                        
-                    <div class="panel-body" style="padding-bottom: 8px;"> 
-                        <div>
-                            <h3 class="panel-title" style="width: 90px;">Lý do: </h3>
-                        </div> 
-                        <div style="margin-top: -23px; margin-left: 55px;">
-                            <?php                                    
-                                echo $this->formElement($form->get('phieu-thu')->get('lyDo'));
-                            ?>
-                        </div>                           
-                    </div>
-                </div>
-            </div> 
-
-            <div class="col-sm-6">
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">Ngày thanh toán: <?php echo date("d/m/Y"); ?></h3> 
-                    </div> 
-                </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">
-                        Nợ cuối kì: <span id="noCuoiKi"><?php echo $response['noCuoiKi']; ?></span>
-                        </h3>
-                    </div>
-                </div>
-                
-                <div class="panel panel-info">
-                    <div class="panel-body" style="padding-bottom: 8px;"> 
-                        <div>
-                            <h3 class="panel-title" style="width: 90px;">Thanh toán: </h3>
-                        </div> 
-                        <div style="margin-top: -23px; margin-left: 95px;">
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                
+                                                             
+                            </div>
+                            
+                        </div>
+                    </div>                    
+                </div>   
+                <table border="1" width="100%">
+                    <tr><td width="15%"><b>Tên khách hàng</b> </td><td><?php echo $thongTinDoiTac->getHoTen(); ?> </td></tr>
+                    <tr><td><b>Ngày đầu kì</b> </td><td><?php echo $response['ngayDauKi']; ?> </td></tr>
+                    <tr><td><b>Nợ đầu kì</b> </td><td><?php echo $response['noDauKi']; ?> </td></tr>
+                    <tr><td><b>Nợ phát sinh</b> </td><td><?php echo $response['noPhatSinh']; ?> </td></tr>
+                    <tr><td><b>Nợ cuối kì</b> </td><td><span id="noCuoiKi"><?php echo $response['noCuoiKi']; ?></span> </td></tr>
+                    <tr>
+                        <td><b>Thanh toán</b> </td>
+                        <td> 
                             <?php
                                 $form->get('phieu-thu')->get('soTien')->setAttribute('value',0);
                                 $form->get('phieu-thu')->get('soTien')->setAttribute('class',' h5a-input form-control input-sm');
@@ -136,36 +138,36 @@
                                 }
                                 echo $this->formElement($form->get('phieu-thu')->get('soTien'));
                             ?>
-                        </div>                           
-                    </div> 
-                </div>
-            
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">
-                        Số dư: <span  id="soDu"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Lý do</b></td>
+                        <td>
+                            <?php                                    
+                                echo $this->formElement($form->get('phieu-thu')->get('lyDo'));
+                            ?>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>Số dư</b> </td><td><span  id="soDu"></span>
                         <?php
                             $congNo->get('duNo')->setAttribute('hidden','true');
                             $congNo->get('duNo')->setAttribute('value',0);
                             echo $this->formHidden($congNo->get('duNo'));  
                         ?>
-                        </h3>
-                    </div>
-                </div>
-            </div> 
-            
-            <div >
-                <div class="panel-body"> 
-                    <button type="submit"  class="full btn h5a-btn btn-success" id="submitbutton"
-                    <?php
-                        if((float)$response['noCuoiKi']<=0)
-                        {
-                            echo 'disabled';
-                        }
-                    ?>
-                    ><i class="fa fa-print"></i> Lưu</button>
-                </div>
-            </div>
+                        </td>
+                    </tr>
+                    <tr><td><b>Ngày thanh toán</b> </td><td><?php echo date("d/m/Y"); ?></td></tr>                        
+                </table>   
+                <button type="submit" style="margin-top:5px;"  class="full btn h5a-btn btn-success" id="submitbutton"
+                            <?php
+                                if((float)$response['noCuoiKi']<=0)
+                                {
+                                    echo 'disabled';
+                                }
+                            ?>
+                            ><i class="fa fa-print"></i> Lưu</button>        
         </div>
     </div>
 </div>
@@ -179,6 +181,9 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
 
     <!-- DataTables JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
@@ -194,6 +199,15 @@
                 alert('Bạn chưa nhập số tiền thanh toán!');
                 return false;
             }
+
+            var lyDo=$('#lyDo').val();
+            $('#lyDoNop').text(lyDo);
+            var soTienBangSo=$('#soTien').val();
+            $('#soTienBangSo').text(soTienBangSo);
+
+           var soTienBangChu=docso(soTienBangSo);
+           $('.soTienBangChu').text(soTienBangChu);
+           window.print();
             return true;
             
         });
@@ -210,7 +224,7 @@
             {
                 alert('Số tiền thanh toán lớn hơn số dư cuối kì');
                 $('#duNo').val('');
-                $('#soTien').val(0);
+                $('#soTien').val('');
                 $('#soDu').text(noCuoiKi);
             }
         });
@@ -226,11 +240,10 @@
             {
                 alert('Số tiền thanh toán lớn hơn số dư cuối kì');
                 $('#duNo').val('');
-                $('#soTien').val(0);
+                $('#soTien').val('');
                 $('#soDu').text(noCuoiKi);
             }
         });                
                
     });
-   
     </script>
