@@ -1,25 +1,27 @@
+<?php
+ $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
+ $y=$datetime->format('Y');          
+ $m=$datetime->format('m');
+ $d=$datetime->format('d'); 
+?>
 <style type="text/css">
     #nha-cung-cap-search-result{ cursor:pointer;}
     #ma-hang-search-result{ cursor:pointer;}
-    @media print {       
-        .col-sm-3 {display: none;}
+    @media print {
+        .table{width: 790px; font-size: 13px; margin-top: -60px}
+        .tb{width: 97%;}
+        .td{width: 90px;}  
+        table td{padding: 5px;}      
 
-        .form-group{display: none;}
-
-        .col-md-2{display: none;}
-        h1{display: none;}
-        .page-header{display: none;}
-        .an{display: none;}
-        .in{display: block;}
-
-        .print{display: block; text-align: left;}
-        #h5a-container{display: none;}
-        .printHoTen {display: block;}
-        .printDiaChi {display: block;}
-        .printNgayXuat{display: block;}
-        table {display: table;}
+        h2{display: none;}
+        .in{display: none;}
+        .row{display: none;}
+        .h5a-container{display: none;}
+        .tbIn{display: block;}
+        #formNhapHang{display: none;}        
     }
 </style>
+
 <script>
    
     kiemTracheckbox = function(){
@@ -44,7 +46,148 @@
     }
 
 </script>
+<div hidden="true" class="tbIn">
+    <table class="table">
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td>
+                <table border="0" class="tb">
+                    <tr>
+                        <td style="width:60%">
+                            <b>
+                                CTY CP SÁCH &amp; TB TRƯỜNG HỌC TRÀ VINH</br>
+                                3A Trưng Nữ Vương Phường 1 TP.Trà Vinh</br>
+                                Mã số thuế: 2100 290 521
+                            </b>
+                        </td>
+                        <td style="text-align:center">
+                            <b>Mẫ số: 01 - TT</b></br>
+                            (Ban hành theo QĐ số: 15/2006/QĐ-BTC ngày 20/3/2006 của Bộ trưởng BTC)
+                        </td>            
+                    </tr>
+                </table>
 
+                <table border="0" style="width:65%; margin-left:220px"  class="tb">
+                    <tr>
+                        <td style="width:50%; padding:0px 0px 0px 30px; font-size:16px; font-weight:bold">PHIẾU NHẬP KHO</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0px;">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
+                        <td style="padding:0px;">Nợ: </td>
+                    </tr>
+                    <tr>
+                        <td style="padding:0px;">Số: </td>
+                        <td style="padding:0px;">Có: </td>
+                    </tr>
+                </table>
+
+                <table border="0"  class="tb">
+                    <tr>
+                        <td colspan="4">
+                            - Họ và tên người giao:.......................................................................................................................................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width:200px">
+                            - Theo.....................
+                        </td>
+                        <td style="width:100px">
+                            số....................
+                        </td>
+                        <td style="width:320px">
+                            ngày........tháng........năm 20....
+                        </td>
+                        <td>
+                            của...........................................
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">                        
+                            Nhập tại kho:........................................
+                        </td>                    
+                        <td colspan="2">
+                            Địa điểm......................................................................................
+                        </td>
+                    </tr>
+                    <tr><td></td></tr>
+                </table>
+
+                <table border="1" id="tbSanPham">
+                    <tr style="text-align:center">
+                        <td rowspan="2" style="width:45px">STT</td>
+                        <td rowspan="2">Tên, nhãn hiệu quy cách, phẩm chất vật tư, dụng cụ sản phẩm, hàng hóa</td>
+                        <td rowspan="2" class="td">Mã số</td>
+                        <td rowspan="2" class="td">Đơn vị tính</td>
+                        <td colspan="2" style="width:300px">Số lượng</td>
+                        <td rowspan="2" class="td">Đơn giá</td>
+                        <td rowspan="2" class="td">Thành tiền</td>
+                    </tr>
+                    <tr style="text-align:center">
+                        <td>Theo chứng từ</td>
+                        <td>Thực nhập</td>
+                    </tr>
+                    <tr style="text-align:center">
+                        <td>A</td>
+                        <td>B</td>
+                        <td>C</td>
+                        <td>D</td>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <!-- <tr>
+                        <td></td>
+                        <td><b>Cộng</b></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr> -->
+                </table>
+            </td>
+        </tr>
+        <tr style="border-style:hidden">
+            <td style="padding-left:20px">- Tổng số tiền (viết bằng chữ): </td>
+        </tr>
+        <tr style="border-style:hidden">
+            <td style="padding-left:20px">- Số chứng từ gốc kèm theo: </td>
+        </tr>
+        <tr style="text-align: -moz-center">
+            <td>
+                <table border="0" class="tb" style="width:100%;">
+                    <tr>
+                        <td colspan="4" style="text-align:right">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td>
+                            Người lập phiếu</br>(Ký, họ tên)
+                        </td>
+                        <td>
+                            Người giao hàng</br>(Ký, họ tên)
+                        </td>
+                        <td>
+                            Thủ kho</br>(Ký, họ tên)
+                        </td>
+                        <td>
+                            Kế toán trưởng<br>(Hoặc bộ phận có nhu cầu nhập)</br>(Ký, họ tên)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height:100px"></td>
+                    </tr>
+                    <tr style="text-align: center;">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Phạm Thị Ngọc Ánh</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</div>
 <?php
      
      $this->headTitle('Nhập hàng');
@@ -125,8 +268,7 @@
     <div class="col-md-10" role="main">
         <div class="h5a-docs-section">
             <div class="page-header">
-                <div class="row">
-                    
+                <div class="row">                    
                     <div class="col-sm-6">
                         <h1>Nhập hàng</h1>
                     </div>
@@ -206,7 +348,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 right" for="form-field-4"></label>
                     <div class="col-sm-7"> 
-                         <?php                                                                  
+                         <?php                                                                 
                             $loaiGia=$form->get('loaiGia');
                             $loaiGia->setAttribute('id','loaiGia');
                             $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
@@ -291,7 +433,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <button type="submit" class="btn h5a-btn btn-primary full" onclick="return luuNhapHangFunction();">Lưu</button>
+                            <button type="button" class="btn h5a-btn btn-primary full" onclick="return luuNhapHangFunction();">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -299,6 +441,7 @@
         </div>
     </div>
 </div>
+
 <?php
     echo $this->form()->closeTag();
 ?>
@@ -324,6 +467,9 @@
             "bAutoWidth": true
         });
         $('#loaiGia').val(0);
+        var thanhTien=0;
+        var tong=0;
+        var i=0;
         
         $('#btnNhapHang').click(function(){            
             var idSanPham=$('#idSanPham').val();
@@ -336,8 +482,8 @@
             var nhaCungCap=$('#nhaCungCap').val();
             var loaiGia=$('#loaiGia').val();
             var giaBia=$('#giaBia').val();
-            var chietKhau=$('#chiecKhau').val();            
-            
+            var chietKhau=$('#chiecKhau').val();
+
             if(loaiGia==1)
             {
                 if(giaBia==0||giaBia==''||giaBia==null||
@@ -360,7 +506,11 @@
             {
                 alert('Thông tin không đầy đủ hoặc không chính xác');
                 return false;
-            }            
+            }
+
+            thanhTien=soLuong*giaNhap;
+            tong=tong+thanhTien;
+            //alert(tong);
 
             var soDong = $('#tbNhapHang > tbody > tr').length;            
             var template = '<tr class="price">'+
@@ -369,11 +519,11 @@
                 '<td>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
-                    '<span>'+soLuong+'</span>'+
+                    '<span class="soLuong">'+soLuong+'</span>'+
                 '</td>'+
                 '<td>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
-                    '<span>'+giaNhap+'</span>'+
+                    '<span class="giaNhap">'+giaNhap+'</span>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;loaiGia&#x5D;" value="'+loaiGia+'">'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;giaBia&#x5D;" value="'+giaBia+'">'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;chiecKhau&#x5D;" value="'+chietKhau+'">'+
@@ -381,23 +531,37 @@
                 '</td>'+
                 '<td style="text-align:left;" class="an">'+
                     '<a class="btnHuy"><img src="<?php echo $this->basePath(); ?>/img/delete.png" width="30px" height="30px"></a>'+
-                '</td>'+
+                '</td>'+                
                 '</tr>';
 
                 $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);
                 $('input[name="phieu-nhap[idUserNv][userId]"]').val(1);
-
+                
             template = template.replace(/__index__/g, soDong);
             $('#tbNhapHang tbody').append(template);
-            var soDong = $('#tbNhapHang > tbody > tr').length; 
-            if(soDong==0)
-            {                
-                document.getElementById("nhaCungCap").disabled = false;
-            }
-            else
-            {                
-                document.getElementById("nhaCungCap").disabled = true;
-            }
+
+            //---------------------------
+            var sD = $('#tbSanPham > tbody > tr').length;
+            i=sD+1;
+            var temp = '<tr class="price">'+
+                '<td>'+i+'</td>'+
+                '<td>'+tenHang+'</td>'+
+                '<td>'+maHang+'</td>'+
+                '<td>'+donViTinh+'</td>'+
+                '<td></td>'+
+                '<td>'+soLuong+'</td>'+
+                '<td>'+giaNhap+'</td>'+
+                '<td>'+'<p>'+thanhTien+'</p>'+'</td>'+
+                '</tr>';
+            temp = temp.replace(/__index__/g, sD);
+            $('#tbSanPham tbody').append(temp); 
+
+            //-------------------------
+            /*$("#tbSanPham tbody p").each(function(){
+                var t=parseInt(jQuery(this).html());
+                alert(t);           
+            });*/
+
             return false;
         });
 
@@ -469,15 +633,11 @@
                 kiemTracheckbox();
             }
             
-
             $('#ma-hang-search-result').empty();
         });
     //./Hiển thị, chọn sản phẩm
 
-    //Hiển thị, chọn nhà cung cấp
-   /* var soDong = $('#tbNhapHang > tbody > tr').length; 
-    if(soDong==0)
-    { */       
+    //Hiển thị, chọn nhà cung cấp     
         $('#nhaCungCap').keyup(function()
         {
 
@@ -532,28 +692,14 @@
                 $('#diaChiNCC').text(diaChi);      
 
                 $('#nha-cung-cap-search-result').empty();
-            });
-    /*}
-    else
-    {
-        document.getElementById("nhaCungCap").disabled = true;
-    }*/
+            });    
     //./Hiển thị, chọn nhà cung cấp
 
     });
 
     $(document).ready(function(){
-      $(document).on('click', '.btnHuy', function(){
+      $(document).on('click', '.btnHuy', function(){        
         $(this).closest('tr').remove();
-        var soDong = $('#tbNhapHang > tbody > tr').length; 
-        if(soDong==0)
-        {                
-            document.getElementById("nhaCungCap").disabled = false;
-        }
-        else
-        {                
-            document.getElementById("nhaCungCap").disabled = true;
-        }
         return false;
       });
     });
@@ -569,9 +715,27 @@
                 return false;
             }
             else
-            {  
-                window.print();              
-                document.getElementById('formNhapHang').submit();
+            {                  
+                $("#tbSanPham tbody p").each(function(){
+                    var t=parseInt(jQuery(this).html());
+                    tong=tong+t;
+                    alert(tong);
+                });
+
+                var sD = $('#tbSanPham > tbody > tr').length;                
+                var temp = '<tr class="price">'+
+                    '<td></td>'+
+                    '<td>Cộng</td>'+
+                    '<td></td>'+
+                    '<td></td>'+
+                    '<td></td>'+
+                    '<td></td>'+
+                    '<td>'+tong+'</td>'+
+                    '</tr>';
+                temp = temp.replace(/__index__/g, sD);
+                $('#tbSanPham tbody').append(temp);
+                window.print();
+                //document.getElementById('formNhapHang').submit();
                 return true;
             }                
         }
