@@ -66,7 +66,7 @@ use DateTimeZone;
      
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
-
+      
 
       // lấy những đối tác thuộc loại khách hàng có công nợ với hệ thống
       

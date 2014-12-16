@@ -67,112 +67,81 @@
                     </div>
                 </div>                    
             </div>
-
-            <div class="panel-info col-sm-12" style="margin-bottom:15px; text-align:center;"> 
-                <div class="panel-heading"> 
-                    <h3 class="panel-title">Tên nhà cung cấp: <?php echo $thongTinDoiTac->getHoTen(); ?>  </h3> 
-                </div>                     
-            </div><br>
-
-            <div class="col-sm-6">
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">Ngày đầu kì: <?php echo $response['ngayDauKi']; ?></h3>
-                    </div> 
-                </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">
-                        Nợ đầu kì: <?php echo $response['noDauKi']; ?>
-                        </h3>
-                    </div>
-                </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">Nợ phát sinh: <?php echo $response['noPhatSinh']; ?></h3> 
-                    </div> 
-                </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-body" style="padding-bottom: 8px;"> 
-                        <div>
-                            <h3 class="panel-title" style="width: 90px;">Lý do: </h3>
-                        </div> 
-                        <div style="margin-top: -23px; margin-left: 55px;">
-                            <?php 
-                                $form->get('phieu-chi')->get('lyDo')->setAttribute('class','h5a-input form-control input-sm'); 
-                                echo $this->formElement($form->get('phieu-chi')->get('lyDo')); 
-                            ?>
-                        </div>                           
-                    </div>
-                </div>
-            </div> 
-
-            <div class="col-sm-6">
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">Ngày thanh toán: <?php echo date("d/m/Y"); ?></h3> 
-                    </div> 
-                </div>
-
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">
-                        Nợ cuối kì: <span id="noCuoiKi"><?php echo $response['noCuoiKi']; ?></span>
-                        </h3>
-                    </div>
-                </div>
+            <table border="1" width="100%">
+                <tr>
+                    <td><b>Tên nhà cung cấp </b></td>
+                    <td>
+                        <?php echo $thongTinDoiTac->getHoTen(); ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Ngày đầu kì</b></td>
+                    <td><?php echo $response['ngayDauKi']; ?>
+                    </td>
+                </tr>
                 
-                <div class="panel panel-info">
-                    <div class="panel-body" style="padding-bottom: 8px;"> 
-                        <div>
-                            <h3 class="panel-title" style="width: 90px;">Thanh toán: </h3>
-                        </div> 
-                        <div style="margin-top: -23px; margin-left: 95px;">
-                            <?php
-                                $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
-                                if((float)$response['noCuoiKi']<=0)
-                                {
-                                    $form->get('phieu-chi')->get('soTien')->setAttribute('disabled',true);
-                                }
-                                $form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );
-                                echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
-                            ?>
-                        </div>                           
-                    </div> 
-                </div>
-            
-                <div class="panel panel-info">
-                    <div class="panel-body"> 
-                        <h3 class="panel-title">
-                        Số dư: <span  id="soDu"></span>
-                        <?php
-                            $congNo->get('duNo')->setAttribute('hidden','true');
-                            $congNo->get('duNo')->setAttribute('value',$response['noCuoiKi']);
-                            echo $this->formHidden($congNo->get('duNo'));
-                        ?>
-                        </h3>
-                    </div>
-                </div>
-            </div>
-
-
-            <div >
-                <div class="panel-body"> 
-                    <button type="submit" class="full btn h5a-btn btn-success" id="submitbutton"
-                    <?php 
+                <tr>
+                    <td><b>Nợ phát sinh</b></td>
+                    <td>
+                        <?php echo $response['noPhatSinh']; ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Nợ cuối kì</b></td>
+                    <td> <span id="noCuoiKi"><?php echo $response['noCuoiKi']; ?></span>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Thanh toán</b></td>
+                    <td> 
+                    <?php
+                        $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
                         if((float)$response['noCuoiKi']<=0)
                         {
-                            echo 'disabled';
+                            $form->get('phieu-chi')->get('soTien')->setAttribute('disabled',true);
                         }
+                        $form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );
+                        echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
                     ?>
-                    >
-                        <i class="fa fa-print"></i> Lưu</button>
-                </div>
-            </div>               
-        </div>
+                    </td>
+                </tr>
+   
+                <tr>
+                    <td><b>Số dư</b></td>
+                    <td>
+                     <span  id="soDu"></span>
+                     <?php
+                        $congNo->get('duNo')->setAttribute('hidden','true');
+                        $congNo->get('duNo')->setAttribute('value',$response['noCuoiKi']);
+                        echo $this->formHidden($congNo->get('duNo'));
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Lý do</b></td>
+                    <td>
+                    <?php 
+                        $form->get('phieu-chi')->get('lyDo')->setAttribute('class','h5a-input form-control input-sm'); 
+                        echo $this->formElement($form->get('phieu-chi')->get('lyDo')); 
+                    ?>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Ngày thanh toán</b></td>
+                    <td>
+                     <?php echo date("d/m/Y"); ?>
+                    </td>
+                </tr>
+            </table>
+             <button type="submit" style="margin-top:5px;" class="full btn h5a-btn btn-success" id="submitbutton"
+                <?php 
+                    if((float)$response['noCuoiKi']<=0)
+                    {
+                        echo 'disabled';
+                    }
+                ?>
+                >
+                    <i class="fa fa-print"></i> Lưu</button>
     </div>
 </div>
 
