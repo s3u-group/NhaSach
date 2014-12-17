@@ -36,6 +36,10 @@
 		*/
 		private $giaXuat;
 
+		/**
+		* @ORM\Column(type="integer")
+		*/
+		private $kho;
 
 		/**
 		* @ORM\Column(name="id_kenh_phan_phoi")
@@ -82,7 +86,16 @@
 		public function getIdKenhPhanPhoi()
 		{
 			return $this->idKenhPhanPhoi;
-		}		
+		}	
+
+		public function setKho($kho)
+		{
+			$this->kho=$kho;
+		}	
+		public function getKho()
+		{
+			return $this->kho;
+		}
 	}
 	
 

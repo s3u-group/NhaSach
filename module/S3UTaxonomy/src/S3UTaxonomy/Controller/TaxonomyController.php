@@ -351,5 +351,6 @@
     return $this->redirect()->toRoute('taxonomy/childTaxonomy',array('tax'=>$tax));
 
  	}
+
  }
 ?>

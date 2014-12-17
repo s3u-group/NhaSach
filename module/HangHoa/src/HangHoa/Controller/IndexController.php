@@ -65,7 +65,6 @@
      {
        return $this->redirect()->toRoute('application');
      }
-     ini_set('safe_mode',FALSE);
     $this->layout('layout/giaodien');
  	}
   
@@ -566,6 +565,7 @@
               $gx=(int)$sanPhams[0]->getGiaNhap()+(((int)$sanPhams[0]->getGiaNhap()*(int)$kenhPhanPhoi['description'])/100);
               $giaXuat->setGiaXuat($gx);
               $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
+              $giaXuat->setKho($idKho);
               
               $entityManager->persist($giaXuat);
               $entityManager->flush(); 
