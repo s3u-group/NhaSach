@@ -47,6 +47,21 @@
                             </div>
                         </div>                        
                     </div>
+                     <?php 
+                        $flash=$this->flashMessenger();
+                        $flash->setMessageOpenFormat('<div%s>
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button>
+                         <ul><li>')
+                         ->setMessageSeparatorString('</li><li>')
+                         ->setMessageCloseString('</li></ul></div>');
+
+                         echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                         echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                         echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                         echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     ?>
                 
                 </div>
                 &nbsp;&nbsp; Tên khách hàng: <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a>
@@ -107,6 +122,7 @@
                                             <th>Thanh toán</th>
                                             <th>Dư nợ</th>
                                             <th>Ngày thanh toán</th>
+                                            <th>Xuất chiết khấu</th>
                                         </thead>
                                         <tbody>
                                         <?php 
@@ -140,8 +156,29 @@
                                                         }
                                                     ?>
                                                     </td>
+                                                    <td>
+                                                    <?php
+                                                    if($rp['idPhieuThu']!='')
+                                                    { ?>
+                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'XuatPhieuChi','id'=>(int)$rp['idPhieuThu'])); ?>">In phiếu chi</a>
+                                                    <?php
+                                                    }                                                    
+                                                    ?>
+                                                    </td>
                                                     
                                                 </tr>
+                                                <?php 
+                                                if($rp['phieuChi'])
+                                                {
+                                                    foreach ($rp['phieuChi'] as $phieuChi) {
+                                                        echo '<tr>
+                                                            <td></td><td></td><td></td><td></td><td></td>
+                                                            <td><span class="label label-success">Chi: '.$phieuChi->getSoTien().'</span></td><td></td>
+                                                            <td>'.$phieuChi->getNgayThanhToan()->format('d-m-Y').'</td><td></td>
+                                                        </tr>';
+                                                    }
+                                                }
+                                                ?>
                                             <?php    
                                             }
                                         ?>
