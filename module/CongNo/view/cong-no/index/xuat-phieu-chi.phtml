@@ -48,7 +48,7 @@
         <tr><td style="padding:0px;" colspan="5" height="50px"></td></tr>
     </table>
     <table width="718" style="font-size:13px; text-align:center;">
-        <tr><td style="padding:0px;"><span style="margin-left:80px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:100px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
         <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Tỷ giá ngoại tệ (Vàng, bạc, đá quý):..................................................................................................</span></td></tr>
         <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Số tiền quy đổi:...............................................................................................................................</span></td></tr>
         <tr><td style="padding:0px; text-align:left;"><span style="margin-left:70px;">(Liên gửi ra ngoài phải đóng dấu)</span></td></tr>
@@ -231,6 +231,7 @@
         var tongTien=parseFloat($('#tongTien').text());
 
         var thanhTien=parseFloat(((chietKhau*tongTien)/100));
+        thanhTien=thanhTien.toFixed(0);
         $('#thanhTien').text(thanhTien);
         $('#soTien').val(thanhTien);
         $('#inSoTienBangSo').text(thanhTien);
