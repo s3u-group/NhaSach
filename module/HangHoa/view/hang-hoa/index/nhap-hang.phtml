@@ -554,8 +554,8 @@
             var donViTinh = $(this).find('span:eq(4)').text();   
             var loaiGia=$(this).find('span:eq(5)').text();   
             var giaBia=$(this).find('span:eq(6)').text();   
-            var chietKhau=$(this).find('span:eq(7)').text();   
-            
+            var chietKhau=$(this).find('span:eq(7)').text(); 
+
             $('#idSanPham').val(id);
             $('#idMaHang').val(ma);
             $('#tenHang').val(ten);
@@ -568,6 +568,12 @@
             {
                 $("#loaiGia").prop("checked", true);
                 $("#loaiGia").val(1);
+                kiemTracheckbox();
+            }
+            else
+            {
+                $("#loaiGia").prop("checked", false);
+                $("#loaiGia").val(0);
                 kiemTracheckbox();
             }
             
