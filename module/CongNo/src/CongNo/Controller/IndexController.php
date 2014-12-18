@@ -163,7 +163,13 @@ use DateTimeZone;
        return $this->redirect()->toRoute('application');
      }
 
-     
+     $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+          return $this->redirect()->toRoute('cong_no/crud', array(
+              'action' => 'index',
+          ));
+      }  
+
      
     // kiểm tra thuộc kho nào
       $idKho=1;
@@ -208,16 +214,8 @@ use DateTimeZone;
             return $this->redirect()->toRoute('cong_no/crud',array('action'=>'index'));
         }        
       }    
-
-      $id = (int) $this->params()->fromRoute('id', 0);
-      if (!$id) {
-          return $this->redirect()->toRoute('cong_no/crud', array(
-              'action' => 'index',
-          ));
-      }  
-
-      $response=$this->searchCongNoKhachHang($id);
       
+      $response=$this->searchCongNoKhachHang($id);      
 
       $thongTinDoiTac=$entityManager->getRepository('HangHoa\Entity\DoiTac')->find($id);
       if($thongTinDoiTac->getKho()!=$idKho)
