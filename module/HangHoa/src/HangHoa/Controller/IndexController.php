@@ -617,16 +617,19 @@
               $giaXuat=new GiaXuat();
               $giaXuat->setIdGiaXuat('');
               $giaXuat->setIdSanPham($sanPhams[0]->getIdSanPham());
+              //  lấy chiết khấu
+              $chietKhau=$this->getChietKhau($idKho,$kenhPhanPhoi['termTaxonomyId']);
               $gx=0;
               if($sanPhams[0]->getLoaiGia()==1)
               {
-                $loiNhuan=(((float)$sanPhams[0]->getGiaBia()*(float)$kenhPhanPhoi['description'])/100);
+
+                $loiNhuan=(((float)$sanPhams[0]->getGiaBia()*(float)$chietKhau)/100);
                 $gx=(float)$sanPhams[0]->getGiaBia()-(float)$loiNhuan;
 
               }
               else
               {
-                $gx=(float)$sanPhams[0]->getGiaNhap()+(((float)$sanPhams[0]->getGiaNhap()*(float)$kenhPhanPhoi['description'])/100);  
+                $gx=(float)$sanPhams[0]->getGiaNhap()+(((float)$sanPhams[0]->getGiaNhap()*(float)$chietKhau)/100);  
               }
               
               $giaXuat->setGiaXuat($gx);
@@ -659,6 +662,15 @@
       'donViTinhs'=>$donViTinhs,
       'kiemTraTonTai'=>0,
     );
+  }
+
+  public function getChietKhau($idKho,$idKenhPhanPhoi)
+  {
+    $entityManager=$this->getEntityManager();
+    $query=$entityManager->createQuery('SELECT ck FROM Kho\Entity\ChietKhau ck WHERE ck.idKho='.$idKho.' and ck.idKenhPhanPhoi='.$idKenhPhanPhoi.' and ck.status=0');
+    $chietKhaus=$query->getResult();
+    $chietKhau=$chietKhaus[0]->getChietKhau();
+    return $chietKhau;
   }
 
   public function searchKhachHangAction()

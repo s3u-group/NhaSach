@@ -5,6 +5,8 @@
 	 use Zend\View\Model\ViewModel;
 	 use Kho\Entity\Kho;
 	 use Kho\Form\ThemKhoForm;
+	 use Kho\Entity\ChietKhau;
+
 	
 	 class IndexController extends AbstractActionController
 	 {
@@ -76,6 +78,27 @@
 	     			}
 	     			$entityManager->persist($kho);
 	     			$entityManager->flush();
+	     			
+	     			$taxonomyKenhPhanPhoi=$this->TaxonomyFunction();
+    				$kenhPhanPhois=$taxonomyKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+	     			
+    				foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+    					if($kenhPhanPhoi['cap']>0)
+    					{
+    						// tạo chiết khấu cho từng kênh
+    						$chietKhau=new ChietKhau();
+    						$chietKhau->setIdKho($kho);
+    						$kpp=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find($kenhPhanPhoi['termTaxonomyId']);
+    						$chietKhau->setIdKenhPhanPhoi($kpp);
+    						$chietKhau->setChietKhau(0);
+    						$chietKhau->setStatus(0);
+    						$entityManager->persist($chietKhau);
+    						$entityManager->flush();
+
+    						// nếu cần chiết khấu tăng thì $chietKhau->setStatus(1); tức là: status=0 thì chiết khấu giảm, status =1 chiết khấu tăng
+    					}
+    				}
+
 	     			$this->flashMessenger()->addSuccessMessage('Thêm chi nhánh mới thành công');
 	     			return $this->redirect()->toRoute('kho/crud',array('action'=>'index'));
 	     		}	     		

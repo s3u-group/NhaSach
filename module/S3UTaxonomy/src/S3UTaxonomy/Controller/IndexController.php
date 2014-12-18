@@ -275,22 +275,25 @@
 
        $taxonomyKenhPhanPhoi=$this->TaxonomyFunction();
        $kenhPhanPhois=$taxonomyKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+       $entityManager=$this->getEntityManager();
+       $query=$entityManager->createQuery('SELECT ck FROM Kho\Entity\ChietKhau ck WHERE ck.idKho='.$idKho.' and ck.status=0');
+       $chietKhaus=$query->getResult();
        
        $request=$this->getRequest();
        if($request->isPost())
        {
          $post=$request->getPost();
-         foreach ($kenhPhanPhois as $kenhPhanPhoi) {
-             if($kenhPhanPhoi['cap']>0)
-             {
-                $this->suaChietKhau($kenhPhanPhoi['termTaxonomyId'],$post[$kenhPhanPhoi['termTaxonomyId']]);
-             }
+         foreach ($chietKhaus as $chietKhau) {
+            
+            $this->suaChietKhau($chietKhau->getIdChietKhau(),$post[$chietKhau->getIdChietKhau()]);
          }
          $this->flashMessenger()->addSuccessMessage('Cập nhập chiết khấu thành công');
          return $this->redirect()->toRoute('s3u_taxonomy/taxonomys',array('action'=>'chietKhau'));
        }
        return array(        
          'kenhPhanPhois'=>$kenhPhanPhois,
+         'chietKhaus'=>$chietKhaus,
        );
     }
 
@@ -308,10 +311,12 @@
                 return $this->redirect()->toRoute('hang_hoa/crud');
             }
             $entityManager=$this->getEntityManager();
-            $termtaxonomy=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find($id);
-            $termtaxonomy->setDescription($value);
+            $chietKhau=$entityManager->getRepository('Kho\Entity\ChietKhau')->find($id);
+            $chietKhau->setChietKhau($value);
 
-            $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.kho='.$idKho.' and gx.idKenhPhanPhoi='.$id);
+            $idKenhPhanPhoi=$chietKhau->getIdKenhPhanPhoi()->getTermTaxonomyId();
+
+            $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.kho='.$idKho.' and gx.idKenhPhanPhoi='.$idKenhPhanPhoi);
             $giaXuats=$query->getResult();
 
             foreach ($giaXuats as $giaXuat) {

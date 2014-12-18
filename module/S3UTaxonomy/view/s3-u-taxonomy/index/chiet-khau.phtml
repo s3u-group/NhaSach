@@ -57,7 +57,16 @@
                                         <?php echo $kenhPhanPhoi['termId']['name']; ?>
                                     </td>
                                     <td width="80%">
-                                        <input name="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="h5a-input form-control input-sm" value="<?php echo $kenhPhanPhoi['description']; ?>">
+                                    <?php
+                                    foreach ($chietKhaus as $chietKhau) {
+                                        if((int)$chietKhau->getIdKenhPhanPhoi()->getTermTaxonomyId()==(int)$kenhPhanPhoi['termTaxonomyId'])
+                                        { ?>
+                                            <input name="<?php echo $chietKhau->getIdChietKhau();  ?>" class="h5a-input form-control input-sm" value="<?php echo $chietKhau->getChietKhau(); ?>">
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                        
                                     </td>
                                     <td>
                                     </td>
