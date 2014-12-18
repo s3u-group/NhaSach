@@ -60,6 +60,12 @@
                             Kênh phân phối
                         </a>
                     </li>
+                    <li>                        
+                        <a href="<?php echo $this->url('s3u_taxonomy/taxonomys',array('action'=>'chietKhau'));?>">
+                            <i class="glyphicons-magic"></i>
+                            Chiết khấu
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no');?>">
                             <i class="fa fa-database"></i>
@@ -68,7 +74,7 @@
                     </li>
                     <li>
                         <a href="<?php echo $this->url('loi_nhuan');?>">
-                            <i class="fa fa-line-chart"></i>
+                            <i class="glyphicon glyphicon-usd"></i>
                            Lợi nhuận
                         </a>
                     </li>
@@ -78,7 +84,7 @@
                     ?>
                             <li>
                                 <a href="<?php echo $this->url('kho');?>">
-                                    <i class="glyphicon glyphicon-folder-open"> </i>
+                                    <i class="glyphicon glyphicon-sort-by-attributes-alt"> </i>
                                    Chi nhánh
                                 </a>
                             </li>
@@ -90,7 +96,7 @@
                     { ?>
                         <li>
                             <a href="#"  style="color:red;">
-                                <i class="glyphicon glyphicon-road"></i>
+                                <i class="glyphicon glyphicon-arrow-right"></i>
                                <b>
                                     <?php 
                                         $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho()); 

@@ -120,35 +120,67 @@
       $dieuKienLoc=$post['dieuKienLoc'];
       $locHangHoa=$post['locHangHoa'];
 
-      if($dieuKienLoc)    
+      if($dieuKienLoc)  // nếu có nhập điều kiện lọc  
       {
         if($locHangHoa=='locTheoLoaiHang')
         {
           //die(var_dump('Lọc theo loại hàng'));
           //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll(); 
 
-          $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);
-          $sanPhams=$query->getResult();
-          foreach ($sanPhams as $sanPham) 
+          $query=$entityManager->createQuery('SELECT zft FROM S3UTaxonomy\Entity\ZfTerm zft WHERE zft.name LIKE :dieuKienLoc');
+          $query->setParameter('dieuKienLoc','%'.$dieuKienLoc.'%');
+          $zfTerms=$query->getResult();
+
+          $termIds=' ';            
+          if($zfTerms)
           {
-            if($sanPham->getIdLoai()->getTermId()->getName()==$dieuKienLoc)
-            {
-              $tam[]=$sanPham;
+            foreach ($zfTerms as $zfTerm) {
+              $termIds.='zfttx.termId='.$zfTerm->getTermId().' and ';
             }
-            
           }
-          $sanPhams=$tam;
-          //die(var_dump($sanPhams));          
+          if($termIds==' ')
+          {
+            $termIds=' ';
+          }
+          
+
+          $query=$entityManager->createQuery('SELECT zfttx FROM S3UTaxonomy\Entity\ZfTermTaxonomy zfttx WHERE '.$termIds.' zfttx.taxonomy=\''.'danh-muc-hang-hoa'.'\'');
+          $zfTermTaxonomys=$query->getResult();
+
+          $idLoais=' ';
+          $soId=count($zfTermTaxonomys);
+          $i=0;
+          if($zfTermTaxonomys)
+          {
+            foreach ($zfTermTaxonomys as $key=>$zfTermTaxonomy) {
+              $idLoais.='sp.idLoai='.$zfTermTaxonomy->getTermTaxonomyId();
+              $i++;
+              if($i>0&&$i<$soId&&$soId>1)
+              {
+                $idLoais.=' or ';
+              }
+
+            }
+
+          }
+          else
+          {
+            $idLoais.=' 1=1 ';
+          }
+          //die(var_dump($idLoais));
+          $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE '.$idLoais);
+          $sanPhams=$query->getResult();
         }
         elseif($locHangHoa=='locTheoNhanHang')
         {
            //die(var_dump('Lọc theo nhãn hàng'));
-          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.nhan=\''.$dieuKienLoc.'\'');
+          $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.nhan LIKE :dieuKienLoc');
+          $query->setParameter('dieuKienLoc','%'.$dieuKienLoc.'%');
           $sanPhams = $query->getResult(); // array of CmsArticle objects    
           
         }
       }
-      else
+      else // nếu không có nhập điều kiện lọc thì lấy ra hết
       {
         //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();         
         $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho);

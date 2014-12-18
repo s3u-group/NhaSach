@@ -116,6 +116,7 @@
                                     <thead>
                                         <th><input type="checkbox"/></th>
                                         <th>Sản phẩm</th>
+                                        <th>Mã vạch</th>
                                         <th>ĐVT</th>
                                         <th>Giá nhập</th>
                                         <?php 
@@ -139,7 +140,7 @@
 
                                             echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
 
-
+                                            echo '<td>'.$sanPham->getMaSanPham().'</td>';
                                             echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
                                             echo '<td>';
                                             if($sanPham->getGiaNhap()==0)
