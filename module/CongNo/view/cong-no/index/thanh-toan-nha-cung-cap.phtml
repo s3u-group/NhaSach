@@ -95,6 +95,7 @@
                     <td><b>Thanh toán</b></td>
                     <td> 
                     <?php
+                        $form->get('phieu-chi')->get('soTien')->setAttribute('min',0); 
                         $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
                         if((float)$response['noCuoiKi']<=0)
                         {

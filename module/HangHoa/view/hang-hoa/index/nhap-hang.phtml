@@ -12,18 +12,15 @@
         .tb{width: 97%;}
         .td{width: 90px;}  
         table td{padding: 5px;}      
-
-        h2{display: none;}
-        .in{display: none;}
+                
         .row{display: none;}
         .h5a-container{display: none;}
         .tbIn{display: block;}
-        #formNhapHang{display: none;}        
+        #formNhapHang{display: none;}
     }
 </style>
 
-<script>
-   
+<script>   
     kiemTracheckbox = function(){
         var tam=document.getElementById("loaiGia").checked;
         if(tam)
@@ -44,9 +41,8 @@
         }
         return true;
     }
-
 </script>
-<div hidden="true" class="tbIn">
+<div  class="tbIn" hidden="true">
     <table class="table">
         <tr style="text-align: -moz-center; border-style:hidden">
             <td>
@@ -73,18 +69,24 @@
                     </tr>
                     <tr>
                         <td style="padding:0px;">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
-                        <td style="padding:0px;">Nợ: </td>
+                        <td style="padding:0px;">
+                            Nợ: ........................................
+                        </td>
                     </tr>
                     <tr>
-                        <td style="padding:0px;">Số: </td>
-                        <td style="padding:0px;">Có: </td>
+                        <td style="padding:0px;">
+                            Số: ........................................
+                        </td>
+                        <td style="padding:0px;">
+                            Có: ........................................
+                        </td>
                     </tr>
                 </table>
 
                 <table border="0"  class="tb">
                     <tr>
                         <td colspan="4">
-                            - Họ và tên người giao:.......................................................................................................................................
+                            - Họ và tên người giao:.............................................................................................................................................
                         </td>
                     </tr>
                     <tr>
@@ -94,11 +96,11 @@
                         <td style="width:100px">
                             số....................
                         </td>
-                        <td style="width:320px">
+                        <td style="width:215px">
                             ngày........tháng........năm 20....
                         </td>
-                        <td>
-                            của...........................................
+                        <td>                            
+                            của...............................................
                         </td>
                     </tr>
                     <tr>
@@ -106,7 +108,7 @@
                             Nhập tại kho:........................................
                         </td>                    
                         <td colspan="2">
-                            Địa điểm......................................................................................
+                            Địa điểm............................................................................................
                         </td>
                     </tr>
                     <tr><td></td></tr>
@@ -120,7 +122,7 @@
                         <td rowspan="2" class="td">Đơn vị tính</td>
                         <td colspan="2" style="width:300px">Số lượng</td>
                         <td rowspan="2" class="td">Đơn giá</td>
-                        <td rowspan="2" class="td">Thành tiền</td>
+                        <td rowspan="2" class="td">Thành tiền</br>(vnđ)</td>
                     </tr>
                     <tr style="text-align:center">
                         <td>Theo chứng từ</td>
@@ -135,24 +137,17 @@
                         <td>2</td>
                         <td>3</td>
                         <td>4</td>
-                    </tr>
-                    <!-- <tr>
-                        <td></td>
-                        <td><b>Cộng</b></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr> -->
+                    </tr>                    
                 </table>
             </td>
         </tr>
         <tr style="border-style:hidden">
-            <td style="padding-left:20px">- Tổng số tiền (viết bằng chữ): </td>
+            <td style="padding-left:20px">- Tổng số tiền (viết bằng chữ): <span id="tongSoTien"></span>&nbsp;đồng</td>
         </tr>
         <tr style="border-style:hidden">
-            <td style="padding-left:20px">- Số chứng từ gốc kèm theo: </td>
+            <td style="padding-left:20px">
+                - Số chứng từ gốc kèm theo: .....................................................................................................................................
+            </td>
         </tr>
         <tr style="text-align: -moz-center">
             <td>
@@ -176,13 +171,7 @@
                     </tr>
                     <tr>
                         <td style="height:100px"></td>
-                    </tr>
-                    <tr style="text-align: center;">
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Phạm Thị Ngọc Ánh</td>
-                    </tr>
+                    </tr>                    
                 </table>
             </td>
         </tr>
@@ -210,34 +199,6 @@
      echo $this->formHidden($form->get('phieu-nhap')->get('status'));
      
 ?>
-
-<h2 hidden="true" class="in">THÔNG TIN PHIẾU NHẬP</h2>
-<table hidden="true" class="in">
-    <tr>
-        <td>
-            Nhà cung cấp: 
-        </td>
-        <td  id="tenNCC">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Địa chỉ: 
-        </td>
-        <td id="diaChiNCC">
-        </td>
-    </tr>
-    <tr>
-        <td>
-            Ngày nhập: 
-        </td>
-        <td>
-            <?php echo date("d/m/Y"); ?>
-        </td>
-    </tr>
-</table>
-
-
 <div class="row">
     <div class="col-md-2">
         <div class="h5a-sidebar affix">
@@ -433,7 +394,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <div class="col-sm-10 col-sm-offset-1">
-                            <button type="button" class="btn h5a-btn btn-primary full" onclick="return luuNhapHangFunction();">Lưu</button>
+                            <button type="submit" class="btn h5a-btn btn-primary full" onclick="return luuNhapHangFunction();">Lưu</button>
                         </div>
                     </div>
                 </div>
@@ -444,7 +405,13 @@
 
 <?php
     echo $this->form()->closeTag();
-?>
+?>   
+    <!-- FormatNumber -->
+    <script src="<?php echo $this->basePath();?>/js/formatnumber.js"></script>
+
+    <!-- convernumbertostring -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
     <!-- jQuery -->
     <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
 
@@ -455,7 +422,7 @@
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
+    <script>    
     $(document).ready(function() 
     {
         $('#dataTables-example').dataTable({
@@ -467,11 +434,9 @@
             "bAutoWidth": true
         });
         $('#loaiGia').val(0);
-        var thanhTien=0;
-        var tong=0;
         var i=0;
         
-        $('#btnNhapHang').click(function(){            
+        $('#btnNhapHang').click(function(){
             var idSanPham=$('#idSanPham').val();
             var maHang=$('#idMaHang').val();
             var tenHang=$('#tenHang').val();
@@ -508,16 +473,12 @@
                 return false;
             }
 
-            thanhTien=soLuong*giaNhap;
-            tong=tong+thanhTien;
-            //alert(tong);
-
             var soDong = $('#tbNhapHang > tbody > tr').length;            
             var template = '<tr class="price">'+
                 '<td>'+tenHang+'</td>'+
                 '<td>'+donViTinh+'</td>'+
                 '<td>'+
-                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+
+                    '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+'<span hidden="true" class="maSanPham">'+maHang+'</span>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
                     '<span class="soLuong">'+soLuong+'</span>'+
                 '</td>'+
@@ -536,39 +497,16 @@
 
                 $('input[name="phieu-nhap[idDoiTac][idDoiTac]"]').val(idNhaCungCap);
                 $('input[name="phieu-nhap[idUserNv][userId]"]').val(1);
-                
+
             template = template.replace(/__index__/g, soDong);
             $('#tbNhapHang tbody').append(template);
-
-            //---------------------------
-            var sD = $('#tbSanPham > tbody > tr').length;
-            i=sD+1;
-            var temp = '<tr class="price">'+
-                '<td>'+i+'</td>'+
-                '<td>'+tenHang+'</td>'+
-                '<td>'+maHang+'</td>'+
-                '<td>'+donViTinh+'</td>'+
-                '<td></td>'+
-                '<td>'+soLuong+'</td>'+
-                '<td>'+giaNhap+'</td>'+
-                '<td>'+'<p>'+thanhTien+'</p>'+'</td>'+
-                '</tr>';
-            temp = temp.replace(/__index__/g, sD);
-            $('#tbSanPham tbody').append(temp); 
-
-            //-------------------------
-            /*$("#tbSanPham tbody p").each(function(){
-                var t=parseInt(jQuery(this).html());
-                alert(t);           
-            });*/
-
             return false;
         });
 
     //Hiển thị, chọn sản phẩm
         var xhr;
         var xhr1;    
-        $('#idMaHang').keyup(function(){            
+        $('#idMaHang').keyup(function(){
             var maHang=$(this).val();            
             if(xhr && xhr.readyState != 4){
                 xhr.abort(); //huy lenh ajax truoc do
@@ -637,7 +575,7 @@
         });
     //./Hiển thị, chọn sản phẩm
 
-    //Hiển thị, chọn nhà cung cấp     
+    //Hiển thị, chọn nhà cung cấp
         $('#nhaCungCap').keyup(function()
         {
 
@@ -699,15 +637,16 @@
 
     $(document).ready(function(){
       $(document).on('click', '.btnHuy', function(){        
-        $(this).closest('tr').remove();
+        $(this).closest('tr').remove();        
         return false;
       });
     });
     </script>
 
     <script>
+
         luuNhapHangFunction=function()
-        {
+        {            
             var soDong = $('#tbNhapHang > tbody > tr').length; 
             if(soDong==0)
             {
@@ -715,29 +654,110 @@
                 return false;
             }
             else
-            {                  
-                $("#tbSanPham tbody p").each(function(){
-                    var t=parseInt(jQuery(this).html());
-                    tong=tong+t;
-                    alert(tong);
+            {
+                var soLuong=new Array();
+                var donGia=new Array();                
+                var maSanPham=new Array();
+                var thanhTien=new Array();
+                var i=1;
+                var j=1;
+                var k=1;
+                var sL=0;
+                var gN=0;
+                var maSP='';
+                var tongTien=0;
+
+                var sD = $('#tbSanPham > tbody > tr').length;
+                var temp = '<tr class="price">';                
+                $("#tbNhapHang tbody tr").each(function()
+                {
+                    var timSoLuong=$(this).find(".soLuong");
+                    var timGiaNhap=$(this).find(".giaNhap");
+                    var timMaSanPham=$(this).find(".maSanPham");
+                    timSoLuong.each(function(){                        
+                        sL=parseInt($(this).html());                        
+                    });
+                    timGiaNhap.each(function(){
+                        gN=parseInt($(this).html());                        
+                    });
+                    timMaSanPham.each(function(){                        
+                        maSP=$(this).html();                        
+                    });
+                    soLuong[k]=sL;
+                    donGia[k]=gN;
+                    thanhTien[k]=sL*gN;
+                    maSanPham[k]=maSP;
+                    //alert(maSanPham[k].toString());
+                    k++;
+                });
+                //------------------------------------------------
+                $("#tbNhapHang tbody tr td").each(function()
+                {
+                    var t=$(this).html();
+                    var c= parseInt(i%5);
+                    if(c==1)
+                    {
+                        temp = temp +'<td style="text-align: center;">'+j+'</td>';
+                    }                   
+                    if(c!=0)                    
+                    {
+                        if(c==2||c==3||c==4)
+                        {                            
+                             if(c==2)
+                             {
+                                temp= temp+
+                                '<td style="text-align: right;">'+$(this).html()+'</td>';
+                             }
+                             if(c==3)
+                             {
+                                temp= temp+
+                                '<td style="text-align: right;">'+formatNumber(soLuong[j])+'</td>';
+                             }
+                             if(c==4)
+                             {
+                                temp= temp+
+                                '<td style="text-align: right;">'+formatNumber(donGia[j])+'</td>';
+                             }                             
+                        }
+                        else
+                        {
+                            temp= temp+
+                             '<td>'+$(this).html()+'</td>';
+                        }
+
+                        if(c==1)
+                        {
+                            temp=temp+
+                            '<td style="text-align: right;">'+maSanPham[j]+'</td>';
+                        }
+                        if(c==2)
+                        {
+                            temp=temp+'<td></td>';
+                        }                            
+                        if(c==4)
+                        {
+                            temp=temp+'<td style="text-align: right;"><span class="thanhTien">'+formatNumber(thanhTien[j])+'</span</td>';
+                            tongTien=tongTien+parseInt(thanhTien[j]);
+                        }
+                    }
+                    if(c==0)
+                    {
+                        temp=temp+'</tr>';                        
+                        j++;                        
+                    }                    
+                    i++;
                 });
 
-                var sD = $('#tbSanPham > tbody > tr').length;                
-                var temp = '<tr class="price">'+
-                    '<td></td>'+
-                    '<td>Cộng</td>'+
-                    '<td></td>'+
-                    '<td></td>'+
-                    '<td></td>'+
-                    '<td></td>'+
-                    '<td>'+tong+'</td>'+
-                    '</tr>';
-                temp = temp.replace(/__index__/g, sD);
+                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right;">'+formatNumber(tongTien)+'</td></tr>';
+                //------------------------------------------------
+                temp = temp.replace(/__index__/g, sD);                    
                 $('#tbSanPham tbody').append(temp);
+                var soTienBangChu=docso(tongTien);                                
+                $('#tongSoTien').text(soTienBangChu);
+                
                 window.print();
-                //document.getElementById('formNhapHang').submit();
-                return true;
+                document.getElementById('formNhapHang').submit();
+                return true;                
             }                
         }
-
     </script>
