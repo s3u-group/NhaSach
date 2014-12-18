@@ -393,17 +393,22 @@
           $entityManager->flush();          
           
           //Cập nhật Sản Phẩm
-          $idSanPham=$cTPhieuNhap->getIdSanPham()->getIdSanPham();        
+          $idSanPham=$cTPhieuNhap->getIdSanPham()->getIdSanPham();  
+
           $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.idSanPham =\''.$idSanPham.'\''); // SUAKHO
           $sanPhams = $query->getResult();
           if($sanPhams)
           {
             foreach ($sanPhams as $sanPham)
             {
-              $tonKho=(int)($sanPham->getTonKho())+$soLuong;
+              $tonKho=(float)($sanPham->getTonKho())+$soLuong;
               $sanPham->setTonKho($tonKho);
               $sanPham->setGiaNhap($giaNhap);
               $entityManager->flush(); 
+
+               $loaiGia=$sanPham->getLoaiGia();  
+               $giaBia=$sanPham->getGiaBia(); 
+               $chietKhau=$sanPham->getChiecKhau(); 
 
               foreach ($kenhPhanPhois as $kenhPhanPhoi) 
               {
@@ -411,8 +416,18 @@
                 {
                   $query = $entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham ='.$idSanPham.' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);   
                   $giaXuats = $query->getResult();
-                  foreach ($giaXuats as $giaXuat) {  
-                    $gx=(int)$giaNhap+(((int)$giaNhap*(int)$kenhPhanPhoi['description'])/100);
+                  $ck=$this->getChietKhau($idKho,$kenhPhanPhoi['termTaxonomyId']);
+                  foreach ($giaXuats as $giaXuat) { 
+                    if((float)$loaiGia==1)
+                    {
+                      $loiNhuan=(float)(((float)$giaBia*(float)$ck)/100);
+                      $gx=(float)$giaBia-(float)$loiNhuan;
+                    } 
+                    else
+                    {
+                      
+                      $gx=(float)$giaNhap+(((float)$giaNhap*(float)$ck)/100);
+                    }                    
                     $giaXuat->setGiaXuat($gx);
                     $entityManager->flush();
                   }
@@ -427,6 +442,11 @@
         }
         $this->flashMessenger()->addSuccessMessage('Nhập hàng thành công!');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));        
+      }
+      else
+      {
+        $this->flashMessenger()->addErrorMessage('Nhập hàng thất bại!');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));
       }
     }    
     return array(       
@@ -770,6 +790,9 @@
             'donViTinh'=>$sanPham->getDonViTinh(),
             'tonKho'=>$sanPham->getTonKho(),
             'giaNhap'=>$sanPham->getGiaNhap(),
+            'loaiGia'=>$sanPham->getLoaiGia(),
+            'giaBia'=>$sanPham->getGiaBia(),
+            'chietKhau'=>$sanPham->getChiecKhau(),
             'giaXuat'=>$giaXuat,
           );
         }
