@@ -201,9 +201,17 @@
 
         $('#submitbutton').click(function(){
             var soTienThanhToan=parseInt($('#soTien').val());// là số tiền thanh toán nhập zô
-            if(soTienThanhToan==0||soTienThanhToan==''||soTienThanhToan==null)
+            if(soTienThanhToan==0||soTienThanhToan==''||soTienThanhToan==null||isNaN(soTienThanhToan)==true)
             {
                 alert('Bạn chưa nhập số tiền thanh toán!');
+                return false;
+            }
+
+            var noCuoiKi=parseInt($('#noCuoiKi').text());
+            var tienThanhToan=parseInt($('#soTien').val());
+            if(tienThanhToan>noCuoiKi)
+            {
+                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
                 return false;
             }
 
@@ -218,38 +226,30 @@
             return true;
             
         });
-               
-        $('#soTien').change(function(){   
-            var noCuoiKi=parseInt($('#noCuoiKi').text());                  
-            var tienThanhToan=parseInt($(this).val());
-            if(tienThanhToan<=noCuoiKi)
-            {
-                $('#duNo').val(noCuoiKi-tienThanhToan);
-                $('#soDu').text(noCuoiKi-tienThanhToan);
-            }
-            else
-            {
-                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
-                $('#duNo').val('');
-                $('#soTien').val('');
-                $('#soDu').text(noCuoiKi);
-            }
-        });
+                       
         $('#soTien').keyup(function(){    
             var noCuoiKi=parseInt($('#noCuoiKi').text());                  
             var tienThanhToan=parseInt($(this).val());
-            if(tienThanhToan<=noCuoiKi)
+            if(tienThanhToan>0)
             {
-                $('#duNo').val(noCuoiKi-tienThanhToan);
-                $('#soDu').text(noCuoiKi-tienThanhToan);
+                if(tienThanhToan<=noCuoiKi)
+                {
+                    $('#duNo').val(noCuoiKi-tienThanhToan);
+                    $('#soDu').text(noCuoiKi-tienThanhToan);
+                }
+                else
+                {
+                    alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                    $('#duNo').val('');
+                    $('#soTien').val('');
+                    $('#soDu').text(noCuoiKi);
+                }
             }
             else
             {
-                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
                 $('#duNo').val('');
                 $('#soTien').val('');
-                $('#soDu').text(noCuoiKi);
-            }
+            }            
         });                
                
     });
