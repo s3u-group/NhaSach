@@ -204,13 +204,17 @@ use DateTimeZone;
           return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$id));
         }
         else{
-          die(var_dump($form->getMessages()));
             $this->flashMessenger()->addErrorMessage('Thanh toán thất bại!');
             return $this->redirect()->toRoute('cong_no/crud',array('action'=>'index'));
         }        
       }    
 
-      
+      $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+          return $this->redirect()->toRoute('cong_no/crud', array(
+              'action' => 'index',
+          ));
+      }  
 
       $response=$this->searchCongNoKhachHang($id);
       
