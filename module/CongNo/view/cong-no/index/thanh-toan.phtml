@@ -136,8 +136,7 @@
                     <tr>
                         <td><b>Thanh toán</b> </td>
                         <td> 
-                            <?php
-                                $form->get('phieu-thu')->get('soTien')->setAttribute('value',0);
+                            <?php                                
                                 $form->get('phieu-thu')->get('soTien')->setAttribute('class',' h5a-input form-control input-sm');
                                 if((float)$response['noCuoiKi']<=0)
                                 {
@@ -241,8 +240,9 @@
                 {
                     alert('Số tiền thanh toán lớn hơn số dư cuối kì');
                     $('#duNo').val('');
-                    $('#soTien').val('');
-                    $('#soDu').text(noCuoiKi);
+                    /*$('#soTien').val('');
+                    $('#soDu').text(noCuoiKi);*/
+                    return false;
                 }
             }
             else
