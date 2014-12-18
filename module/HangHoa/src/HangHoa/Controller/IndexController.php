@@ -541,7 +541,30 @@
           }     
           
           $sanPham->setTonKho(0);
-          $sanPham->setGiaNhap(0);
+
+          if($sanPham->getLoaiGia()==1)
+          {
+            $giaNhap=0; 
+            if(!$sanPham->getChiecKhau()||$sanPham->getChiecKhau()==null||$sanPham->getChiecKhau()==''||
+               !$sanPham->getGiaBia()||$sanPham->getGiaBia()==null||$sanPham->getGiaBia()=='')
+            {
+              $giaNhap=0;
+            }
+            else
+            {
+              $loiNhuan=((float)$sanPham->getChiecKhau()*(float)$sanPham->getGiaBia())/100;
+              $giaNhap=(float)$sanPham->getGiaBia()-(float)$loiNhuan;
+            }
+            $sanPham->setGiaNhap($giaNhap);
+          }
+          else
+          {
+            $sanPham->setLoaiGia(0);
+            $sanPham->setChiecKhau(0);
+            $sanPham->setGiaBia(0);
+          }
+        
+          
           $sanPham->setKho($idKho);
           $entityManager->persist($sanPham);
           $entityManager->flush(); 
@@ -562,7 +585,18 @@
               $giaXuat=new GiaXuat();
               $giaXuat->setIdGiaXuat('');
               $giaXuat->setIdSanPham($sanPhams[0]->getIdSanPham());
-              $gx=(int)$sanPhams[0]->getGiaNhap()+(((int)$sanPhams[0]->getGiaNhap()*(int)$kenhPhanPhoi['description'])/100);
+              $gx=0;
+              if($sanPhams[0]->getLoaiGia()==1)
+              {
+                $loiNhuan=(((float)$sanPhams[0]->getGiaBia()*(float)$kenhPhanPhoi['description'])/100);
+                $gx=(float)$sanPhams[0]->getGiaBia()-(float)$loiNhuan;
+
+              }
+              else
+              {
+                $gx=(float)$sanPhams[0]->getGiaNhap()+(((float)$sanPhams[0]->getGiaNhap()*(float)$kenhPhanPhoi['description'])/100);  
+              }
+              
               $giaXuat->setGiaXuat($gx);
               $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
               $giaXuat->setKho($idKho);

@@ -157,6 +157,7 @@
                                     <thead>
                                         <th><input type="checkbox"/></th>
                                         <th>Sản phẩm</th>
+                                        <th>Mã vạch</th>
                                         <th>Tồn kho</th>
                                         <th>Loại</th>
                                         <th>Nhãn hàng</th>
@@ -167,6 +168,7 @@
                                         <tr>
                                             <td><input type="checkbox"/></td>
                                             <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
+                                            <td><?php echo $sanPham->getMaSanPham(); ?></td>
                                             <td><?php echo $sanPham->getTonKho(); ?></td>
                                             <td><?php echo $sanPham->getIdLoai()->getTermId()->getName(); ?></td>
                                             <td><?php echo $sanPham->getNhan(); ?></td>
