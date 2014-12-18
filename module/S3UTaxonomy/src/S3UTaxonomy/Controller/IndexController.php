@@ -256,5 +256,107 @@
         }                       
         return $this->redirect()->toRoute('s3u_taxonomy');        
  	}
+
+    public function chietKhauAction()
+    {
+       $this->layout('layout/giaodien');
+
+        $idKho=1;
+        if($this->zfcUserAuthentication()->hasIdentity())
+        { 
+          $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        }
+        else
+        {
+            return $this->redirect()->toRoute('hang_hoa/crud');
+        }
+
+       $entityManager=$this->getEntityManager();
+
+       $taxonomyKenhPhanPhoi=$this->TaxonomyFunction();
+       $kenhPhanPhois=$taxonomyKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+       
+       $request=$this->getRequest();
+       if($request->isPost())
+       {
+         $post=$request->getPost();
+         foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+             if($kenhPhanPhoi['cap']>0)
+             {
+                $this->suaChietKhau($kenhPhanPhoi['termTaxonomyId'],$post[$kenhPhanPhoi['termTaxonomyId']]);
+             }
+         }
+         $this->flashMessenger()->addSuccessMessage('Cập nhập chiết khấu thành công');
+         return $this->redirect()->toRoute('s3u_taxonomy/taxonomys',array('action'=>'chietKhau'));
+       }
+       return array(        
+         'kenhPhanPhois'=>$kenhPhanPhois,
+       );
+    }
+
+    public function suaChietKhau($id,$value)
+    {
+        if($id&&$value)
+        {
+            $idKho=1;
+            if($this->zfcUserAuthentication()->hasIdentity())
+            { 
+              $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+            }
+            else
+            {
+                return $this->redirect()->toRoute('hang_hoa/crud');
+            }
+            $entityManager=$this->getEntityManager();
+            $termtaxonomy=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find($id);
+            $termtaxonomy->setDescription($value);
+
+            $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.kho='.$idKho.' and gx.idKenhPhanPhoi='.$id);
+            $giaXuats=$query->getResult();
+
+            foreach ($giaXuats as $giaXuat) {
+                $idSanPham=$giaXuat->getIdSanPham();
+                $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($idSanPham);
+                if($sanPham->getLoaiGia()==1)// là sản phẩm có giá bìa
+                {
+                    /**
+                     * @value là chiết khấu
+                     */
+                    $this->suaGiaXuatSanPhamCoGiaBia($sanPham,$giaXuat,$value);
+                }
+                else// là sản phẩm có giá nhập
+                {
+                    $this->suaGiaXuatSanPhamKhongCoGiaBia($sanPham,$giaXuat,$value);
+                }
+            }
+
+            $entityManager->flush();
+        }
+    }
+
+    public function suaGiaXuatSanPhamCoGiaBia($sanPham,$giaXuat,$chietKhau)
+    {
+        $entityManager=$this->getEntityManager();
+        if($giaXuat&&$chietKhau&&$sanPham)
+        {
+            $loiNhuan=(float)(((float)($sanPham->getGiaBia())*(float)$chietKhau)/100);
+            $gx=(float)($sanPham->getGiaBia()-$loiNhuan);
+            $giaXuat->setGiaXuat($gx);
+            $entityManager->flush();
+        }
+
+    }
+    public function suaGiaXuatSanPhamKhongCoGiaBia($sanPham,$giaXuat,$chietKhau)
+    {
+        $entityManager=$this->getEntityManager();
+        if($giaXuat&&$chietKhau)
+        {
+            $loiNhuan=(float)(((float)($sanPham->getGiaNhap())*(float)$chietKhau)/100);
+            $gx=(float)($sanPham->getGiaNhap()+$loiNhuan);
+            $giaXuat->setGiaXuat($gx);
+            $entityManager->flush();
+        }
+
+    }
  }
 ?>

@@ -1,0 +1,117 @@
+<?php
+ $this->headTitle('Chiết khấu');
+
+?>
+<form action="<?php echo $this->url('s3u_taxonomy/taxonomys',array('action'=>'chietKhau')); ?>" method="post">
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
+                 / Thêm sản phẩm /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
+                        <i class="fa fa-cubes"></i> Danh sách hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">                
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Chiết khấu</h1>
+                    </div>
+                </div>
+                <?php
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                ?>
+            </div>
+            <div class="row">
+                <table class="item">
+                    <tbody>
+                        <?php 
+                        foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+                            if($kenhPhanPhoi['cap']>0)
+                            {
+                            ?>
+                                <tr>
+                                    <td width="15%">
+                                        <?php echo $kenhPhanPhoi['termId']['name']; ?>
+                                    </td>
+                                    <td width="80%">
+                                        <input name="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" class="h5a-input form-control input-sm" value="<?php echo $kenhPhanPhoi['description']; ?>">
+                                    </td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            <?php
+                            }
+                            
+                        }
+                        ?>
+                                            
+                    </tbody>
+                </table>                            
+            </div>
+            <div class="page-footer" style="margin-right:50px">
+                <div class="row bottom20">
+                    <div class="col-sm-6 col-sm-offset-6">
+                        <div class="pull-right">
+                            <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</form>
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+<!-- Summernot JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/summernote.min.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+$(document).ready(function() {
+    $('#dataTables-example').dataTable({
+        "pagingType": "simple",
+        "bPaginate": true,
+        "bLengthChange": true,
+        "bFilter": true,
+        "bInfo": true,
+        "bAutoWidth": true,
+    });
+    $('#loaiGia').val(0);
+
+});
+
+$("#editor").summernote({height:150});
+</script>

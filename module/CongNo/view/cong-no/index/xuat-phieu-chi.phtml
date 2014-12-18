@@ -1,0 +1,264 @@
+<?php echo $this->headTitle('Xuất phiếu chi');
+ $form->setAttribute('action', $this->url('cong_no/crud', array('action' => 'xuatPhieuChi','id'=>$phieuThu->getIdPhieuThu())));
+ $form->setAttribute('role','form');
+ $form->prepare();
+ echo $this->form()->openTag($form);
+
+ $phieuChi=$form->get('phieu-chi'); 
+
+ $congNo=$phieuChi->get('idCongNo');
+ $congNo->setAttribute('value',$phieuThu->getIdCongNo()->getIdCongNo());
+ echo $this->formHidden($congNo);  
+
+ $idPhieuChi=$phieuChi->get('idPhieuChi');  
+ echo $this->formHidden($idPhieuChi);
+
+ $idUserNv=$phieuChi->get('idUserNv');
+ $idUserNv->setAttribute('value',$this->zfcUserIdentity()->getId());
+ echo $this->formHidden($idUserNv); 
+ 
+?>
+<style type="text/css">    
+    #nha-cung-cap-search-result{ cursor:pointer;}
+    @media print {    
+        .in{display: block;}   
+        .khongin{display: none;}        
+    }
+</style>
+<div class="in" hidden="true">
+    <table width="718" style="font-size:13px;">
+        <tr><td style="padding:0px;" width="240px">Đơn vị:...........................</td><td style="padding:0px;"></td><td style="padding:0px;" width="260px" align="center"><b>Mẫ số: 02 - TT</b></td></tr>
+        <tr><td style="padding:0px;">Địa chỉ:...........................</td><td style="padding:0px;" align="center"><b style="font-size:16px;">PHIẾU CHI</b> Số: ..............</td><td align="center" style="padding:0px;"><div style="margin-top:-3px;"><i>(Ban hành theo QĐ số 15/2006/QĐ-BTC<br>Ngày 20/3/2006 của Bộ trưởng BTC)</i></div></td></tr>
+        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center"><i>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?></i></td><td style="padding:0px;" align="right"><b>Nợ:</b>..............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center">Quyển số:..........</td><td style="padding:0px;" align="right"><b>Có:</b>...............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Họ tên người nhận tiền:.........................................................................................................................<div style="margin-top:-20px; margin-left:230px;" id="hoTenNguoiNhanTien"></div></span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Địa chỉ:.................................................................................................................................................</span><div style="margin-top:-20px; margin-left:130px;" id="inDiaChi"></div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Lý do chi:..............................................................................................................................................</span><div style="margin-top:-20px; margin-left:150px;" id="inLyDo">Lý do</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Số tiền:................................................................(Viết bằng chữ)..........................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span><div style="margin-top:-39px; margin-left:150px;" id="inSoTienBangSo">Số tiền bằng số</div><div style="margin-top:-19px; margin-left:480px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Kèm theo:........................................................................................................................chứng từ gốc.</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3" align="right"><span>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?>&nbsp;&nbsp;</span></td></tr>
+
+    </table>
+    <table width="718" style="font-size:13px; text-align:center;">
+        <tr><td style="padding:0px;"><b>Người lập phiếu</b></td><td style="padding:0px;"><b>Người nhận tiền</b></td><td style="padding:0px;"><b>Thủ quỹ</b></td><td style="padding:0px;"><b>Kế toán trưởng</b></td><td style="padding:0px;"><b>Thủ trưởng đơn vị</b></td></tr>
+        <tr><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên, đóng dấu)</td></tr>
+        <tr><td style="padding:0px;" colspan="5" height="50px"></td></tr>
+    </table>
+    <table width="718" style="font-size:13px; text-align:center;">
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Tỷ giá ngoại tệ (Vàng, bạc, đá quý):..................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Số tiền quy đổi:...............................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px; text-align:left;"><span style="margin-left:70px;">(Liên gửi ra ngoài phải đóng dấu)</span></td></tr>
+    </table>
+</div>
+<div class="khongin">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Công nợ /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            <i class="glyphicon glyphicon-open"></i> Công nợ Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
+                            <i class="glyphicon glyphicon-save"></i> Công nợ NCC
+                        </a>
+                    </li>                 
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Xuất phiếu chi</h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                        $flash=$this->flashMessenger();
+                        $flash->setMessageOpenFormat('<div%s>
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button>
+                         <ul><li>')
+                         ->setMessageSeparatorString('</li><li>')
+                         ->setMessageCloseString('</li></ul></div>');
+
+                         echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                         echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                         echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                         echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     ?>
+                </div>
+                <div class="row">
+                    <table width="100%">
+                        <tr>
+                            <td width="15%">
+                                Tên người nhận tiền
+                            </td>
+                            <td>
+                               <input class="h5a-input form-control input-sm" name="tenNguoiNhanTien" id="tenNguoiNhanTien">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                Địa chỉ
+                            </td>
+                            <td>
+                               <input class="h5a-input form-control input-sm" name="diaChi" id="diaChi">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                Tổng tiền
+                            </td>
+                            <td>
+                                <span id="tongTien"><?php echo $phieuThu->getSoTien(); ?></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                Chiết khấu
+                            </td>
+                            <td>
+                                <input type="text" name="chietKhau" id="chietKhau" class="h5a-input form-control input-sm" >
+                                <?php  
+                                    $soTien=$phieuChi->get('soTien');
+                                    $soTien->setAttribute('id','soTien');
+                                    echo $this->formHidden($soTien);                                                
+                                ?>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                Thành tiền
+                            </td>
+                            <td>
+                                <span id="thanhTien"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                Lý do
+                            </td>
+                            <td>
+                                <?php                                                
+                                    $lyDo=$phieuChi->get('lyDo');
+                                    $lyDo->setAttribute('class','h5a-input form-control input-sm');
+                                    echo $this->formElement($lyDo); 
+
+                                    $ngayThanhToan=$phieuChi->get('ngayThanhToan');
+                                    
+                                    $ngayThanhToan->setAttribute('value',date('Y-m-d'));
+                                    echo $this->formHidden($ngayThanhToan);                                               
+                                ?>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <div class="pull-right">
+                        <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                        <button id="submit" type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
+                    </div>
+            </div>
+        </div>
+    </div>  
+</div>  
+<?php echo $this->form()->closeTag(); ?>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+     <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('.dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+
+    $('#submit').click(function(){
+        window.print();
+    });
+
+    $('#chietKhau').keyup(function(){  
+        var chietKhau=parseFloat($('#chietKhau').val());
+        var tongTien=parseFloat($('#tongTien').text());
+
+        var thanhTien=parseFloat(((chietKhau*tongTien)/100));
+        $('#thanhTien').text(thanhTien);
+        $('#soTien').val(thanhTien);
+        $('#inSoTienBangSo').text(thanhTien);
+
+        var soTienBangChu=docso(thanhTien);
+        $('.inSoTienBangChu').text(soTienBangChu);
+
+    });
+
+    $('#lyDo').keyup(function(){  
+        var lyDo=$('#lyDo').val();
+        
+        $('#inLyDo').text(lyDo);
+
+    });
+
+    $('#diaChi').keyup(function(){  
+        var diaChi=$('#diaChi').val();
+        
+        $('#inDiaChi').text(diaChi);
+
+    });
+
+    $('#tenNguoiNhanTien').keyup(function(){  
+        var tenNguoiNhanTien=$('#tenNguoiNhanTien').val();
+        
+        $('#hoTenNguoiNhanTien').text(tenNguoiNhanTien);
+
+    });
+
+    </script>

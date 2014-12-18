@@ -247,13 +247,13 @@ return array(
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Index'),
-                    'action'    =>array('index'),
+                    'action'    =>array('chietKhau'),
                     'roles'     =>array('nguoi-dung'),
                 ),
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Taxonomy'),
-                    'action'    =>array('taxonomyIndex','taxonomyEdit','taxonomyAdd'),
+                    'action'    =>array(),
                     'roles'     =>array('nguoi-dung'),
                 ),
 

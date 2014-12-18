@@ -7,6 +7,7 @@ namespace CongNo\Controller;
  use DoctrineORMModule\Paginator\Adapter\DoctrinePaginator as DoctrineAdapter;
  use Zend\ServiceManager\ServiceManager;
  use CongNo\Form\ThanhToanForm;
+ use CongNo\Form\PhieuChiForm;
  use CongNo\Entity\PhieuThu;
  use CongNo\Form\ThanhToanNhaCungCapForm;
  use CongNo\Form\PhieuChiFieldset;
@@ -161,6 +162,8 @@ use DateTimeZone;
      {
        return $this->redirect()->toRoute('application');
      }
+
+     
      
     // kiểm tra thuộc kho nào
       $idKho=1;
@@ -198,20 +201,16 @@ use DateTimeZone;
           $entityManager->persist($phieuThu);
           $entityManager->flush();
           $this->flashMessenger()->addSuccessMessage('Thanh toán thành công!');
-          return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
+          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$id));
         }
         else{
+          die(var_dump($form->getMessages()));
             $this->flashMessenger()->addErrorMessage('Thanh toán thất bại!');
-            return $this->redirect()->toRoute('cong_no/crud',array('action','index'));
+            return $this->redirect()->toRoute('cong_no/crud',array('action'=>'index'));
         }        
       }    
 
-      $id = (int) $this->params()->fromRoute('id', 0);
-      if (!$id) {
-          return $this->redirect()->toRoute('cong_no/crud', array(
-              'action' => 'index',
-          ));
-      }  
+      
 
       $response=$this->searchCongNoKhachHang($id);
       
@@ -405,6 +404,13 @@ use DateTimeZone;
      {
        return $this->redirect()->toRoute('application');
      }
+
+     $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+          return $this->redirect()->toRoute('cong_no/crud', array(
+              'action' => 'congNoNhaCungCap',
+          ));
+      }  
      // kiểm tra thuộc kho nào
       $idKho=1;
       if($this->zfcUserAuthentication()->hasIdentity())
@@ -444,7 +450,7 @@ use DateTimeZone;
           $entityManager->flush();
           $this->flashMessenger()->addSuccessMessage('Thanh toán thành công!');
           return $this->redirect()->toRoute('cong_no/crud', array(
-             'action' => 'congNoNhaCungCap',
+             'action' => 'chiTietCongNoNhaCungCap','id'=>$id,
           ));          
         }
         else
@@ -457,12 +463,7 @@ use DateTimeZone;
        
       }
 
-      $id = (int) $this->params()->fromRoute('id', 0);
-      if (!$id) {
-          return $this->redirect()->toRoute('cong_no/crud', array(
-              'action' => 'congNoNhaCungCap',
-          ));
-      }  
+      
 
       $response=$this->searchCongNoNhaCungCap($id);      
 
@@ -906,6 +907,7 @@ use DateTimeZone;
 
           $query = $entityManager->createQuery('SELECT pt FROM HangHoa\Entity\DoiTac kh, CongNo\Entity\CongNo cn, CongNo\Entity\PhieuThu pt  WHERE kh.kho='.$idKho.' and kh.idDoiTac=cn.idDoiTac and cn.idCongNo=pt.idCongNo and pt.kho='.$idKho.' and kh.idDoiTac= :idDoiTac ORDER BY pt.ngayThanhToan DESC, pt.idPhieuThu DESC');        
 
+          
           $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
           $congNos = $query->getResult(); // array of CmsArticle objects 
 
@@ -938,7 +940,9 @@ use DateTimeZone;
                 'noCuoiKi'=>$noCuoiKi,
                 'thanhToan'=>$thanhToan,
                 'duNo'=>$duNo,
-                'ngayThanhToan'=>$ngayThanhToan,                
+                'ngayThanhToan'=>$ngayThanhToan,
+                'idPhieuThu'=>'',   
+                'phieuChi'=>'',
               );
 
             foreach ($congNos as $congNo) 
@@ -950,6 +954,10 @@ use DateTimeZone;
               $duNo=$congNo->getIdCongNo()->getDuNo();
               $thanhToan=(float)$noCuoiKi-(float)$duNo;
               $ngayThanhToan=$congNo->getNgayThanhToan();
+              $idPT=$congNo->getIdPhieuThu();
+              $idCongNo=$congNo->getIdCongNo()->getIdCongNo();
+              $qr=$entityManager->createQuery('SELECT pc FROM CongNo\Entity\PhieuChi pc WHERE pc.idCongNo='.$idCongNo.' and pc.kho='.$idKho);
+              $phieuChi=$qr->getResult();
 
               $response[]=array(
                 'ngayDauKi'=>$ngayDauKi,
@@ -959,6 +967,8 @@ use DateTimeZone;
                 'thanhToan'=>$thanhToan,
                 'duNo'=>$duNo,
                 'ngayThanhToan'=>$ngayThanhToan,
+                'idPhieuThu'=>$idPT,  
+                'phieuChi'=>$phieuChi,
 
               );
             }
@@ -999,6 +1009,7 @@ use DateTimeZone;
             $thanhToan='Chưa Thanh Toán';
             $duNo='';
             $ngayThanhToan='';
+            $idPT='';
 
             $response[]=array(
                 'ngayDauKi'=>$ngayDauKi,
@@ -1008,6 +1019,8 @@ use DateTimeZone;
                 'thanhToan'=>$thanhToan,
                 'duNo'=>$duNo,
                 'ngayThanhToan'=>$ngayThanhToan,
+                'idPhieuThu'=>$idPT,
+                'phieuChi'=>'',
 
               );
           }
@@ -1173,6 +1186,59 @@ use DateTimeZone;
         }
 
       return array('response'=>$response,'doiTac'=>$doiTacs,'phieuNhaps'=>$phieuNhaps);
+  }
+
+  public function xuatPhieuChiAction()
+  {
+    // id công nợ
+      $id = (int) $this->params()->fromRoute('id', 0);
+      if (!$id) {
+          return $this->redirect()->toRoute('cong_no/crud');
+      } 
+
+      // kiểm tra thuộc kho nào
+      $idKho=1;
+      if($this->zfcUserAuthentication()->hasIdentity())
+      { 
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      }
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
+
+      $phieuThu=$entityManager->getRepository('CongNo\Entity\PhieuThu')->find($id);
+      $idDoiTac=$phieuThu->getIdCongNo()->getIdDoiTac()->getIdDoiTac();
+      $form=new PhieuChiForm($entityManager);
+
+      $phieuChi=new PhieuChi();
+
+      $form->bind($phieuChi);
+
+      $request=$this->getRequest();
+      if($request->isPost())
+      {        
+        $form->setData($request->getPost());
+        if($form->isValid())
+        {
+          $phieuChi->setKho($idKho);
+          $entityManager->persist($phieuChi);
+          $entityManager->flush();
+          $this->flashMessenger()->addSuccessMessage('Xuất phiếu chi thành công');
+          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$idDoiTac));
+        }
+        else
+        {
+          $this->flashMessenger()->addErrorMessage('Xuất phiếu chi thất bại');
+          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$idDoiTac));
+        }
+
+      }
+
+
+      return array(
+        'form'=>$form,
+        'phieuThu'=>$phieuThu,
+      );
+
   }
  }
 ?>
