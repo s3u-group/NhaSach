@@ -135,7 +135,7 @@
                             {
                                 $form->get('phieu-chi')->get('soTien')->setAttribute('disabled',true);
                             }
-                            $form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );
+                            /*$form->get('phieu-chi')->get('soTien')->setAttribute('value', 0 );*/
                             echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
                         ?>
                         </td>
@@ -203,10 +203,17 @@
     $(document).ready(function() {
 
         $('#submitbutton').click(function(){
-            var soTienThanhToan=parseInt($('#soTien').val());// là số tiền thanh toán nhập zô
-            if(soTienThanhToan==0||soTienThanhToan==''||soTienThanhToan==null)
+            var soTienThanhToan=parseInt($('#soTien').val());// là số tiền thanh toán nhập zô            
+            if(soTienThanhToan==0||soTienThanhToan==''||soTienThanhToan==null||isNaN(soTienThanhToan)==true)
             {
                 alert('Bạn chưa nhập số tiền thanh toán!');
+                return false;
+            }
+            var noCuoiKi=parseInt($('#noCuoiKi').text());
+            var tienThanhToan=parseInt($('#soTien').val());
+            if(tienThanhToan>noCuoiKi)
+            {
+                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
                 return false;
             }
 
@@ -219,43 +226,33 @@
             var inSoTienBangChu=docso(soTienBangSo);
             $('.inSoTienBangChu').text(inSoTienBangChu);
             window.print();
-
             return true;
             
         });
                
-        $('#soTien').change(function(){   
-            var noCuoiKi=parseInt($('#noCuoiKi').text());                  
-            var tienThanhToan=parseInt($(this).val());
-            if(tienThanhToan<=noCuoiKi)
-            {
-                $('#duNo').val(noCuoiKi-tienThanhToan);
-                $('#soDu').text(noCuoiKi-tienThanhToan);
-            }
-            else
-            {
-                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
-                $('#duNo').val('');
-                $('#soTien').val('');
-                $('#soDu').text(noCuoiKi);
-            }
-        });
         $('#soTien').keyup(function(){    
             var noCuoiKi=parseInt($('#noCuoiKi').text());                  
             var tienThanhToan=parseInt($(this).val());
-            if(tienThanhToan<=noCuoiKi)
+            if(tienThanhToan>0)
             {
-                $('#duNo').val(noCuoiKi-tienThanhToan);
-                $('#soDu').text(noCuoiKi-tienThanhToan);
+                if(tienThanhToan<=noCuoiKi)
+                {
+                    $('#duNo').val(noCuoiKi-tienThanhToan);
+                    $('#soDu').text(noCuoiKi-tienThanhToan);
+                }
+                else
+                {
+                    alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+                    $('#duNo').val('');                    
+                    return false;
+                }
             }
             else
-            {
-                alert('Số tiền thanh toán lớn hơn số dư cuối kì');
+            {                
                 $('#duNo').val('');
                 $('#soTien').val('');
-                $('#soDu').text(noCuoiKi);
-            }
-        });                
+            }           
+        }); 
                
     });
    
