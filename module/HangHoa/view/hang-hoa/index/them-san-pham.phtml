@@ -19,39 +19,7 @@
             document.getElementById('trGiaNhap').hidden=false;
         }
         return true;
-    }
-    kiemTraCheckLoaiMaSanPham=function()
-    {
-        var tam=document.getElementById("loaiMaSanPham").checked;
-        if(tam)
-        {
-            document.getElementById("loaiMaSanPham").value=1;
-            document.getElementById("tdCheckLoaiMaSanPham").hidden=true;
-            document.getElementById("maSanPham").required='';
-        }
-        else
-        {
-            document.getElementById("loaiMaSanPham").value=0;
-            document.getElementById("tdCheckLoaiMaSanPham").hidden=false;
-            document.getElementById("maSanPham").required='required';
-        }
-    }
-    kiemTraCheckMaVach=function()
-    {
-        var tam=document.getElementById("checkMaVach").checked;
-        if(tam)
-        {
-            document.getElementById("checkMaVach").value=1;
-            document.getElementById("tdCheckMaVach").hidden=true;            
-            document.getElementById("maVach").required='';
-        }
-        else
-        {
-            document.getElementById("checkMaVach").value=0;
-            document.getElementById("tdCheckMaVach").hidden=false;            
-            document.getElementById("maVach").required='required';
-        }
-    }
+    }    
 
 </script>
 <?php
@@ -128,13 +96,7 @@
                                             ?>
                                         </td>
                                         <td>
-                                            <?php
-                                                $loaiMaSanPham=$sanPham->get('loaiMaSanPham');
-                                                $loaiMaSanPham->setAttribute('id','loaiMaSanPham');
-                                                $loaiMaSanPham->setAttribute('onChange','return kiemTraCheckLoaiMaSanPham();');
-
-                                                echo $this->formElement($loaiMaSanPham);
-                                            ?> Tự động
+                                            Không nhập thì mã sẽ được tạo tự động
                                         </td>
                                     </tr>
                                 </table>
@@ -155,13 +117,7 @@
                                             ?>
                                         </td>
                                         <td>
-                                            <?php
-                                                $checkMaVach=$sanPham->get('checkMaVach');
-                                                $checkMaVach->setAttribute('id','checkMaVach');
-                                                $checkMaVach->setAttribute('onChange','return kiemTraCheckMaVach();');
-
-                                                echo $this->formElement($checkMaVach);
-                                            ?> Tự động
+                                            Không nhập thì mã sẽ được tạo tự động
                                         </td>
                                     </tr>
                                 </table>

@@ -184,7 +184,6 @@
   // xem chi tiết sản phẩm
   public function sanPhamAction()
   {
-    
     // kiểm tra đăng nhập
     if(!$this->zfcUserAuthentication()->hasIdentity())
     {
@@ -224,15 +223,14 @@
      $request = $this->getRequest();
 
      if($request->isPost())
-     {
+     {        
         $post = array_merge_recursive(
               $request->getPost()->toArray(),
               $request->getFiles()->toArray()
         );
         $form->setData($request->getPost());
         if($form->isValid())
-        {
-          //die(var_dump($request->getPost()));
+        {          
           if($post['san-pham']['hinhAnh']['error']==0)
           {
             // xóa bỏ hình củ trong img
@@ -563,8 +561,8 @@
             }
           //-----------------------------------------
 
-          //-------Kiểm tra loại mã vạch
-            if((int)($post['san-pham']['checkMaVach'])==1)
+          //-------Kiểm tra loại mã vạch            
+            if(trim($post['san-pham']['maVach'])=='')
             {
               $mang=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
               $a='';
@@ -721,7 +719,7 @@
           //-----------------------------
 
           //-------Cập nhật mã sản phẩm            
-            if((int)($post['san-pham']['loaiMaSanPham'])==1)
+            if(trim($post['san-pham']['maSanPham'])=='')
             {
               $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maVach=\''.$sanPham->getMaVach().'\'');
               $sanPhams=$query->getResult();
