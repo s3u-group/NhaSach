@@ -265,6 +265,9 @@
             }
           }
         }
+        else{
+          die(var_dump($form->getMessages()));
+        }
         
      } 
      return array(

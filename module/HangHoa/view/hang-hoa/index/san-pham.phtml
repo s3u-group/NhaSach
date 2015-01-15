@@ -103,25 +103,13 @@
                     </div>
                     <div role="tabpanel" class="tab-pane" id="1">
                         <div class="row">
-                            <div class="col-md-6">                            
-                                	<input type="text" class="form-control h5a-input" placeholder="Tiêu đề" value="Mô tả sản phẩm" disabled="disabled">
-                                    <p>
-                                        <?php                                        
-                                            echo $this->formHidden($sanPham->get('idSanPham'));
-                                            echo $this->formHidden($sanPham->get('tonKho'));
-                                            echo $this->formHidden($sanPham->get('giaNhap'));
-                                            
-
-                                            $moTa=$sanPham->get('moTa');
-                                            $moTa->setAttribute('class','form-control h5a');
-                                            $moTa->setAttribute('id','editor');
-                                            $moTa->setAttribute('rows','5');
-                                            echo $this->formElement($moTa);                                                
-                                        ?>
-                                            <br><br>
-
-                                    </p>
-		                            <h4 class="underline">More Info</h4>
+                            <div class="col-md-6">
+                            <?php                                        
+                                echo $this->formHidden($sanPham->get('idSanPham'));
+                                echo $this->formHidden($sanPham->get('tonKho'));
+                                echo $this->formHidden($sanPham->get('giaNhap'));
+                                                                                
+                            ?>
 		                            <table class="item">
 		                                <tbody>
 		                                    <tr>
@@ -130,7 +118,7 @@
                                                     <?php 
                                                         $tenSanPham=$sanPham->get('tenSanPham');
                                                         $tenSanPham->setAttribute('class','form-control h5a');
-                                                        $tenSanPham->setAttribute('id','editor');
+                                                        //$tenSanPham->setAttribute('id','editor');
                                                         echo $this->formElement($tenSanPham);                                                
                                                     ?>
 		                                        </td>
@@ -141,7 +129,7 @@
                                                     <?php 
                                                         $maSanPham=$sanPham->get('maSanPham');
                                                         $maSanPham->setAttribute('class','form-control h5a');
-                                                        $maSanPham->setAttribute('id','editor');
+                                                        //$maSanPham->setAttribute('id','editor');
                                                         echo $this->formElement($maSanPham);                                                
                                                     ?>
                                                 </td>
@@ -181,7 +169,7 @@
 		                                            <?php 
                                                         $nhan=$sanPham->get('nhan');
                                                         $nhan->setAttribute('class','form-control h5a');
-                                                        $nhan->setAttribute('id','editor');
+                                                        //$nhan->setAttribute('id','editor');
                                                         echo $this->formElement($nhan);                                                
                                                     ?>
 		                                        </td>
@@ -212,6 +200,20 @@
                                                     }
                                                 }
                                             ?>
+                                            <tr>
+                                                <td>
+                                                    Mô tả
+                                                </td>
+                                                <td>
+                                                <?php
+                                                    $moTa=$sanPham->get('moTa');
+                                                    $moTa->setAttribute('class','form-control h5a');
+                                                    //$moTa->setAttribute('id','editor');
+                                                    $moTa->setAttribute('rows','5');
+                                                    echo $this->formElement($moTa);
+                                                ?>
+                                                </td>
+                                            </tr>
 		                                    <tr>
                                                 <td colspan="2">
                                                     <br>

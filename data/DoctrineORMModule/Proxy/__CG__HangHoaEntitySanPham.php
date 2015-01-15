@@ -64,10 +64,10 @@ class SanPham extends \HangHoa\Entity\SanPham implements \Doctrine\ORM\Proxy\Pro
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'loaiGia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaBia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'chiecKhau', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'kho');
+            return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'loaiGia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaBia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'chiecKhau', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'kho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maVach', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idBarcode');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'loaiGia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaBia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'chiecKhau', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'kho');
+        return array('__isInitialized__', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tenSanPham', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'moTa', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'hinhAnh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'nhan', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idDonViTinh', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idLoai', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'tonKho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaNhap', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'loaiGia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'giaBia', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'chiecKhau', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctHoaDons', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'ctPhieuNhaps', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'kho', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'maVach', '' . "\0" . 'HangHoa\\Entity\\SanPham' . "\0" . 'idBarcode');
     }
 
     /**
@@ -173,6 +173,50 @@ class SanPham extends \HangHoa\Entity\SanPham implements \Doctrine\ORM\Proxy\Pro
     }
 
     
+    /**
+     * {@inheritDoc}
+     */
+    public function setIdBarcode($idBarcode)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setIdBarcode', array($idBarcode));
+
+        return parent::setIdBarcode($idBarcode);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getIdBarcode()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getIdBarcode', array());
+
+        return parent::getIdBarcode();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setMaVach($maVach)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setMaVach', array($maVach));
+
+        return parent::setMaVach($maVach);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getMaVach()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getMaVach', array());
+
+        return parent::getMaVach();
+    }
+
     /**
      * {@inheritDoc}
      */
