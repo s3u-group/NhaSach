@@ -23,7 +23,7 @@ class CreateSanPhamForm extends Form
         // Add the user fieldset, and set it as the base fieldset
         $sanPhamFieldset = new SanPhamFieldset($objectManager);
         $sanPhamFieldset->setUseAsBaseFieldset(true);
-        $this->add($sanPhamFieldset);        
+        $this->add($sanPhamFieldset);
 
         $this->add(array(
              'name' => 'submit',

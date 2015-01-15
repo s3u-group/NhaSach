@@ -6,6 +6,7 @@
      $form->prepare();
      echo $this->form()->openTag($form);
      $sanPham=$form->get('san-pham');
+     echo $this->formHidden($sanPham->get('maVach'));     
 ?>
 
 <div class="row">
