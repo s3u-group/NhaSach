@@ -1,0 +1,146 @@
+<?php
+     $this->headTitle('Mã vạch');
+?>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                 / Mã vạch /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion"> 
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Mã vạch</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>                                           
+                        </div>
+                    </div>
+                </div>                
+                <?php
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" id="btFm" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     $error=$flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $error;
+
+                     $info=$flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $info;
+
+                     $default=$flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $default;
+
+                     $success=$flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     echo $success;                     
+                    if($error||$success||$info||$default)
+                    {
+                        echo '
+                        <script type="text/javascript">
+                            setTimeout(function(){
+                                document.getElementById("btFm").click();
+                            },5000);
+                        </script>';                        
+                    }
+                ?>
+            </div>
+            <div class="box">                
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row">
+                                <table id="tatCa" class="dataTables">
+                                    <thead>                                 
+                                        <th>Tên loại mã vạch</th>
+                                        <th>Độ dài kí tự</th>
+                                        <th>Trạng thái</th>
+                                        <th>Chọn sử dụng</th>
+                                    </thead>
+                                    <tbody>                                               
+                                        <?php
+                                            foreach ($barcodes as $barcode) {
+                                                echo '<tr>';
+                                                    echo '<td>';
+                                                        echo '<a href="'.$this->url('barcode/crud',array('action'=>'sua-barcode','id'=>$barcode->getIdBarcode())).'">'.$barcode->getTenBarcode().'</a>';
+                                                    echo '</td>';
+                                                    if($barcode->getLength()==0)
+                                                        echo '<td>Không bắt buộc</td>';
+                                                    else
+                                                        echo '<td>'.$barcode->getLength().'</td>';
+                                                    if($barcode->getState()==1)
+                                                        echo '<td><span class="label label-success">Đang sử dụng</span></td>';
+                                                    else
+                                                        echo '<td></td>';
+                                                    echo '<td>';
+                                                    if($barcode->getState()==0)
+                                                    echo '<a href="'.$this->url('barcode/crud',array('action'=>'chon-su-dung-Barcode','id'=>$barcode->getIdBarcode())).'" class="btn h5a-btn btn-primary btn-xs">Chọn</a>';
+                                                    else
+                                                        echo '<td></td>';
+                                                    echo '</td>';
+                                                echo '</tr>  ';
+                                            }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+<!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('.dataTables').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+    
+    $('#btPrev').click(function(){
+        document.getElementById('dataTables-example_previous').click();
+    });
+
+    $('#btNext').click(function(){
+        document.getElementById('dataTables-example_next').click();
+    }); 
+
+    </script>

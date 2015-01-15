@@ -242,6 +242,13 @@
                             <?php } ?>
                             <li class="divider"></li>
                             <li class="dropdown-header">Settings</li>
+                            <?php if((int)$this->zfcUserIdentity()->getId()==1) { ?>
+                            <li>                            
+                                <a href="<?php echo $this->url('barcode/crud',array('action'=>'index'));?>">
+                                    <i class="fa fa-list-alt"></i> Cài đặt mã vạch
+                                </a>
+                            </li>
+                            <?php } ?>
                             <li>
                                 <a href="<?php echo $this->url('application/default',array('controller'=>'Index','action'=>'logout'));?>"><i class="fa fa-signout"></i> Log out</a>
                             </li>

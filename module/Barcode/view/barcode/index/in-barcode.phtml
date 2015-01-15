@@ -1,0 +1,131 @@
+<style type="text/css">    
+    #fitin {
+    width: 158px;
+    height: 80px;
+    border: 1px solid black;
+    overflow: hidden;
+    font-size: 13px;
+    text-align: center;
+    }    
+</style>
+<?php $this->headTitle('In mã vạch');
+if($ktIn==0)
+{?>
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <!-- <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('kenh_phan_phoi');?>">/ Khách hàng</a>
+                 / #xxx /
+            </span> -->
+            <ul class="nav h5a-sidenav nav-list accordion">
+                <li>
+                    <a href="<?php echo $this->url('barcode/crud',array('action'=>'index'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Hàng hóa
+                    </a>
+                </li> 
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            
+    </div>
+</div>
+
+<div class="container h5a-container gray">
+    <div class="row">
+        <div class="col-md-10 col-md-offset-2">
+            <h1>In mã vạch</h1>
+            <div class="tabbable">
+                <!-- <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Cập nhật</a>
+                    </li>                    
+                </ul> -->
+                <div class="tab-content">                    
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="row">
+                            <div class="col-md-6">                      
+                                <?php          
+                                //die(var_dump($sanPham->getTenSanPham()));
+                                ?>  
+                                <form name="frmInBarcode" method="post" action="<?php echo $this->url('barcode/crud', array('action' => 'inBarcode','id'=>$sanPham->getIdSanPham()));?>">
+                                    <h4 class="underline">Thông tin chi tiết</h4>
+                                    <table class="item">
+                                        <tbody>
+                                            <tr>
+                                                <td>Tên sản phẩm</td>
+                                                <td>
+                                                <input type="hidden" name="idSanPham"value="<?php echo $sanPham->getIdSanPham();?>"/>
+                                                <input type="text" name="tenSanPham" class="h5a-input form-control input-sm" value="<?php echo $sanPham->getTenSanPham();?>" disabled/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>Số lượng</td>
+                                                <td>
+                                                    <input type="number" min="1" name="soLuong" class="h5a-input form-control input-sm" required/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td></td>
+                                                <td>
+                                                <input type="submit" class="full btn h5a-btn btn-success" value="In"/>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </form>
+                            </div>
+                            <div class="col-md-6">
+                            </div>
+                        </div>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<?php }
+else{ 
+    //die(var_dump($soLuong,$sanPham->getTenSanPham(),$sanPham));?>
+<div>&nbsp;</div>
+<table border="1">    
+    <?php
+    for($i=0;$i<13;$i++)
+    {
+        echo "<tr>";
+        for($j=0;$j<5;$j++)
+        {?>
+            <td style="padding:0px">
+                <div id="fitin">
+                <div><?php echo $sanPham->getTenSanPham();?></div>
+                <img style="width:97%; margin-top:2px; margin-bottom:2px;" src="<?php echo $this->basePath();?>/img/barcode.png">
+                <span style="padding-top:2px">Giá: 12000 vnđ</span>
+                </div>
+            </td>
+        <?php } 
+        echo "</tr>";
+        $j=0;
+    }?>    
+</table>
+<!-- <div id="fitin">
+    <div><?php echo $sanPham->getTenSanPham();?></div>
+    <img style="width:98%; margin-top:2px; margin-bottom:2px;" src="<?php echo $this->basePath();?>/img/barcode.png">
+    <span style="padding-top:2px">Giá: 12000 vnđ</span>
+</div> -->
+
+<?php }?>
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+<script>
+$(function() {
+    while( $('#fitin div').height() > 20 ) {
+        $('#fitin div').css('font-size', (parseInt($('#fitin div').css('font-size')) - 1) + "px" );
+    }
+});
+</script>

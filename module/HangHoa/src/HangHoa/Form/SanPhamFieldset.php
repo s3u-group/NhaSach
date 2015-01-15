@@ -50,6 +50,17 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
                 'placeholder'=>'Mã hàng',                
              ),
          ));
+         $this->add(array(
+             'name' => 'maVach',
+             'type' => 'Text',
+             'options' => array(                 
+             ),
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Mã vạch',                
+             ),
+         ));
 
          $this->add(array(
              'name' => 'moTa',
@@ -135,6 +146,28 @@ class SanPhamFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'loaiGia',
              'options' => array(
                  'label' => 'A checkbox',
+                 'use_hidden_element' => true,
+                 'checked_value' => 1,
+                 'unchecked_value' => 0,
+                 'disable_inarray_validator' => true,   
+             )
+         ));
+
+         $this->add(array(
+             'type' => 'Zend\Form\Element\Checkbox',
+             'name' => 'loaiMaSanPham',
+             'options' => array(                 
+                 'use_hidden_element' => true,
+                 'checked_value' => 1,
+                 'unchecked_value' => 0,
+                 'disable_inarray_validator' => true,   
+             )
+         ));
+
+         $this->add(array(
+             'type' => 'Zend\Form\Element\Checkbox',
+             'name' => 'checkMaVach',
+             'options' => array(                 
                  'use_hidden_element' => true,
                  'checked_value' => 1,
                  'unchecked_value' => 0,

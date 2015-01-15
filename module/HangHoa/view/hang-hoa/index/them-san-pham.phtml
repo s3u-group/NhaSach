@@ -20,12 +20,44 @@
         }
         return true;
     }
+    kiemTraCheckLoaiMaSanPham=function()
+    {
+        var tam=document.getElementById("loaiMaSanPham").checked;
+        if(tam)
+        {
+            document.getElementById("loaiMaSanPham").value=1;
+            document.getElementById("tdCheckLoaiMaSanPham").hidden=true;
+            document.getElementById("maSanPham").required='';
+        }
+        else
+        {
+            document.getElementById("loaiMaSanPham").value=0;
+            document.getElementById("tdCheckLoaiMaSanPham").hidden=false;
+            document.getElementById("maSanPham").required='required';
+        }
+    }
+    kiemTraCheckMaVach=function()
+    {
+        var tam=document.getElementById("checkMaVach").checked;
+        if(tam)
+        {
+            document.getElementById("checkMaVach").value=1;
+            document.getElementById("tdCheckMaVach").hidden=true;            
+            document.getElementById("maVach").required='';
+        }
+        else
+        {
+            document.getElementById("checkMaVach").value=0;
+            document.getElementById("tdCheckMaVach").hidden=false;            
+            document.getElementById("maVach").required='required';
+        }
+    }
 
 </script>
 <?php
  $this->headTitle('Thêm sản phẩm');
 
- $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'them-san-pham')));
+ $form->setAttribute('action', $this->url('barcode/crud', array('action' => 'themSanPham')));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);
@@ -34,6 +66,7 @@
  echo $this->formHidden($sanPham->get('idSanPham'));
  echo $this->formHidden($sanPham->get('tonKho'));
  echo $this->formHidden($sanPham->get('giaNhap'));
+ echo $this->formHidden($sanPham->get('maSanPham')); 
 ?>
 
 <div class="row">
@@ -43,14 +76,7 @@
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
                 <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
                  / Thêm sản phẩm /
-            </span>
-            <ul class="nav h5a-sidenav nav-list accordion">                        
-                <li>
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
-                        <i class="fa fa-cubes"></i> Danh sách hàng
-                    </a>
-                </li>
-            </ul>
+            </span>            
         </div>
     </div>
     <div class="col-md-10" role="main">
@@ -63,25 +89,10 @@
                     <div class="col-sm-6">
                         <div class="pull-right">
                             <button type="reset" id="btHuy1" class="h5a-btn btn btn-default btn-sm">Hủy</button>
-                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>                                
+                            <button type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
                         </div>
                     </div>
-                </div>
-                <?php
-                    $flash=$this->flashMessenger();
-                    $flash->setMessageOpenFormat('<div%s>
-                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                         &times;
-                     </button>
-                     <ul><li>')
-                     ->setMessageSeparatorString('</li><li>')
-                     ->setMessageCloseString('</li></ul></div>');
-
-                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
-                ?>
+                </div>                
             </div>
             <div class="row">
                 <table class="item">
@@ -94,33 +105,76 @@
                                     $tenSanPham->setAttribute('class','h5a-input form-control input-sm');
                                     $tenSanPham->setAttribute('placeholder','Tên sản phẩm');
                                     echo $this->formElement($tenSanPham);
-                                    
                                 ?>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td>Mã sản phẩm</td>
+                            <td>
+                                <table style="width:100%; margin-left:-5px;">
+                                    <tr>
+                                        <td style="width:37%" id="tdCheckLoaiMaSanPham">
+                                            <?php
+                                                $maSanPham=$sanPham->get('maSanPham'); 
+                                                $maSanPham->setAttribute('style','width:98%;');
+                                                $maSanPham->setAttribute('id','maSanPham');
+                                                $maSanPham->setAttribute('class','form-control h5a-input');
+                                                $maSanPham->setAttribute('placeholder','Mã sản phẩm');
+                                                echo $this->formElement($maSanPham);
+                                                if($kiemTraTonTai==1)
+                                                {
+                                                    echo '<p class="badge red" style="color:white">Mã sản phẩm đã tồn tại</p>';
+                                                }
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                                $loaiMaSanPham=$sanPham->get('loaiMaSanPham');
+                                                $loaiMaSanPham->setAttribute('id','loaiMaSanPham');
+                                                $loaiMaSanPham->setAttribute('onChange','return kiemTraCheckLoaiMaSanPham();');
+
+                                                echo $this->formElement($loaiMaSanPham);
+                                            ?> Tự động
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr>
                             <td>Mã vạch</td>
-                            <td>                                            
-                                <?php 
-                                    $maSanPham=$sanPham->get('maSanPham');
-                                    $maSanPham->setAttribute('class','form-control h5a-input');
-                                    $maSanPham->setAttribute('placeholder','Mã sản phẩm');
-                                    echo $this->formElement($maSanPham);
-                                    if($kiemTraTonTai==1)
-                                    {
-                                        echo '<p class="badge red" style="color:white">Mã sản phẩm đã tồn tại</p>';
-                                    }                                                
-                                ?>
+                            <td>
+                                <table style="width:100%; margin-left:-5px;">
+                                    <tr>
+                                        <td style="width:37%" id="tdCheckMaVach">
+                                            <?php
+                                                $maVach=$sanPham->get('maVach');
+                                                $maVach->setAttribute('style','width:98%;');
+                                                $maVach->setAttribute('id','maVach');
+                                                $maVach->setAttribute('class','form-control h5a-input');
+                                                echo $this->formElement($maVach);
+                                            ?>
+                                        </td>
+                                        <td>
+                                            <?php
+                                                $checkMaVach=$sanPham->get('checkMaVach');
+                                                $checkMaVach->setAttribute('id','checkMaVach');
+                                                $checkMaVach->setAttribute('onChange','return kiemTraCheckMaVach();');
+
+                                                echo $this->formElement($checkMaVach);
+                                            ?> Tự động
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                         <tr>
                             <td>Nhãn</td>
-                            <td class="red">                                                                       
+                            <td class="red">
                                 <?php 
                                     $nhan=$sanPham->get('nhan');
                                     $nhan->setAttribute('class','form-control h5a-input');
                                     $nhan->setAttribute('placeholder','Nhãn sản phẩm');
-                                    echo $this->formElement($nhan);                                                
+                                    echo $this->formElement($nhan);
                                 ?>
                             </td>
                         </tr>
@@ -131,7 +185,7 @@
                                     $loai=$sanPham->get('idLoai');                                                
                                     $loai->setAttribute('style','width:35%;height:35px');
                                     $loai->setValueOptions($this->MakeArrayOptionTaxonomy($loais));
-                                    echo $this->formElement($loai);                                                
+                                    echo $this->formElement($loai);
                                 ?>
                             </td>
                         </tr>                                    
@@ -139,10 +193,10 @@
                             <td>Đơn vị tính</td>
                             <td>
                                 <?php                                                                  
-                                    $donViTinh=$sanPham->get('idDonViTinh');                                                
+                                    $donViTinh=$sanPham->get('idDonViTinh');
                                     $donViTinh->setAttribute('style','width:35%;height:35px');
                                     $donViTinh->setValueOptions($this->MakeArrayOptionTaxonomy($donViTinhs));
-                                    echo $this->formElement($donViTinh);                                                
+                                    echo $this->formElement($donViTinh);
                                 ?>
                             </td>
                         </tr>  
@@ -153,40 +207,37 @@
                                     $loaiGia=$sanPham->get('loaiGia');
                                     $loaiGia->setAttribute('id','loaiGia');
                                     $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
-
-                                    echo $this->formElement($loaiGia);                                               
-                                ?>
-                                <!--<input type="checkbox" id='loaiChiecKhau' name="loaiChiecKhau" onChange="return kiemTracheckbox();">-->
+                                    echo $this->formElement($loaiGia);
+                                ?>                                
                                 Sản phẩm thuộc loại có giá in trên bìa
                             </td>
                         </tr> 
                         <tr id="trGiaNhap">
                             <td>Giá nhập</td>
                             <td>
-                                <?php                                                                  
+                                <?php
                                     $giaNhap=$sanPham->get('giaNhap');
                                     $giaNhap->setAttribute('class','h5a-input form-control input-sm');
-                                    echo $this->formElement($giaNhap);                                               
+                                    echo $this->formElement($giaNhap);
                                 ?>
                             </td>
                         </tr> 
                         <tr hidden="true" id='trGiaBia'>
                             <td>Giá bìa</td>
                             <td>
-                                <?php                                                                  
+                                <?php
                                     $giaNhap=$sanPham->get('giaBia');
                                     $giaNhap->setAttribute('class','h5a-input form-control input-sm');
-                                    echo $this->formElement($giaNhap);                                               
+                                    echo $this->formElement($giaNhap);
                                 ?>
                             </td>
                         </tr> 
                         <tr hidden='true' id='trChiecKhau'>
                             <td>Chiếc khấu (%)</td>
                             <td>
-                                <?php                                                                  
-                                    $chiecKhau=$sanPham->get('chiecKhau');
+                                <?php                                    $chiecKhau=$sanPham->get('chiecKhau');
                                     $chiecKhau->setAttribute('class','h5a-input form-control input-sm');
-                                    echo $this->formElement($chiecKhau);                                               
+                                    echo $this->formElement($chiecKhau);
                                 ?>                               
                             </td>
                         </tr>   
@@ -197,16 +248,15 @@
                                     $moTa=$sanPham->get('moTa');
                                     $moTa->setAttribute('class','form-control h5a');
                                     $moTa->setAttribute('id','editor');
-                                    echo $this->formElement($moTa);                                                
+                                    echo $this->formElement($moTa);
                                 ?>
                             </td>
                         <tr>
                             <td>Hình ảnh</td>
                             <td>
-                                <?php                                                
-                                    $hinhAnh=$sanPham->get('hinhAnh');
+                                <?php                                    $hinhAnh=$sanPham->get('hinhAnh');
                                     $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
-                                    echo $this->formElement($hinhAnh);                                                
+                                    echo $this->formElement($hinhAnh);
                                 ?>
                             </td>
                         </tr>                                    

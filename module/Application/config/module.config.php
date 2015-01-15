@@ -203,7 +203,7 @@ return array(
 
     //phân quyền theo chuyển hướng
     
-     'bjyauthorize'=>array(
+    /*'bjyauthorize'=>array(
 
         'guards'=>array(
             'BjyAuthorize\Guard\Controller'=>array(                
@@ -265,6 +265,6 @@ return array(
               
             ),
         ),
-    ),
+    ),*/
    
 );

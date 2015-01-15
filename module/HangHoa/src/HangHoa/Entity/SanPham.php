@@ -108,6 +108,35 @@
 
 		private $kho;
 
+		/**
+		* @ORM\Column(name="ma_vach",type="text", length=255)
+		*/
+		private $maVach;
+
+		/**
+	    * @ORM\ManyToOne(targetEntity="Barcode\Entity\Barcode", cascade={"persist"})
+	    * @ORM\JoinColumn(name="id_barcode", referencedColumnName="id_barcode")
+	    **/
+	    private $idBarcode;
+
+	    public function setIdBarcode($idBarcode)
+		{
+			$this->idBarcode=$idBarcode;
+		}
+		public function getIdBarcode()
+		{
+			return $this->idBarcode;
+		}
+
+		public function setMaVach($maVach)
+		{
+			$this->maVach=$maVach;
+		}
+		public function getMaVach()
+		{
+			return $this->maVach;
+		}
+
 		public function setLoaiGia($loaiGia)
 		{
 			$this->loaiGia=$loaiGia;

@@ -12,6 +12,7 @@
  use HangHoa\Entity\CTHoaDon;
  use HangHoa\Entity\GiaXuat; 
  use HangHoa\Form\CreateSanPhamForm;
+ use Barcode\Entity\Barcode;
 
  use HangHoa\Form\XuatHoaDonForm;
 
@@ -505,15 +506,18 @@
 
   public function themSanPhamAction()
   {
-   // kiểm tra đăng nhập
     if(!$this->zfcUserAuthentication()->hasIdentity())
     {
       return $this->redirect()->toRoute('application');
+    }     
+    $idKho=1;
+    if($this->zfcUserAuthentication()->hasIdentity())
+    { 
+      $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
     }
-    $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
-
     $sanPham=new SanPham();
     $form= new CreateSanPhamForm($entityManager);
     $form->bind($sanPham);
@@ -527,104 +531,221 @@
     $request = $this->getRequest();
 
     if($request->isPost())
-    {
+    {      
       $post = array_merge_recursive(
               $request->getPost()->toArray(),
               $request->getFiles()->toArray()
           );
-          //die(var_dump($post));
-      $form->setData($request->getPost());       
-      if ($form->isValid()){        
+      $form->setData($request->getPost());      
+      if ($form->isValid())
+      {
+        //Kiểm tra mã sản phẩm đã tồn tại chưa
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
-        $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+        $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$post['san-pham']['maSanPham'].'\'');
         $query = $queryBuilder->getQuery(); 
         $maSanPham = $query->execute();
         if(!$maSanPham)
         {
-          if ($post['san-pham']['hinhAnh']['error']==0) {
-            $uniqueToken=md5(uniqid(mt_rand(),true));          
-            $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
-            $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
-            $filter->filter($post['san-pham']['hinhAnh']);
-            $sanPham->setHinhAnh($newName);
-          }
-          else
-          {
-            $sanPham->setHinhAnh('photo_default.png');
-          }     
-          
-          $sanPham->setTonKho(0);
+          //-------Kiểm tra loại mã vạch đã thiết lập
+            $repository = $entityManager->getRepository('Barcode\Entity\Barcode');
+            $queryBuilder = $repository->createQueryBuilder('b');
+            $queryBuilder->add('where','b.state=1');
+            $query = $queryBuilder->getQuery(); 
+            $loaiMaVachs = $query->execute();
+            foreach ($loaiMaVachs as $loaiMaVach) {
+              $loaiMV=$loaiMaVach->getTenBarcode();
+              $length=$loaiMaVach->getLength();          
+            }
+          //-----------------------------------------
 
-          if($sanPham->getLoaiGia()==1)
-          {
-            $giaNhap=0; 
-            if(!$sanPham->getChiecKhau()||$sanPham->getChiecKhau()==null||$sanPham->getChiecKhau()==''||
-               !$sanPham->getGiaBia()||$sanPham->getGiaBia()==null||$sanPham->getGiaBia()=='')
+          //-------Kiểm tra loại mã vạch
+            if((int)($post['san-pham']['checkMaVach'])==1)
             {
-              $giaNhap=0;
+              $mang=array('A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z');
+              $a='';
+              if($loaiMV=='Code128')
+              {            
+                do
+                {
+                  for ($i = 0; $i<15; $i++) 
+                  {
+                      $a .= mt_rand(0,9);
+                  }
+                  $maVach=$a;
+
+                  $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+                  $queryBuilder = $repository->createQueryBuilder('sp');
+                  $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maVach=\''.$maVach.'\'');
+                  $query = $queryBuilder->getQuery(); 
+                  $maVachSanPham = $query->execute();
+                }
+                while($maVachSanPham);
+              }
+
+              if($loaiMV=='Codabar')
+              {            
+                do
+                {
+                  $rand1=$mang[rand(0,25)];
+                  $rand2=$mang[rand(0,25)];            
+                  for ($i = 0; $i<13; $i++) 
+                  {
+                      $a .= mt_rand(0,9);
+                  }        
+                  $maVach=$rand1.$a.$rand2;
+
+                  $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+                  $queryBuilder = $repository->createQueryBuilder('sp');
+                  $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maVach=\''.$maVach.'\'');
+                  $query = $queryBuilder->getQuery(); 
+                  $maVachSanPham = $query->execute();
+                }
+                while($maVachSanPham);
+              }
+              if($loaiMV=='Code25')
+              {
+                do
+                {
+                  for ($i = 0; $i<15; $i++) 
+                  {
+                      $a .= mt_rand(0,9);
+                  }        
+                  $maVach=$a;
+
+                  $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+                  $queryBuilder = $repository->createQueryBuilder('sp');
+                  $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maVach=\''.$maVach.'\'');
+                  $query = $queryBuilder->getQuery(); 
+                  $maVachSanPham = $query->execute();
+                }
+                while($maVachSanPham);
+              }
+              if($loaiMV=='Ean13')
+              {
+                do
+                {
+                  for ($i = 0; $i<12; $i++) 
+                  {
+                      $a .= mt_rand(0,9);
+                  }        
+                  $maVach=$a;
+
+                  $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+                  $queryBuilder = $repository->createQueryBuilder('sp');
+                  $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maVach=\''.$maVach.'\'');
+                  $query = $queryBuilder->getQuery(); 
+                  $maVachSanPham = $query->execute();
+                }
+                while($maVachSanPham);
+              }
+              if($loaiMV=='Code39')
+              {
+                do
+                {
+                  for ($i = 0; $i<15; $i++) 
+                  {
+                      $a .= mt_rand(0,9);
+                  }        
+                  $maVach=$a;
+
+                  $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+                  $queryBuilder = $repository->createQueryBuilder('sp');
+                  $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maVach=\''.$maVach.'\'');
+                  $query = $queryBuilder->getQuery(); 
+                  $maVachSanPham = $query->execute();
+                }
+                while($maVachSanPham);
+              }
+
+              $sanPham->setMaVach($maVach);
+              $query=$entityManager->createQuery('SELECT b FROM Barcode\Entity\Barcode b WHERE b.tenBarcode=\''.$loaiMV.'\'');
+              $idBarcodes=$query->getResult();
+              foreach ($idBarcodes as $idBarcode) {
+                $sanPham->setIdBarcode($idBarcode);
+              }
             }
             else
             {
-              $loiNhuan=((float)$sanPham->getChiecKhau()*(float)$sanPham->getGiaBia())/100;
-              $giaNhap=(float)$sanPham->getGiaBia()-(float)$loiNhuan;
+              $query=$entityManager->createQuery('SELECT b FROM Barcode\Entity\Barcode b WHERE b.tenBarcode=0');
+              $idBarcodes=$query->getResult();
+              foreach ($idBarcodes as $idBarcode) {
+                $sanPham->setIdBarcode($idBarcode);
+              }
             }
-            $sanPham->setGiaNhap($giaNhap);
-          }
-          else
-          {
-            $sanPham->setLoaiGia(0);
-            $sanPham->setChiecKhau(0);
-            $sanPham->setGiaBia(0);
-          }
-        
-          
-          $sanPham->setKho($idKho);
-          $entityManager->persist($sanPham);
-          $entityManager->flush(); 
+          //----------------------------
 
-          $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
-          $queryBuilder = $repository->createQueryBuilder('sp');
-          $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
-          $query = $queryBuilder->getQuery(); 
-          $sanPhams = $query->execute();
-          
-
-          $taxonomyLoai=$this->TaxonomyFunction();
-          $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
-          
-          foreach ($kenhPhanPhois as $kenhPhanPhoi) {
-            if($kenhPhanPhoi['cap']>0)
+          //-------Lưu các thông tin khác
+            if ($post['san-pham']['hinhAnh']['error']==0) {
+              $uniqueToken=md5(uniqid(mt_rand(),true));          
+              $newName=$uniqueToken.'_'.$post['san-pham']['hinhAnh']['name'];
+              $filter = new \Zend\Filter\File\Rename("./public/img/".$newName);
+              $filter->filter($post['san-pham']['hinhAnh']);
+              $sanPham->setHinhAnh($newName);            
+            }
+            else
             {
-              $giaXuat=new GiaXuat();
-              $giaXuat->setIdGiaXuat('');
-              $giaXuat->setIdSanPham($sanPhams[0]->getIdSanPham());
-              //  lấy chiết khấu
-              $chietKhau=$this->getChietKhau($idKho,$kenhPhanPhoi['termTaxonomyId']);
-              $gx=0;
-              if($sanPhams[0]->getLoaiGia()==1)
+              $sanPham->setHinhAnh('photo_default.png');
+            }          
+            $sanPham->setTonKho(0);
+
+            if($sanPham->getLoaiGia()==1)
+            {
+              $giaNhap=0; 
+              if(!$sanPham->getChiecKhau()||$sanPham->getChiecKhau()==null||$sanPham->getChiecKhau()==''||
+                 !$sanPham->getGiaBia()||$sanPham->getGiaBia()==null||$sanPham->getGiaBia()=='')
               {
-
-                $loiNhuan=(((float)$sanPhams[0]->getGiaBia()*(float)$chietKhau)/100);
-                $gx=(float)$sanPhams[0]->getGiaBia()-(float)$loiNhuan;
-
+                $giaNhap=0;
               }
               else
               {
-                $gx=(float)$sanPhams[0]->getGiaNhap()+(((float)$sanPhams[0]->getGiaNhap()*(float)$chietKhau)/100);  
+                $loiNhuan=((float)$sanPham->getChiecKhau()*(float)$sanPham->getGiaBia())/100;
+                $giaNhap=(float)$sanPham->getGiaBia()-(float)$loiNhuan;
               }
-              
-              $giaXuat->setGiaXuat($gx);
-              $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
-              $giaXuat->setKho($idKho);
-              
-              $entityManager->persist($giaXuat);
-              $entityManager->flush(); 
+              $sanPham->setGiaNhap($giaNhap);
             }
-            
-          }
+            else
+            {
+              $sanPham->setLoaiGia(0);
+              $sanPham->setChiecKhau(0);
+              $sanPham->setGiaBia(0);
+            }
+                    
+            $sanPham->setKho($idKho);          
+            $entityManager->persist($sanPham);
+            $entityManager->flush();
+          //-----------------------------
+
+          //-------Cập nhật mã sản phẩm            
+            if((int)($post['san-pham']['loaiMaSanPham'])==1)
+            {
+              $query=$entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.maVach=\''.$sanPham->getMaVach().'\'');
+              $sanPhams=$query->getResult();
+              foreach ($sanPhams as $sanPham) {
+                $id=$sanPham->getIdSanPham();
+                if($id<10)
+                {
+                  $maSP='sp_000'.$id;
+                }
+                if($id>=10&&$id<100)
+                {
+                  $maSP='sp_00'.$id;
+                }
+                if($id>=100&&$id<1000)
+                {
+                  $maSP='sp_0'.$id;
+                }
+                if($id>=1000)
+                {
+                  $maSP='sp_'.$id;
+                }
+                $sanPham->setMaSanPham($maSP);
+                $entityManager->flush();
+              }
+            }          
+          //---------------------------
           $this->flashMessenger()->addSuccessMessage('Thêm sản phẩm thành công!');
-          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+          return $this->redirect()->toRoute('barcode/crud',array('action'=>'index'));
         }
         else
         {
@@ -633,16 +754,15 @@
             'loais'=>$loais,
             'donViTinhs'=>$donViTinhs,
             'kiemTraTonTai'=>1,
-          );          
+          );
         }
       }      
     }
-
     return array(
       'form' => $form, 
       'loais'=>$loais,
       'donViTinhs'=>$donViTinhs,
-      'kiemTraTonTai'=>0,
+      'kiemTraTonTai'=>0,      
     );
   }
 
