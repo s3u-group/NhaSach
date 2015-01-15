@@ -775,7 +775,7 @@
               {
                 $gx=(float)$sanPhams[0]->getGiaNhap()+(((float)$sanPhams[0]->getGiaNhap()*(float)$chietKhau)/100);  
               }
-              $giaXuat->setGiaXuat($gx);
+              $giaXuat->setGiaXuat(round($gx, 0));
               $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
               $giaXuat->setKho($idKho);
               
