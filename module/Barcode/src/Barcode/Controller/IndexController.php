@@ -164,11 +164,11 @@
     $this->layout('layout/giaodien');  
     $entityManager=$this->getEntityManager();
 
-    $sanPham=$entityManager->getRepository('Barcode\Entity\SanPhamTest')->find($id);
+    $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id);
     if(!$sanPham)
     {
       $this->flashMessenger()->addErrorMessage('Không tìm thấy sản phẩm này! Vui lòng kiểm tra lại!');
-      return $this->redirect()->toRoute('barcode/crud',array('action'=>'index'));
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
     }
     $request=$this->getRequest();
     if($request->isPost())
@@ -177,7 +177,6 @@
       $maVach=$sanPham->getMaVach();
       $loaiMaVach=$sanPham->getIdBarcode()->getTenBarcode();
 
-      //$barcodeOptions = array('text' =>$maVach);
       $barcodeOptions = array(          
           'text' =>'12345678', 
           'barHeight'=> 25,          
@@ -187,8 +186,7 @@
           'withQuietZones'=>false,
       );
 
-      $rendererOptions = array();
-      /*$imageResource = Bc::draw($loaiMaVach, 'image', $barcodeOptions, $rendererOptions);*/
+      $rendererOptions = array();      
       $imageResource = Bc::draw('code39', 'image', $barcodeOptions, $rendererOptions);
       imagejpeg($imageResource, './public/img/barcode.png', 100);
       imagedestroy($imageResource);

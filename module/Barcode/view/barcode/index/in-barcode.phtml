@@ -21,7 +21,7 @@ if($ktIn==0)
             </span> -->
             <ul class="nav h5a-sidenav nav-list accordion">
                 <li>
-                    <a href="<?php echo $this->url('barcode/crud',array('action'=>'index'));?>">                                 
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">                                 
                         <i class="fa fa-list-alt"></i> Hàng hóa
                     </a>
                 </li> 
@@ -38,19 +38,11 @@ if($ktIn==0)
     <div class="row">
         <div class="col-md-10 col-md-offset-2">
             <h1>In mã vạch</h1>
-            <div class="tabbable">
-                <!-- <ul class="nav nav-tabs" role="tablist" id="myTab">
-                    <li role="presentation" class="active">
-                        <a href="#home" role="tab" data-toggle="tab">Cập nhật</a>
-                    </li>                    
-                </ul> -->
+            <div class="tabbable">                
                 <div class="tab-content">                    
                     <div role="tabpanel" class="tab-pane active" id="home">
                         <div class="row">
-                            <div class="col-md-6">                      
-                                <?php          
-                                //die(var_dump($sanPham->getTenSanPham()));
-                                ?>  
+                            <div class="col-md-6">
                                 <form name="frmInBarcode" method="post" action="<?php echo $this->url('barcode/crud', array('action' => 'inBarcode','id'=>$sanPham->getIdSanPham()));?>">
                                     <h4 class="underline">Thông tin chi tiết</h4>
                                     <table class="item">
@@ -88,8 +80,7 @@ if($ktIn==0)
     </div>
 </div>
 <?php }
-else{ 
-    //die(var_dump($soLuong,$sanPham->getTenSanPham(),$sanPham));?>
+else { ?>
 <div>&nbsp;</div>
 <table border="1">    
     <?php
@@ -110,13 +101,8 @@ else{
         $j=0;
     }?>    
 </table>
-<!-- <div id="fitin">
-    <div><?php echo $sanPham->getTenSanPham();?></div>
-    <img style="width:98%; margin-top:2px; margin-bottom:2px;" src="<?php echo $this->basePath();?>/img/barcode.png">
-    <span style="padding-top:2px">Giá: 12000 vnđ</span>
-</div> -->
-
 <?php }?>
+
 <!-- jQuery -->
 <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
 
