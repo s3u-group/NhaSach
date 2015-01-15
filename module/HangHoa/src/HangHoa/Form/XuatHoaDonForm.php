@@ -85,6 +85,17 @@ class XuatHoaDonForm extends Form
                 'autocomplete'=>'off',
             ),
          ));
+        $this->add(array(
+             'name' => 'maVach',
+             'type' => 'Text',
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',  
+                'placeholder'=>'Nhập mã vạch', 
+                'id'=>'maVach',
+                'autocomplete'=>'off',
+            ),
+         ));
 
         $this->add(array(
              'name' => 'tenHang',
