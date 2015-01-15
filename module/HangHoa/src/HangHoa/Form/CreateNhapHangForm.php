@@ -71,6 +71,18 @@ class CreateNhapHangForm extends Form
          ));
 
         $this->add(array(
+             'name' => 'maVach',
+             'type' => 'Text',
+             'attributes'=>array(
+                'required'=>'required',
+                'class'   => 'h5a-input form-control input-sm',
+                'placeholder'=>'Mã vạch',
+                'id'=>'maVach',
+                'autocomplete'=>'off',
+            ),
+         ));
+
+        $this->add(array(
              'name' => 'tenHang',
              'type' => 'Text',
              'attributes'=>array(

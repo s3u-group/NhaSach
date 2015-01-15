@@ -7,6 +7,7 @@
 <style type="text/css">
     #nha-cung-cap-search-result{ cursor:pointer;}
     #ma-hang-search-result{ cursor:pointer;}
+    #ma-vach-search-result{ cursor:pointer;}
     @media print {
         .table{width: 790px; font-size: 13px; margin-top: -60px}
         .tb{width: 97%;}
@@ -270,11 +271,21 @@
             </div>                 
             <div class="col-sm-6">
                 <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-1">Mã vạch</label>
+                    <label class="col-sm-4 right" for="form-field-1">Mã sản phẩm</label>
                     <div class="col-sm-7">                                    
                         <?php
                             echo $this->formElement($form->get('maHang'));
                         ?>
+                    </div>
+                    <div id="ma-hang-search-result"></div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-4 right" for="form-field-1">Mã vạch</label>
+                    <div class="col-sm-7">                                    
+                        <?php
+                            echo $this->formElement($form->get('maVach'));
+                        ?>
+                        <div id="ma-vach-search-result"></div>
                     </div>
                     <div id="ma-hang-search-result"></div>
                 </div>
@@ -503,7 +514,7 @@
             return false;
         });
 
-    //Hiển thị, chọn sản phẩm
+        //Hiển thị, chọn sản phẩm
         var xhr;
         var xhr1;    
         $('#idMaHang').keyup(function(){
@@ -527,6 +538,7 @@
                 success:function(data){                
                     $.each(data, function(key,val){
                         $('#ma-hang-search-result').empty(); //lam rong khung ket qua
+                        $('#ma-vach-search-result').empty();
 
                         var pos = $('#idMaHang').position(); //lấy tọa độ của ô mã sản phẩm
                         $('#ma-hang-search-result').css({
@@ -537,7 +549,7 @@
                         });
 
                         $.each(data, function(key, val){
-                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span><span class="hide">'+val.donViTinh+'</span><span class="hide">'+val.loaiGia+'</span><span class="hide">'+val.giaBia+'</span><span class="hide">'+val.chietKhau+'</span></div>');
+                            $('#ma-hang-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span><span class="hide">'+val.donViTinh+'</span><span class="hide">'+val.loaiGia+'</span><span class="hide">'+val.giaBia+'</span><span class="hide">'+val.chietKhau+'</span><span class="hide">'+val.maVach+'</span></div>');
                             // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
                         })
                     });
@@ -555,9 +567,11 @@
             var loaiGia=$(this).find('span:eq(5)').text();   
             var giaBia=$(this).find('span:eq(6)').text();   
             var chietKhau=$(this).find('span:eq(7)').text(); 
+            var maVach=$(this).find('span:eq(8)').text(); 
 
             $('#idSanPham').val(id);
             $('#idMaHang').val(ma);
+            $('#maVach').val(maVach);
             $('#tenHang').val(ten);
             $('#giaNhap').val(giaNhap);
             $('#donViTinh').val(donViTinh);
@@ -577,9 +591,91 @@
                 kiemTracheckbox();
             }
             
+            $('#ma-vach-search-result').empty();
             $('#ma-hang-search-result').empty();
         });
-    //./Hiển thị, chọn sản phẩm
+
+
+
+// Khi gõ vào mã vạch
+        var xhrMaVach;
+        $('#maVach').keyup(function(){
+            var maVach=$(this).val();
+            if(maVach){
+                if(xhrMaVach && xhrMaVach.readyState != 4){
+                    xhrMaVach.abort(); //huy lenh ajax truoc do
+                }
+                xhrMaVach = $.ajax({
+                    url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-san-pham-theo-ma-vach')); ?>',
+                    type:'POST',
+                    dataType:'json',
+                    data:{
+                        'maVach':maVach
+                    },
+                    success:function(data){                
+                        $.each(data, function(key,val){
+                            $('#ma-vach-search-result').empty(); //lam rong khung ket qua
+                            $('#ma-hang-search-result').empty();
+
+                            var pos = $('#maVach').position(); //lấy tọa độ của ô mã sản phẩm
+                            $('#ma-vach-search-result').css({
+                                position:'absolute',
+                                top:pos.top + 35,
+                                left:pos.left,
+                                'z-index': 100 // đặt search-result lên layout ngoài nhất
+                            });
+
+                            $.each(data, function(key, val){
+                                $('#ma-vach-search-result').append('<div class="list-group-item"><span class="hide">'+val.idSanPham+'</span><span>'+val.maHang+'</span><span class="hide">'+val.tenSanPham+'</span><span class="hide">'+val.giaNhap+'</span><span class="hide">'+val.donViTinh+'</span><span class="hide">'+val.loaiGia+'</span><span class="hide">'+val.giaBia+'</span><span class="hide">'+val.chietKhau+'</span><span class="hide">'+val.maVach+'</span><span style="margin-right:0px;">&nbsp;&nbsp;('+val.maVach+')</span></div>');
+                                // thêm một dòng vào search result, mỗi một dòng là 1 sản phẩm
+                            });
+                        });
+                    }
+                });
+
+            }
+            else{//ngược lại mã vạch == null
+                $('#ma-vach-search-result').empty();
+            }
+        });
+        
+        $('#ma-vach-search-result').on('click', '.list-group-item', function(){
+            var id = $(this).find('span:eq(0)').text();
+            var ma = $(this).find('span:eq(1)').text();
+            var ten = $(this).find('span:eq(2)').text();            
+            var giaNhap = $(this).find('span:eq(3)').text();
+            var donViTinh = $(this).find('span:eq(4)').text();   
+            var loaiGia=$(this).find('span:eq(5)').text();   
+            var giaBia=$(this).find('span:eq(6)').text();   
+            var chietKhau=$(this).find('span:eq(7)').text(); 
+            var maVach=$(this).find('span:eq(8)').text(); 
+
+            $('#idSanPham').val(id);
+            $('#idMaHang').val(ma);
+            $('#maVach').val(maVach);
+            $('#tenHang').val(ten);
+            $('#giaNhap').val(giaNhap);
+            $('#donViTinh').val(donViTinh);
+            $('#loaiGia').val(loaiGia);
+            $('#giaBia').val(giaBia);
+            $('#chiecKhau').val(chietKhau);
+            if(parseInt(loaiGia)==1)
+            {
+                $("#loaiGia").prop("checked", true);
+                $("#loaiGia").val(1);
+                kiemTracheckbox();
+            }
+            else
+            {
+                $("#loaiGia").prop("checked", false);
+                $("#loaiGia").val(0);
+                kiemTracheckbox();
+            }
+            
+            $('#ma-vach-search-result').empty();
+            $('#ma-hang-search-result').empty();
+        });
+
 
     //Hiển thị, chọn nhà cung cấp
         $('#nhaCungCap').keyup(function()

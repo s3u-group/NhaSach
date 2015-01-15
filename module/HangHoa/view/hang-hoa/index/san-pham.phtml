@@ -108,6 +108,11 @@
                                 echo $this->formHidden($sanPham->get('idSanPham'));
                                 echo $this->formHidden($sanPham->get('tonKho'));
                                 echo $this->formHidden($sanPham->get('giaNhap'));
+                                /*$sanPham->get('loaiMaSanPham')->setAttribute('value','1');
+                                echo $this->formHidden($sanPham->get('loaiMaSanPham'));
+                                $sanPham->get('checkMaVach')->setAttribute('value','1');
+                                echo $this->formHidden($sanPham->get('checkMaVach'));*/
+                                echo $this->formHidden($sanPham->get('loaiGia'));
                                                                                 
                             ?>
 		                            <table class="item">
@@ -134,6 +139,17 @@
                                                     ?>
                                                 </td>
 		                                    </tr>
+                                            <tr>
+                                                <td>Mã vạch</td>
+                                                <td>
+                                                    <?php 
+                                                        $maSanPham=$sanPham->get('maVach');
+                                                        $maSanPham->setAttribute('class','form-control h5a');
+                                                        //$maSanPham->setAttribute('id','editor');
+                                                        echo $this->formElement($maSanPham);                                                
+                                                    ?>
+                                                </td>
+                                            </tr>
 
                                             <tr>
                                                 <td>Hình ảnh</td>

@@ -266,7 +266,7 @@
           }
         }
         else{
-          die(var_dump($form->getMessages()));
+          //die(var_dump($form->getMessages()));
         }
         
      } 
@@ -421,6 +421,7 @@
       }
       else
       {
+        //die(var_dump($form->getMessages()['phieu-nhap']['ctPhieuNhaps']));
         $this->flashMessenger()->addErrorMessage('Nhập hàng thất bại!');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));
       }
@@ -865,6 +866,7 @@
           $response[]=array(
             'idSanPham'=>$sanPham->getIdSanPham(),
             'maHang'=>$sanPham->getMaSanPham(),
+            'maVach'=>$sanPham->getMaVach(),
             'tenSanPham'=>$sanPham->getTenSanPham(),
             'donViTinh'=>$sanPham->getDonViTinh(),
             'tonKho'=>$sanPham->getTonKho(),
@@ -880,6 +882,69 @@
     $json = new JsonModel($response);
     return $json;
   }
+
+   public function searchSanPhamTheoMaVachAction()
+  {
+    // kiểm tra đăng nhập
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('application');
+    }
+    $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho(); 
+    $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();
+
+    $response=array();
+    $request=$this->getRequest();
+    if($request->isXmlHttpRequest())
+    {
+      $data=$request->getPost();
+      $maVach=$data['maVach'];
+      if($maVach)
+      {
+        $entityManager=$this->getEntityManager();
+        $query = $entityManager->createQuery('SELECT sp FROM HangHoa\Entity\SanPham sp WHERE sp.kho='.$idKho.' and sp.maVach LIKE :maVach');
+        $query->setParameter('maVach','%'.$maVach.'%');// % đặt ở dưới này thì được đặt ở trên bị lỗi
+        $sanPhams = $query->getResult(); // array of CmsArticle objects         
+
+        $pluginKenhPhanPhoi=$this->TaxonomyFunction();
+        $kenhPhanPhois=$pluginKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+          
+
+        foreach ($sanPhams as $sanPham) {
+
+          foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+            if($kenhPhanPhoi['cap']>0)
+            {
+              $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham='.$sanPham->getIdSanPham().' and gx.idKenhPhanPhoi='.$kenhPhanPhoi['termTaxonomyId']);
+              $giaXuats=$query->getResult();
+              foreach ($giaXuats as $gx) {
+                $giaXuat[$kenhPhanPhoi['termTaxonomyId']]=$gx->getGiaXuat();
+              }
+              
+            }            
+          }
+          $soKenhPhanPhoi=count($giaXuat);
+          $response[]=array(
+            'idSanPham'=>$sanPham->getIdSanPham(),
+            'maHang'=>$sanPham->getMaSanPham(),
+            'maVach'=>$sanPham->getMaVach(),
+            'tenSanPham'=>$sanPham->getTenSanPham(),
+            'donViTinh'=>$sanPham->getDonViTinh(),
+            'tonKho'=>$sanPham->getTonKho(),
+            'giaNhap'=>$sanPham->getGiaNhap(),
+            'loaiGia'=>$sanPham->getLoaiGia(),
+            'giaBia'=>$sanPham->getGiaBia(),
+            'chietKhau'=>$sanPham->getChiecKhau(),
+            'giaXuat'=>$giaXuat,
+          );
+        }
+      }
+    }
+    $json = new JsonModel($response);
+    return $json;
+  }
+
 
   public function searchNhaCungCapAction()
   {
