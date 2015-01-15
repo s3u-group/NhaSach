@@ -1209,11 +1209,18 @@
                   $sanPham->setIdSanPham('');
                   $sanPham->setMaSanPham($maSanPham);
                   $sanPham->setTenSanPham($tenSanPham);
+
+
+                  $idLoai=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(52);
+                  $sanPham->setIdLoai($idLoai);  
+
+                  $dvt=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(51);
+                  $sanPham->setIdDonViTinh($dvt);
                   $sanPham->setMoTa('');                  
                   $sanPham->setNhan('');                  
                   $sanPham->setTonKho('');
                   $sanPham->setGiaNhap($gia);
-                  $sanPham->setLoaiGia('0');
+                  $sanPham->setLoaiGia(0);
                   $sanPham->setGiaBia('');
                   $sanPham->setChiecKhau('');                  
                   $sanPham->setKho($idKho);
