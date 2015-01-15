@@ -45,21 +45,14 @@ use DateTimeZone;
 	public function donHangAction()
 	{
 
-		// kiểm tra đăng nhập
-	     if(!$this->zfcUserAuthentication()->hasIdentity())
-	     {
-	       return $this->redirect()->toRoute('application');
-	     }
-	     
-	     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
+	  if(!$this->zfcUserAuthentication()->hasIdentity())
+      {
+        return $this->redirect()->toRoute('application');
+      }
+      $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+      $this->layout('layout/giaodien');
+      $entityManager=$this->getEntityManager();
 
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -78,20 +71,14 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-	     if(!$this->zfcUserAuthentication()->hasIdentity())
-	     {
-	       return $this->redirect()->toRoute('application');
-	     }
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
-	     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\PhieuNhap')->findAll();
 	    $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho);
@@ -108,18 +95,13 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-      $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -168,18 +150,13 @@ use DateTimeZone;
 	public function doanhThuTheoThangAction()
 	{
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -230,18 +207,13 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -352,18 +324,13 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -411,25 +378,18 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-    	$idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-		$this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
-
-	    $id = (int) $this->params()->fromRoute('id', 0);
-	    if (!$id) {
-	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
-	            'action' => 'index',
-	        ));
-	    }  
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        // id đối tác
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('loi_nhuan/crud');
+        }  
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    $thoiGian=(string)$id;
 	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
@@ -457,25 +417,18 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-		$this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
-
-	    $id = (int) $this->params()->fromRoute('id', 0);
-	    if (!$id) {
-	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
-	            'action' => 'index',
-	        ));
-	    }  
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        // id đối tác
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('loi_nhuan/crud');
+        }  
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();  
 
 	    $thoiGian=(string)$id;
 	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
@@ -506,25 +459,19 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        // id đối tác
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('loi_nhuan/crud');
+        }  
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
-		$this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
-
-	    $id = (int) $this->params()->fromRoute('id', 0);
-	    if (!$id) {
-	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
-	            'action' => 'index',
-	        ));
-	    }  
 
 	    $thoiGian=(string)$id;
 	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
@@ -594,25 +541,18 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-		$this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
-
-	    $id = (int) $this->params()->fromRoute('id', 0);
-	    if (!$id) {
-	        return $this->redirect()->toRoute('loi_nhuan/crud', array(
-	            'action' => 'index',
-	        ));
-	    }  
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        // id đối tác
+        $id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('loi_nhuan/crud');
+        }  
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    $thoiGian=(string)$id;
 	    $y=$thoiGian[0].$thoiGian[1].$thoiGian[2].$thoiGian[3];
@@ -640,10 +580,10 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
+	    if(!$this->zfcUserAuthentication()->hasIdentity())
+	    {
+	        return $this->redirect()->toRoute('application');
+	    }
   
 
 		$entityManager=$this->getEntityManager();
@@ -668,18 +608,12 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-	    
-
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -719,10 +653,10 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
+	    if(!$this->zfcUserAuthentication()->hasIdentity())
+	    {
+	        return $this->redirect()->toRoute('application');
+	    }
 
 
 		$entityManager=$this->getEntityManager();
@@ -747,17 +681,13 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $entityManager=$this->getEntityManager();
 
-	    $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -800,10 +730,10 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
+	    if(!$this->zfcUserAuthentication()->hasIdentity())
+	    {
+	        return $this->redirect()->toRoute('application');
+	    }
 
 
 		$entityManager=$this->getEntityManager();
@@ -828,17 +758,12 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -940,10 +865,10 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
+	    if(!$this->zfcUserAuthentication()->hasIdentity())
+	    {
+	        return $this->redirect()->toRoute('application');
+	    }
      
 
 		$entityManager=$this->getEntityManager();
@@ -968,18 +893,12 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -1019,7 +938,7 @@ use DateTimeZone;
 	{
 		if(!$this->zfcUserAuthentication()->hasIdentity())
 	    {
-	      return $this->redirect()->toRoute('zfcuser');
+	      return $this->redirect()->toRoute('application');
 	    }
 
 	    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
@@ -1060,10 +979,11 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
+     // kiểm tra đăng nhập
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
 
 
 		$entityManager=$this->getEntityManager();
@@ -1088,18 +1008,13 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\HoaDon')->findAll();
 	    $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho);
@@ -1112,7 +1027,7 @@ use DateTimeZone;
 	{
 		if(!$this->zfcUserAuthentication()->hasIdentity())
 	    {
-	      return $this->redirect()->toRoute('zfcuser');
+	      return $this->redirect()->toRoute('application');
 	    }
 
 	    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);
@@ -1163,11 +1078,10 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
 
 		$entityManager=$this->getEntityManager();
 	    // tham số thức nhất cho hàm exportExcel
@@ -1192,18 +1106,12 @@ use DateTimeZone;
 	{
 
 		// kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-     $idKho=1;
-	     if($this->zfcUserAuthentication()->hasIdentity())
-	     { 
-	       $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-	     }
-
-	    $this->layout('layout/giaodien');
-	    $entityManager=$this->getEntityManager();
+        if(!$this->zfcUserAuthentication()->hasIdentity())
+        {
+        return $this->redirect()->toRoute('application');
+        }
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $entityManager=$this->getEntityManager();
 
 	    //$donHangs=$entityManager->getRepository('HangHoa\Entity\PhieuNhap')->findAll();
 	    $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho);
@@ -1217,7 +1125,7 @@ use DateTimeZone;
 	{
 		if(!$this->zfcUserAuthentication()->hasIdentity())
 	    {
-	      return $this->redirect()->toRoute('zfcuser');
+	      return $this->redirect()->toRoute('application');
 	    }
 
 	    $objPHPExcel->getActiveSheet()->setCellValue('A2', $tieuDe);

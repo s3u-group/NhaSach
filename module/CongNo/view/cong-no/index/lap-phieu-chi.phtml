@@ -1,4 +1,3 @@
-<?php echo $this->headTitle('Công nợ'); ?>
 
     <div class="row">
         <div class="col-md-2">
@@ -6,7 +5,7 @@
                 <span class="breadcrumb row">
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
                     <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
-                     / Công nợ /
+                     / <!-- Công nợ  -->Thanh toán/
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
                     
@@ -29,7 +28,7 @@
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
                             <!-- <i class="glyphicon glyphicon-save"></i> --> Phiếu chi
                         </a>
-                    </li>                   
+                    </li>                  
                     
                 </ul>
             </div>
@@ -39,7 +38,7 @@
                 <div class="page-header">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1>Nhà cung cấp</h1>
+                            <h1>Loại phiếu chi</h1>
                         </div>
 
                         <div class="col-sm-6">
@@ -52,7 +51,7 @@
                                         <i class="fa fa-chevron-right"></i>
                                     </button>
                                 </div>
-                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'export-cong-no-nha-cung-cap')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                                <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                             
                             </div>
                         </div>
@@ -73,55 +72,32 @@
                          echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
                      ?>
                 </div>
-                <div class="box">
-                    <ul class="nav nav-tabs" role="tablist" id="myTab">
-                        <li role="presentation" class="active">
-                            <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
-                        </li>                                                       
-                    </ul>
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="home">
-                            <div class="container">
-                                <div class="row">
-                                    <table id="" class="dataTables-example">
-                                        <thead>
-                                            <th><input type="checkbox"/></th>
-                                            <th>Nhà cung cấp</th>
-                                            <th>Ngày</th>
-                                            <th>Nợ đầu kì</th>
-                                            <th>Phát sinh</th>
-                                            <th>Cuối kì</th> 
-                                            <!-- <th>Chi tiết công nợ</th> -->                                                
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                            
-                                            foreach ($response as $rp) { 
-                                            ?>
-                                                <tr>
-                                                    <td><input type="checkbox"/></td>
-                                                    <td>
-                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chi-tiet-cong-no-nha-cung-cap','id'=>$rp['idDoiTac'])); ?>"><?php  echo $rp['hoTenDoiTac']; ?></a>
-                                                    </td>
-                                                    <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                    <td><?php  echo (int)($rp['noDauKi']); ?></td>
-                                                    <td><?php  echo $rp['noPhatSinh']; ?></td>
-                                                    <td><?php  echo $rp['noCuoiKi']; ?></td>
-                                                    <!-- <td></td> -->
-                                                </tr>
-                                            <?php    
-                                            }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>                            
-                    </div>
-                </div>
+                <div class="row">
+                    <table width="100%">
+                        <tr>
+                            <td width="20%">
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-nha-cung-cap')); ?>">Nhà  cung cấp</a>
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>">Khách hàng (Xuất chiết khấu</a>)
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                        
+                    </table>
+
+                </div>               
             </div>
         </div>
-    </div>    
+    </div>  
+<?php echo $this->form()->closeTag(); ?>
     <!-- /.container -->
 
     <!-- jQuery -->
@@ -133,27 +109,7 @@
     <!-- DataTables JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('.dataTables-example').dataTable({
-            "pagingType": "simple",
-            "bPaginate": true,
-            "bLengthChange": true,
-            "bFilter": true,
-            "bInfo": true,
-            "bAutoWidth": true,
+     <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
 
-            "language": {
-                "lengthMenu": "Hiển thị _MENU_ mục",
-                "zeroRecords": "Không có dữ liệu",
-                "info": "_PAGE_ / _PAGES_",
-                "infoEmpty": "",
-                "infoFiltered": "",
-                "decimal": ",",
-                "thousands": ".",
-                "search":"Tìm kiếm:",
-            }
-        });
-    });
-    </script>
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->

@@ -24,7 +24,7 @@
 		private $idGiaXuat;
 		/**
 		* @ORM\Column(name="id_san_pham")
-		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham")
+		* @ORM\ManyToOne(targetEntity="HangHoa\Entity\SanPham", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_san_pham", referencedColumnName="id_san_pham")
 		*/
 		private $idSanPham;
@@ -43,7 +43,7 @@
 
 		/**
 		* @ORM\Column(name="id_kenh_phan_phoi")
-		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy")
+		* @ORM\ManyToOne(targetEntity="S3UTaxonomy\Entity\ZfTermTaxonomy", cascade={"persist"})
 		* @ORM\JoinColumn(name="id_kenh_phan_phoi", referencedColumnName="term_taxonomy_id")
 		*/
 		private $idKenhPhanPhoi;

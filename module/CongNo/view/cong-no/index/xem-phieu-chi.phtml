@@ -1,0 +1,113 @@
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Thanh toán/
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                             Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
+                             Nhà cung cấp
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
+                            Phiếu thu
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
+                             Phiếu chi
+                        </a>
+                    </li>                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <!-- <div class="row">
+                        <div class="col-sm-6">
+                            <h1>xem phiếu chi</h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                               
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div> -->
+                <div style="margin-left:180px;">
+                    <table width="718" style="font-size:13px;">
+                        <tr><td style="padding:0px;" width="240px">Đơn vị:...........................</td><td style="padding:0px;"></td><td style="padding:0px;" width="260px" align="center"><b>Mẫ số: 02 - TT</b></td></tr>
+                        <tr><td style="padding:0px;">Địa chỉ:...........................</td><td style="padding:0px;" align="center"><b style="font-size:16px;">PHIẾU CHI</b> Số: ..............<div style="margin-top:-22px; margin-left:100px;"><?php echo $phieuChi->getMaPhieuChi(); ?></div></td><td align="center" style="padding:0px;"><div style="margin-top:-3px;"><i>(Ban hành theo QĐ số 15/2006/QĐ-BTC<br>Ngày 20/3/2006 của Bộ trưởng BTC)</i></div></td></tr>
+                        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center"><i>Ngày <?php echo $phieuChi->getNgayThanhToan()->format('d'); ?> tháng <?php echo $phieuChi->getNgayThanhToan()->format('m'); ?> năm <?php echo $phieuChi->getNgayThanhToan()->format('Y'); ?></i></td><td style="padding:0px;" align="right"><b>Nợ:</b>..............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+                        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center">Quyển số:..........</td><td style="padding:0px;" align="right"><b>Có:</b>...............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Họ tên người nhận tiền:.........................................................................................................................</span><div style="margin-top:-20px; margin-left:230px;" id="hoTenNguoiNhanTien"><?php echo $phieuChi->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></div></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Địa chỉ:.................................................................................................................................................</span><div style="margin-top:-20px; margin-left:130px;" id="inDiaChi"><?php echo $phieuChi->getIdCongNo()->getIdDoiTac()->getDiaChi(); ?></div></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Lý do chi:..............................................................................................................................................</span><div style="margin-top:-20px; margin-left:150px;" id="inLyDo">
+                            <?php echo $phieuChi->getLyDo(); ?></div></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Số tiền:................................................................(Viết bằng chữ)..........................................................</span></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span><div style="margin-top:-39px; margin-left:150px;" id="inSoTienBangSo"><?php echo $phieuChi->getSoTien(); ?></div><div style="margin-top:-19px; margin-left:480px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+                        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Kèm theo:........................................................................................................................chứng từ gốc.</span></td></tr>
+                        <tr><td style="padding:0px;" colspan="3" align="right"><span>Ngày <?php echo $phieuChi->getNgayThanhToan()->format('d'); ?> tháng <?php echo $phieuChi->getNgayThanhToan()->format('m'); ?> năm <?php echo $phieuChi->getNgayThanhToan()->format('Y'); ?>&nbsp;&nbsp;</span></td></tr>
+
+                    </table>
+                    <table width="718" style="font-size:13px; text-align:center;">
+                        <tr><td style="padding:0px;"><b>Người lập phiếu</b></td><td style="padding:0px;"><b>Người nhận tiền</b></td><td style="padding:0px;"><b>Thủ quỹ</b></td><td style="padding:0px;"><b>Kế toán trưởng</b></td><td style="padding:0px;"><b>Thủ trưởng đơn vị</b></td></tr>
+                        <tr><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên, đóng dấu)</td></tr>
+                        <tr><td style="padding:0px;" colspan="5" height="50px"></td></tr>
+                        <tr>
+                            <td style="padding:0px;"><b><?php echo $phieuChi->getIdUserNv()->getHoTen(); ?></b></td>
+                            <td style="padding:0px;"><b><?php echo $phieuChi->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></b></td>
+                            <td style="padding:0px;"></td>
+                            <td style="padding:0px;"></td>
+                            <td style="padding:0px;"></td>
+                        </tr>
+                    </table>
+                    <table width="718" style="font-size:13px; text-align:center;">
+                        <tr><td style="padding:0px;"><span style="margin-left:100px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+                        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Tỷ giá ngoại tệ (Vàng, bạc, đá quý):..................................................................................................</span></td></tr>
+                        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Số tiền quy đổi:...............................................................................................................................</span></td></tr>
+                        <tr><td style="padding:0px; text-align:left;"><span style="margin-left:70px;">(Liên gửi ra ngoài phải đóng dấu)</span></td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>  
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+     <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var inSoTienBangChu=docso(<?php echo $phieuChi->getSoTien(); ?>);
+            $('.inSoTienBangChu').text(inSoTienBangChu);
+        });
+    </script>

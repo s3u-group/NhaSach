@@ -25,7 +25,7 @@
 <?php
  $this->headTitle('Thêm sản phẩm');
 
- $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'themSanPham')));
+ $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'them-san-pham')));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);
@@ -46,7 +46,7 @@
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
                 <li>
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
                         <i class="fa fa-cubes"></i> Danh sách hàng
                     </a>
                 </li>

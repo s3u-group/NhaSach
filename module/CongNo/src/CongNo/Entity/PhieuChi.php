@@ -22,6 +22,11 @@
 		*/
 		private $idPhieuChi;
 
+		/**
+		* @ORM\Column(name="ma_phieu_chi", type="text")
+		*/
+		private $maPhieuChi;
+
 
 		/**
 		* @ORM\OneToOne(targetEntity="CongNo\Entity\CongNo", cascade={"persist"})
@@ -75,6 +80,14 @@
 		public function getIdPhieuChi()
 		{
 			return $this->idPhieuChi;
+		}
+
+		public  function setMaPhieuChi($maPhieuChi){
+			$this->maPhieuChi=$maPhieuChi;
+		}
+
+		public function getMaPhieuChi(){
+			return $this->maPhieuChi;
 		}
 
 

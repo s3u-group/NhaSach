@@ -24,14 +24,13 @@ class XuatPhieuChiFieldset extends Fieldset implements InputFilterProviderInterf
              'type' => 'Hidden',
         ));
         $this->add(array(
+             'name' => 'maPhieuChi',
+             'type' => 'Hidden',
+        ));
+        $this->add(array(
              'name' => 'idCongNo',
              'type' => 'Hidden',
         ));
-
-        /*$congNoFieldset = new CongNoFieldset($objectManager);
-        $congNoFieldset->setUseAsBaseFieldset(true);
-        $congNoFieldset->setName('idCongNo');
-        $this->add($congNoFieldset);     */ 
         
         $this->add(array(
              'name' => 'idUserNv',
@@ -52,7 +51,7 @@ class XuatPhieuChiFieldset extends Fieldset implements InputFilterProviderInterf
              'name' => 'soTien',
              'type' => 'Number',             
              'attributes'=>array(                
-                'id'=>'soTien',
+                'id'=>'soTien',                
             ),
         ));
 

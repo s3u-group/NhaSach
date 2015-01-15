@@ -23,22 +23,6 @@ class ThanhToanNhaCungCapForm extends Form
         $phieuChiFieldset->setUseAsBaseFieldset(true);
         $this->add($phieuChiFieldset);
 
-       /* $this->add(array(
-             'name' => 'idNhaCungCap',
-             'type' => 'hidden',
-             'attributes'=>array(  
-                'id'=>'idNhaCungCap'            
-            ),
-         ));*/
-
-        /*$this->add(array(
-             'name' => 'thanhToan',
-             'type' => 'Number',
-             'attributes'=>array(  
-                'id'=>'thanhToan',
-                'min'=>0,            
-            ),
-         ));*/
 
         $this->add(array(
              'name' => 'tenNhaCungCap',

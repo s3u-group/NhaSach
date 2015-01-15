@@ -37,7 +37,12 @@ class PhieuThuFieldset extends Fieldset implements InputFilterProviderInterface
         $this->add(array(
              'name' => 'idPhieuThu',
              'type' => 'Hidden',             
-        ));        
+        ));  
+
+        $this->add(array(
+             'name' => 'maPhieuThu',
+             'type' => 'Hidden',             
+        ));      
 
         $this->add(array(
              'name' => 'lyDo',

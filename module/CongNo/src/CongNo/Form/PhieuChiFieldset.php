@@ -23,6 +23,10 @@ class PhieuChiFieldset extends Fieldset implements InputFilterProviderInterface
              'name' => 'idPhieuChi',
              'type' => 'Hidden',
         ));
+         $this->add(array(
+             'name' => 'maPhieuChi',
+             'type' => 'Hidden',
+        ));
 
         $congNoFieldset = new CongNoFieldset($objectManager);
         $congNoFieldset->setUseAsBaseFieldset(true);

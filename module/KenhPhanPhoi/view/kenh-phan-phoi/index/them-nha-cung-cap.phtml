@@ -1,7 +1,7 @@
 <?php
  $this->headTitle('Thêm nhà cung cấp');
 
- $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'themNhaCungCap')));
+ $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'them-nha-cung-cap')));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);
@@ -21,7 +21,7 @@ echo $this->formHidden($idKenhPhanPhoi);
         <div class="h5a-sidebar affix">
             <span class="breadcrumb row">
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a> 
-                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">/ Nhà Cung Cấp</a>
+                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nha-cung-cap'));?>">/ Nhà Cung Cấp</a>
                  / Thêm mới /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
@@ -31,7 +31,7 @@ echo $this->formHidden($idKenhPhanPhoi);
                     </a>
                 </li> 
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nha-cung-cap'));?>">
                         <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
                     </a>
                 </li>                 

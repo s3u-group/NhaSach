@@ -13,18 +13,17 @@
                     <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
                         <i class="fa fa-flag-checkered"></i> Doanh thu
                     </a>
-                </li>                
+                </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Hóa đơn
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
+                        <i class="fa fa-cubes"></i> Phiếu xuất
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieuNhap'));?>">
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
                         <i class="fa fa-tasks"></i> Phiếu nhập
                     </a>
                 </li>
-                
             </ul>
         </div>
     </div>
@@ -67,11 +66,11 @@
                                     ?>   
                                         <tr>
                                             <td>
-                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>">#<?php echo $hoaDon->getMaHoaDon(); ?>
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-don-hang','id'=>$hoaDon->getIdHoaDon())); ?>">#<?php echo $hoaDon->getMaHoaDon(); ?>
                                                 </a>
                                             </td>
                                             <td>
-                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietKhachHang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>">
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-khach-hang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>">
                                                     <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
                                                 </a>
                                             </td>
@@ -79,7 +78,7 @@
                                                 $doanhThu=0; $von=0; $loiNhuan=0;
                                                 foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
                                                     $doanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                    $von+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                    $von+=(float)$ctHoaDon->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
                                                 }
                                                 $loiNhuan=$doanhThu-$von;
                                             ?>

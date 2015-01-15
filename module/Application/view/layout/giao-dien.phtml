@@ -49,7 +49,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li>                        
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">                        
+                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">                        
                             <i class="fa fa-barcode"></i>
                             Hàng hóa
                         </a>
@@ -61,21 +61,24 @@
                         </a>
                     </li>
                     <li>                        
-                        <a href="<?php echo $this->url('s3u_taxonomy/taxonomys',array('action'=>'chietKhau'));?>">
+                        <a href="<?php echo $this->url('s3u_taxonomy/taxonomys',array('action'=>'chiet-khau'));?>">
                             <i class="glyphicons-magic"></i>
-                            Chiết khấu
+                            <!-- Chiết khấu -->
+                            Chính sách bán hàng
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no');?>">
                             <i class="fa fa-compress"></i>
-                            Công nợ
+                            <!-- Công nợ -->
+                            Thanh toán
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo $this->url('loi_nhuan');?>">
                             <i class="glyphicon glyphicon-usd"></i>
-                           Lợi nhuận
+                           <!-- Lợi nhuận -->
+                           Bán hàng
                         </a>
                     </li>
                     <?php 
@@ -95,9 +98,9 @@
                     if($this->zfcUserIdentity())
                     { ?>
                         <li>
-                            <a href="#"  style="color:red;">
-                                <i class="fa fa-hand-o-right"></i>
-                               <b>
+                            <a href="#">
+                                <i class="fa fa-hand-o-right"></i>Tên chi nhánh: 
+                               <b style="color:red;">
                                     <?php 
                                         $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho()); 
                                         echo $kho->getTenKho();
@@ -147,7 +150,7 @@
                                     foreach ($responses['response'] as $response) {
                                     ?>
                                         <li>
-                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$response['idDoiTac'])); ?>">
+                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$response['idDoiTac'])); ?>">
                                                 <i class="image fa fa-flag"></i>
                                                 <p><i class="fa fa-clock-o"></i> 
                                                     <small><b><?php echo $response['hoTenDoiTac']; ?></b>.</small>
@@ -223,10 +226,10 @@
                             <li class="divider"></li>
                             <li class="dropdown-header">Quick Adds</li>
                             <li>
-                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themKhachHang')); ?>"><i class="fa fa-tag"></i> Thêm khách hàng</a>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'them-khach-hang')); ?>"><i class="fa fa-tag"></i> Thêm khách hàng</a>
                             </li>
                             <li>
-                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themNhaCungCap')); ?>"><i class="fa fa-tag"></i> Add Product</a>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'them-nha-cung-cap')); ?>"><i class="fa fa-tag"></i> Add Product</a>
                             </li>
                             <?php if((int)$this->zfcUserIdentity()->getId()==1) { ?>
                                 <li>

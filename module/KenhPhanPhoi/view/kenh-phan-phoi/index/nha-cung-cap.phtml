@@ -17,7 +17,7 @@
                     </a>
                 </li> 
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nha-cung-cap'));?>">
                         <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
                     </a>
                 </li>              
@@ -44,9 +44,9 @@
                             </div>
                             <div class="btn-group ">
                                 <button type="button" class="h5a-btn btn btn-default btn-sm">Import</button>
-                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'exportNhaCungCap')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'export-nha-cung-cap')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                             </div>                                    
-                            <a  href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'themNhaCungCap'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
+                            <a  href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'them-nha-cung-cap'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
                         </div>
                     </div>
                 </div>
@@ -74,6 +74,17 @@
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
+                        <?php
+                        /*$tongNo=0;
+                        foreach ($doiTacs as $key => $doiTac) {
+                            if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==46)
+                            {
+                                $array=$this->GetSoPhieuNhapVaPhieuNhapMoiNhat($doiTac->getIdDoiTac());
+                                $tongNo+=$array['noCuoiKi'];
+                            }
+                        }*/
+                        ?>
+                        <!-- <label style="margin-right:0px; width:100%;text-align:right">Tổng nợ: <?php //echo $tongNo; $tongNo=0; ?></label> -->
                         <div class="container">
                             <div class="row">
                                 <table id="tatCa" class="dataTables">
@@ -82,11 +93,12 @@
                                         <th>Nhà cung cấp</th>
                                         <th>Điện thoại</th>
                                         <th>Địa chỉ</th>
-                                        <th>Đơn hàng</th>
-                                        <th>Mới nhất</th>
+                                        <th>Tổng số đơn hàng</th>
+                                        <th>Tổng nợ</th>
                                     </thead>
                                     <tbody>                                               
                                         <?php
+                                            $tongNo=0;
                                             foreach ($doiTacs as $key => $doiTac) {
                                                 if($doiTac->getLoaiDoiTac()->getTermTaxonomyId()==46)
                                                 {
@@ -94,24 +106,30 @@
                                                     $soHoaDon=$array['soHoaDon'];
                                                     $hoaDonMoiNhat=$array['hoaDonMoiNhat'];
                                                     $idHoaDon=$array['idHoaDon'];
+                                                    $tongNo+=(float)$array['noCuoiKi'];
                                                     echo '<tr>';
                                                         echo '<td><input type="checkbox"/></td>';
                                                         echo '<td>';
-                                                            echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietNhaCungCap','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
+                                                            echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-nha-cung-cap','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
                                                         echo '</td>';                                                            
                                                         echo '<td>'.$doiTac->getDiDong().'</td>';
                                                         echo '<td>'.$doiTac->getDiaChi().'</td>';
                                                         echo '<td>'.$soHoaDon.'</td>';
                                                         echo '<td>';
-                                                            if($hoaDonMoiNhat!='')
-                                                            {
-                                                                echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chiTietPhieuNhap','id'=>$idHoaDon)).'">#'.$hoaDonMoiNhat.'</a>';
-                                                            }
+                                                            echo $array['noCuoiKi'];
                                                         echo '</td>';
                                                     echo '</tr>  ';
                                                 }
                                             }
-                                        ?>                                                     
+                                        ?> 
+                                        <tr>
+                                            <td>&nbsp;</td>
+                                            <td style="text-align:center;"></td>
+                                            <td style="text-align:center;"></td>
+                                            <td style="text-align:center;"></td>
+                                            <td style="text-align:center;"><b>Tổng nợ: </b></td>
+                                            <td><b><?php echo $tongNo; $tongNo=0; ?></b></td>
+                                        </tr>                                                     
                                     </tbody>
                                 </table>
                             </div>

@@ -33,16 +33,20 @@
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                        <i class="glyphicon glyphicon-open"></i> Khách hàng
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
                     </a>
-                </li> 
+                </li>
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
+                        <i class="fa fa-cubes"></i> Phiếu xuất
                     </a>
-                </li>                  
-                
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
+                        <i class="fa fa-tasks"></i> Phiếu nhập
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -51,7 +55,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Thông tin khách hàng</h2>
+                        <h1>Chi tiết đơn hàng</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
@@ -68,60 +72,10 @@
                     </div>
                 </div>
             </div>
-            <div class="box">   
-                
-                <table class="tb">
-                    <tr>
-                        <td class="td">
-                            <b>Họ tên: </b>
-                        </td>
-                        <td>                                    
-                            <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
-                        </td>
-                        <td>
-                            <b>Địa chỉ: </b>
-                        </td>
-                        <td>
-                            <?php echo $hoaDon->getIdDoiTac()->getDiaChi(); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Di động:</b> 
-                        </td>
-                        <td>
-                            <?php echo $hoaDon->getIdDoiTac()->getDiDong(); ?>
-                        </td>
-                        <td class="td1">
-                            <b>Điện thoại cố định: </b>
-                        </td>
-                        <td>
-                            <?php 
-                                if($hoaDon->getIdDoiTac()->getDienThoaiCoDinh()!=0)
-                                    echo $hoaDon->getIdDoiTac()->getDienThoaiCoDinh(); 
-
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Email:</b>
-                        </td>
-                        <td>
-                            <?php echo $hoaDon->getIdDoiTac()->getEmail(); ?>
-                        </td>
-                        <td>
-                            
-                        </td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div>
-                <h2>Chi tiết đơn hàng</h2>
-            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <b>Tên khách hàng: </b><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-khach-hang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>"><?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?></a></div>
+                </div>
             
             <div class="box">                        
                 <div class="tab-content">
@@ -142,7 +96,7 @@
                                     foreach ($chiTietHoaDons as $chiTietHoaDon) {
                                         echo '<tr>';
                                             echo '<td><input type="checkbox"/></td>';
-                                            echo '<td><a id="link" href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a><label hidden="true" class="lb">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</label></td>';
+                                            echo '<td><a id="link" href="'.$this->url('hang_hoa/crud', array('action'=>'san-pham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a><label hidden="true" class="lb">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</label></td>';
                                             echo '<td>'.$chiTietHoaDon->getGia().'</td>';
                                             echo '<td>'.$chiTietHoaDon->getSoLuong().'</td>';
                                             echo '<td>'.$chiTietHoaDon->getGia()*$chiTietHoaDon->getSoLuong().'</td>';

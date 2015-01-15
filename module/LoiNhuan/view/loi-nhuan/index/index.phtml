@@ -14,14 +14,14 @@
                     <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
                         <i class="fa fa-flag-checkered"></i> Doanh thu
                     </a>
-                </li>                     
+                </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Hóa đơn
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
+                        <i class="fa fa-cubes"></i> Phiếu xuất
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieuNhap'));?>">
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
                         <i class="fa fa-tasks"></i> Phiếu nhập
                     </a>
                 </li>
@@ -50,12 +50,12 @@
                                 <button class="h5a-btn btn btn-default dropdown-toggle btn-sm" type="button" data-toggle="dropdown">Loại thống kê <span class="caret"></span></button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index')); ?>">Theo ngày</a></li>
-                                    <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoThang')); ?>">Theo tháng</a></li>
-                                    <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoQuy')); ?>">Theo quý</a></li>
-                                    <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanhThuTheoNam')); ?>">Theo năm</a></li>
+                                    <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanh-thu-theo-thang')); ?>">Theo tháng</a></li>
+                                    <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanh-thu-theo-quy')); ?>">Theo quý</a></li>
+                                    <li><a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'doanh-thu-theo-nam')); ?>">Theo năm</a></li>
                                 </ul>
                             </div>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportDoanhThuTheoNgay')); ?>">
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'export-doanh-thu-theo-ngay')); ?>">
                             <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                         </div>
                     </div>
@@ -99,7 +99,7 @@
                                             <td>
                                                 <!-- nếu tất cả thì id sẽ có số 00 ở phía sau có nghỉa là tất cả -->
                                                 <?php $id=(int)$doanhThu['idThoiGian'].'00'; ?>
-                                                <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuNgay','id'=>$id)); ?>">
+                                                <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chi-tiet-doanh-thu-ngay','id'=>$id)); ?>">
                                                     <?php echo $doanhThu['thoiGian']; ?>
                                                 </a>
                                             </td>
@@ -111,7 +111,7 @@
                                                 foreach ($doanhThu['chiTietDoanhThus'] as $chiTietDoanhThu) {
                                                     foreach ($chiTietDoanhThu->getCtHoaDons() as $ctHoaDon) {
                                                         $tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                        $tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                        $tongNguonVon+=(float)$ctHoaDon->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
                                                     }
                                                 }
                                                 $tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
@@ -157,7 +157,7 @@
                                                         $soDonHang++;
                                                         foreach ($chiTietDoanhThu->getCtHoaDons() as $ctHoaDon) {
                                                             $tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-                                                            $tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                            $tongNguonVon+=(float)$ctHoaDon->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
                                                         }
                                                     }
                                                     
@@ -169,7 +169,7 @@
                                                 <tr>
                                                     <td>
                                                         <?php $id=(int)$doanhThu['idThoiGian'].$kenhPhanPhoi['termTaxonomyId']; ?>
-                                                        <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chiTietDoanhThuNgay','id'=>$id)); ?>">
+                                                        <a href="<?php echo $this->url('loi_nhuan/crud', array('action'=>'chi-tiet-doanh-thu-ngay','id'=>$id)); ?>">
                                                             <?php echo $doanhThu['thoiGian']; ?>
                                                         </a>
                                                     </td>
