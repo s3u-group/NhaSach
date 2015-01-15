@@ -141,7 +141,14 @@
                                             echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'san-pham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
 
                                             echo '<td>'.$sanPham->getMaSanPham().'</td>';
-                                            echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
+                                            if($sanPham->getIdDonViTinh()) 
+                                            {
+                                                echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';
+                                            }
+                                            else
+                                            {
+                                                echo '<td></td>';
+                                            }
                                             echo '<td>';
                                             if($sanPham->getGiaNhap()==0)
                                             {
