@@ -64,10 +64,10 @@ class SystemUser extends \Application\Entity\SystemUser implements \Doctrine\ORM
     public function __sleep()
     {
         if ($this->__isInitialized__) {
-            return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
+            return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'kho', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
         }
 
-        return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
+        return array('__isInitialized__', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'id', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'username', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'password', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'displayName', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'hoTen', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diaChi', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'email', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'state', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'moTa', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'dienThoaiCoDinh', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'diDong', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'twitter', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'kho', '' . "\0" . 'Application\\Entity\\SystemUser' . "\0" . 'roles');
     }
 
     /**
@@ -461,6 +461,28 @@ class SystemUser extends \Application\Entity\SystemUser implements \Doctrine\ORM
         $this->__initializer__ && $this->__initializer__->__invoke($this, 'addRole', array($role));
 
         return parent::addRole($role);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setKho($kho)
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'setKho', array($kho));
+
+        return parent::setKho($kho);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getKho()
+    {
+
+        $this->__initializer__ && $this->__initializer__->__invoke($this, 'getKho', array());
+
+        return parent::getKho();
     }
 
 }
