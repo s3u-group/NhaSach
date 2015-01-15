@@ -259,19 +259,15 @@
 
     public function chietKhauAction()
     {
-       $this->layout('layout/giaodien');
-
-        $idKho=1;
-        if($this->zfcUserAuthentication()->hasIdentity())
-        { 
-          $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-        }
-        else
+      // kiểm tra đăng nhập
+        if(!$this->zfcUserAuthentication()->hasIdentity())
         {
-            return $this->redirect()->toRoute('hang_hoa/crud');
+        return $this->redirect()->toRoute('application');
         }
-
-       $entityManager=$this->getEntityManager();
+        $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+        $this->layout('layout/giaodien');
+        $entityManager=$this->getEntityManager();
+        
 
        $taxonomyKenhPhanPhoi=$this->TaxonomyFunction();
        $kenhPhanPhois=$taxonomyKenhPhanPhoi->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
@@ -289,7 +285,7 @@
             $this->suaChietKhau($chietKhau->getIdChietKhau(),$post[$chietKhau->getIdChietKhau()]);
          }
          $this->flashMessenger()->addSuccessMessage('Cập nhập chiết khấu thành công');
-         return $this->redirect()->toRoute('s3u_taxonomy/taxonomys',array('action'=>'chietKhau'));
+         return $this->redirect()->toRoute('s3u_taxonomy/taxonomys',array('action'=>'chiet-khau'));
        }
        return array(        
          'kenhPhanPhois'=>$kenhPhanPhois,
@@ -301,16 +297,15 @@
     {
         if($id&&$value)
         {
-            $idKho=1;
-            if($this->zfcUserAuthentication()->hasIdentity())
-            { 
-              $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
-            }
-            else
+            // kiểm tra đăng nhập
+            if(!$this->zfcUserAuthentication()->hasIdentity())
             {
-                return $this->redirect()->toRoute('hang_hoa/crud');
+            return $this->redirect()->toRoute('application');
             }
+            $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+            $this->layout('layout/giaodien');
             $entityManager=$this->getEntityManager();
+
             $chietKhau=$entityManager->getRepository('Kho\Entity\ChietKhau')->find($id);
             $chietKhau->setChietKhau($value);
 
