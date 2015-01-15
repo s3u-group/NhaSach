@@ -1,7 +1,7 @@
 <?php
  $this->headTitle('Thêm khách hàng');
 
- $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'themKhachHang')));
+ $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'them-khach-hang')));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);
@@ -27,7 +27,7 @@
                     </a>
                 </li> 
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
+                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nha-cung-cap'));?>">
                         <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
                     </a>
                 </li>                 

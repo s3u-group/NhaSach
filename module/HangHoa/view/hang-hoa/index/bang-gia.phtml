@@ -7,24 +7,24 @@
         <div class="h5a-sidebar affix">
             <span class="breadcrumb row">
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">/ Hàng hóa</a>
                  / Bảng giá /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
                 <li>
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
                         <i class="fa fa-cubes"></i> Danh sách hàng
                     </a>
                 </li>
                 <li>
-                    <!-- <a href="nhapHang.html"> -->
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>">
+                 
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
                         <i class="fa fa-download"></i> Nhập hàng
                     </a>
                 </li>
                 <li>
                     <!-- <a href="xuatHang.html"> -->
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
                         <i class="fa fa-upload"></i> Xuất hàng
                     </a>
                 </li>
@@ -50,7 +50,7 @@
                             </div>
                             <div class="btn-group ">
                                 <?php
-                                    $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'importBangGia')));
+                                    $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'import-bang-gia')));
                                     $form->setAttribute('role','form');
                                     $form->setAttribute('name','frmImport');
                                     $form->setAttribute('style','margin-top: 0px;margin-bottom:0px;');
@@ -62,7 +62,7 @@
                                     echo $this->formElement($file);
                                 ?>
                                 <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" >Import</button>
-                                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'exportBangGia')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'export-bang-gia')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                                 <?php
                                     echo $this->form()->closeTag();
                                 ?>
@@ -138,7 +138,7 @@
                                             echo '<tr>';
                                             echo '<td><input type="checkbox"/></td>';
 
-                                            echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
+                                            echo '<td><img src="'.$this->basePath().'/img/'.$sanPham->getHinhAnh().'" height="40" width="40px"> <a href="'.$this->url('hang_hoa/crud',array('action'=>'san-pham', 'id'=>$sanPham->getIdSanPham())).'">'.$sanPham->getTenSanPham().'</a></td>';
 
                                             echo '<td>'.$sanPham->getMaSanPham().'</td>';
                                             echo '<td>'.$sanPham->getIdDonViTinh()->getTermId()->getName().'</td>';

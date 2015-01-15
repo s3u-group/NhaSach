@@ -8,7 +8,7 @@
             <span class="breadcrumb row">
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>                        
                 <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
-                 / Hóa đơn /
+                 / Phiếu xuất /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">
                 <li>
@@ -17,12 +17,12 @@
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'donHang'));?>">
-                        <i class="fa fa-cubes"></i> Hóa đơn
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
+                        <i class="fa fa-cubes"></i> Phiếu xuất
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieuNhap'));?>">
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
                         <i class="fa fa-tasks"></i> Phiếu nhập
                     </a>
                 </li>
@@ -47,7 +47,7 @@
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
-                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'exportPhieuNhap')); ?>">
+                            <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'export-phieu-nhap')); ?>">
                              <button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                         </div>
                     </div>
@@ -67,8 +67,8 @@
                                 <table id="" class="dataTables-example">
                                     <thead>
                                         <th><input type="checkbox"/></th>
-                                        <th>Phiếu nhập</th>
                                         <th>Ngày</th>
+                                        <th>Phiếu nhập</th>                                       
                                         <th>Khách hàng</th>
                                         <th>Thanh toán</th>
                                         <th>Tổng tiền</th>
@@ -79,11 +79,12 @@
                                         {?>
                                         <tr>
                                             <td><input type="checkbox"/></td>
-                                            <td>
-                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietPhieuNhap','id'=>$phieuNhap->getIdPhieuNhap()));?>"><?php echo '#'.$phieuNhap->getMaPhieuNhap(); ?></a>
-                                            </td>
                                             <td><?php echo $phieuNhap->getNgayNhap()->format('d-m-Y'); ?></td>
-                                            <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietNhaCungCap','id'=>$phieuNhap->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $phieuNhap->getIdDoiTac()->getHoTen(); ?></a></td>
+                                            <td>
+                                                <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-phieu-nhap','id'=>$phieuNhap->getIdPhieuNhap()));?>"><?php echo '#'.$phieuNhap->getMaPhieuNhap(); ?></a>
+                                            </td>
+                                            
+                                            <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-nha-cung-cap','id'=>$phieuNhap->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $phieuNhap->getIdDoiTac()->getHoTen(); ?></a></td>
                                             <td>
                                             <?php 
                                                 if($phieuNhap->getStatus()==0)

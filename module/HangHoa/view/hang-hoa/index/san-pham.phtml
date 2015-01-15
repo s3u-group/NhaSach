@@ -1,7 +1,7 @@
 <?php
      $this->headTitle('Sản phẩm');
      
-     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'sanPham','id'=>$sanPhams->getIdSanPham())));
+     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'san-pham','id'=>$sanPhams->getIdSanPham())));
      $form->setAttribute('role','form');
      $form->prepare();
      echo $this->form()->openTag($form);
@@ -13,7 +13,7 @@
         <div class="h5a-sidebar affix">
             <span class="breadcrumb row">
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
-                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hangHoa'));?>">/ Hàng hóa</a>
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">/ Hàng hóa</a>
                  / #xxx /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">
@@ -33,7 +33,7 @@
                 <img class="pull-left img-circle" width="40px" height="40px" src="<?php echo $this->basePath();?>/img/<?php echo $sanPhams->getHinhAnh(); ?>" alt=""> <?php echo $sanPhams->getTenSanPham(); ?>
             </h1>
             <div class="btn-group pull-right">
-                <a href="<?php echo $this->url('hang_hoa/crud', array('action'=>'xoaSanPham','id'=>$sanPhams->getIdSanPham())); ?>" class="btn h5a-btn btn-danger btn-xs" onclick="return xacNhanXoa()"><i class="fa fa-times"></i> Xóa sản phẩm</a>                
+                <a href="<?php echo $this->url('hang_hoa/crud', array('action'=>'xoa-san-pham','id'=>$sanPhams->getIdSanPham())); ?>" class="btn h5a-btn btn-danger btn-xs" onclick="return xacNhanXoa()"><i class="fa fa-times"></i> Xóa sản phẩm</a>                
             </div>
             	<p>
                     <?php echo $sanPhams->getMoTa(); ?>

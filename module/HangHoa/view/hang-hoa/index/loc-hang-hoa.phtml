@@ -34,18 +34,18 @@
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
                 <li>                            
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bangGia'));?>">                                 
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                                 
                         <i class="fa fa-list-alt"></i> Bảng giá
                     </a>
                 </li>
                 <li>
                     <!-- <a href="nhapHang.html"> -->
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhapHang'));?>"> 
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>"> 
                         <i class="fa fa-download"></i> Nhập hàng
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuatHang'));?>">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
                         <i class="fa fa-upload"></i> Xuất hàng
                     </a>
                 </li>
@@ -74,7 +74,7 @@
                                 <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return functionExport();">Export</button>
                             </div>
                             <!-- <button type="button" class="h5a-btn btn btn-default btn-sm">Quản lý tồn kho</button> -->
-                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'themSanPham'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
+                            <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'them-san-pham'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
                         </div>
                     </div>
                 </div>
@@ -91,7 +91,7 @@
                             <div class="row bottom20">                                        
                                 <?php
                                     // gửi tới form loc hang hóa
-                                    $url=$this->url('hang_hoa/crud', array('action' => 'locHangHoa'));
+                                    $url=$this->url('hang_hoa/crud', array('action' => 'loc-hang-hoa'));
                                 ?>
                                 <form method="post" action="<?php echo $url; ?>" onSubmit="return functionKiemTraDieuKienLoc();">
                                 <div class="input-group has-feedback">
@@ -117,7 +117,7 @@
                             <div class="row">
                                 <?php
                                     // gửi tới form loc hang hóa
-                                    $url=$this->url('hang_hoa/crud', array('action' => 'exportHangHoa'));
+                                    $url=$this->url('hang_hoa/crud', array('action' => 'export-hang-hoa'));
                                 ?>
                                 <form method="post" action="<?php echo $url; ?>" id="frmEport">
                                 <table id="dataTables-example" class="">
@@ -135,7 +135,7 @@
                                     <?php foreach ($sanPhams as $sanPham) {?>                
                                         <tr>
                                             <td><input type="checkbox"/><input type="hidden" name="idSanPham[]" value="<?php echo $sanPham->getIdSanPham(); ?>"></td>
-                                            <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'sanPham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
+                                            <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'san-pham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
                                             <td><?php echo $sanPham->getMaSanPham(); ?></td>
                                             <td><?php echo $sanPham->getTonKho(); ?></td>
                                             <td><?php echo $sanPham->getIdLoai()->getTermId()->getName(); ?></td>

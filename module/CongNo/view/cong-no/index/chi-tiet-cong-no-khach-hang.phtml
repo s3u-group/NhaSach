@@ -12,14 +12,24 @@
                     
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
-                            <i class="glyphicon glyphicon-open"></i> Công nợ Khách hàng
+                            <!-- <i class="glyphicon glyphicon-open"></i> --> Khách hàng
                         </a>
                     </li> 
                     <li>
-                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'congNoNhaCungCap'));?>" title="Công nợ nhà cung cấp">
-                            <i class="glyphicon glyphicon-save"></i> Công nợ NCC
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Nhà cung cấp
                         </a>
-                    </li>                 
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
+                           <!--  <i class="glyphicon glyphicon-save"></i> --> Phiếu thu
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Phiếu chi
+                        </a>
+                    </li>                      
                     
                 </ul>
             </div>
@@ -29,7 +39,7 @@
                 <div class="page-header">
                     <div class="row">
                         <div class="col-sm-6">
-                            <h1>Chi tiết công nợ</h1>
+                            <h1>khách hàng</h1>
                         </div>
 
                         <div class="col-sm-6">
@@ -64,7 +74,7 @@
                      ?>
                 
                 </div>
-                &nbsp;&nbsp; Tên khách hàng: <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a>
+                &nbsp;&nbsp; Tên khách hàng: <a href="<?php echo $this->url('cong_no/crud',array('action'=>'xuat-phieu-thu','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a>
                 <div class="box">
                     <ul class="nav nav-tabs" role="tablist" id="myTab">
                         <li role="presentation" class="active">
@@ -74,11 +84,79 @@
                     <div class="tab-content">
                         <div role="tabpanel" class="tab-pane active" id="home">
                             <div class="container">
-
                                 <div class="row">
+                                    <h3>Lịch sử thanh toán của khách hàng</h3>
+                                    <table border="1" width="100%">
+                                        <thead>
+                                            <th>Ngày</th>
+                                            <th>Nợ đầu kì</th>
+                                            <th>Tổng nợ</th> 
+                                            <th>Thanh toán</th>
+                                            <th>Còn lại</th>
+                                            <th width="170px">Phiếu thu</th>
+                                            <th width="170px">Phiếu chi</th>
+                                            <th>Xuất chiết khấu</th>
+                                        </thead>
+                                        <tbody>
+                                        <?php 
+                                            foreach ($response as $rp) { 
+                                            ?>
+                                                <tr>                                         
+                                                    <td><?php  echo $rp['ngayDauKi']; ?></td>
+                                                    <td><?php  echo $rp['noDauKi']; ?></td>
+                                                    <td><?php  echo $rp['noCuoiKi']; ?></td> 
+                                                    <td><?php  echo $rp['thanhToan']; ?></td>
+                                                    <td><?php  echo $rp['duNo']; ?></td>
+                                                    <td>
+                                                    <?php
+                                                    if($rp['idPhieuThu']!=''&&$rp['idPhieuThu']!=null){
+                                                    ?>
+                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'xem-phieu-thu','id'=>$rp['idPhieuThu'])); ?>">Xem</a>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php 
+                                                    if($rp['phieuChi'])
+                                                    {
+                                                        $co=0;
+                                                        foreach ($rp['phieuChi'] as $phieuChi) {
+                                                            $co++;
+                                                            if($co>1){
+                                                                echo '&nbsp;|&nbsp;';
+                                                            }
+                                                            ?>
+                                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'xem-phieu-chi','id'=>$phieuChi->getIdPhieuChi())); ?>">Xem</a>
+                                                            <?php
+                                                        }
+                                                    }
+                                                    ?>
+                                                    </td>
+                                                    <td>
+                                                    <?php
+                                                    if($rp['idPhieuThu']!=''&&$rp['idPhieuThu']!=null){
+                                                    ?>
+                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'xuat-phieu-chi','id'=>$rp['idPhieuThu'])); ?>">Xuất chiết khấu</a>
+                                                    <?php
+                                                    }
+                                                    ?>                                    
+                                                    </td>
+                                                    
+                                                </tr>
+                                                
+                                            <?php    
+                                            }
+                                        ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <h3>Danh sách phiếu xuất</h3>
                                     <table id="" class="dataTables-example">
                                         <thead>
-                                            <th>Hóa đơn</th>
+                                            <th>Phiếu xuất</th>
                                             <th>Tên sản phẩm</th>
                                             <th>Giá</th>
                                             <th>Số lượng</th>
@@ -92,7 +170,7 @@
                                             foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
                                         ?>
                                             <tr>
-                                                <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chiTietDonHang','id'=>$hoaDon->getIdHoaDon())); ?>"><?php echo '#'.$hoaDon->getMaHoaDon(); ?></a></td>
+                                                <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-don-hang','id'=>$hoaDon->getIdHoaDon())); ?>"><?php echo '#'.$hoaDon->getMaHoaDon(); ?></a></td>
                                                 <td><?php echo $ctHoaDon->getIdSanPham()->getTenSanPham(); ?></td>
                                                 <td><?php echo $ctHoaDon->getGia(); ?></td>
                                                 <td><?php echo $ctHoaDon->getSoLuong(); ?></td>
@@ -110,81 +188,7 @@
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="row">
-                                    <h3>Lịch sử công nợ khách hàng</h3>
-                                    <table border="1" width="100%">
-                                        <thead>
-                                            <th>Khách hàng</th>
-                                            <th>Ngày đầu kì</th>
-                                            <th>Đầu kì</th>
-                                            <th>Phát sinh</th>
-                                            <th>Cuối kì</th>
-                                            <th>Thanh toán</th>
-                                            <th>Dư nợ</th>
-                                            <th>Ngày thanh toán</th>
-                                            <th>Xuất chiết khấu</th>
-                                        </thead>
-                                        <tbody>
-                                        <?php 
-                                            foreach ($response as $rp) { 
-                                            ?>
-                                                <tr>                                                    
-                                                    <td>
-                                                    <?php
-                                                        if($rp['noCuoiKi']>0&&$rp['thanhToan']=='Chưa Thanh Toán')
-                                                        {
-                                                    ?>
-                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'thanhToan','id'=>$doiTac->getIdDoiTac())); ?>"><?php echo $doiTac->getHoTen(); ?></a></td>
-                                                    <?php
-                                                        }
-                                                        else
-                                                        {
-                                                            echo $doiTac->getHoTen();
-                                                        }
-                                                    ?>
-                                                    <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noPhatSinh']; ?></td>
-                                                    <td><?php  echo $rp['noCuoiKi']; ?></td>
-                                                    <td><?php  echo $rp['thanhToan']; ?></td>
-                                                    <td><?php  echo $rp['duNo']; ?></td>
-                                                    <td>
-                                                    <?php  
-                                                        if($rp['ngayThanhToan'])
-                                                        {
-                                                            echo $rp['ngayThanhToan']->format('Y-m-d');
-                                                        }
-                                                    ?>
-                                                    </td>
-                                                    <td>
-                                                    <?php
-                                                    if($rp['idPhieuThu']!='')
-                                                    { ?>
-                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'XuatPhieuChi','id'=>(int)$rp['idPhieuThu'])); ?>">In phiếu chi</a>
-                                                    <?php
-                                                    }                                                    
-                                                    ?>
-                                                    </td>
-                                                    
-                                                </tr>
-                                                <?php 
-                                                if($rp['phieuChi'])
-                                                {
-                                                    foreach ($rp['phieuChi'] as $phieuChi) {
-                                                        echo '<tr>
-                                                            <td></td><td></td><td></td><td></td><td></td>
-                                                            <td><span class="label label-success">Chi: '.$phieuChi->getSoTien().'</span></td><td></td>
-                                                            <td>'.$phieuChi->getNgayThanhToan()->format('d-m-Y').'</td><td></td>
-                                                        </tr>';
-                                                    }
-                                                }
-                                                ?>
-                                            <?php    
-                                            }
-                                        ?>
-                                        </tbody>
-                                    </table>
-                                </div>
+                                
                             </div>
                         </div>                        
                     </div>

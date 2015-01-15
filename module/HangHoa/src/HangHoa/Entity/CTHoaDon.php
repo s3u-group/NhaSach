@@ -45,6 +45,11 @@
 		*/
 		private $gia;
 
+		/**
+		* @ORM\Column(name="gia_nhap", type="float")
+		*/
+		private $giaNhap;
+
 
 		/**
 		* @ORM\Column(name="so_luong", type="integer")
@@ -90,6 +95,13 @@
 		public function getGia()
 		{
 			return $this->gia;
+		}
+		
+		public function setGiaNhap($giaNhap){
+			$this->giaNhap=$giaNhap;
+		}
+		public function getGiaNhap(){
+			return $this->giaNhap;
 		}
 
 

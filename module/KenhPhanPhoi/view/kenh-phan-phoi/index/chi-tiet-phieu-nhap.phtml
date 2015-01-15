@@ -12,16 +12,20 @@
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'index'));?>">
-                        <i class="glyphicon glyphicon-open"></i> Khách hàng
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
+                        <i class="fa fa-flag-checkered"></i> Doanh thu
                     </a>
-                </li> 
+                </li>
                 <li>
-                    <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'nhaCungCap'));?>">
-                        <i class="glyphicon glyphicon-save"></i> Nhà cung cấp
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
+                        <i class="fa fa-cubes"></i> Phiếu xuất
                     </a>
-                </li>                 
-                
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
+                        <i class="fa fa-tasks"></i> Phiếu nhập
+                    </a>
+                </li>
             </ul>
         </div>
     </div>
@@ -30,7 +34,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h2>Thông tin khách hàng</h2>
+                        <h1>Chi tiết phiếu nhập</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
@@ -42,66 +46,16 @@
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
-                             <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'exportExcel'));?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                             <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'export-excel'));?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="box">   
-                
-                <table>
-                    <tr>
-                        <td>
-                            <b>Họ tên: </b>
-                        </td>
-                        <td>                                    
-                            <?php echo $phieuNhap->getIdDoiTac()->getHoTen(); ?>
-                        </td>
-                        <td>
-                            <b>Địa chỉ: </b>
-                        </td>
-                        <td>
-                            <?php echo $phieuNhap->getIdDoiTac()->getDiaChi(); ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Di động:</b> 
-                        </td>
-                        <td>
-                            <?php echo $phieuNhap->getIdDoiTac()->getDiDong(); ?>
-                        </td>
-                        <td>
-                            <b>Điện thoại cố định: </b>
-                        </td>
-                        <td>
-                            <?php 
-                                if($phieuNhap->getIdDoiTac()->getDienThoaiCoDinh()!=0)
-                                    echo $phieuNhap->getIdDoiTac()->getDienThoaiCoDinh(); 
-
-                            ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <b>Email:  </b>
-                        </td>
-                        <td>
-                            <?php echo $phieuNhap->getIdDoiTac()->getEmail(); ?>
-                        </td>
-                        <td>
-                            
-                        </td>
-                        <td>
-                            
-                        </td>
-                    </tr>
-                </table>
+            <div class="row">
+                <div class="col-sm-6">
+                    Tên nhà cung cấp: <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-nha-cung-cap','id'=>$phieuNhap->getIdDoiTac()->getIdDoiTac())); ?>"><?php echo $phieuNhap->getIdDoiTac()->getHoTen(); ?></a>
+                </div>
             </div>
-            <div>
-                <h2>Chi tiết phiếu nhập</h2>
-            </div>
-            
             <div class="box">                        
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
@@ -121,7 +75,7 @@
                                     foreach ($chiTietPhieuNhaps as $chiTietPhieuNhap) {
                                         echo '<tr>';
                                             echo '<td><input type="checkbox"/></td>';
-                                            echo '<td><a href="'.$this->url('hang_hoa/crud', array('action'=>'sanPham', 'id'=>$chiTietPhieuNhap->getIdSanPham()->getIdSanPham())).'">'.$chiTietPhieuNhap->getIdSanPham()->getTenSanPham().'</a></td>';
+                                            echo '<td><a href="'.$this->url('hang_hoa/crud', array('action'=>'san-pham', 'id'=>$chiTietPhieuNhap->getIdSanPham()->getIdSanPham())).'">'.$chiTietPhieuNhap->getIdSanPham()->getTenSanPham().'</a></td>';
                                             echo '<td>'.$chiTietPhieuNhap->getGiaNhap().'</td>';
                                             echo '<td>'.$chiTietPhieuNhap->getSoLuong().'</td>';
                                             echo '<td>'.$chiTietPhieuNhap->getGiaNhap()*$chiTietPhieuNhap->getSoLuong().'</td>';
