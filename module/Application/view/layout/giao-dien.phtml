@@ -96,13 +96,15 @@
                     ?>
                     <?php
                     if($this->zfcUserIdentity())
-                    { ?>
-                        <li>
+                    { 
+                         $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho());
+                    ?>
+                        <li title="Bạn đang ở chi nhánh <?php echo $kho->getTenKho(); ?>">
                             <a href="#">
-                                <i class="fa fa-hand-o-right"></i>Tên chi nhánh: 
+                                <i class="fa fa-hand-o-right"></i>
                                <b style="color:red;">
                                     <?php 
-                                        $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho()); 
+                                        
                                         echo $kho->getTenKho();
                                     ?>
                                 </b>

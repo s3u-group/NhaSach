@@ -745,7 +745,7 @@
             }          
           //---------------------------
           $this->flashMessenger()->addSuccessMessage('Thêm sản phẩm thành công!');
-          return $this->redirect()->toRoute('barcode/crud',array('action'=>'index'));
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
         }
         else
         {
@@ -994,6 +994,7 @@
                   $sanPham->setLoaiGia('0');
                   $sanPham->setGiaBia('');
                   $sanPham->setChiecKhau('');
+                  //Thêm mã vạch tự động
                   $sanPham->setKho($idKho);
                   $sanPham->setHinhAnh('photo_default.png');                  
                   $entityManager->persist($sanPham);

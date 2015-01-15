@@ -46,8 +46,11 @@
     $this->layout('layout/giaodien');
     $entityManager=$this->getEntityManager();
         
-    $barcode = $entityManager->getRepository('Barcode\Entity\Barcode')->findAll();
-    //die(var_dump($barcode));
+    $repository = $entityManager->getRepository('Barcode\Entity\Barcode');     
+    $queryBuilder = $repository->createQueryBuilder('bc');
+    $queryBuilder->add('where','bc.idBarcode NOT IN (0)');
+    $query = $queryBuilder->getQuery(); 
+    $barcode = $query->execute();
     return array(
       'barcodes'=>$barcode,
     );
