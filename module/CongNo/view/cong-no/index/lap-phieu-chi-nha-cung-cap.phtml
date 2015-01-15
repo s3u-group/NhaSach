@@ -1,0 +1,347 @@
+<?php
+    $this->headTitle('Lập phiếu chi');
+    $dateTime=new DateTime(null,new DateTimeZone('Asia/Ho_Chi_Minh'));
+    $form->setAttribute('action', $this->url('cong_no/crud', array('action' => 'lap-phieu-chi-nha-cung-cap')));
+     $form->setAttribute('role','form');
+     $form->setAttribute('id','formThanhToan');
+     $form->setAttribute('class','form-horizontal');
+     $form->prepare();
+     echo $this->form()->openTag($form);
+     echo $this->formHidden($form->get('phieu-chi')->get('idPhieuChi')); 
+
+     $form->get('phieu-chi')->get('maPhieuChi')->setAttribute('value',$maPhieuChi);  
+     echo $this->formHidden($form->get('phieu-chi')->get('maPhieuChi'));   
+     echo $this->formHidden($form->get('phieu-chi')->get('idUserNv'));
+
+     $form->get('phieu-chi')->get('ngayThanhToan')->setAttribute('hidden','true');
+     $form->get('phieu-chi')->get('ngayThanhToan')->setAttribute('value', $dateTime);
+     echo $this->formElement($form->get('phieu-chi')->get('ngayThanhToan'));
+     
+
+     $congNo=$form->get('phieu-chi')->get('idCongNo');
+     echo $this->formHidden($congNo->get('idCongNo'));
+
+     echo $this->formHidden($congNo->get('idDoiTac'));
+
+     $congNo->get('ki')->setAttribute('hidden','true');
+     echo $this->formHidden($congNo->get('ki'));
+
+     echo $this->formHidden($congNo->get('noDauKi'));
+
+     echo $this->formHidden($congNo->get('noPhatSinh'));
+
+?>
+<style type="text/css">    
+    #search-result-nha-cung-cap{ cursor:pointer;}
+    @media print {    
+        .in{display: block;}   
+        .khongin{display: none;}        
+    }
+</style>
+<div class="in" hidden="true">
+    <table width="718" style="font-size:13px;">
+        <tr><td style="padding:0px;" width="240px">Đơn vị:...........................</td><td style="padding:0px;"></td><td style="padding:0px;" width="260px" align="center"><b>Mẫ số: 02 - TT</b></td></tr>
+        <tr><td style="padding:0px;">Địa chỉ:...........................</td><td style="padding:0px;" align="center"><b style="font-size:16px;">PHIẾU CHI</b> Số: ..............<div style="margin-top: -22px; margin-left:100px;"><?php echo $maPhieuChi; ?></div></td><td align="center" style="padding:0px;"><div style="margin-top:-3px;"><i>(Ban hành theo QĐ số 15/2006/QĐ-BTC<br>Ngày 20/3/2006 của Bộ trưởng BTC)</i></div></td></tr>
+        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center"><i>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?></i></td><td style="padding:0px;" align="right"><b>Nợ:</b>..............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center">Quyển số:..........</td><td style="padding:0px;" align="right"><b>Có:</b>...............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Họ tên người nhận tiền:.........................................................................................................................<div style="margin-top:-20px; margin-left:230px;" id="hoTenNguoiNhanTien"></div></span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Địa chỉ:.................................................................................................................................................</span><div style="margin-top:-20px; margin-left:130px;" id="diaChiNguoiNhanTien">Nhập địa chỉ</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Lý do chi:..............................................................................................................................................</span><div style="margin-top:-20px; margin-left:150px;" id="lyDoNop">Lý do</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Số tiền:................................................................(Viết bằng chữ)..........................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span><div style="margin-top:-39px; margin-left:150px;" class="soTienBangSo">Số tiền bằng số</div><div style="margin-top:-19px; margin-left:480px;" class="soTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Kèm theo:........................................................................................................................chứng từ gốc.</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3" align="right"><span>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?>&nbsp;&nbsp;</span></td></tr>
+
+    </table>
+    <table width="718" style="font-size:13px; text-align:center;">
+        <tr><td style="padding:0px;"><b>Người lập phiếu</b></td><td style="padding:0px;"><b>Người nhận tiền</b></td><td style="padding:0px;"><b>Thủ quỹ</b></td><td style="padding:0px;"><b>Kế toán trưởng</b></td><td style="padding:0px;"><b>Thủ trưởng đơn vị</b></td></tr>
+        <tr><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên, đóng dấu)</td></tr>
+        <tr><td style="padding:0px;" colspan="5" height="50px"></td></tr>
+        <tr>
+            <td style="padding:0px;">
+                <b>
+                <?php
+                    if($this->zfcUserIdentity()) 
+                    {
+                        $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
+                        echo $nguoiLapPhieu;
+                    }
+                ?>
+                </b>
+            </td>
+            <td style="padding:0px;">
+                <b id="nguoiNhantien">
+                
+                </b>
+
+            </td>
+            <td style="padding:0px;"></td>
+            <td style="padding:0px;"></td>
+            <td style="padding:0px;"></td>
+        </tr>
+    </table>
+    <table width="718" style="font-size:13px; text-align:center;">
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="soTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Tỷ giá ngoại tệ (Vàng, bạc, đá quý):..................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Số tiền quy đổi:...............................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px; text-align:left;"><span style="margin-left:70px;">(Liên gửi ra ngoài phải đóng dấu)</span></td></tr>
+    </table>
+</div>
+<div class="khongin">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Thanh toán /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            <!-- <i class="glyphicon glyphicon-open"></i> --> Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Nhà cung cấp
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
+                           <!--  <i class="glyphicon glyphicon-save"></i> --> Phiếu thu
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Phiếu chi
+                        </a>
+                    </li>   
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Lập phiếu chi</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                         
+                            </div>
+                            
+                        </div>
+                    </div>
+                                       
+                </div>
+                <table border="1" width="100%">
+                    <tr>
+                        <td width="15%"><b>Tên nhà cung cấp </b></td>
+                        <td>
+                            <?php echo $this->formElement($form->get('tenNhaCungCap')); ?>
+                            <div id="search-result-nha-cung-cap"></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Ngày đầu kì</b></td>
+                        <td>
+                            <span id="viewNgayDauKi"></span>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td><b>Nợ phát sinh</b></td>
+                        <td>
+                            <span id="viewNoPhatSinh"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Nợ cuối kì</b></td>
+                        <td> <span id="viewNoCuoiKi"></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Thanh toán</b></td>
+                        <td> 
+                        <?php
+                            $form->get('phieu-chi')->get('soTien')->setAttribute('min',0); 
+                            $form->get('phieu-chi')->get('soTien')->setAttribute('class','h5a-input form-control input-sm'); 
+                            $form->get('phieu-chi')->get('soTien')->setAttribute('disabled','true');                             
+                            echo $this->formElement($form->get('phieu-chi')->get('soTien')); 
+                        ?>
+                        </td>
+                    </tr>
+       
+                    <tr>
+                        <td><b>Số dư</b></td>
+                        <td>
+                         <span  id="soDu"></span>
+                         <?php
+                            $congNo->get('duNo')->setAttribute('hidden','true');
+                            echo $this->formHidden($congNo->get('duNo'));
+                        ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Lý do</b></td>
+                        <td>
+                        <?php 
+                            $form->get('phieu-chi')->get('lyDo')->setAttribute('class','h5a-input form-control input-sm'); 
+                            $form->get('phieu-chi')->get('lyDo')->setAttribute('disabled','true');
+                            echo $this->formElement($form->get('phieu-chi')->get('lyDo')); 
+                        ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Ngày thanh toán</b></td>
+                        <td>
+                         <?php echo date("d-m-Y"); ?>
+                        </td>
+                    </tr>
+                </table>
+                 <button type="submit" style="margin-top:5px;" class="full btn h5a-btn btn-success" id="submitbutton" disabled="true"><i class="fa fa-print"></i> Lưu</button>
+        </div>
+    </div>
+</div>
+
+<?php
+    echo $this->form()->closeTag();
+?>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script type="text/javascript">
+     $(document).ready(function() {
+        var xhr;
+        $('#tenNhaCungCap').keyup(function(){
+            var tenNhaCungCap=$(this).val();  
+
+            if(xhr && xhr.readyState != 4){
+                xhr.abort(); //huy lenh ajax truoc do
+            }
+            xhr = $.ajax({
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-nha-cung-cap')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'nhaCungCap':tenNhaCungCap
+                },
+                success:function(data){          
+                    $.each(data, function(key,val){
+                        $('#search-result-nha-cung-cap').empty(); //lam rong khung ket qua
+
+                        var pos = $('#tenNhaCungCap').position(); //lấy tọa độ của ô tên khách hàng
+                        $('#search-result-nha-cung-cap').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+                        $.each(data, function(key, val){
+                            $('#search-result-nha-cung-cap').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span><span class="hide">'+val.diaChi+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
+                        })
+                    });
+                }
+            });    
+        });     
+
+        $('#search-result-nha-cung-cap').on('click','.list-group-item',function(){
+            var idNhaCungCap = $(this).find('span:eq(0)').text();
+            var tenNhaCungCap = $(this).find('span:eq(1)').text();
+            var diaChiNhaCungCap=$(this).find('span:eq(2)').text();
+            $('#idDoiTac').val(idNhaCungCap);
+            $('#tenNhaCungCap').val(tenNhaCungCap);
+            $('#hoTenNguoiNhanTien').text(tenNhaCungCap);
+            $('#diaChiNguoiNhanTien').text(diaChiNhaCungCap);
+            $('#nguoiNhantien').text(tenNhaCungCap);
+
+            $('#search-result-nha-cung-cap').empty(); //lam rong khung ket qua
+
+            var xhr1;
+            if(xhr1 && xhr1.readyState != 4){
+                xhr1.abort(); //huy lenh ajax truoc do
+            }
+            xhr1 = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'search-cong-no-nha-cung-cap')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'idNhaCungCap':idNhaCungCap
+                },
+                success:function(data){  
+                    $('#ki').val(data.ngayDauKi);
+                    $('#noDauKi').val(data.noDauKi);
+                    $('#noPhatSinh').val(data.noPhatSinh);
+
+                    $('#viewNgayDauKi').text(data.ngayDauKi);
+                    $('#viewNoDauKi').text(data.noDauKi);
+                    $('#viewNoPhatSinh').text(data.noPhatSinh);
+                    $('#viewNoCuoiKi').text(data.noCuoiKi);  
+
+                    
+                    var noCuoiKi=parseInt(data.noCuoiKi);
+                    if(noCuoiKi>0&&!isNaN(noCuoiKi)){
+                        $('#soTien').prop('disabled',false);
+                        $('#lyDo').prop('disabled',false);
+                        $('#submitbutton').prop('disabled',false);
+                    }
+                }
+            });
+
+        });
+
+        $('#soTien').keyup(function(){
+
+            var soTien=parseFloat($(this).val());
+            var noCuoiKi=parseFloat($('#viewNoCuoiKi').text());
+            var duNo=noCuoiKi-soTien;
+            //alert(noCuoiKi+' '+soTien+' '+duNo);
+            if(isNaN(soTien)||isNaN(noCuoiKi)||isNaN(duNo)||duNo<0){}
+            else{
+                $('#duNo').val(duNo);
+                $('#soDu').text(duNo);
+            }
+
+        });
+
+        // khi click vào nút submit lưu
+        $('#submitbutton').click(function(){
+            var noCuoiKi=parseFloat($('#viewNoCuoiKi').text());
+            var soTien=parseFloat($('#soTien').val());
+            if(isNaN(soTien)||isNaN(noCuoiKi)||noCuoiKi<=0||soTien==null||soTien==''||soTien==0||soTien>noCuoiKi){
+                return false;
+            }
+            else{
+                var lyDo=$('#lyDo').val();
+                $('#lyDoNop').text(lyDo);
+                var soTienBangSo=$('#soTien').val();
+                $('.soTienBangSo').text(soTienBangSo);
+
+                var soTienBangChu=docso(soTienBangSo);
+                $('.soTienBangChu').text(soTienBangChu);
+
+                window.print();
+                return true;
+            }
+
+
+        });
+               
+    });
+    </script>

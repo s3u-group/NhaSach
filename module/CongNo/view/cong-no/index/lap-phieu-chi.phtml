@@ -1,0 +1,115 @@
+
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / <!-- Công nợ  -->Thanh toán/
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            <!-- <i class="glyphicon glyphicon-open"></i> --> Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Nhà cung cấp
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
+                           <!--  <i class="glyphicon glyphicon-save"></i> --> Phiếu thu
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Phiếu chi
+                        </a>
+                    </li>                  
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Loại phiếu chi</h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                        $flash=$this->flashMessenger();
+                        $flash->setMessageOpenFormat('<div%s>
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button>
+                         <ul><li>')
+                         ->setMessageSeparatorString('</li><li>')
+                         ->setMessageCloseString('</li></ul></div>');
+
+                         echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                         echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                         echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                         echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     ?>
+                </div>
+                <div class="row">
+                    <table width="100%">
+                        <tr>
+                            <td width="20%">
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-nha-cung-cap')); ?>">Nhà  cung cấp</a>
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>">Khách hàng (Xuất chiết khấu</a>)
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                        
+                    </table>
+
+                </div>               
+            </div>
+        </div>
+    </div>  
+<?php echo $this->form()->closeTag(); ?>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+     <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->

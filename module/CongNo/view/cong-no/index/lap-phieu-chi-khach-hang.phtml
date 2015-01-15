@@ -1,0 +1,351 @@
+<?php echo $this->headTitle('Xuất phiếu chi');
+ $form->setAttribute('action', $this->url('cong_no/crud', array('action' => 'lap-phieu-chi-khach-hang')));
+ $form->setAttribute('role','form');
+ $form->prepare();
+ echo $this->form()->openTag($form);
+
+ $phieuChi=$form->get('phieu-chi'); 
+
+ $congNo=$phieuChi->get('idCongNo');
+ $congNo->setAttribute('id','idCongNo');
+ //$congNo->setAttribute('value',$phieuThu->getIdCongNo()->getIdCongNo());
+ echo $this->formHidden($congNo);  
+
+ 
+ $idPhieuChi=$phieuChi->get('idPhieuChi');  
+ echo $this->formHidden($idPhieuChi);
+ 
+ $phieuChi->get('maPhieuChi')->setAttribute('value',$maPhieuChi);  
+ echo $this->formHidden($phieuChi->get('maPhieuChi'));
+
+ $idUserNv=$phieuChi->get('idUserNv');
+ $idUserNv->setAttribute('value',$this->zfcUserIdentity()->getId());
+ echo $this->formHidden($idUserNv); 
+ //die(var_dump());
+ 
+?>
+<style type="text/css">    
+    #search-result-khach-hang{ cursor:pointer;}
+    @media print {    
+        .in{display: block;}   
+        .khongin{display: none;}        
+    }
+</style>
+<div class="in" hidden="true">
+    <table width="718" style="font-size:13px;">
+        <tr><td style="padding:0px;" width="240px">Đơn vị:...........................</td><td style="padding:0px;"></td><td style="padding:0px;" width="260px" align="center"><b>Mẫ số: 02 - TT</b></td></tr>
+        <tr><td style="padding:0px;">Địa chỉ:...........................</td><td style="padding:0px;" align="center"><b style="font-size:16px;">PHIẾU CHI</b> Số: ..............<div style="margin-top:-22px; margin-left:100px;"><?php echo $maPhieuChi; ?></div></td><td align="center" style="padding:0px;"><div style="margin-top:-3px;"><i>(Ban hành theo QĐ số 15/2006/QĐ-BTC<br>Ngày 20/3/2006 của Bộ trưởng BTC)</i></div></td></tr>
+        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center"><i>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?></i></td><td style="padding:0px;" align="right"><b>Nợ:</b>..............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+        <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center">Quyển số:..........</td><td style="padding:0px;" align="right"><b>Có:</b>...............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Họ tên người nhận tiền:.........................................................................................................................<div style="margin-top:-20px; margin-left:230px;" id="inHoTenNguoiNhanTien"></div></span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Địa chỉ:.................................................................................................................................................</span><div style="margin-top:-20px; margin-left:130px;" id="inDiaChi"></div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Lý do chi:..............................................................................................................................................</span><div style="margin-top:-20px; margin-left:150px;" id="inLyDo">Lý do</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Số tiền:................................................................(Viết bằng chữ)..........................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span><div style="margin-top:-39px; margin-left:150px;" id="inSoTienBangSo">Số tiền bằng số</div><div style="margin-top:-19px; margin-left:480px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">............................................................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Kèm theo:........................................................................................................................chứng từ gốc.</span></td></tr>
+        <tr><td style="padding:0px;" colspan="3" align="right"><span>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?>&nbsp;&nbsp;</span></td></tr>
+
+    </table>
+    <table width="718" style="font-size:13px; text-align:center;">
+        <tr><td style="padding:0px;"><b>Người lập phiếu</b></td><td style="padding:0px;"><b>Người nhận tiền</b></td><td style="padding:0px;"><b>Thủ quỹ</b></td><td style="padding:0px;"><b>Kế toán trưởng</b></td><td style="padding:0px;"><b>Thủ trưởng đơn vị</b></td></tr>
+        <tr><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên, đóng dấu)</td></tr>
+        <tr><td style="padding:0px;" colspan="5" height="50px"></td></tr>
+        <tr>
+            <td style="padding:0px;">
+                <b>
+                <?php
+                    if($this->zfcUserIdentity()) 
+                    {
+                        $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
+                        echo $nguoiLapPhieu;
+                    }
+                ?>
+                </b>
+            </td>
+            <td style="padding:0px;">
+                <b id="nguoiNhantien">
+                
+                </b>
+
+            </td>
+            <td style="padding:0px;"></td>
+            <td style="padding:0px;"></td>
+            <td style="padding:0px;"></td>
+        </tr>
+    </table>
+    <table width="718" style="font-size:13px; text-align:center;">
+        <tr><td style="padding:0px;"><span style="margin-left:100px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Tỷ giá ngoại tệ (Vàng, bạc, đá quý):..................................................................................................</span></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Số tiền quy đổi:...............................................................................................................................</span></td></tr>
+        <tr><td style="padding:0px; text-align:left;"><span style="margin-left:70px;">(Liên gửi ra ngoài phải đóng dấu)</span></td></tr>
+    </table>
+</div>
+<div class="khongin">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / <!-- Công nợ  -->Thanh toán/
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            <!-- <i class="glyphicon glyphicon-open"></i> --> Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Nhà cung cấp
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
+                           <!--  <i class="glyphicon glyphicon-save"></i> --> Phiếu thu
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
+                            <!-- <i class="glyphicon glyphicon-save"></i> --> Phiếu chi
+                        </a>
+                    </li>                    
+                    
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Phiếu chi</h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                                <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
+                            
+                            </div>
+                        </div>
+                    </div>
+                    <?php 
+                        $flash=$this->flashMessenger();
+                        $flash->setMessageOpenFormat('<div%s>
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button>
+                         <ul><li>')
+                         ->setMessageSeparatorString('</li><li>')
+                         ->setMessageCloseString('</li></ul></div>');
+
+                         echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                         echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                         echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                         echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     ?>
+                </div>
+                <div class="row">
+                    <table width="100%">
+                        <tr>
+                            <td width="15%">
+                                Tên người khách hàng
+                            </td>
+                            <td>
+                               <input class="h5a-input form-control input-sm" name="tenNguoiNhanTien" id="tenKhachHang" >
+                               <div id="search-result-khach-hang"></div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td width="15%">
+                                Địa chỉ
+                            </td>
+                            <td>
+                               <input class="h5a-input form-control input-sm" name="diaChi" id="diaChi">
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td width="15%">
+                                Tổng tiền
+                            </td>
+                            <td>
+                                <input type="text" class="h5a-input form-control input-sm" id="tongTien" value="<?php //echo $phieuThu->getSoTien(); ?>" disabled="true">
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td width="15%">
+                                Số tiền chiết khấu (VNĐ)
+                            </td>
+                            <td>
+                                <input type="Number" name="chietKhau" id="chietKhau" class="h5a-input form-control input-sm" >
+                                <?php  
+                                    $soTien=$phieuChi->get('soTien');
+                                    $soTien->setAttribute('id','soTien');
+                                    echo $this->formHidden($soTien);                                                
+                                ?>
+                            </td>
+                        </tr>
+                        <!-- <tr>
+                            <td width="15%">
+                                Thành tiền
+                            </td>
+                            <td>
+                                <span id="thanhTien"></span>
+                            </td>
+                        </tr> -->
+                        <tr>
+                            <td width="15%">
+                                Lý do
+                            </td>
+                            <td>
+                                <?php                                                
+                                    $lyDo=$phieuChi->get('lyDo');
+                                    $lyDo->setAttribute('class','h5a-input form-control input-sm');
+                                    echo $this->formElement($lyDo); 
+
+                                    $ngayThanhToan=$phieuChi->get('ngayThanhToan');
+                                    
+                                    $ngayThanhToan->setAttribute('value',date('Y-m-d'));
+                                    echo $this->formHidden($ngayThanhToan);                                               
+                                ?>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                </div>
+                <div class="pull-right">
+                        <button type="reset" class="h5a-btn btn btn-default btn-sm">Hủy</button>
+                        <button id="submit" disabled="true" type="submit" class="h5a-btn btn btn-primary btn-sm">Lưu</button>
+                    </div>
+            </div>
+        </div>
+    </div>  
+</div>  
+<?php echo $this->form()->closeTag(); ?>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+     <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('.dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+        $('#submit').click(function(){
+            var soTien=$('#chietKhau').val();
+            var lyDo=$('#lyDo').val();
+            var soTienBangChu=docso(soTien);
+            var diaChi=$('#diaChi').val();
+            var tenKhachHang=$('#tenKhachHang').val();
+            $('#soTien').val(soTien);
+            $('#inSoTienBangSo').text(soTien);
+            $('.inSoTienBangChu').text(soTienBangChu);
+            $('#inDiaChi').text(diaChi);
+            $('#inLyDo').text(lyDo);
+            $('#inHoTenNguoiNhanTien').text(tenKhachHang);
+            if(soTien==null||soTien==''||soTien==0||isNaN(soTien)){
+                return false;
+            }
+            window.print();
+
+            return true;
+        });
+
+        var xhr;
+        $('#tenKhachHang').keyup(function(){
+            var tenKhachHang=$(this).val();  
+
+            if(xhr && xhr.readyState != 4){
+                xhr.abort(); //huy lenh ajax truoc do
+            }
+            xhr = $.ajax({
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-khach-hang')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'tenKhachHang':tenKhachHang
+                },
+                success:function(data){          
+                    $.each(data, function(key,val){
+                        $('#search-result-khach-hang').empty(); //lam rong khung ket qua
+
+                        var pos = $('#tenKhachHang').position(); //lấy tọa độ của ô tên khách hàng
+                        $('#search-result-khach-hang').css({
+                            position:'absolute',
+                            top:pos.top + 35,
+                            left:pos.left,
+                            'z-index': 100 // đặt search-result lên layout ngoài nhất
+                        });
+                        $.each(data, function(key, val){
+                            $('#search-result-khach-hang').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span><span class="hide">'+val.diaChiKhachHang+'</span><span class="hide">'+val.kenhPhanPhoi+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
+                        })
+                    });
+
+                }
+            });    
+        });  
+
+        $('#search-result-khach-hang').on('click','.list-group-item',function(){
+            var idKhachHang = $(this).find('span:eq(0)').text();
+            var tenKhachHang = $(this).find('span:eq(1)').text();
+            var diaChi = $(this).find('span:eq(2)').text();
+            $('#tenKhachHang').val(tenKhachHang);
+            $('#nguoiNhantien').text(tenKhachHang);
+            $('#diaChi').val(diaChi);
+
+            $('#search-result-khach-hang').empty();
+            var xhr1;
+            xhr = $.ajax({
+                url:'<?php echo $this->url('cong_no/crud', array('action'=>'search-phieu-thu-moi-nhat')); ?>',
+                type:'POST',
+                dataType:'json',
+                data:{
+                    'idKhachHang':idKhachHang
+                },
+                success:function(data){          
+                   var idCongNo=data.idCongNo;
+                   if(idCongNo==''){
+                        alert('Không thể xuất chiết khấu cho khách hàng này. Vì khách hàng này chưa từng mua hàng hóa ở đây');
+                   }
+                   else{
+                    $('#idCongNo').val(data.idCongNo);
+                    $('#submit').prop('disabled',false);
+                   }
+                   
+                }
+            });
+        });
+
+    });
+
+         
+
+</script>
