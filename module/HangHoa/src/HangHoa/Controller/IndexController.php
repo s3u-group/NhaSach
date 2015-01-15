@@ -539,7 +539,7 @@
       $form->setData($request->getPost());      
       if ($form->isValid())
       {
-        //Kiểm tra mã sản phẩm đã tồn tại chưa
+       //Kiểm tra mã sản phẩm đã tồn tại chưa
         $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
         $queryBuilder = $repository->createQueryBuilder('sp');
         $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$post['san-pham']['maSanPham'].'\'');
@@ -744,8 +744,45 @@
               }
             }          
           //---------------------------
+          $repository = $entityManager->getRepository('HangHoa\Entity\SanPham');
+          $queryBuilder = $repository->createQueryBuilder('sp');
+          $queryBuilder->add('where','sp.kho='.$idKho.' and sp.maSanPham=\''.$sanPham->getMaSanPham().'\'');
+          $query = $queryBuilder->getQuery(); 
+          $sanPhams = $query->execute();
+          
+
+          $taxonomyLoai=$this->TaxonomyFunction();
+          $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+          
+          foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+            if($kenhPhanPhoi['cap']>0)
+            {
+              $giaXuat=new GiaXuat();
+              $giaXuat->setIdGiaXuat('');
+              $giaXuat->setIdSanPham($sanPhams[0]->getIdSanPham());
+              //  lấy chiết khấu
+              $chietKhau=$this->getChietKhau($idKho,$kenhPhanPhoi['termTaxonomyId']);
+              $gx=0;
+              if($sanPhams[0]->getLoaiGia()==1)
+              {
+
+                $loiNhuan=(((float)$sanPhams[0]->getGiaBia()*(float)$chietKhau)/100);
+                $gx=(float)$sanPhams[0]->getGiaBia()-(float)$loiNhuan;
+              }
+              else
+              {
+                $gx=(float)$sanPhams[0]->getGiaNhap()+(((float)$sanPhams[0]->getGiaNhap()*(float)$chietKhau)/100);  
+              }
+              $giaXuat->setGiaXuat($gx);
+              $giaXuat->setIdKenhPhanPhoi($kenhPhanPhoi['termTaxonomyId']);
+              $giaXuat->setKho($idKho);
+              
+              $entityManager->persist($giaXuat);
+              $entityManager->flush(); 
+            }
+          }
           $this->flashMessenger()->addSuccessMessage('Thêm sản phẩm thành công!');
-          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
         }
         else
         {
