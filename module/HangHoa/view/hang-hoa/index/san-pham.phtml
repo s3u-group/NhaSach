@@ -83,7 +83,14 @@
                                         </tr>
                                         <tr>
                                             <td>Loại: </td>
-                                            <td><?php echo $sanPhams->getIdLoai()->getTermId()->getName(); ?></td>
+                                            <td>
+                                                <?php                                                
+                                                    if($sanPhams->getIdLoai())
+                                                    {
+                                                        echo $sanPhams->getIdLoai()->getTermId()->getName();
+                                                    }
+                                                ?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Nhãn: </td>
@@ -91,7 +98,14 @@
                                         </tr>
                                         <tr>
                                             <td>Đơn vị tính: </td>
-                                            <td><?php echo $sanPhams->getIdDonViTinh()->getTermId()->getName(); ?></td>
+                                            <td>
+                                                <?php 
+                                                    if($sanPhams->getIdDonViTinh()) 
+                                                    {
+                                                        echo $sanPhams->getIdDonViTinh()->getTermId()->getName(); 
+                                                    }                                                    
+                                                ?>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <td>Thông tin khác</td>
