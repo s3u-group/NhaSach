@@ -963,7 +963,7 @@ use DateTimeZone;
 			foreach ($doanhThu['chiTietDoanhThus'] as $hoaDons) {
 				foreach ($hoaDons->getCtHoaDons() as $ctHoaDon) {
 					$tongDoanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
-					$tongNguonVon+=(float)$ctHoaDon->getIdSanPham()->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+					$tongNguonVon+=(float)$ctHoaDon->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
 				}
 			}
 			$tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
