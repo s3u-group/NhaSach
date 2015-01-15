@@ -276,7 +276,8 @@ $this->headTitle($title);
                         <div class="col-sm-7">
                             <!--<input type="text" id="form-field-1" placeholder="Mã hàng" class="h5a-input form-control input-sm">-->
                         <?php
-                            echo $this->formRow($form->get('maHang'));
+                            $form->get('maHang')->setAttribute('disabled','true');
+                            echo $this->formRow($form->get('maHang'));                            
                         ?>
                         <div id="san-pham-search-result"></div>
                         </div>
@@ -285,6 +286,7 @@ $this->headTitle($title);
                         <label class="col-sm-4 right" for="form-field-1">Mã vạch</label>
                         <div class="col-sm-7">
                         <?php
+                            $form->get('maVach')->setAttribute('disabled','true');
                             echo $this->formRow($form->get('maVach'));
                         ?>
                         <div id="ma-vach-search-result"></div>
@@ -295,6 +297,7 @@ $this->headTitle($title);
                         <div class="col-sm-7">
                             <!--<input type="text" id="form-field-2" placeholder="Tên hàng" class="h5a-input form-control input-sm">-->
                         <?php
+                            $form->get('tenHang')->setAttribute('disabled','true');
                             echo $this->formRow($form->get('tenHang'));
                         ?>
                         </div>
@@ -305,6 +308,7 @@ $this->headTitle($title);
                         <div class="col-sm-7">
                             <!--<input type="text" id="form-field-3" class="h5a-input form-control input-sm" value="120">-->
                         <?php
+                            $form->get('soLuong')->setAttribute('disabled','true');
                             echo $this->formRow($form->get('soLuong'));
                         ?>
                         </div>
@@ -314,6 +318,7 @@ $this->headTitle($title);
                         <div class="col-sm-7">
                             <!--<input type="text" id="form-field-4" class="h5a-input form-control input-sm" value="325.000">-->
                         <?php
+                            $form->get('giaXuat')->setAttribute('disabled','true');
                             echo $this->formRow($form->get('giaXuat'));
                         ?>
                         </div>
@@ -482,6 +487,14 @@ $this->headTitle($title);
         //Hiển thị, chọn khách hàng
             $('#tenKhachHang').keyup(function(){
                 var tenKhachHang=$(this).val();
+                if(tenKhachHang==''||tenKhachHang==null){
+                    $('#maHang').prop('disabled',true);
+                    $('#tenHang').prop('disabled',true);
+                    $('#maVach').prop('disabled',true);
+                    $('#soLuong').prop('disabled',true);
+                    $('#giaXuat').prop('disabled',true);
+                    $('#tbXuatHang > tbody > tr').remove();
+                }
 
                 if(xhr && xhr.readyState != 4){
                     xhr.abort(); //huy lenh ajax truoc do
@@ -528,6 +541,14 @@ $this->headTitle($title);
                 $('#kenhPhanPhoi').val(kenhPhanPhoi);
 
                 $('#search-result').empty();
+                var tenKhachHang=$('#tenKhachHang').val();
+                if(tenKhachHang){
+                    $('#maHang').prop('disabled',false);
+                    $('#tenHang').prop('disabled',false);
+                    $('#maVach').prop('disabled',false);
+                    $('#soLuong').prop('disabled',false);
+                    $('#giaXuat').prop('disabled',false);
+                }
             });
         //./Hiển thị, chọn khách hàng
 
