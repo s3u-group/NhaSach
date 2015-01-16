@@ -674,7 +674,7 @@ use DateTimeZone;
 	    $PI_ExportExcel=$this->ExportExcel();
 	    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->data($objPHPExcel, $tieuDe, $fieldName, $doanhThus));
 
-	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'doanhThuTheoThang'));   
+	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'doanh-thu-theo-thang'));   
 	}
 
 	public function dataDoanhThuTheoThang()
@@ -751,7 +751,7 @@ use DateTimeZone;
 	    $PI_ExportExcel=$this->ExportExcel();
 	    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->data($objPHPExcel, $tieuDe, $fieldName, $doanhThus));
 
-	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'doanhThuTheoQuy'));   
+	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'doanh-thu-theo-quy'));   
 	}
 
 	public function dataDoanhThuTheoQuy()
@@ -886,7 +886,7 @@ use DateTimeZone;
 	    $PI_ExportExcel=$this->ExportExcel();
 	    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->data($objPHPExcel, $tieuDe, $fieldName, $doanhThus));
 
-	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'doanhThuTheoNam'));   
+	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'doanh-thu-theo-nam'));   
 	}
 
 	public function dataDoanhThuTheoNam()
@@ -1001,7 +1001,7 @@ use DateTimeZone;
 	    $PI_ExportExcel=$this->ExportExcel();
 	    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->dataExportDonHang($objPHPExcel, $tieuDe, $fieldName, $donHangs));
 
-	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'donHang'));   
+	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'don-hang'));   
 	}
 
 	public function dataDonHang()
@@ -1098,7 +1098,7 @@ use DateTimeZone;
 	    $PI_ExportExcel=$this->ExportExcel();
 	    $exportExcel=$PI_ExportExcel->exportExcel($objPHPExcel, $fileName, $this->dataExportPhieuNhap($objPHPExcel, $tieuDe, $fieldName, $phieuNhaps));
 
-	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'phieuNhap'));   
+	    return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'phieu-nhap'));   
 	}
 
 

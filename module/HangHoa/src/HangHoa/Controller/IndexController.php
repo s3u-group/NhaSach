@@ -205,7 +205,7 @@
      if($sanPhams->getKho()!=$this->zfcUserAuthentication()->getIdentity()->getKho())
      {
        return $this->redirect()->toRoute('hang_hoa/crud', array(
-             'action' => 'hangHoa',
+             'action' => 'hang-hoa',
          ));
      }
      $form->bind($sanPhams);
@@ -415,13 +415,13 @@
           }
         }
         $this->flashMessenger()->addSuccessMessage('Nhập hàng thành công!');
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));        
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhap-hang'));        
       }
       else
       {
         //die(var_dump($form->getMessages()['phieu-nhap']['ctPhieuNhaps']));
         $this->flashMessenger()->addErrorMessage('Nhập hàng thất bại!');
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhapHang'));
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'nhap-hang'));
       }
     }    
     return array(       
@@ -500,7 +500,7 @@
 
         $entityManager->flush();
         $this->flashMessenger()->addSuccessMessage('Xuất hàng thành công!');
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'xuatHang'));        
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'xuat-hang'));        
       }      
     }
     return array('form'=>$form);
@@ -784,7 +784,7 @@
             }
           }
           $this->flashMessenger()->addSuccessMessage('Thêm sản phẩm thành công!');
-          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
         }
         else
         {
@@ -1282,7 +1282,7 @@
         $this->flashMessenger()->addSuccessMessage('Import tập tin sản phẩm thành công.');
         if(count($listMaSanPham)==0)
         {
-          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+          return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
         }
         else
         {
@@ -1294,12 +1294,12 @@
       else
       {
         $this->flashMessenger()->addErrorMessage('Import hàng hóa không thành công! Tập tin không hợp lệ');
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
       }
     }
     else
     {
-      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
     }
   }
 
@@ -1431,12 +1431,12 @@
       else
       {
         $this->flashMessenger()->addSuccessMessage('Import bảng giá không thành công! Tập tin không hợp lệ');
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bang-gia'));
       }
     }
     else
     {
-      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bang-gia'));
     }
   }  
 
@@ -1553,7 +1553,7 @@
     $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);    //  (I want the output for 2003)
     $objWriter->save('php://output'); 
 
-    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));                                  
+    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));                                  
 
   }
 
@@ -1681,7 +1681,7 @@
      $objWriter = new PHPExcel_Writer_Excel5($objPHPExcel);    //  (I want the output for 2003)
      $objWriter->save('php://output');
 
-    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bangGia'));                                  
+    return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'bang-gia'));                                  
 
   }
 
@@ -1706,7 +1706,7 @@
       $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id);
       if($sanPham->getKho()!=$idKho)
       {
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
       }
       if($sanPham->getHinhAnh()!='photo_default.png')
       {        
@@ -1715,11 +1715,11 @@
       }      
       if(!$sanPham)
       {
-        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
       }
       //$entityManager->remove($sanPham);      
       //$entityManager->flush();      
-      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hangHoa'));
+      return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
   }
   
  }
