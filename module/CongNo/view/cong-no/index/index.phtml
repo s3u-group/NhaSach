@@ -115,9 +115,9 @@
                                                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$rp['idDoiTac'])); ?>"><?php echo $rp['hoTenDoiTac']; ?></a>          
                                                     </td>
                                                     <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noPhatSinh']; ?></td>
-                                                    <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                    <td><?php  echo number_format($rp['noDauKi'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format($rp['noPhatSinh'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format($rp['noCuoiKi'],'0','',' '); ?></td>
                                                     <!-- <td></td> -->
                                                     
                                                 </tr>
@@ -157,10 +157,10 @@
                                                         <td>
                                                             <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$rp['idDoiTac'])); ?>"><?php echo $rp['hoTenDoiTac']; ?></a>
                                                         </td>
-                                                        <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                        <td><?php  echo $rp['noDauKi']; ?></td>
-                                                        <td><?php  echo $rp['noPhatSinh']; ?></td>
-                                                        <td><?php  echo $rp['noCuoiKi']; ?></td>
+                                                        <td><?php  echo $rp['ngayDauKi']; ?></td>                                                        
+                                                        <td><?php  echo number_format($rp['noDauKi'],'0','',' '); ?></td>
+                                                        <td><?php  echo number_format($rp['noPhatSinh'],'0','',' '); ?></td>
+                                                        <td><?php  echo number_format($rp['noCuoiKi'],'0','',' '); ?></td>
                                                     </tr>
                                                 <?php    
                                                 }

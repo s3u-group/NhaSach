@@ -168,7 +168,7 @@
                                             <td><input type="checkbox"/></td>
                                             <td><img src="<?php echo $this->basePath();?>/img/<?php echo $sanPham->getHinhAnh(); ?>" height="40" width="40px"> <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'san-pham', 'id'=>$sanPham->getIdSanPham()));?>"><?php echo $sanPham->getTenSanPham(); ?></a></td>
                                             <td><?php echo $sanPham->getMaSanPham(); ?></td>
-                                            <td><?php echo $sanPham->getTonKho(); ?></td>
+                                            <td><?php echo number_format($sanPham->getTonKho(),'0','',' '); ?></td>
                                             <td>
                                                 <?php 
                                                     if($sanPham->getIdLoai()) 
@@ -212,7 +212,7 @@ $(document).ready(function() {
         "bLengthChange": true,
         "bFilter":false,
         "bInfo": true,
-        "bAutoWidth": true
+        "bAutoWidth": true,        
     });
 });
 
