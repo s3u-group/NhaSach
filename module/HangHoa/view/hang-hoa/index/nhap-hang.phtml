@@ -320,7 +320,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 right" for="form-field-4"></label>
                     <div class="col-sm-7"> 
-                         <?php                                                                 
+                         <?php
                             $loaiGia=$form->get('loaiGia');
                             $loaiGia->setAttribute('id','loaiGia');
                             $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
@@ -347,6 +347,8 @@
                         <?php
 
                             $form->get('chiecKhau')->setAttribute('value','0');
+                            $form->get('chiecKhau')->setAttribute('type','number');
+                            $form->get('chiecKhau')->setAttribute('min','0');
                             $form->get('chiecKhau')->setAttribute('id','chiecKhau');
                             $form->get('chiecKhau')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('chiecKhau'));
@@ -359,6 +361,8 @@
                         <?php
                             $form->get('giaBia')->setAttribute('value','0');
                             $form->get('giaBia')->setAttribute('id','giaBia');
+                            $form->get('giaBia')->setAttribute('type','number');
+                            $form->get('giaBia')->setAttribute('min','0');
                             $form->get('giaBia')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('giaBia'));
                         ?>
@@ -447,7 +451,7 @@
         $('#loaiGia').val(0);
         var i=0;
         
-        $('#btnNhapHang').click(function(){
+        $('#btnNhapHang').click(function(){            
             var idSanPham=$('#idSanPham').val();
             var maHang=$('#idMaHang').val();
             var tenHang=$('#tenHang').val();
@@ -743,12 +747,12 @@
         return false;
       });
     });
+
     </script>
 
     <script>
-
         luuNhapHangFunction=function()
-        {            
+        {
             var soDong = $('#tbNhapHang > tbody > tr').length; 
             if(soDong==0)
             {
@@ -861,5 +865,5 @@
                 document.getElementById('formNhapHang').submit();
                 return true;                
             }                
-        }
+        }        
     </script>
