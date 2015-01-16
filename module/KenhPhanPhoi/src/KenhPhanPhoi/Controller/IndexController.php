@@ -120,11 +120,8 @@ use DateTimeZone;
       {
         return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'don-hang'));
       }
-        $query=$entityManager->createQuery('SELECT cthd FROM HangHoa\Entity\CTHoaDon cthd WHERE cthd.idHoaDon='.$hoaDon->getIdHoaDon());
-        $chiTietHoaDons=$query->getResult();
         
         return array(
-          'chiTietHoaDons'=>$chiTietHoaDons,
           'hoaDon'=>$hoaDon,
         );
   }
@@ -151,10 +148,7 @@ use DateTimeZone;
       {
         return $this->redirect()->toRoute('loi_nhuan/crud',array('action'=>'phieu-nhap'));
       }
-      $query=$entityManager->createQuery('SELECT cthd FROM HangHoa\Entity\CTPhieuNhap cthd WHERE cthd.idPhieuNhap='.$phieuNhap->getIdPhieuNhap());
-      $chiTietPhieuNhaps=$query->getResult();
       return array(
-        'chiTietPhieuNhaps'=>$chiTietPhieuNhaps,
         'phieuNhap'=>$phieuNhap,
       );
   }

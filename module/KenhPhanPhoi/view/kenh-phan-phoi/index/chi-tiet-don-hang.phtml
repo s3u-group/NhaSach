@@ -1,5 +1,8 @@
 <?php
     $this->headTitle('Chi tiết đơn hàng');
+    $d=$hoaDon->getNgayXuat()->format('d');
+    $m=$hoaDon->getNgayXuat()->format('m');
+    $y=$hoaDon->getNgayXuat()->format('Y');
 ?>
 <style type="text/css">   
     @media print {
@@ -53,63 +56,181 @@
     <div class="col-md-10" role="main">
         <div class="h5a-docs-section">
             <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <h1>Chi tiết đơn hàng</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="pull-right">
-                            <div class="btn-group ">
-                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
-                                    <i class="fa fa-chevron-left"></i>
-                                </button>                                    
-                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                            </div>
-                                <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return inDonHangFunction();">In đơn hàng</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6">
-                    <b>Tên khách hàng: </b><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-khach-hang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>"><?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?></a></div>
-                </div>
-            
-            <div class="box">                        
-                <div class="tab-content">
-                    <div role="tabpanel" class="tab-pane active" id="home">
-                        <div class="container">
-                            <div class="row">
-                                <table id="dataTables-example" class="">
-                                    <thead>
-                                        <th><input type="checkbox"/></th>
-                                        <th>Tên sản phẩm</th>
-                                        <th>Giá</th>
-                                        <th>Số lượng</th>   
-                                        <th>Thành tiền</th>                                                 
-                                    </thead>
-                                    <tbody>
-                                        
-                                    <?php
-                                    foreach ($chiTietHoaDons as $chiTietHoaDon) {
-                                        echo '<tr>';
-                                            echo '<td><input type="checkbox"/></td>';
-                                            echo '<td><a id="link" href="'.$this->url('hang_hoa/crud', array('action'=>'san-pham', 'id'=>$chiTietHoaDon->getIdSanPham()->getIdSanPham())).'">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</a><label hidden="true" class="lb">'.$chiTietHoaDon->getIdSanPham()->getTenSanPham().'</label></td>';
-                                            echo '<td>'.$chiTietHoaDon->getGia().'</td>';
-                                            echo '<td>'.$chiTietHoaDon->getSoLuong().'</td>';
-                                            echo '<td>'.$chiTietHoaDon->getGia()*$chiTietHoaDon->getSoLuong().'</td>';
-                                        echo '</tr>';
+                
+            </div>           
+            <div>
+                <table class="table">
+                    <tr style="text-align: -moz-center; border-style:hidden">
+                        <td>
+                            <table border="0" class="tb">
+                                <tr>
+                                    <td style="width:60%">
+                                        <b>
+                                            CTY CP SÁCH &amp; TB TRƯỜNG HỌC TRÀ VINH</br>
+                                            3A Trưng Nữ Vương Phường 1 TP.Trà Vinh</br>
+                                            Mã số thuế: 2100 290 521
+                                        </b>
+                                    </td>
+                                    <td style="text-align:center">
+                                        <b>Mẫ số: 02 - TT</b></br>
+                                        (Ban hành theo QĐ số: 15/2006/QĐ-BTC ngày 20/3/2006 của Bộ trưởng BTC)
+                                    </td>            
+                                </tr>
+                            </table>
+
+                            <table border="0" style="width:65%; margin-left:220px"  class="tb">
+                                <tr>
+                                    <td style="width:50%; padding:0px 0px 0px 30px; font-size:16px; font-weight:bold">PHIẾU XUẤT KHO</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0px;">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
+                                    <td style="padding:0px;">
+                                        Nợ: ........................................
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:0px;">
+                                        Số: ........................................
+                                    </td>
+                                    <td style="padding:0px;">
+                                        Có: ........................................
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <table border="0"  class="tb">
+                                <tr>
+                                    <td colspan="4">- Họ và tên người nhận hàng:....................................................Địa chỉ (bộ phận)..................................................
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:200px">
+                                        - Theo.....................
+                                    </td>
+                                    <td style="width:100px">
+                                        số....................
+                                    </td>
+                                    <td style="width:215px">
+                                        Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?>
+                                    </td>
+                                    <td>                            
+                                        của...............................................
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">                        
+                                        Xuất tại kho:........................................
+                                    </td>                    
+                                    <td colspan="2">                            
+                                        Địa điểm..........................................................................................
+                                    </td>
+                                </tr>
+                                <tr><td></td></tr>
+                            </table>
+
+                            <table border="1" id="tbSanPham">
+                                <tr style="text-align:center">
+                                    <td rowspan="2" style="width:45px">STT</td>
+                                    <td rowspan="2">Tên, nhãn hiệu quy cách, phẩm chất vật tư, dụng cụ sản phẩm, hàng hóa</td>
+                                    <td rowspan="2" class="td">Mã số</td>
+                                    <td rowspan="2" class="td">Đơn vị tính</td>
+                                    <td colspan="2" style="width:300px">Số lượng</td>
+                                    <td rowspan="2" class="td">Đơn giá</td>
+                                    <td rowspan="2" class="td">Thành tiền</br>(vnđ)</td>
+                                </tr>
+                                <tr style="text-align:center">
+                                    <td>Theo chứng từ</td>
+                                    <td>Thực xuất</td>
+                                </tr>
+                                <?php
+                                    $stt=0;
+                                    foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
+                                        $stt++;
+                                ?>
+                                        <tr style="text-align:center">
+                                            <td><?php echo $stt; ?></td>
+                                            <td><?php echo $chiTietHoaDon->getIdSanPham()->getTenSanPham(); ?></td>
+                                            <td><?php echo $chiTietHoaDon->getIdSanPham()->getMaSanPham(); ?></td>
+                                            <td><?php echo $chiTietHoaDon->getIdSanPham()->getIdDonViTinh()->getTermId()->getName(); ?></td>
+                                            <td></td>
+                                            <td><?php echo number_format($chiTietHoaDon->getSoLuong(),'0','',' '); ?></td>
+                                            <td>
+                                                <?php 
+                                                    echo number_format($chiTietHoaDon->getGia(),'0','',' ');
+                                                ?>
+                                            </td>
+                                            <td width="100px">
+                                            <?php 
+                                                $thanhTien=(float)$chiTietHoaDon->getGia()*(float)$chiTietHoaDon->getSoLuong();
+                                                echo number_format($thanhTien,'0','',' ');
+
+                                            ?>
+                                            </td>
+                                            
+                                        </tr>     
+                                <?php
                                     }
-                                    ?>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
+                                ?>
+                                                       
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="border-style:hidden">
+                        <td style="padding-left:20px">- Tổng số tiền (viết bằng chữ): <span id="tongSoTien"></span>&nbsp;đồng</td>
+                    </tr>
+                    <tr style="border-style:hidden">
+                        <td style="padding-left:20px">
+                            - Số chứng từ gốc kèm theo: .....................................................................................................................................
+                        </td>
+                    </tr>
+                    <tr style="text-align: -moz-center">
+                        <td>
+                            <table border="0" class="tb" style="width:100%;">
+                                <tr>
+                                    <td colspan="5" style="text-align:right">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
+                                </tr>
+                                <tr style="text-align: center;">
+                                    <td>
+                                        Người lập phiếu</br>(Ký, họ tên)
+                                    </td>
+                                    <td>
+                                        Người nhận hàng</br>(Ký, họ tên)
+                                    </td>
+                                    <td>
+                                        Thủ kho</br>(Ký, họ tên)
+                                    </td>
+                                    <td>
+                                        Kế toán trưởng</br>(Ký, họ tên)
+                                    </td>
+                                    <td>
+                                        Giám đốc</br>(Ký, họ tên)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="height:100px"></td>
+                                </tr>  
+                                <tr style="text-align: center;">
+                                    <td>
+                                        <b><?php echo $hoaDon->getIdUserNv()->getHoTen(); ?></b>
+                                    </td>
+                                    <td>
+                                        <b><?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?></b>
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                    <td>
+                                        
+                                    </td>
+                                </tr>                  
+                            </table>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
