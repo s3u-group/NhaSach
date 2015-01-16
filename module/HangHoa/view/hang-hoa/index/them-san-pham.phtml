@@ -4,19 +4,29 @@
         var tam=document.getElementById("loaiGia").checked;
         if(tam)
         {
+            alert('Có check');
             // có check thì hiển thị và giá trị bằng 1
             document.getElementById("loaiGia").value=1;
             document.getElementById("trGiaBia").hidden=false;
             document.getElementById("trChiecKhau").hidden=false;
-            document.getElementById('trGiaNhap').hidden=true;            
+            document.getElementById('trGiaNhap').hidden=true;
+
+            document.getElementById("txtGiaNhap").required=false;
+            document.getElementById("txtGiaBia").required="required";
+            document.getElementById("txtChiecKhau").required="required";
         }
         else
         {
+            alert('Bỏ check');
             // không có check thì ẩn và giá trị bằng 0
             document.getElementById("loaiGia").value=0;
             document.getElementById("trGiaBia").hidden=true;
             document.getElementById("trChiecKhau").hidden=true;
-            document.getElementById('trGiaNhap').hidden=false;            
+            document.getElementById('trGiaNhap').hidden=false;
+
+            document.getElementById("txtGiaNhap").required="required";
+            document.getElementById("txtGiaBia").required=false;
+            document.getElementById("txtChiecKhau").required=false;
         }
         return true;
     }    
@@ -173,7 +183,9 @@
                                 <?php
                                     $giaNhap=$sanPham->get('giaNhap');
                                     $giaNhap->setAttribute('type','number');
+                                    $giaNhap->setAttribute('id','txtGiaNhap');
                                     $giaNhap->setAttribute('min','0');
+                                    $giaNhap->setAttribute('required','required');
                                     $giaNhap->setAttribute('class','h5a-input form-control input-sm');
                                     echo $this->formElement($giaNhap);
                                 ?>
@@ -185,6 +197,7 @@
                                 <?php
                                     $giaNhap=$sanPham->get('giaBia');
                                     $giaNhap->setAttribute('type','number');
+                                    $giaNhap->setAttribute('id','txtGiaBia');
                                     $giaNhap->setAttribute('min','0');
                                     $giaNhap->setAttribute('class','h5a-input form-control input-sm');
                                     echo $this->formElement($giaNhap);
@@ -197,6 +210,7 @@
                                 <?php
                                     $chiecKhau=$sanPham->get('chiecKhau');
                                     $chiecKhau->setAttribute('type','number');
+                                    $chiecKhau->setAttribute('id','txtChiecKhau');
                                     $chiecKhau->setAttribute('min','0');
                                     $chiecKhau->setAttribute('class','h5a-input form-control input-sm');
                                     echo $this->formElement($chiecKhau);

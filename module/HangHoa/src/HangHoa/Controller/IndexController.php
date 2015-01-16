@@ -1505,7 +1505,9 @@
                                   ->setCellValue('E4', 'Nhãn hàng')                                  
                                   ->getStyle('A4:E4')->getFont()->setBold(true);
     $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-
+    foreach(range('A','E') as $columnID) {
+        $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);
+    }
     $post= $this->getRequest()->getPost();
     if($post['coLocSanPham'])
     {
@@ -1520,7 +1522,6 @@
                                         ->setCellValue('D'.$index, $sanPham->getIdLoai()->getTermId()->getName())
                                         ->setCellValue('E'.$index, $sanPham->getNhan());
           $objPHPExcel->getActiveSheet()->getStyle('C'.$index)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
-        
         }
       }
     }
@@ -1638,6 +1639,7 @@
     }
     $objPHPExcel->getActiveSheet()->getStyle('A4:'.$cotCuoiCung.'4')->getFont()->setBold(true);
     $objPHPExcel->getActiveSheet()->getStyle('A4:'.$cotCuoiCung.'4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
+    $objPHPExcel->getActiveSheet()->getColumnDimension($columnID)->setAutoSize(true);    
 
     // xuất dữ liệu trong csdl ra excel từ dùng số 5 trở đi
     //$sanPhams=$entityManager->getRepository('HangHoa\Entity\SanPham')->findAll();
