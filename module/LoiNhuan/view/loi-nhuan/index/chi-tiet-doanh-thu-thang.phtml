@@ -84,8 +84,10 @@
                                                 }
                                                 $loiNhuan=$doanhThu-$von;
                                             ?>
-                                            <td> <?php echo $doanhThu; ?></td>
-                                            <td><?php echo $loiNhuan; ?></td>
+                                            
+                                            <td><?php echo number_format($doanhThu,'0','',' '); ?></td>
+                                            <td><?php  echo number_format($loiNhuan,'0','',' '); ?></td>
+                                    
                                         </tr>
                                     <?php
                                     }

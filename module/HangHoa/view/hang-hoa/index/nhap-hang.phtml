@@ -87,7 +87,7 @@
                 <table border="0"  class="tb">
                     <tr>
                         <td colspan="4">
-                            - Họ và tên người giao:.............................................................................................................................................
+                            - Họ và tên người giao:.............................................................................................................................................<div class="nguoiGiaoHang" style="margin-left:150px; margin-top:-22px;">Phan Văn Thanh</div>
                         </td>
                     </tr>
                     <tr>
@@ -172,7 +172,29 @@
                     </tr>
                     <tr>
                         <td style="height:100px"></td>
-                    </tr>                    
+                    </tr>     
+                    <tr style="text-align: center;">
+                        <td>
+                            <b>
+                            <?php
+                                if($this->zfcUserIdentity()) 
+                                {
+                                    $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
+                                    echo $nguoiLapPhieu;
+                                }
+                            ?>
+                            </b>
+                        </td>
+                        <td>
+                            <b><div class="nguoiGiaoHang"></div></b>
+                        </td>
+                        <td>
+                           
+                        </td>
+                        <td>
+                          
+                        </td>
+                    </tr>            
                 </table>
             </td>
         </tr>
@@ -320,7 +342,7 @@
                 <div class="form-group">
                     <label class="col-sm-4 right" for="form-field-4"></label>
                     <div class="col-sm-7"> 
-                         <?php                                                                 
+                         <?php
                             $loaiGia=$form->get('loaiGia');
                             $loaiGia->setAttribute('id','loaiGia');
                             $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
@@ -347,6 +369,8 @@
                         <?php
 
                             $form->get('chiecKhau')->setAttribute('value','0');
+                            $form->get('chiecKhau')->setAttribute('type','number');
+                            $form->get('chiecKhau')->setAttribute('min','0');
                             $form->get('chiecKhau')->setAttribute('id','chiecKhau');
                             $form->get('chiecKhau')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('chiecKhau'));
@@ -359,6 +383,8 @@
                         <?php
                             $form->get('giaBia')->setAttribute('value','0');
                             $form->get('giaBia')->setAttribute('id','giaBia');
+                            $form->get('giaBia')->setAttribute('type','number');
+                            $form->get('giaBia')->setAttribute('min','0');
                             $form->get('giaBia')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('giaBia'));
                         ?>
@@ -447,7 +473,7 @@
         $('#loaiGia').val(0);
         var i=0;
         
-        $('#btnNhapHang').click(function(){
+        $('#btnNhapHang').click(function(){            
             var idSanPham=$('#idSanPham').val();
             var maHang=$('#idMaHang').val();
             var tenHang=$('#tenHang').val();
@@ -491,11 +517,11 @@
                 '<td>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;idSanPham&#x5D;" value="'+idSanPham+'">'+'<span hidden="true" class="maSanPham">'+maHang+'</span>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;soLuong&#x5D;" value="'+soLuong+'">'+
-                    '<span class="soLuong">'+soLuong+'</span>'+
+                    '<span class="soLuong">'+addPeriod(soLuong)+'</span>'+
                 '</td>'+
                 '<td>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;giaNhap&#x5D;" value="'+giaNhap+'">'+
-                    '<span class="giaNhap">'+giaNhap+'</span>'+
+                    '<span class="giaNhap">'+addPeriod(giaNhap)+'</span>'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;loaiGia&#x5D;" value="'+loaiGia+'">'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;giaBia&#x5D;" value="'+giaBia+'">'+
                     '<input type="hidden" name="phieu-nhap&#x5B;ctPhieuNhaps&#x5D;&#x5B;__index__&#x5D;&#x5B;idSanPham&#x5D;&#x5B;chiecKhau&#x5D;" value="'+chietKhau+'">'+
@@ -706,8 +732,8 @@
                         var pos = $('#nhaCungCap').position(); //lấy tọa độ của ô mã sản phẩm
                         $('#nha-cung-cap-search-result').css({
                             position:'absolute',
-                            top:pos.top + 109,
-                            left:pos.left+177,
+                            top:pos.top + 145,
+                            left:pos.left+182,
                             'z-index': 100 // đặt search-result lên layout ngoài nhất
                         });
 
@@ -743,12 +769,12 @@
         return false;
       });
     });
+
     </script>
 
     <script>
-
         luuNhapHangFunction=function()
-        {            
+        {
             var soDong = $('#tbNhapHang > tbody > tr').length; 
             if(soDong==0)
             {
@@ -777,14 +803,15 @@
                     var timGiaNhap=$(this).find(".giaNhap");
                     var timMaSanPham=$(this).find(".maSanPham");
                     timSoLuong.each(function(){                        
-                        sL=parseInt($(this).html());                        
+                        sL=parseInt($(this).html().replace(/ /g,''));                        
                     });
                     timGiaNhap.each(function(){
-                        gN=parseInt($(this).html());                        
+                        gN=parseInt($(this).html().replace(/ /g,''));
                     });
                     timMaSanPham.each(function(){                        
                         maSP=$(this).html();                        
                     });
+                    //alert(sL+' '+gN);
                     soLuong[k]=sL;
                     donGia[k]=gN;
                     thanhTien[k]=sL*gN;
@@ -856,12 +883,14 @@
                 $('#tbSanPham tbody').append(temp);
                 var soTienBangChu=docso(tongTien);                                
                 $('#tongSoTien').text(soTienBangChu);
+                var nguoiGiaoHang=$('#nhaCungCap').val();
+                $('.nguoiGiaoHang').text(nguoiGiaoHang);
                 
                 window.print();
                 document.getElementById('formNhapHang').submit();
                 return true;                
-            }                
-        }
+            }     
+        }           
 
         function addPeriod(nStr){
             nStr += '';
@@ -873,5 +902,6 @@
                 x1 = x1.replace(rgx, '$1' + ' ' + '$2');
             }
             return x1 + x2;
-        }
+        }    
+
     </script>

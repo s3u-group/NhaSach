@@ -116,8 +116,9 @@
                                                 }
                                                 $tongLoiNhuan=$tongDoanhThu-$tongNguonVon;
                                             ?>
-                                            <td><?php echo $tongDoanhThu; ?></td>
-                                            <td><?php echo $tongLoiNhuan; ?></td>
+                                            <td><?php echo number_format($tongDoanhThu,'0','',' '); ?></td>
+                                            <td><?php  echo number_format($tongLoiNhuan,'0','',' '); ?></td>
+                                    
                                         </tr>
                                     <?php
                                     }
@@ -174,8 +175,9 @@
                                                         </a>
                                                     </td>
                                                     <td><?php echo $soDonHang; ?></td>
-                                                    <td><?php echo $tongDoanhThu; ?></td>
-                                                    <td><?php echo $tongLoiNhuan; ?></td>
+                                                    <td><?php echo number_format($tongDoanhThu,'0','',' '); ?></td>
+                                                    <td><?php  echo number_format($tongLoiNhuan,'0','',' '); ?></td>
+                                    
                                                 </tr>
                                         <?php
                                             }

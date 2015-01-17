@@ -144,7 +144,7 @@
                                     <td>Thực xuất</td>
                                 </tr>
                                 <?php
-                                    $stt=0;
+                                    $stt=0; $tongCong=0;
                                     foreach ($hoaDon->getCtHoaDons() as $chiTietHoaDon) {
                                         $stt++;
                                 ?>
@@ -162,8 +162,11 @@
                                             </td>
                                             <td width="100px">
                                             <?php 
+                                                
                                                 $thanhTien=(float)$chiTietHoaDon->getGia()*(float)$chiTietHoaDon->getSoLuong();
+                                                
                                                 echo number_format($thanhTien,'0','',' ');
+                                                $tongCong+=$thanhTien;
 
                                             ?>
                                             </td>
@@ -172,7 +175,15 @@
                                 <?php
                                     }
                                 ?>
-                                                       
+                                <tr style="text-align:center">
+                                    <td rowspan="2" style="width:45px"></td>
+                                    <td rowspan="2"><b>Tổng cộng</b></td>
+                                    <td rowspan="2" class="td"></td>
+                                    <td rowspan="2" class="td"></td>
+                                    <td colspan="2" style="width:300px"></td>
+                                    <td rowspan="2" class="td"></td>
+                                    <td rowspan="2" class="td"><b><?php echo number_format($tongCong,'0','',' '); ?></b></td>
+                                </tr>                 
                             </table>
                         </td>
                     </tr>
