@@ -172,6 +172,4 @@
 	    	return $this->kho;
 	    }	
 	}
-	
-
 ?>
