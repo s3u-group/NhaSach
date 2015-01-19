@@ -1,0 +1,25 @@
+<?php $this->headTitle('Import Nhập Hàng hóa');?>
+<div align="center">
+	<h3>DANH SÁCH CÁC MÃ SẢN PHẨM KHÔNG THỂ IMPORT</h3>
+	<table>
+		<?php
+		$i=0;
+		foreach ($listMaSanPham as $list) {?>
+			<tr>
+				<td><?php echo ++$i; ?>.</td>
+				<td><?php echo $list; ?></td>
+			</tr>			
+		<?php }?>
+	</table>		
+</div>
+<div class="page-footer">
+    <div class="row bottom20">
+        <div class="col-sm-7 col-sm-offset-3">
+            <div class="col-sm-5 col-sm-offset-3">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>"><button type="button" class="btn h5a-btn btn-primary full">Trở về</button></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+

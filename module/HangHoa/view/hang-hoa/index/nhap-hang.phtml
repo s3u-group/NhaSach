@@ -21,7 +21,7 @@
     }
 </style>
 
-<script>   
+<script>
     kiemTracheckbox = function(){
         var tam=document.getElementById("loaiGia").checked;
         if(tam)
@@ -200,13 +200,26 @@
         </tr>
     </table>
 </div>
+<?php                                
+    $formFile->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'import-nhap-hang-hoa')));
+    $formFile->setAttribute('role','form');
+    $formFile->setAttribute('name','frmImport');
+    $formFile->setAttribute('style','margin-top: 0px;margin-bottom:0px;text-align:right; display:none;');
+    $formFile->prepare();
+    echo $this->form()->openTag($formFile);
+    $file=$formFile->get('file');                                        
+    $file->setAttribute('style','display:none');
+    $file->setAttribute('onchange','return hamSubmit();');       
+    echo $this->formElement($file);
+    echo $this->form()->closeTag();
+?>
+
 <?php
-     
      $this->headTitle('Nhập hàng');
      $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhap-hang')));
      $form->setAttribute('role','form');
-     $form->setAttribute('id','formNhapHang');
-     $form->setAttribute('class','form-horizontal');
+     $form->setAttribute('id','formNhapHang');                 
+     $form->setAttribute('class','form-horizontal');     
      $form->prepare();
      echo $this->form()->openTag($form);
      echo $this->formHidden($form->get('idSanPham'));     
@@ -220,8 +233,8 @@
      echo $this->formHidden($form->get('phieu-nhap')->get('idDoiTac')->get('idDoiTac'));
      echo $this->formHidden($form->get('phieu-nhap')->get('idUserNv')->get('userId'));
      echo $this->formHidden($form->get('phieu-nhap')->get('status'));
-     
 ?>
+
 <div class="row">
     <div class="col-md-2">
         <div class="h5a-sidebar affix">
@@ -252,11 +265,16 @@
     <div class="col-md-10" role="main">
         <div class="h5a-docs-section">
             <div class="page-header">
-                <div class="row">                    
+                <div class="row">
                     <div class="col-sm-6">
                         <h1>Nhập hàng</h1>
                     </div>
-                    <div class="col-sm-6">                                
+                    <div class="col-sm-6">
+                        <div class="pull-right">                            
+                            <div class="btn-group">
+                                <button type="button" class="h5a-btn btn btn-primary btn-sm" onclick="return Import();">Import</button>
+                            </div>                            
+                        </div>
                     </div>
                 </div>
                 <?php
@@ -289,12 +307,13 @@
                             },5000);
                         </script>';                        
                     }
-                ?>
-            </div>                 
+                ?>                
+            </div>
+            
             <div class="col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-4 right" for="form-field-1">Mã sản phẩm</label>
-                    <div class="col-sm-7">                                    
+                    <div class="col-sm-7">
                         <?php
                             echo $this->formElement($form->get('maHang'));
                         ?>
@@ -390,7 +409,6 @@
                         ?>
                     </div>
                 </div>
-                
                 <div class="form-group">
                     <div class="col-sm-10 col-sm-offset-1">
                         <button type="button" id="btnNhapHang" class="btn h5a-btn btn-primary full">Nhập hàng</button>
@@ -763,12 +781,26 @@
 
     });
 
+    Import=function()
+    {
+        document.getElementById('file').click();
+        return false;     
+    }
+    hamSubmit=function(){
+        var valueFile=document.getElementById('file').value;        
+        if(valueFile)
+        {            
+            document.frmImport.submit();
+            return true;           
+        }
+    }
+
     $(document).ready(function(){
       $(document).on('click', '.btnHuy', function(){        
         $(this).closest('tr').remove();        
         return false;
       });
-    });
+    });    
 
     </script>
 
