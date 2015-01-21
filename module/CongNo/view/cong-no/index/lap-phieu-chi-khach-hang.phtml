@@ -37,8 +37,8 @@
 </style>
 <div class="in" hidden="true">
     <table width="718" style="font-size:13px;">
-        <tr><td style="padding:0px;" width="240px">Đơn vị:...........................</td><td style="padding:0px;"></td><td style="padding:0px;" width="260px" align="center"><b>Mẫ số: 02 - TT</b></td></tr>
-        <tr><td style="padding:0px;">Địa chỉ:...........................</td><td style="padding:0px;" align="center"><b style="font-size:16px;">PHIẾU CHI</b> Số: ..............<div style="margin-top:-22px; margin-left:100px;"><?php echo $maPhieuChi; ?></div></td><td align="center" style="padding:0px;"><div style="margin-top:-3px;"><i>(Ban hành theo QĐ số 15/2006/QĐ-BTC<br>Ngày 20/3/2006 của Bộ trưởng BTC)</i></div></td></tr>
+        <tr><td style="padding:0px;" width="240px">Đơn vị: NHÀ SÁCH VINH QUANG</td><td style="padding:0px;"></td><td style="padding:0px;" width="260px" align="center"><b>Mẫ số: 02 - TT</b></td></tr>
+        <tr><td style="padding:0px;">Địa chỉ: 45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</td><td style="padding:0px;" align="center"><b style="font-size:16px;">PHIẾU CHI</b> Số: ..............<div style="margin-top:-22px; margin-left:100px;"><?php echo $maPhieuChi; ?></div></td><td align="center" style="padding:0px;"><div style="margin-top:-3px;"><i>(Ban hành theo QĐ số 15/2006/QĐ-BTC<br>Ngày 20/3/2006 của Bộ trưởng BTC)</i></div></td></tr>
         <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center"><i>Ngày <?php echo date('d'); ?> tháng <?php echo date('m'); ?> năm <?php echo date('Y'); ?></i></td><td style="padding:0px;" align="right"><b>Nợ:</b>..............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
         <tr><td style="padding:0px;"></td><td style="padding:0px;" align="center">Quyển số:..........</td><td style="padding:0px;" align="right"><b>Có:</b>...............................&nbsp;&nbsp;&nbsp;&nbsp;</td></tr>
         <tr><td style="padding:0px;" colspan="3"><span style="margin-left:80px;">Họ tên người nhận tiền:.........................................................................................................................<div style="margin-top:-20px; margin-left:230px;" id="inHoTenNguoiNhanTien"></div></span></td></tr>
@@ -56,15 +56,15 @@
         <tr><td style="padding:0px;"><b>Người lập phiếu</b></td><td style="padding:0px;"><b>Người nhận tiền</b></td><td style="padding:0px;"><b>Thủ quỹ</b></td><td style="padding:0px;"><b>Kế toán trưởng</b></td><td style="padding:0px;"><b>Thủ trưởng đơn vị</b></td></tr>
         <tr><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên)</td><td style="padding:0px;">(Ký, họ tên, đóng dấu)</td></tr>
         <tr><td style="padding:0px;" colspan="5" height="50px"></td></tr>
-        <tr>
+        <!-- <tr>
             <td style="padding:0px;">
                 <b>
                 <?php
-                    if($this->zfcUserIdentity()) 
+                    /*if($this->zfcUserIdentity()) 
                     {
                         $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
                         echo $nguoiLapPhieu;
-                    }
+                    }*/
                 ?>
                 </b>
             </td>
@@ -77,10 +77,10 @@
             <td style="padding:0px;"></td>
             <td style="padding:0px;"></td>
             <td style="padding:0px;"></td>
-        </tr>
+        </tr> -->
     </table>
     <table width="718" style="font-size:13px; text-align:center;">
-        <tr><td style="padding:0px;"><span style="margin-left:100px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:140px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
+        <tr><td style="padding:0px;"><span style="margin-left:100px;">Đã nhận đủ số tiền (Viết bằng chữ):.....................................................................................................</span><div style="margin-top:-20px; margin-left:350px;" class="inSoTienBangChu">Số tiền bằng chữ</div></td></tr>
         <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Tỷ giá ngoại tệ (Vàng, bạc, đá quý):..................................................................................................</span></td></tr>
         <tr><td style="padding:0px;"><span style="margin-left:80px;">+ Số tiền quy đổi:...............................................................................................................................</span></td></tr>
         <tr><td style="padding:0px; text-align:left;"><span style="margin-left:70px;">(Liên gửi ra ngoài phải đóng dấu)</span></td></tr>
@@ -96,7 +96,11 @@
                      / <!-- Công nợ  -->Thanh toán/
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
-                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
                             Khách hàng
@@ -283,7 +287,7 @@
             var diaChi=$('#diaChi').val();
             var tenKhachHang=$('#tenKhachHang').val();
             $('#soTien').val(soTien);
-            $('#inSoTienBangSo').text(soTien);
+            $('#inSoTienBangSo').text(addPeriod(soTien));
             $('.inSoTienBangChu').text(soTienBangChu);
             $('#inDiaChi').text(diaChi);
             $('#inLyDo').text(lyDo);
@@ -363,6 +367,16 @@
 
     });
 
-         
+    function addPeriod(nStr){
+        nStr += '';
+        var x = nStr.split(' ');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? ' ' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+        }
+        return x1 + x2;
+    }
 
 </script>

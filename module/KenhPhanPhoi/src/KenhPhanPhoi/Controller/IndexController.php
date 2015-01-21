@@ -65,7 +65,6 @@ use DateTimeZone;
 
     $taxonomyFunction=$this->TaxonomyFunction();
     $kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');
-
     return array(
       'kenhPhanPhois'=>$kenhPhanPhois,
       'doiTacs'=>$doiTacs,
@@ -390,9 +389,10 @@ use DateTimeZone;
             return $this->redirect()->toRoute('kenh_phan_phoi/crud',array('action'=>'chi-tiet-khach-hang','id'=>$id));
             
           }
-        }       
-        
+        } 
       }
+
+      $kho=$entityManager->getRepository('Kho\Entity\Kho')->find($idKho);
 
       return array(
         'form'=>$form,
@@ -402,6 +402,7 @@ use DateTimeZone;
         'hoaDons'=>$hoaDons,
         'phieuThus'=>$phieuThus,
         'coKiemTraTrung'=>0,
+        'kho'=>$kho,
       );
   }
 

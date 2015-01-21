@@ -1,0 +1,265 @@
+ <style type="text/css">
+    #notifications{
+         width: 215px; 
+         margin-left: 20px;
+    }
+     @media print {        
+        
+        .col-sm-6{display: none;}        
+        .col-md-2{display: none;}
+        .page-header{display: none;}
+        #donotPrint{display: none;}
+        #print{
+            display: block;
+            margin-top: -50px;
+        }
+    }
+</style>
+<?php echo $this->headTitle('Công nợ'); ?>
+    <div class="row">
+        <div class="col-md-2">
+            <div class="h5a-sidebar affix">
+                <span class="breadcrumb row">
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                    <a href="<?php echo $this->url('cong_no');?>">/ Khách hàng</a>
+                     / Công nợ /
+                </span>
+                <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
+                            Khách hàng
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
+                            Nhà cung cấp
+                        </a>
+                    </li> 
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
+                           Phiếu thu
+                        </a>
+                    </li> 
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Phiếu chi
+                        </a>
+                         <ul class="dropdown-menu" id="notifications">   
+                            <li>
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-nha-cung-cap')); ?>">Lập phiếu chi Nhà cung cấp
+                                </a>
+                                
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>">Lập phiếu chi Khách hàng
+                                </a>
+                                
+                            </li>
+                        </ul>
+                    </li> 
+                </ul>
+            </div>
+        </div>
+        <div class="col-md-10" role="main">
+            <div class="h5a-docs-section">
+                <div class="page-header">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h1>Tổng hợp thu chi</h1>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    <button type="button" id="btnPrint" value="In" class="h5a-btn btn btn-primary btn-sm">In</button>
+                                </div>
+                            </div>
+                        </div>                        
+                    </div>
+                    <?php 
+                        $flash=$this->flashMessenger();
+                        $flash->setMessageOpenFormat('<div%s>
+                         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
+                             &times;
+                         </button>
+                         <ul><li>')
+                         ->setMessageSeparatorString('</li><li>')
+                         ->setMessageCloseString('</li></ul></div>');
+
+                         echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                         echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                         echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                         echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     ?>
+                </div>
+                <div class="row" id="donotPrint">
+                    <form action="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi')); ?>" method="post">
+                    <div class="col-sm-1" style="text-align:center;"><b>Từ ngày: </b></div>
+                    <div class="col-sm-2">
+                        <input type="date" name="ngayBatDau" class="h5a-input form-control input-sm"<?php if($ngayBatDau){echo 'value="'.$ngayBatDau.'"'; } ?>>
+                    </div>
+                    <div class="col-sm-2" style="text-align:center;"><b>Đến ngày:</b></div>
+                    <div class="col-sm-2">
+                        <input type="date" name="ngayKetThuc" class="h5a-input form-control input-sm" <?php if($ngayKetThuc){echo 'value="'.$ngayKetThuc.'"'; } ?>>
+                    </div>
+                    <div class="col-sm-2">
+                        <input style="width:80px; height: 29px;" type="submit" class="h5a-btn btn btn-primary btn-sm" value=" Tìm ">
+                    </div>
+                </div>
+                <br>
+                <?php
+                if($phieuThus||$phieuChis)
+                {
+                ?>
+                    <div class="row" id="print">
+                        <div style="text-align:left;"><h3><b>NHÀ SÁCH VINH QUANG</b></h3></div>
+                        <div style="text-align:left;"><h3><b>45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</b></h3></div>
+                        <div style="text-align:center;"><h2><b>SỔ QUỸ TIỀN MẶT</b></h2></div>
+                        <div style="text-align:center;"><b>Ngày <?php echo date('d'); ?> Tháng <?php echo date('m'); ?> Năm <?php echo date('Y'); ?></b></div>
+                        
+                        <table border="1" width="100%">
+                            <thead>
+                                <tr>
+                                    <th colspan="2" style="text-align:center;"><b>chứng từ</b></th>
+                                    <th rowspan="2" style="text-align:center;">Diễn giải</th>
+                                    <th colspan="2" style="text-align:center;">Phát sinh</th>                                
+                                </tr>
+                                <tr>
+                                    <th style="text-align:center;"><b>Ngày</b></th>
+                                    <th style="text-align:center;">Số</th>
+
+                                    <th style="text-align:center;">Thu</th>
+                                    <th style="text-align:center;">Chi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php
+                            $tongTienThu=0;
+                            $tongTienChi=0;
+                            if($phieuThus){                                
+                                foreach ($phieuThus as $phieuThu) {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $phieuThu->getNgayThanhToan()->format('d/m/Y'); ?>
+                                        </td>
+                                        <td style="white-space:nowrap;"><?php echo $phieuThu->getMaPhieuthu(); ?></td>
+                                        <td><?php echo $phieuThu->getLyDo(); ?></td>
+                                        <td style="text-align:right;">
+                                        <?php 
+                                            echo number_format($phieuThu->getSoTien(),'0','',' ');
+                                            $tongTienThu+=$phieuThu->getSoTien();
+                                        ?>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                <?php
+                                }              
+                            }
+                            ?>
+
+                            <?php                            
+                            if($phieuChis){                                
+                                foreach ($phieuChis as $phieuChi) {
+                                ?>
+                                    <tr>
+                                        <td>
+                                            <?php echo $phieuChi->getNgayThanhToan()->format('d/m/Y'); ?>
+                                        </td>
+                                        <td style="white-space:nowrap;"><?php echo $phieuChi->getMaPhieuChi(); ?></td>
+                                        <td><?php echo $phieuChi->getLyDo(); ?></td>
+                                        <td></td>
+                                        <td style="text-align:right;">
+                                        <?php 
+                                            echo number_format($phieuChi->getSoTien(),'0','',' ');
+                                            $tongTienChi+=$phieuChi->getSoTien();
+                                        ?>
+                                        </td>
+                                    </tr>
+                                <?php
+                                }              
+                            }
+                            ?>
+                            <tr>
+                                <td><b>Tổng tiền tăng giảm</b></td>
+                                <td></td>
+                                <td></td>
+                                <td style="text-align:right; white-space:nowrap;">
+                                    <b>
+                                        <?php echo number_format($tongTienThu,'0','',' '); ?>
+                                    </b>
+                                </td>
+                                <td style="text-align:right; white-space:nowrap;">
+                                    <b>
+                                        <?php echo number_format($tongTienChi,'0','',' '); ?>
+                                    </b>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
+        </div>
+    </div>    
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('.dataTables-example').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true,
+
+            "language": {
+                "lengthMenu": "Hiển thị _MENU_ mục",
+                "zeroRecords": "Không có dữ liệu",
+                "info": "_PAGE_ / _PAGES_",
+                "infoEmpty": "",
+                "infoFiltered": "",
+                "decimal": ",",
+                "thousands": ".",
+                "search":"Tìm kiếm:",
+            }
+        });
+    });
+
+    $('#btnPrint').click(function(){
+        window.print();
+    });
+
+    $('#btPrev').click(function(){
+    document.getElementById('dataTables-example_previous').click();
+    });
+
+    $('#btNext').click(function(){
+        document.getElementById('dataTables-example_next').click();
+    });
+    </script>

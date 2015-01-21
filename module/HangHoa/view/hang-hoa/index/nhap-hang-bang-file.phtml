@@ -1,219 +1,3 @@
-<?php
- $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
- $y=$datetime->format('Y');          
- $m=$datetime->format('m');
- $d=$datetime->format('d'); 
-?>
-<style type="text/css">
-    #nha-cung-cap-search-result{ cursor:pointer;}
-    #ma-hang-search-result{ cursor:pointer;}
-    #ma-vach-search-result{ cursor:pointer;}
-    @media print {
-        .table{width: 790px; font-size: 13px; margin-top: -60px}
-        .tb{width: 97%;}
-        .td{width: 90px;}  
-        table td{padding: 5px;}      
-                
-        .row{display: none;}
-        .h5a-container{display: none;}
-        .tbIn{display: block;}
-        #formNhapHang{display: none;}
-    }
-</style>
-
-<script>
-    kiemTracheckbox = function(){
-        var tam=document.getElementById("loaiGia").checked;
-        if(tam)
-        {
-            // có check thì hiển thị và giá trị bằng 1
-            document.getElementById("loaiGia").value=1;
-            document.getElementById("trGiaBia").hidden=false;
-            document.getElementById("trChiecKhau").hidden=false;
-            document.getElementById('trGiaNhap').hidden=true;
-        }
-        else
-        {
-            // không có check thì ẩn và giá trị bằng 0
-            document.getElementById("loaiGia").value=0;
-            document.getElementById("trGiaBia").hidden=true;
-            document.getElementById("trChiecKhau").hidden=true;
-            document.getElementById('trGiaNhap').hidden=false;
-        }
-        return true;
-    }
-</script>
-<div  class="tbIn" hidden="true">
-    <table class="table">
-        <tr style="text-align: -moz-center; border-style:hidden">
-            <td>
-                <table border="0" class="tb">
-                    <tr>
-                        <td style="width:60%">
-                            <b>
-                                NHÀ SÁCH VINH QUANG</br>
-                                45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</br>
-                                Mã số thuế: 
-                            </b>
-                        </td>
-                        <td style="text-align:center">
-                            <b>Mẫ số: 01 - TT</b></br>
-                            (Ban hành theo QĐ số: 15/2006/QĐ-BTC ngày 20/3/2006 của Bộ trưởng BTC)
-                        </td>            
-                    </tr>
-                </table>
-
-                <table border="0" style="width:65%; margin-left:220px"  class="tb">
-                    <tr>
-                        <td style="width:50%; padding:0px 0px 0px 30px; font-size:16px; font-weight:bold">PHIẾU NHẬP KHO</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0px;">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
-                        <td style="padding:0px;">
-                            Nợ: ........................................
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="padding:0px;">
-                            Số: ........................................<div style="margin-top:-20px; margin-left:30px;"><?php echo $maPhieuNhap; ?></div>
-                        </td>
-                        <td style="padding:0px;">
-                            Có: ........................................
-                        </td>
-                    </tr>
-                </table>
-
-                <table border="0"  class="tb">
-                    <tr>
-                        <td colspan="4">
-                            - Họ và tên người giao:.............................................................................................................................................<div class="nguoiGiaoHang" style="margin-left:150px; margin-top:-22px;">Phan Văn Thanh</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="width:200px">
-                            - Theo.....................
-                        </td>
-                        <td style="width:100px">
-                            số....................
-                        </td>
-                        <td style="width:215px">
-                            ngày........tháng........năm 20....
-                        </td>
-                        <td>                            
-                            của...............................................
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">                        
-                            Nhập tại kho:........................................
-                        </td>                    
-                        <td colspan="2">
-                            Địa điểm............................................................................................
-                        </td>
-                    </tr>
-                    <tr><td></td></tr>
-                </table>
-
-                <table border="1" id="tbSanPham">
-                    <tr style="text-align:center">
-                        <td rowspan="2" style="width:45px">STT</td>
-                        <td rowspan="2">Tên, nhãn hiệu quy cách, phẩm chất vật tư, dụng cụ sản phẩm, hàng hóa</td>
-                        <td rowspan="2" class="td">Mã số</td>
-                        <td rowspan="2" class="td">Đơn vị tính</td>
-                        <td colspan="2" style="width:300px">Số lượng</td>
-                        <td rowspan="2" class="td">Đơn giá</td>
-                        <td rowspan="2" class="td">Thành tiền</br>(vnđ)</td>
-                    </tr>
-                    <tr style="text-align:center">
-                        <td>Theo chứng từ</td>
-                        <td>Thực nhập</td>
-                    </tr>
-                    <tr style="text-align:center">
-                        <td>A</td>
-                        <td>B</td>
-                        <td>C</td>
-                        <td>D</td>
-                        <td>1</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td>4</td>
-                    </tr>                    
-                </table>
-            </td>
-        </tr>
-        <tr style="border-style:hidden">
-            <td style="padding-left:20px">- Tổng số tiền (viết bằng chữ): <span id="tongSoTien"></span>&nbsp;đồng</td>
-        </tr>
-        <tr style="border-style:hidden">
-            <td style="padding-left:20px">
-                - Số chứng từ gốc kèm theo: .....................................................................................................................................
-            </td>
-        </tr>
-        <tr style="text-align: -moz-center">
-            <td>
-                <table border="0" class="tb" style="width:100%;">
-                    <tr>
-                        <td colspan="4" style="text-align:right">Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?></td>
-                    </tr>
-                    <tr style="text-align: center;">
-                        <td>
-                            Người lập phiếu</br>(Ký, họ tên)
-                        </td>
-                        <td>
-                            Người giao hàng</br>(Ký, họ tên)
-                        </td>
-                        <td>
-                            Thủ kho</br>(Ký, họ tên)
-                        </td>
-                        <td>
-                            Thủ trưởng đơn vị<br>(Hoặc bộ phận có nhu cầu nhập)</br>(Ký, họ tên)
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="height:100px"></td>
-                    </tr>     
-                      
-                </table>
-            </td>
-        </tr>
-    </table>
-</div>
-<?php                                
-    $formFile->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhap-hang-bang-file')));
-    $formFile->setAttribute('role','form');
-    $formFile->setAttribute('name','frmImport');
-    $formFile->setAttribute('style','margin-top: 0px;margin-bottom:0px;text-align:right; display:none;');
-    $formFile->prepare();
-    echo $this->form()->openTag($formFile);
-    $file=$formFile->get('file');                                        
-    $file->setAttribute('style','display:none');
-    $file->setAttribute('onchange','return hamSubmit();');       
-    echo $this->formElement($file);
-    echo $this->form()->closeTag();
-?>
-
-<?php
-     $this->headTitle('Nhập hàng');
-     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhap-hang')));
-     $form->setAttribute('role','form');
-     $form->setAttribute('id','formNhapHang');                 
-     $form->setAttribute('class','form-horizontal');     
-     $form->prepare();
-     echo $this->form()->openTag($form);
-     echo $this->formHidden($form->get('idSanPham'));     
-     echo $this->formHidden($form->get('donViTinh'));
-     echo $this->formHidden($form->get('idNhaCungCap'));
-     echo $this->formHidden($form->get('phieu-nhap')->get('idPhieuNhap'));
-     $form->get('phieu-nhap')->get('maPhieuNhap')->setAttribute('value','1114-9999');
-     echo $this->formHidden($form->get('phieu-nhap')->get('maPhieuNhap'));
-     $form->get('phieu-nhap')->get('ngayNhap')->setAttribute('value',Date('Y-m-d'));
-     echo $this->formHidden($form->get('phieu-nhap')->get('ngayNhap'));     
-     echo $this->formHidden($form->get('phieu-nhap')->get('idDoiTac')->get('idDoiTac'));
-     echo $this->formHidden($form->get('phieu-nhap')->get('idUserNv')->get('userId'));
-     echo $this->formHidden($form->get('phieu-nhap')->get('status'));
-?>
-
 <div class="row">
     <div class="col-md-2">
         <div class="h5a-sidebar affix">
@@ -246,9 +30,9 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Nhập hàng</h1>
+                        <h1>Lỗi nhập hàng</h1>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6">                       
                         <div class="pull-right">
                             <div class="btn-group ">
                                 <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
@@ -257,10 +41,8 @@
                                 <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
-                            </div>
-                            <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" style="margin-right:60px;">Import</button></a>
-
-                            
+                                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>"><button type="button" class="h5a-btn btn btn-primary btn-sm">Trở về</button></a>&nbsp;
+                            </div>                                
                         </div>
                     </div>
                 </div>
@@ -296,152 +78,38 @@
                     }
                 ?>                
             </div>
+                <div class="row">
+                    <h3>DANH SÁCH CÁC MÃ SẢN PHẨM KHÔNG THỂ IMPORT</h3>
+                    <table border="1" width="81%">
+                        <thead>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên nhà cung cấp</th>
+                            <th>Số lượng</th>
+                            <th>giá</th>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i=0;
+                            foreach ($danhSachLoi as $loi) {?>
+                                <tr>
+                                    <td><?php echo ++$i; ?></td>
+                                    <td><?php echo $loi['maSanPham']; ?></td>
+                                    <td><?php echo $loi['nhaCungCap']; ?></td>
+                                    <td><?php echo $loi['soLuong']; ?></td>
+                                    <td><?php echo $loi['gia']; ?></td>
+                                </tr>           
+                            <?php }?>
+                        </tbody>
+                    </table> 
+
+                </div>
+                <br>
+                <div class="row">
+                        
+                </div>
             
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-1">Mã sản phẩm</label>
-                    <div class="col-sm-7">
-                        <?php
-                            echo $this->formElement($form->get('maHang'));
-                        ?>
-                    </div>
-                    <div id="ma-hang-search-result"></div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-1">Mã vạch</label>
-                    <div class="col-sm-7">                                    
-                        <?php
-                            echo $this->formElement($form->get('maVach'));
-                        ?>
-                        <div id="ma-vach-search-result"></div>
-                    </div>
-                    <div id="ma-hang-search-result"></div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-2">Tên hàng</label>
-                    <div class="col-sm-7">                                    
-                        <?php
-                            echo $this->formElement($form->get('tenHang'));
-                        ?>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-1">Nhà cung cấp</label>
-                    <div class="col-sm-7">
-                        <?php
-                            echo $this->formElement($form->get('nhaCungCap'));
-                        ?>
-                    </div>
-                    <div id="nha-cung-cap-search-result"></div>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
-                    <div class="col-sm-7">                                    
-                        <?php
-                            echo $this->formElement($form->get('soLuong'));
-                        ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-4"></label>
-                    <div class="col-sm-7"> 
-                         <?php
-                            $loaiGia=$form->get('loaiGia');
-                            $loaiGia->setAttribute('id','loaiGia');
-                            $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
-                            echo $this->formElement($loaiGia);                                               
-                        ?>                                   
-                       <!--  <input type="checkbox" value="0" onChange="return kiemTracheckbox();" name="loaiChiecKhau" id="loaiChiecKhau"> -->
-                        Sản phẩm thuộc loại có giá bìa
-                    </div>
-                </div>
-                <div class="form-group" id="trGiaNhap">
-                    <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
-                    <div class="col-sm-7">                                    
-                        <?php
-                            $form->get('giaNhap')->setAttribute('value','0');
-                            $form->get('giaNhap')->setAttribute('id','giaNhap');
-                            $form->get('giaNhap')->setAttribute('class','h5a-input form-control input-sm');
-                            echo $this->formElement($form->get('giaNhap'));
-                        ?>
-                    </div>
-                </div>
-                <div class="form-group" id="trChiecKhau" hidden="true">
-                    <label class="col-sm-4 right" for="form-field-4">Chiếc khấu (%)</label>
-                    <div class="col-sm-7">                                    
-                        <?php
-
-                            $form->get('chiecKhau')->setAttribute('value','0');
-                            $form->get('chiecKhau')->setAttribute('type','number');
-                            $form->get('chiecKhau')->setAttribute('min','0');
-                            $form->get('chiecKhau')->setAttribute('id','chiecKhau');
-                            $form->get('chiecKhau')->setAttribute('class','h5a-input form-control input-sm');
-                            echo $this->formElement($form->get('chiecKhau'));
-                        ?>
-                    </div>
-                </div>
-                <div class="form-group" id="trGiaBia" hidden="true">
-                    <label class="col-sm-4 right" for="form-field-4">Giá bìa</label>
-                    <div class="col-sm-7">                                    
-                        <?php
-                            $form->get('giaBia')->setAttribute('value','0');
-                            $form->get('giaBia')->setAttribute('id','giaBia');
-                            $form->get('giaBia')->setAttribute('type','number');
-                            $form->get('giaBia')->setAttribute('min','0');
-                            $form->get('giaBia')->setAttribute('class','h5a-input form-control input-sm');
-                            echo $this->formElement($form->get('giaBia'));
-                        ?>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-sm-10 col-sm-offset-1">
-                        <button type="button" id="btnNhapHang" class="btn h5a-btn btn-primary full">Nhập hàng</button>
-                    </div>
-                </div>
-            </div>
         </div>                
-    </div>
-</div>
-
-<div class="h5a-container">
-    <div class="row">
-        <div class="col-md-2">
-        </div>
-        <h2 hidden="true" class="in">CHI TIẾT PHIẾU NHẬP</h2>
-        
-        
-        <div class="col-md-10">
-            <h1>Danh sách nhập</h1>
-            <div class="box">
-                <table id="tbNhapHang" class="invoice pricelist bottom20">
-                    <thead>
-                        <th>Sản phẩm</th>
-                        <th>Đơn vị tính</th>
-                        <th>Số lượng</th>
-                        <th>Giá nhập</th>
-                        <th class="an">Hủy</th>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>            
-            <div class="page-footer">                
-                <div class="col-sm-6">
-                    <div class="col-sm-6 col-sm-offset-1">
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="form-group">
-                        <div class="col-sm-10 col-sm-offset-1">
-                            <button type="submit" class="btn h5a-btn btn-primary full" onclick="return luuNhapHangFunction();">Lưu</button>
-                        </div>
-                    </div>
-                </div>
-            </div> 
-        </div>
     </div>
 </div>
 
@@ -859,12 +527,12 @@
                              if(c==3)
                              {
                                 temp= temp+
-                                '<td style="text-align: right; white-space:nowrap;">'+addPeriod(soLuong[j])+'</td>';
+                                '<td style="text-align: right;">'+formatNumber(soLuong[j])+'</td>';
                              }
                              if(c==4)
                              {
                                 temp= temp+
-                                '<td style="text-align: right; white-space:nowrap;">'+addPeriod(donGia[j])+'</td>';
+                                '<td style="text-align: right;">'+formatNumber(donGia[j])+'</td>';
                              }                             
                         }
                         else
@@ -876,7 +544,7 @@
                         if(c==1)
                         {
                             temp=temp+
-                            '<td style="text-align: right; ">'+maSanPham[j]+'</td>';
+                            '<td style="text-align: right;">'+maSanPham[j]+'</td>';
                         }
                         if(c==2)
                         {
@@ -884,7 +552,7 @@
                         }                            
                         if(c==4)
                         {
-                            temp=temp+'<td style="text-align: right; white-space:nowrap;"><span class="thanhTien">'+addPeriod(thanhTien[j])+'</span</td>';
+                            temp=temp+'<td style="text-align: right;"><span class="thanhTien">'+formatNumber(thanhTien[j])+'</span</td>';
                             tongTien=tongTien+parseInt(thanhTien[j]);
                         }
                     }
@@ -896,7 +564,7 @@
                     i++;
                 });
 
-                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right; white-space:nowrap;">'+addPeriod(tongTien)+'</td></tr>';
+                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right;">'+formatNumber(tongTien)+'</td></tr>';
                 //------------------------------------------------
                 temp = temp.replace(/__index__/g, sD);                    
                 $('#tbSanPham tbody').append(temp);

@@ -78,9 +78,9 @@
                             <div class="row">
                                 <table id="" class="dataTables-example">
                                     <thead>
-                                        <th><input type="checkbox"/></th>
-                                        <th>Phiếu xuất</th>
+                                        <th><input type="checkbox"/></th>    
                                         <th>Ngày</th>
+                                        <th>Phiếu xuất</th>
                                         <th>Khách hàng</th>
                                         <th>Thanh toán</th>
                                         <th>Tổng tiền</th>
@@ -91,10 +91,11 @@
                                         {?>
                                         <tr>
                                             <td><input type="checkbox"/></td>
+                                            <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
                                             <td>
                                                 <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-don-hang','id'=>$donHang->getIdHoaDon()));?>"><?php echo '#'.$donHang->getMaHoaDon(); ?></a>
                                             </td>
-                                            <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
+                                            
                                             <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-khach-hang','id'=>$donHang->getIdDoiTac()->getIdDoiTac()));?>"><?php echo $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
                                             <td>
                                             <?php 
@@ -161,8 +162,9 @@
                                         ?>
                                                 <tr>
                                                     <td><input type="checkbox"/></td>
-                                                    <td><a href="khachHang.html"><?php echo '#'.$donHang->getMaHoaDon(); ?></a></td>
                                                     <td><?php echo $donHang->getNgayXuat()->format('d-m-Y'); ?></td>
+                                                    <td><a href="khachHang.html"><?php echo '#'.$donHang->getMaHoaDon(); ?></a></td>
+                                                    
                                                     <td><a href="khachHang.html"><?php $donHang->getIdDoiTac()->getHoTen(); ?></a></td>
                                                     <td>
                                                     <?php 

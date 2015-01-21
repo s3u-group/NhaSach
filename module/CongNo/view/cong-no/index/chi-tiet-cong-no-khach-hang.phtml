@@ -15,7 +15,11 @@
                      / Công nợ /
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
-                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
                            Khách hàng
@@ -110,11 +114,12 @@
                                             <th>Ngày</th>
                                             <th>Nợ đầu kì</th>
                                             <th>Tổng nợ</th> 
+                                            <th>Phát sinh</th>
                                             <th>Thanh toán</th>
                                             <th>Còn lại</th>
                                             <th width="170px">Phiếu thu</th>
                                             <th width="170px">Phiếu chi</th>
-                                            <th>Xuất chiết khấu</th>
+                                            <!-- <th>Xuất chiết khấu</th> -->
                                         </thead>
                                         <tbody>
                                         <?php 
@@ -122,10 +127,11 @@
                                             ?>
                                                 <tr>                                         
                                                     <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noCuoiKi']; ?></td> 
-                                                    <td><?php  echo $rp['thanhToan']; ?></td>
-                                                    <td><?php  echo $rp['duNo']; ?></td>
+                                                    <td><?php  echo number_format($rp['noDauKi'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format($rp['noCuoiKi'],'0','',' '); ?></td> 
+                                                    <td><?php  echo number_format($rp['noPhatSinh'],'0','',' ');?></td>
+                                                    <td><?php  echo number_format((float)$rp['thanhToan'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format((float)$rp['duNo'],'0','',' '); ?></td>
                                                     <td>
                                                     <?php
                                                     if($rp['idPhieuThu']!=''&&$rp['idPhieuThu']!=null){
@@ -152,19 +158,19 @@
                                                     }
                                                     ?>
                                                     </td>
-                                                    <td>
-                                                    <?php
-                                                    if($rp['idPhieuThu']!=''&&$rp['idPhieuThu']!=null){
+                                                    <!-- <td>
+                                                     <?php
+                                                    //if($rp['idPhieuThu']!=''&&$rp['idPhieuThu']!=null){
                                                     ?>
-                                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'xuat-phieu-chi','id'=>$rp['idPhieuThu'])); ?>">Xuất chiết khấu</a>
+                                                        <a href="<?php //echo $this->url('cong_no/crud',array('action'=>'xuat-phieu-chi','id'=>$rp['idPhieuThu'])); ?>">Xuất chiết khấu</a>
                                                     <?php
-                                                    }
-                                                    ?>                                    
-                                                    </td>
+                                                    //}
+                                                    ?>                                
+                                                    </td>  -->
                                                     
                                                 </tr>
                                                 
-                                            <?php    
+                                            <?php  
                                             }
                                         ?>
                                         </tbody>
@@ -191,11 +197,11 @@
                                             <tr>
                                                 <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-don-hang','id'=>$hoaDon->getIdHoaDon())); ?>"><?php echo '#'.$hoaDon->getMaHoaDon(); ?></a></td>
                                                 <td><?php echo $ctHoaDon->getIdSanPham()->getTenSanPham(); ?></td>
-                                                <td><?php echo $ctHoaDon->getGia(); ?></td>
-                                                <td><?php echo $ctHoaDon->getSoLuong(); ?></td>
+                                                <td><?php echo number_format($ctHoaDon->getGia(),'0','',' '); ?></td>
+                                                <td><?php echo number_format($ctHoaDon->getSoLuong(),'0','',' '); ?></td>
                                                 <td>
                                                     <?php $thanhTien=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong(); 
-                                                        echo $thanhTien;
+                                                        echo number_format($thanhTien,'0','',' ');
                                                     ?>
                                                 </td>
                                             </tr>

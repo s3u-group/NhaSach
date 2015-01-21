@@ -154,20 +154,20 @@ return array(
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Index'),
-                    'action'    =>array('chiet-khau'),
+                    'action'    =>array('chiet-khau','index'),
                     'roles'     =>array('nguoi-dung'),
                 ),
 
                 array(
                     'controller'=>array('S3UTaxonomy\Controller\Taxonomy'),
-                    'action'=>array(),
+                    'action'=>array('taxonomyIndex'),
                     'roles'     =>array('nguoi-dung','khach'),
                 ),
 
 
                 array(
                     'controller'=>array('Application\Controller\Index'),
-                    //'action'    =>array('index','login'),
+                    //'action'    =>array('index','login','logout'),
                     'roles'     =>array('khach','nguoi-dung'),
                 ),  
 

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 31, 2015 at 08:39 AM
+-- Generation Time: Jan 21, 2015 at 03:36 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -82,12 +82,12 @@ CREATE TABLE IF NOT EXISTS `cong_no` (
   `id_cong_no` int(11) NOT NULL AUTO_INCREMENT,
   `id_doi_tac` int(11) NOT NULL,
   `ki` date NOT NULL,
-  `no_dau_ki` float NOT NULL,
-  `no_phat_sinh` float NOT NULL,
-  `du_no` float NOT NULL,
+  `no_dau_ki` bigint(20) NOT NULL,
+  `no_phat_sinh` bigint(20) NOT NULL,
+  `du_no` bigint(20) NOT NULL,
   PRIMARY KEY (`id_cong_no`),
   KEY `fk_cong_no_doi_tac` (`id_doi_tac`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=26 ;
 
 -- --------------------------------------------------------
 
@@ -149,20 +149,14 @@ CREATE TABLE IF NOT EXISTS `doi_tac` (
   KEY `fk_doitac_zf_term_taxonomy` (`loai_doi_tac`),
   KEY `ho_ten` (`ho_ten`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=33 ;
 
 --
 -- Dumping data for table `doi_tac`
 --
 
 INSERT INTO `doi_tac` (`id_doi_tac`, `ho_ten`, `dia_chi`, `email`, `mo_ta`, `dien_thoai_co_dinh`, `di_dong`, `hinh_anh`, `website`, `twitter`, `loai_doi_tac`, `id_kenh_phan_phoi`, `ngay_dang_ky`, `kho`) VALUES
-(22, 'KH Phan VÄƒn Thanh 1', 'Cáº§u KÃ¨ - TrÃ  Vinh', 'phanvanthanhda10tt@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 45, 39, '2015-01-14', 1),
-(23, 'KH LÆ°u Kim Loan 1', 'Tiá»ƒu CÃ¢n - TrÃ  Vinh', 'luukimloan@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 45, 40, '2015-01-14', 1),
-(24, 'KH Huá»³nh Sa Quang 1', 'ChÃ¢u ThÃ nh - TrÃ  Vinh', 'hsqtravinh@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 45, 41, '2015-01-14', 1),
-(25, 'KH Huá»³nh Thá»‹ NhÆ° Ngá»c 1', 'CÃ ng Long - TrÃ  Vinh', 'huynhthinhungoc@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 45, 43, '2015-01-14', 1),
-(26, 'KH Pháº¡m Minh ÄÆ°Æ¡ng 1', 'ChÃ¢u ThÃ nh - VÄ©nh Long', 'phamminhduong@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 45, 42, '2015-01-14', 1),
-(27, 'NhÃ  Cung Cáº¥p Viáº¿t TrÃ  Vinh', 'TrÃ  Vinh', 'ncccayviet@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 46, 39, '2015-01-14', 1),
-(28, 'NhÃ  Cung Cáº¥p ThÆ°á»›c TrÃ  Vinh 1', 'TrÃ  Vinh', 'nccthuoc@gmail.com', '<p><br></p>', 0, 0, 'photo_default.png', '', '', 46, 39, '2015-01-14', 1);
+(1, 'BÃ¡n láº»', 'ThÃ nh Phá»‘ TrÃ  Vinh', 'banLe_1@gmail.com', '<p>banle<br></p>', 0, 0, 'photo_default.png', 'banle', 'banle', 45, 43, '2015-01-20', 1);
 
 -- --------------------------------------------------------
 
@@ -179,7 +173,7 @@ CREATE TABLE IF NOT EXISTS `gia_xuat` (
   PRIMARY KEY (`id_gia_xuat`),
   KEY `fk_giaxuat_sanpham` (`id_san_pham`),
   KEY `fk_gia_xuat_term_taxonomy` (`id_kenh_phan_phoi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=81 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -199,7 +193,7 @@ CREATE TABLE IF NOT EXISTS `hoa_don` (
   KEY `fk_hoadon_doitac` (`id_doi_tac`),
   KEY `fk_hoadon_user` (`id_user_nv`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=30 ;
 
 -- --------------------------------------------------------
 
@@ -240,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `phieu_chi` (
   KEY `fk_phieuchi_user` (`id_user_nv`),
   KEY `fk_phieuchi_congno` (`id_cong_no`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
 
 -- --------------------------------------------------------
 
@@ -260,7 +254,7 @@ CREATE TABLE IF NOT EXISTS `phieu_nhap` (
   KEY `fk_phieunhap_user` (`id_user_nv`),
   KEY `fk_phieunhap_doitac` (`id_doi_tac`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=85 ;
 
 -- --------------------------------------------------------
 
@@ -274,14 +268,14 @@ CREATE TABLE IF NOT EXISTS `phieu_thu` (
   `id_user_nv` int(11) NOT NULL,
   `id_cong_no` int(11) NOT NULL,
   `ly_do` longtext,
-  `so_tien` float NOT NULL,
+  `so_tien` bigint(20) NOT NULL,
   `ngay_thanh_toan` date NOT NULL,
   `kho` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_phieu_thu`),
   KEY `fk_phieuthu_user` (`id_user_nv`),
   KEY `fk_phieuthu_congno` (`id_cong_no`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 
@@ -311,7 +305,7 @@ CREATE TABLE IF NOT EXISTS `san_pham` (
   KEY `fk_sanpham_zftermtaxonomy` (`id_loai`),
   KEY `kho` (`kho`),
   KEY `ma_san_pham` (`ma_san_pham`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
 
 -- --------------------------------------------------------
 
@@ -335,7 +329,7 @@ CREATE TABLE IF NOT EXISTS `user` (
   `kho` int(11) DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Dumping data for table `user`

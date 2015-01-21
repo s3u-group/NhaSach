@@ -180,6 +180,7 @@ use DateTimeZone;
           }
 
           $phieuThu->setKho($idKho);
+          //die(var_dump($phieuThu));
           $entityManager->persist($phieuThu);
           $entityManager->flush();
           $this->flashMessenger()->addSuccessMessage('Thanh toán thành công!');
@@ -1005,7 +1006,10 @@ use DateTimeZone;
               );
           }
         }
-
+      // lấy nợ phát sinh hoaDon
+      $query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.idDoiTac= :idDoiTac');
+      $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+      $hoaDons=$query->getResult();      
       return array('response'=>$response,'doiTac'=>$doiTacs,'hoaDons'=>$hoaDons);
   }
 
@@ -1157,6 +1161,10 @@ use DateTimeZone;
               );
           }
         }
+
+      $query=$entityManager->createQuery('SELECT pn FROM HangHoa\Entity\PhieuNhap pn WHERE pn.kho='.$idKho.' and pn.idDoiTac= :idDoiTac');
+      $query->setParameter('idDoiTac',$idDoiTac);// % đặt ở dưới này thì được đặt ở trên bị lỗi
+      $phieuNhaps=$query->getResult(); 
 
       return array('response'=>$response,'doiTac'=>$doiTacs,'phieuNhaps'=>$phieuNhaps);
   }
@@ -1393,7 +1401,7 @@ use DateTimeZone;
   }
 
   public function xemPhieuThuAction(){
-    // kiểm tra đăng nhập
+      // kiểm tra đăng nhập
       if(!$this->zfcUserAuthentication()->hasIdentity())
       {
         return $this->redirect()->toRoute('application');
@@ -1414,5 +1422,68 @@ use DateTimeZone;
         'phieuThu'=>$phieuThu,
       );
   }
+  public function tongHopThuChiAction(){
+    // kiểm tra đăng nhập
+    if(!$this->zfcUserAuthentication()->hasIdentity())
+    {
+      return $this->redirect()->toRoute('application');
+    }
+    $idKho=$this->zfcUserAuthentication()->getIdentity()->getKho();
+    $this->layout('layout/giaodien');
+    $entityManager=$this->getEntityManager();
+    $request=$this->getRequest();
+    $ngayBatDau='';
+    $ngayKetThuc='';
+    $phieuThus=null;
+    $phieuChis=null;
+
+    if($request->isPost()){
+      
+      $post=$request->getPost();
+      $ngayBatDau=$post['ngayBatDau'];
+      $ngayKetThuc=$post['ngayKetThuc'];
+      
+
+      $qb=$entityManager->createQueryBuilder();
+      $qb->select('pt');
+      $qb->from('CongNo\Entity\PhieuThu', 'pt');
+      $qb->orderBy('pt.ngayThanhToan','ASC');
+
+      $qbPhieuChi=$entityManager->createQueryBuilder();
+      $qbPhieuChi->select('pc');
+      $qbPhieuChi->from('CongNo\Entity\PhieuChi', 'pc');
+      $qbPhieuChi->orderBy('pc.ngayThanhToan','ASC');
+
+
+      if($ngayKetThuc!=''&&$ngayKetThuc!=null){
+        
+        $qb->andWhere('pt.ngayThanhToan<=:ngayKetThuc');
+        $qb->setParameter('ngayKetThuc',$ngayKetThuc);
+
+        $qbPhieuChi->andWhere('pc.ngayThanhToan<=:ngayKetThuc');
+        $qbPhieuChi->setParameter('ngayKetThuc',$ngayKetThuc);
+
+      }
+      if($ngayBatDau!=''&&$ngayBatDau!=null){
+        $qb->andWhere('pt.ngayThanhToan>=:ngayBatDau');
+        $qb->setParameter('ngayBatDau',$ngayBatDau);
+
+        $qbPhieuChi->andWhere('pc.ngayThanhToan>=:ngayBatDau');
+        $qbPhieuChi->setParameter('ngayBatDau',$ngayBatDau);
+      }
+
+      $phieuThus=$qb->getQuery()->getResult();
+      $phieuChis=$qbPhieuChi->getQuery()->getResult();
+    }
+    return array(
+      'phieuThus'=>$phieuThus,
+      'phieuChis'=>$phieuChis,
+      'ngayBatDau'=>$ngayBatDau,
+      'ngayKetThuc'=>$ngayKetThuc,
+    );
+  }
+
+
+
  }
 ?>

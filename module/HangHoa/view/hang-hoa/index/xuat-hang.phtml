@@ -1,6 +1,20 @@
 <?php
 $title = 'Xuất hàng';
-$this->headTitle($title);
+$formFile->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuat-hang-bang-file')));
+$formFile->setAttribute('role','form');
+$formFile->setAttribute('name','frmImport');
+$formFile->setAttribute('style','margin-top: 0px;margin-bottom:0px;text-align:right; display:none;');
+$formFile->prepare();
+echo $this->form()->openTag($formFile);
+echo '<input type="hidden" name="idNhaCungCap">';
+echo '<input type="hidden" id="fileName" name="fileName">';
+$file=$formFile->get('file');                                        
+$file->setAttribute('style','display:none');
+$file->setAttribute('onchange','return hamSubmit();');       
+echo $this->formElement($file);
+echo $this->form()->closeTag();
+
+
  $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuat-hang')));
  $form->setAttribute('role','form');
  $form->setAttribute('id','formXuatHang');
@@ -40,9 +54,9 @@ $this->headTitle($title);
                     <tr>
                         <td style="width:60%">
                             <b>
-                                CTY CP SÁCH &amp; TB TRƯỜNG HỌC TRÀ VINH</br>
-                                3A Trưng Nữ Vương Phường 1 TP.Trà Vinh</br>
-                                Mã số thuế: 2100 290 521
+                                NHÀ SÁCH VINH QUANG</br>
+                                45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</br>
+                                Mã số thuế: 
                             </b>
                         </td>
                         <td style="text-align:center">
@@ -65,7 +79,7 @@ $this->headTitle($title);
                     </tr>
                     <tr>
                         <td style="padding:0px;">
-                            Số: ........................................
+                            Số: ........................................<div style="margin-top:-20px; margin-left:30px;"><?php echo $maHoaDon; ?></div>
                         </td>
                         <td style="padding:0px;">
                             Có: ........................................
@@ -155,7 +169,7 @@ $this->headTitle($title);
                             Thủ kho</br>(Ký, họ tên)
                         </td>
                         <td>
-                            Kế toán trưởng</br>(Ký, họ tên)
+                            Thủ trưởng đơn vị</br>(Ký, họ tên)
                         </td>
                         <td>
                             Giám đốc</br>(Ký, họ tên)
@@ -164,28 +178,7 @@ $this->headTitle($title);
                     <tr>
                         <td style="height:100px"></td>
                     </tr> 
-                    <tr style="text-align: center;">
-                        <td>
-                            <b>
-                            <?php
-                                if($this->zfcUserIdentity()) 
-                                {
-                                    $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
-                                    echo $nguoiLapPhieu;
-                                }
-                            ?>
-                            </b>
-                        </td>
-                        <td>
-                            <b><div class="nguoiGiaoHang"></div></b>
-                        </td>
-                        <td>
-                           
-                        </td>
-                        <td>
-                          
-                        </td>
-                    </tr>                    
+                                    
                 </table>
             </td>
         </tr>
@@ -227,7 +220,20 @@ $this->headTitle($title);
                 <div class="row">
                     <div class="col-sm-6">
                         <h1>Xuất hàng</h1>
-                    </div>                  
+                    </div>  
+                     <div class="col-sm-6">
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                            <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" style="margin-right:60px;">Import</button></a>                            
+                        </div>
+                    </div>                
                 </div>
                 <?php
                     $flash=$this->flashMessenger();
@@ -263,6 +269,13 @@ $this->headTitle($title);
             </div>
 
             <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="col-sm-4 right" for="form-field-3"></label>
+                        <div class="col-sm-7">
+                            <input type="checkbox" id="banLe" name="banLe" value="<?php echo $banLe->getIdDoiTac(); ?>"> <label for="banLe">Bán lẻ</label>
+                            <input type="hidden" value="<?php echo $banLe->getIdKenhPhanPhoi()->getTermTaxonomyId(); ?>" id="kpp">
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label class="col-sm-4 right" for="form-field-3">Khách hàng</label>
                         <div class="col-sm-7">
@@ -808,12 +821,12 @@ $this->headTitle($title);
                              if(c==3)
                              {
                                 temp= temp+
-                                '<td style="text-align: right;">'+formatNumber(soLuong[j])+'</td>';
+                                '<td style="text-align: right; white-space:nowrap;">'+addPeriod(soLuong[j])+'</td>';
                              }
                              if(c==4)
                              {
                                 temp= temp+
-                                '<td style="text-align: right;">'+formatNumber(donGia[j])+'</td>';
+                                '<td style="text-align: right; white-space:nowrap;">'+addPeriod(donGia[j])+'</td>';
                              }                             
                         }
                         else
@@ -833,7 +846,7 @@ $this->headTitle($title);
                         }                            
                         if(c==4)
                         {
-                            temp=temp+'<td style="text-align: right;"><span class="thanhTien">'+formatNumber(thanhTien[j])+'</span</td>';
+                            temp=temp+'<td style="text-align: right; white-space:nowrap;"><span class="thanhTien">'+addPeriod(thanhTien[j])+'</span</td>';
                             tongTien=tongTien+parseInt(thanhTien[j]);
                         }
                     }
@@ -845,7 +858,7 @@ $this->headTitle($title);
                     i++;
                 });
 
-                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right;">'+formatNumber(tongTien)+'</td></tr>';
+                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right; white-space:nowrap;">'+addPeriod(tongTien)+'</td></tr>';
                 //------------------------------------------------
                 temp = temp.replace(/__index__/g, sD);                    
                 $('#tbSanPham tbody').append(temp);
@@ -869,6 +882,34 @@ $this->headTitle($title);
             $(this).closest('tr').remove();
             return false;
           });
+          $('#banLe').on('change',function(){
+            if($(this).prop('checked')){
+                var idKhachHangBanLe=$('#banLe').val();
+                var idKenhPhanPhoi=$('#kpp').val();
+                $('#idKhachhang').val(idKhachHangBanLe);
+                $('#tenKhachHang').val(<?php echo '"'.$banLe->getHoTen().'"'; ?>);
+                $('#diaChiKhachHang').val(<?php echo '"'.$banLe->getDiaChi().'"'; ?>);
+
+                $('#kenhPhanPhoi').val(idKenhPhanPhoi);
+                $('#tenKhachHang').prop('disabled',true);
+                $('#diaChiKhachHang').prop('disabled',true); 
+
+                $('#maHang').prop('disabled',false);
+                $('#tenHang').prop('disabled',false);
+                $('#maVach').prop('disabled',false);
+                $('#soLuong').prop('disabled',false);
+                $('#giaXuat').prop('disabled',false);
+
+
+            }
+            else{
+                $('#idKhachhang').val('');
+                $('#tenKhachHang').val('');
+                $('#diaChiKhachHang').val('');
+                $('#tenKhachHang').prop('disabled',false);
+                $('#diaChiKhachHang').prop('disabled',false);  
+            }
+          });
         });
     </script>
 
@@ -887,6 +928,20 @@ $this->headTitle($title);
                     return true;
                 }
                 return false;
+            }
+        }
+
+        Import=function()
+        {
+            document.getElementById('file').click();
+            return false;     
+        }
+        hamSubmit=function(){
+            var valueFile=document.getElementById('file').value;        
+            if(valueFile)
+            {            
+                document.frmImport.submit();
+                return true;           
             }
         }
     </script>

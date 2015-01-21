@@ -1,15 +1,16 @@
-<style type="text/css">   
-    @media print {
+<style type="text/css">
+    @media print {  
+        .table{width: 790px; font-size: 13px; margin-top: -60px}
+        .tb{width: 97%;}
+        .td{width: 90px;}  
+        table td{padding: 5px;}      
+                
         .col-md-2{display: none;}
-        .tb{width: 900px; margin-left: -10px; margin-top: -30px;}
-        .td{width: 80px;}  
-        .page-header{display: none;}
+        .col-sm-6{display: none;}
+        .h5a-container{display: none;}
+        .tbIn{display: block;}
     }
 </style>
-<?php
-    $this->headTitle('Chi tiết phiếu nhập');
-?>
-
 <div class="row">
     <div class="col-md-2">
         <div class="h5a-sidebar affix">
@@ -18,20 +19,20 @@
                 <a href="<?php echo $this->url('kenh_phan_phoi',array('action'=>'index'));?>">/ Khách hàng</a>
                  / Đơn hàng /
             </span>
-            <ul class="nav h5a-sidenav nav-list accordion">
+            <ul class="nav h5a-sidenav nav-list accordion">                        
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
+                        <i class="fa fa-cubes"></i> Danh sách hàng
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
-                        <i class="fa fa-cubes"></i> Phiếu xuất
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
+                        <i class="fa fa-download"></i> Nhập hàng
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
-                        <i class="fa fa-tasks"></i> Phiếu nhập
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
+                        <i class="fa fa-upload"></i> Xuất hàng
                     </a>
                 </li>
             </ul>
@@ -39,44 +40,14 @@
     </div>
     <div class="col-md-10" role="main">
         <div class="h5a-docs-section">
-            <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-5" id="donotPrint">
-                        <h1>Phiếu nhập kho</h1>
-                    </div>
-
-                    <div class="col-sm-7">
-                        <div class="pull-right">
-                            <div class="btn-group ">
-                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
-                                    <i class="fa fa-chevron-left"></i>
-                                </button>                                    
-                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                                <button type="button" id="btnPrint" value="In" class="h5a-btn btn btn-primary btn-sm">In</button>
-                            </div>
-                        </div>
-                    </div>                        
+            <div class="row">
+                <div class="col-sm-6">
+                    
                 </div>
-                <?php 
-                    $flash=$this->flashMessenger();
-                    $flash->setMessageOpenFormat('<div%s>
-                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                         &times;
-                     </button>
-                     <ul><li>')
-                     ->setMessageSeparatorString('</li><li>')
-                     ->setMessageCloseString('</li></ul></div>');
-
-                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
-                 ?>
             </div>
+            <?php //die(var_dump($phieuNhap)); ?>
             <div  class="tbIn">
-                <table class="table" width="">
+                <table class="table">
                     <tr style="text-align: -moz-center; border-style:hidden">
                         <td>
                             <table border="0" class="tb">
@@ -124,21 +95,21 @@
                                 </tr>
                                 <tr>
                                     <td style="width:200px">
-                                        - Theo.......................
+                                        - Theo.....................
                                     </td>
-                                    <td style="width:100px;">
+                                    <td style="width:100px">
                                         số....................
                                     </td>
                                     <td style="width:215px">
                                         ngày <?php echo $phieuNhap->getNgayNhap()->format('d'); ?> tháng <?php echo $phieuNhap->getNgayNhap()->format('m'); ?>  năm <?php echo $phieuNhap->getNgayNhap()->format('Y'); ?> 
                                     </td>
                                     <td>                            
-                                        của............................
+                                        của...............................................
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">                        
-                                        Nhập tại kho:....................................
+                                        Nhập tại kho:........................................
                                     </td>                    
                                     <td colspan="2">
                                         Địa điểm............................................................................................
@@ -175,7 +146,7 @@
                                         <td>1</td>
                                         <td style="white-space:nowrap;"><?php echo number_format($chiTietPhieuNhap->getSoLuong(),'0','',' '); ?></td>
                                         <td style="white-space:nowrap;"><?php echo number_format($chiTietPhieuNhap->getGiaNhap(),'0','',' '); ?></td>
-                                        <td style="white-space:nowrap;">
+                                        <td  style="white-space:nowrap;">
                                         <?php 
                                             $thanhTien=(float)$chiTietPhieuNhap->getSoLuong()*$chiTietPhieuNhap->getGiaNhap();
                                             $tongCong+=$thanhTien;
@@ -186,11 +157,11 @@
                                 }
                                 ?>  
                                 <tr style="text-align:center">
-                                    <td rowspan="2" style="width:45px"></td>
+                                    <td rowspan="2"></td>
                                     <td rowspan="2"><b>Tổng cộng</b></td>
                                     <td rowspan="2" class="td"></td>
                                     <td rowspan="2" class="td"></td>
-                                    <td colspan="2" style="width:300px"></td>
+                                    <td colspan="2"></td>
                                     <td rowspan="2" class="td"></td>
                                     <td rowspan="2" class="td" style="white-space:nowrap;"><b><?php echo number_format($tongCong,'0','',' '); ?></b></td>
                                 </tr>                  
@@ -202,7 +173,7 @@
                     </tr>
                     <tr style="border-style:hidden">
                         <td style="padding-left:20px">
-                            - Số chứng từ gốc kèm theo: ..............................................................................................................................................................
+                            - Số chứng từ gốc kèm theo: .....................................................................................................................................
                         </td>
                     </tr>
                     <tr style="text-align: -moz-center">
@@ -237,9 +208,9 @@
         </div>
     </div>
 </div>
-<!-- /.container -->
-
-    <!-- FormatNumber -->
+<form method="post" action="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa')); ?>" id="nhapHang">
+</form>
+ <!-- FormatNumber -->
     <script src="<?php echo $this->basePath();?>/js/formatnumber.js"></script>
 
     <!-- convernumbertostring -->
@@ -253,22 +224,10 @@
 
     <!-- DataTables JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
-
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable({
-            "pagingType": "simple",
-            "bPaginate": true,
-            "bLengthChange": true,
-            "bFilter": true,
-            "bInfo": true,
-            "bAutoWidth": true
-        });
-
-        $('#tongSoTien').text(docso(<?php echo $tongCong; ?>));
-        $('#btnPrint').click(function(){
+    <script type="text/javascript">
+        $(document).ready(function(){
             window.print();
+            document.getElementById('nhapHang').submit();
+
         });
-    });
     </script>

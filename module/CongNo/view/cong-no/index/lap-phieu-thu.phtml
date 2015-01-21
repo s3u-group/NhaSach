@@ -57,9 +57,9 @@
 </style>
 <div class="in" hidden="true" align="center" style="font-size:13px;">
     <table width="791px" hieght="567">
-        <tr><td width="400px">CTY CP & TB TRƯỜNG HỌC TRÀ VINH</td><td></td><td width="200px" style="text-align:right;">Mẫu số: 01 - TT</td></tr>
-        <tr><td>3A Trưng Nữ Vương Phường 1 TP .Trà Vinh</td><td></td><td width="200px" style="text-align:right;"></td></tr>
-        <tr><td>Mã số thuế: 2100 290 521</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+        <tr><td width="400px">NHÀ SÁCH VINH QUANG</td><td></td><td width="200px" style="text-align:right;">Mẫu số: 01 - TT</td></tr>
+        <tr><td>45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+        <tr><td>Mã số thuế:</td><td></td><td width="200px" style="text-align:right;"></td></tr>
         
     </table>
     <table width="791px" style="font-size:13px;">
@@ -100,13 +100,14 @@
         <tr><td><b>Giám đốc</b></td><td><b>Kế toán trưởng</b></td><td><b>Người nộp tiền</b></td><td><b>Người lập phiếu</b></td><td><b>Thủ quỹ</b></td></tr>
         <tr><td>(Ký, họ tên, đóng dấu)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td></tr>
         <tr><td colspan="5" height="50px"></td></tr>
+        <!-- 
         <?php 
-            if($this->zfcUserIdentity()) 
+            /*if($this->zfcUserIdentity()) 
             {
                 $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
-            }
+            }*/
         ?>
-        <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b id="nguoiNopTien"></b></td><td><b><?php echo $nguoiLapPhieu; ?></b></td><td><b>Dương Thị Hồng Thắm</b></td></tr>
+        <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b id="nguoiNopTien"></b></td><td><b><?php //echo $nguoiLapPhieu; ?></b></td><td><b>Dương Thị Hồng Thắm</b></td></tr> -->
     </table>
 </div>
 <div class="khongin">
@@ -119,6 +120,11 @@
                      / Thanh toán /
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
                             Khách hàng
@@ -307,9 +313,9 @@
                     $('#noPhatSinh').val(data.noPhatSinh);
 
                     $('#viewNgayDauKi').text(data.ngayDauKi);
-                    $('#viewNoDauKi').text(data.noDauKi);
-                    $('#viewNoPhatSinh').text(data.noPhatSinh);
-                    $('#viewNoCuoiKi').text(data.noCuoiKi);  
+                    $('#viewNoDauKi').text(addPeriod(data.noDauKi));
+                    $('#viewNoPhatSinh').text(addPeriod(data.noPhatSinh));
+                    $('#viewNoCuoiKi').text(addPeriod(data.noCuoiKi));  
 
                     
                     var noCuoiKi=parseInt(data.noCuoiKi);
@@ -326,20 +332,20 @@
         $('#soTien').keyup(function(){
 
             var soTien=parseFloat($(this).val());
-            var noCuoiKi=parseFloat($('#viewNoCuoiKi').text());
+            var noCuoiKi=parseFloat($('#viewNoCuoiKi').text().replace(/ /g,''));
             var duNo=noCuoiKi-soTien;
             //alert(noCuoiKi+' '+soTien+' '+duNo);
             if(isNaN(soTien)||isNaN(noCuoiKi)||isNaN(duNo)||duNo<0){}
             else{
                 $('#duNo').val(duNo);
-                $('#soDu').text(duNo);
+                $('#soDu').text(addPeriod(duNo));
             }
 
         });
 
         // khi click vào nút submit lưu
         $('#submitbutton').click(function(){
-            var noCuoiKi=parseFloat($('#viewNoCuoiKi').text());
+            var noCuoiKi=parseFloat($('#viewNoCuoiKi').text().replace(/ /g,''));
             var soTien=parseFloat($('#soTien').val());
             //alert('số tiền: '+soTien+' Nợ cuối kì: '+noCuoiKi);
             if(isNaN(soTien)||isNaN(noCuoiKi)||noCuoiKi<=0||soTien==null||soTien==''||soTien==0||soTien>noCuoiKi){
@@ -349,7 +355,7 @@
                 var lyDo=$('#lyDo').val();
                 $('#lyDoNop').text(lyDo);
                 var soTienBangSo=$('#soTien').val();
-                $('.soTienBangSo').text(soTienBangSo);
+                $('.soTienBangSo').text(addPeriod(soTienBangSo));
 
                 var soTienBangChu=docso(soTienBangSo);
                 $('.soTienBangChu').text(soTienBangChu);
@@ -362,4 +368,16 @@
         });
                
     });
+
+    function addPeriod(nStr){
+        nStr += '';
+        var x = nStr.split(' ');
+        var x1 = x[0];
+        var x2 = x.length > 1 ? ' ' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + ' ' + '$2');
+        }
+        return x1 + x2;
+    }
     </script>

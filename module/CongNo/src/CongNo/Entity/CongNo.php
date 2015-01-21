@@ -37,19 +37,19 @@
 
 
 		/**
-		* @ORM\Column(name="no_dau_ki",type="float")
+		* @ORM\Column(name="no_dau_ki",type="text")
 		*/
 		private $noDauKi;
 
 
 		/**
-		* @ORM\Column(name="no_phat_sinh",type="float")
+		* @ORM\Column(name="no_phat_sinh",type="text")
 		*/
 		private $noPhatSinh;
 
 
 		/**
-		* @ORM\Column(name="du_no",type="float")
+		* @ORM\Column(name="du_no",type="text")
 		*/
 		private $duNo;
 

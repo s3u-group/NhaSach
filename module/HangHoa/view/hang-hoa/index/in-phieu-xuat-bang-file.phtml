@@ -1,32 +1,25 @@
-<?php
-    $this->headTitle('Chi tiết đơn hàng');
-    $d=$hoaDon->getNgayXuat()->format('d');
-    $m=$hoaDon->getNgayXuat()->format('m');
-    $y=$hoaDon->getNgayXuat()->format('Y');
-?>
-<style type="text/css">   
-    @media print {
-        .col-sm-3 {display: none;}
-        .form-group{display: none;}
+<style type="text/css">
+    #san-pham-search-result{ cursor:pointer;}
+    #search-result{cursor:pointer;}
+    .table{width: 790px; font-size: 13px; margin-top: -60px}
+    @media print {        
+        .table{width: 790px; font-size: 13px; margin-top: -60px}
+        .tb{width: 97%;}
+        .td{width: 90px;}  
+        table td{padding: 5px;}      
+                
         .col-md-2{display: none;}
-        .col-sm-6{margin-top: -80px}
-        .pull-right{display: none;}        
-        .tb{width: 900px; margin-left: -10px; margin-top: -30px;}
-        .td{width: 80px;}       
-        #donotPrint{display: none;} 
-        table {display: table;}
-        .dataTables_length{display: none;}
-        .dataTables_filter{display: none;}
-        .dataTables_info{display: none;}
-        #dataTables-example_paginate{display: none;}
-        .sorting_asc{display: none;}
-        .sorting_1 {display: none;}
-        #link{display: none;}
-        .lb{display: block;}
-        #destination-search{display: none;}        
+        .page-header{display: none;}
+        .tbIn{display: block;}
+        #formNhapHang{display: none;}
     }
+    
 </style>
-
+<?php
+$d=$hoaDon->getNgayXuat()->format('d');
+$m=$hoaDon->getNgayXuat()->format('m');
+$y=$hoaDon->getNgayXuat()->format('Y');
+?>
 <div class="row">
     <div class="col-md-2">
         <div class="h5a-sidebar affix">
@@ -57,41 +50,8 @@
     <div class="col-md-10" role="main">
         <div class="h5a-docs-section">
             <div class="page-header">
-                <div class="row">
-                    <div class="col-sm-5" id="donotPrint">
-                        <h1>Phiếu xuất kho</h1>
-                    </div>
-
-                    <div class="col-sm-7">
-                        <div class="pull-right">
-                            <div class="btn-group ">
-                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
-                                    <i class="fa fa-chevron-left"></i>
-                                </button>                                    
-                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
-                                    <i class="fa fa-chevron-right"></i>
-                                </button>
-                                <button type="button" id="btnPrint" value="In" class="h5a-btn btn btn-primary btn-sm">In</button>
-                            </div>
-                        </div>
-                    </div>                        
-                </div>
-                <?php 
-                    $flash=$this->flashMessenger();
-                    $flash->setMessageOpenFormat('<div%s>
-                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                         &times;
-                     </button>
-                     <ul><li>')
-                     ->setMessageSeparatorString('</li><li>')
-                     ->setMessageCloseString('</li></ul></div>');
-
-                     echo $flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
-                     echo $flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
-                     echo $flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
-                     echo $flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
-                 ?>
-            </div>       
+                
+            </div>           
             <div>
                 <table class="table">
                     <tr style="text-align: -moz-center; border-style:hidden">
@@ -111,7 +71,7 @@
                                     </td>            
                                 </tr>
                             </table>
-                            <br>
+
                             <table border="0" style="width:65%; margin-left:220px"  class="tb">
                                 <tr>
                                     <td style="width:50%; padding:0px 0px 0px 30px; font-size:16px; font-weight:bold">PHIẾU XUẤT KHO</td>
@@ -125,29 +85,26 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0px;">
-                                        Số: ........................................
-                                        <div style="margin-top:-22px; margin-left:30px;"><?php echo $hoaDon->getMaHoaDon(); ?></div>
+                                        Số: ........................................<div style="margin-top:-22px; margin-left: 30px;"><?php echo $hoaDon->getMaHoaDon(); ?></div>
                                     </td>
                                     <td style="padding:0px;">
                                         Có: ........................................
                                     </td>
                                 </tr>
                             </table>
-                            <br>
+
                             <table border="0"  class="tb">
                                 <tr>
-                                    <td colspan="4">- Họ và tên người nhận hàng:....................................................Địa chỉ (bộ phận)..................................................
-                                        <div style="margin-top:-22px; margin-left:195px;">
-                                            <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
-                                        </div>
-                                        <div style="margin-top:-22px; margin-left:510px;">
-                                            <?php echo $hoaDon->getIdDoiTac()->getDiaChi(); ?>
-                                        </div>
+                                    <td colspan="4">
+                                        - Họ và tên người nhận hàng:.................................................... Địa chỉ (bộ phận).....................
+                                        <div style="margin-top:-22px; margin-left:200px;"><?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?></div><div style="margin-top:-22px; margin-left:510px;"><?php echo $hoaDon->getIdDoiTac()->getDiaChi(); ?></div>
+
                                     </td>
                                 </tr>
+                                
                                 <tr>
                                     <td style="width:200px">
-                                        - Theo.....................
+                                        <span>- Theo....................</span>
                                     </td>
                                     <td style="width:100px">
                                         số....................
@@ -156,12 +113,12 @@
                                         Ngày <?php echo $d;?> tháng <?php echo $m;?> năm <?php echo $y;?>
                                     </td>
                                     <td>                            
-                                        của...............................................
+                                        của................
                                     </td>
                                 </tr>
                                 <tr>
                                     <td colspan="2">                        
-                                        Xuất tại kho:........................................
+                                        Xuất tại kho:.................
                                     </td>                    
                                     <td colspan="2">                            
                                         Địa điểm..........................................................................................
@@ -201,7 +158,7 @@
                                                     echo number_format($chiTietHoaDon->getGia(),'0','',' ');
                                                 ?>
                                             </td>
-                                            <td style="white-space:nowrap;">
+                                            <td width="100px" style="white-space:nowrap;">
                                             <?php 
                                                 
                                                 $thanhTien=(float)$chiTietHoaDon->getGia()*(float)$chiTietHoaDon->getSoLuong();
@@ -271,10 +228,9 @@
         </div>
     </div>
 </div>
-
-<!-- /.container -->
-
-    <!-- FormatNumber -->
+<form method="post" action="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa')); ?>" id="nhapHang">
+</form>
+<!-- FormatNumber -->
     <script src="<?php echo $this->basePath();?>/js/formatnumber.js"></script>
 
     <!-- convernumbertostring -->
@@ -289,36 +245,12 @@
     <!-- DataTables JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            var tongSoTien=docso(<?php echo $tongCong; ?>);
+            $('#tongSoTien').text(tongSoTien);
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').dataTable({
-            "pagingType": "simple",
-            "bPaginate": true,
-            "bLengthChange": true,
-            "bFilter": true,
-            "bInfo": true,
-            "bAutoWidth": true
-        });
-        $('#tongSoTien').text(docso(<?php echo $tongCong; ?>));
-    });
-
-    inDonHangFunction=function()
-    {
-        window.print();        
-    }
-
-    $('#btnPrint').click(function(){
-        window.print();
-    });
-
-    $('#btPrev').click(function(){
-        document.getElementById('dataTables-example_previous').click();
-    });
-
-    $('#btNext').click(function(){
-        document.getElementById('dataTables-example_next').click();
-    }); 
-
+            window.print();   
+            document.getElementById('nhapHang').submit();         
+        })
     </script>

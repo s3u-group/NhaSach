@@ -134,7 +134,16 @@
                     <div role="tabpanel" class="tab-pane" id="1">
                         <div class="row">
                             <div class="col-md-6">
-                                <?php  
+                                <?php 
+                                $idKho=$kho->getIdKho();
+                                $email='banLe_'.$idKho.'@gmail.com';
+                                $diaChiKho=$kho->getDiaChiKho();
+                                $ten='Bán lẻ';
+                                $isBanLe=false;
+                                if($khachHang->getEmail()==$email&&$khachHang->getDiaChi()==$diaChiKho&&$khachHang->getHoTen()==$ten){
+                                    $isBanLe=true;
+                                }
+
                                 $form->setAttribute('action', $this->url('kenh_phan_phoi/crud', array('action' => 'chi-tiet-khach-hang','id'=>$khachHang->getIdDoiTac())));
                                 $form->setAttribute('role','form');
                                 $form->prepare();
@@ -153,6 +162,9 @@
                                                 <td>
                                                 <?php
                                                     $khachHangElement->get('hoTen')->setAttribute('class','form-control h5a-input');
+                                                    if($isBanLe){
+                                                        $khachHangElement->get('hoTen')->setAttribute('disabled',true);
+                                                    }
                                                     echo $this->formElement($khachHangElement->get('hoTen'));
                                                 ?>
                                                 </td>
@@ -161,7 +173,10 @@
                                                 <td>Địa chỉ</td>
                                                 <td>
                                                 <?php
-                                                    $khachHangElement->get('hoTen')->setAttribute('class','form-control h5a-input');
+                                                    $khachHangElement->get('diaChi')->setAttribute('class','form-control h5a-input');
+                                                    if($isBanLe){
+                                                        $khachHangElement->get('diaChi')->setAttribute('disabled',true);
+                                                    }
                                                     echo $this->formElement($khachHangElement->get('diaChi'));
                                                 ?>
                                                 </td>
@@ -232,6 +247,9 @@
                                                 <td>
                                                 <?php
                                                     $khachHangElement->get('email')->setAttribute('class','form-control h5a-input');
+                                                    if($isBanLe){
+                                                        $khachHangElement->get('email')->setAttribute('disabled',true);
+                                                    }
                                                     echo $this->formElement($khachHangElement->get('email'));
                                                 ?>
                                                 </td>

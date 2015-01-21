@@ -48,9 +48,9 @@
 </style>
 <div class="in" hidden="true" align="center" style="font-size:13px;">
     <table width="791px" hieght="567">
-        <tr><td width="400px">CTY CP & TB TRƯỜNG HỌC TRÀ VINH</td><td></td><td width="200px" style="text-align:right;">Mẫu số: 01 - TT</td></tr>
-        <tr><td>3A Trưng Nữ Vương Phường 1 TP .Trà Vinh</td><td></td><td width="200px" style="text-align:right;"></td></tr>
-        <tr><td>Mã số thuế: 2100 290 521</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+        <tr><td width="400px">NHÀ SÁCH VINH QUANG</td><td></td><td width="200px" style="text-align:right;">Mẫu số: 01 - TT</td></tr>
+        <tr><td>45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+        <tr><td>Mã số thuế:</td><td></td><td width="200px" style="text-align:right;"></td></tr>
         
     </table>
     <table width="791px" style="font-size:13px;">
@@ -92,12 +92,12 @@
         <tr><td>(Ký, họ tên, đóng dấu)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td></tr>
         <tr><td colspan="5" height="50px"></td></tr>
         <?php 
-            if($this->zfcUserIdentity()) 
+            /*if($this->zfcUserIdentity()) 
             {
                 $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
-            }
+            }*/
         ?>
-        <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b><?php echo $thongTinDoiTac->getHoTen(); ?></b></td><td><b><?php echo $nguoiLapPhieu; ?></b></td><td><b>Dương Thị Hồng Thắm</b></td></tr>
+        <!-- <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b><?php //echo $thongTinDoiTac->getHoTen(); ?></b></td><td><b><?php //echo $nguoiLapPhieu; ?></b></td><td><b>Dương Thị Hồng Thắm</b></td></tr> -->
     </table>
 </div>
 <div class="khongin">
@@ -110,6 +110,11 @@
                      / Thanh toán /
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
                              Khách hàng

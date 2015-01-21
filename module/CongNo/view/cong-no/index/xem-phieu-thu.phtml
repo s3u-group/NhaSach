@@ -7,6 +7,12 @@
          margin-left: 20px;
     }
 </style>
+<style type="text/css">   
+    @media print {
+        .col-md-2{display: none;}    
+        .page-header{display: none;}  
+    }
+</style>
 
 <div class="khongin">
     <div class="row">
@@ -18,6 +24,11 @@
                      / Thanh toán /
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
                             Khách hàng
@@ -57,20 +68,32 @@
         <div class="col-md-10" role="main">
             <div class="h5a-docs-section">
                 <div class="page-header">
-                    <!-- <div class="row">
+                    <div class="row">
                         <div class="col-sm-6">
-                            <h1>xem phiếu thu</h1>
+                            <h1>Phiếu thu</h1>
                         </div>
                         <div class="col-sm-6">
-                           
+                            <div class="pull-right">
+                                <div class="btn-group ">
+                                    <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-left"></i>
+                                    </button>                                    
+                                    <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                        <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                    <button type="button" id="btnPrint" value="In" class="h5a-btn btn btn-primary btn-sm">In</button>
+                                </div>
+                            </div>
                         </div>
-                    </div>  -->
+                    </div>
+                </div> 
+                <div>
                     <div class="row">
                         <div align="center" style="font-size:13px;">
                             <table width="791px" hieght="567">
-                                <tr><td width="400px">CTY CP & TB TRƯỜNG HỌC TRÀ VINH</td><td></td><td width="200px" style="text-align:right;">Mẫu số: 01 - TT</td></tr>
-                                <tr><td>3A Trưng Nữ Vương Phường 1 TP .Trà Vinh</td><td></td><td width="200px" style="text-align:right;"></td></tr>
-                                <tr><td>Mã số thuế: 2100 290 521</td><td></td><td width="200px" style="text-align:right;"></td></tr>
+                                <tr><td width="400px"><b>NHÀ SÁCH VINH QUANG</b></td><td></td><td width="200px" style="text-align:right;"><b>Mẫu số: 01 - TT</b></td></tr>
+                                <tr><td><b>45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh</b></td><td></td><td width="200px" style="text-align:right;"></td></tr>
+                                <tr><td><b>Mã số thuế: </b></td><td></td><td width="200px" style="text-align:right;"></td></tr>
                                 
                             </table>
                             <table width="791px" style="font-size:13px;">
@@ -112,12 +135,12 @@
                                 <tr><td>(Ký, họ tên, đóng dấu)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td><td>(Ký, họ tên)</td></tr>
                                 <tr><td colspan="5" height="50px"></td></tr>
                                 <?php 
-                                    if($this->zfcUserIdentity()) 
+                                   /* if($this->zfcUserIdentity()) 
                                     {
                                         $nguoiLapPhieu=$this->zfcUserIdentity()->getHoTen();
-                                    }
+                                    }*/
                                 ?>
-                                <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b><?php echo $phieuThu->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></b></td><td><b><?php echo $nguoiLapPhieu; ?></b></td><td><b>Dương Thị Hồng Thắm</b></td></tr>
+                                <!-- <tr><td><b>Lâm Văn Bạch</b></td><td><b>Phạm Thị Ngọc Ánh</b></td><td><b><?php //echo $phieuThu->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></b></td><td><b><?php //echo $nguoiLapPhieu; ?></b></td><td><b>Dương Thị Hồng Thắm</b></td></tr> -->
                             </table>
                         </div>
                     </div>                   
@@ -147,6 +170,10 @@
     $(document).ready(function(){
         var soTienBangChu=docso(<?php echo $phieuThu->getSoTien(); ?>);
         $('.soTienBangChu').text(soTienBangChu);
+        $('#btnPrint').click(function(){
+            window.print();
+        });
+
     })
         
 </script>

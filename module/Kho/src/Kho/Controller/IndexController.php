@@ -6,6 +6,9 @@
 	 use Kho\Entity\Kho;
 	 use Kho\Form\ThemKhoForm;
 	 use Kho\Entity\ChietKhau;
+	 use HangHoa\Entity\DoiTac;
+	 use DateTime;
+	 use DateTimeZone;
 
 	
 	 class IndexController extends AbstractActionController
@@ -98,6 +101,23 @@
     						// nếu cần chiết khấu tăng thì $chietKhau->setStatus(1); tức là: status=0 thì chiết khấu giảm, status =1 chiết khấu tăng
     					}
     				}
+    				
+    				$dateTime=new DateTime(null,new DateTimeZone('Asia/Ho_Chi_Minh'));
+    				//die(var_dump($dateTime));
+    				// khi thêm chi nhánh nhớ phải thểm 1 khách hàng bán lẻ
+    				$kenhPhanPhoi=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(43);
+    				$loaiDoiTac=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(45);
+    				$banLe=new DoiTac();
+    				$banLe->setHoTen('Bán lẻ');
+    				$banLe->setDiaChi($kho->getDiaChiKho());
+    				$email='banLe_'.$kho->getIdKho().'@gmail.com';
+    				$banLe->setEmail($email);
+    				$banLe->setKho($kho->getIdKho());
+    				$banLe->setIdKenhPhanPhoi($kenhPhanPhoi);
+    				$banLe->setNgayDangKy($dateTime);
+    				$banLe->setLoaiDoiTac($loaiDoiTac);
+    				$entityManager->persist($banLe);
+    				$entityManager->flush();
 
 	     			$this->flashMessenger()->addSuccessMessage('Thêm chi nhánh mới thành công');
 	     			return $this->redirect()->toRoute('kho/crud',array('action'=>'index'));
@@ -154,7 +174,16 @@
 	     			$kiemTraTonTai=$query->getResult();	     			
 	     			if(!$kiemTraTonTai||($kiemTraTonTai&&$kiemTraTonTai[0]->getIdKho()==$idKhoTruoc))
 	     			{
-		     			$entityManager->flush();
+					    $query=$entityManager->createQuery('SELECT dt FROM HangHoa\Entity\DoiTac dt WHERE dt.hoTen= :hoTen and dt.kho= :idKho and dt.email= :email');
+					    $query->setParameter('hoTen','Bán lẻ');
+					    $query->setParameter('idKho',$id);
+					    $email='banLe_'.$id.'@gmail.com';
+					    $query->setParameter('email',$email);
+					    $banLe=$query->getSingleResult();
+					    $banLe->setDiaChi($kho->getDiaChiKho());
+
+					    $entityManager->flush();
+
 		     			$this->flashMessenger()->addSuccessMessage('Cập nhật thành công');
 		     			return $this->redirect()->toRoute('kho/crud',array('action'=>'index'));
 	     			}

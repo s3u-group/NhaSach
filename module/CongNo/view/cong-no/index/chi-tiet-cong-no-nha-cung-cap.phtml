@@ -15,7 +15,11 @@
                      / Công nợ /
                 </span>
                 <ul class="nav h5a-sidenav nav-list accordion">
-                    
+                    <li>
+                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'tong-hop-thu-chi'));?>">
+                            Tổng hợp thu chi
+                        </a>
+                    </li>
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
                              Khách hàng
@@ -43,7 +47,7 @@
                             </li>
                             <li class="divider"></li>
                             <li>
-                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>" style=">Lập phiếu chi khách hàng
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>">Lập phiếu chi khách hàng
                                 </a>
                                 
                             </li>
@@ -111,7 +115,8 @@
                                         <thead>
                                             <th>Ngày</th>
                                             <th>Đầu kì</th>
-                                            <th>Cuối kì</th>
+                                            <th>Tổng nợ</th>
+                                            <th>Phát sinh</th>
                                             <th>Thanh toán</th>
                                             <th>Còn lại</th>
                                             <th width="170px">Phiếu chi</th>
@@ -122,10 +127,11 @@
                                             ?>
                                                 <tr>                                                 
                                                     <td><?php  echo $rp['ngayDauKi']; ?></td>
-                                                    <td><?php  echo $rp['noDauKi']; ?></td>    
-                                                    <td><?php  echo $rp['noCuoiKi']; ?></td>
-                                                    <td><?php  echo $rp['thanhToan']; ?></td>
-                                                    <td><?php  echo $rp['duNo']; ?></td>
+                                                    <td><?php  echo number_format($rp['noDauKi'],'0','',' '); ?></td>    
+                                                    <td><?php  echo number_format($rp['noCuoiKi'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format($rp['noPhatSinh'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format((float)$rp['thanhToan'],'0','',' '); ?></td>
+                                                    <td><?php  echo number_format((float)$rp['duNo'],'0','',' '); ?></td>
                                                     <td>
                                                     <?php
                                                         if ($rp['phieuChi']) {
@@ -163,11 +169,11 @@
                                             <tr>
                                                 <td><a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-phieu-nhap','id'=>$phieuNhap->getIdPhieuNhap())); ?>"><?php echo '#'.$phieuNhap->getMaPhieuNhap(); ?></a></td>
                                                 <td><?php echo $ctPhieuNhap->getIdSanPham()->getTenSanPham(); ?></td>
-                                                <td><?php echo $ctPhieuNhap->getGiaNhap(); ?></td>
-                                                <td><?php echo $ctPhieuNhap->getSoLuong(); ?></td>
+                                                <td><?php echo number_format($ctPhieuNhap->getGiaNhap(),'0','',' '); ?></td>
+                                                <td><?php echo number_format($ctPhieuNhap->getSoLuong(),'0','',' '); ?></td>
                                                 <td>
                                                     <?php $thanhTien=(float)$ctPhieuNhap->getGiaNhap()*(float)$ctPhieuNhap->getSoLuong(); 
-                                                        echo $thanhTien;
+                                                        echo number_format($thanhTien,'0','',' ');
                                                     ?>
                                                 </td>
                                             </tr>

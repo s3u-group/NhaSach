@@ -1,0 +1,210 @@
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">/ Hàng hóa</a>
+                 / Nhập hàng /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
+                        <i class="fa fa-cubes"></i> Danh sách hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
+                        <i class="fa fa-download"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
+                        <i class="fa fa-upload"></i> Xuất hàng
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Lỗi nhập hàng</h1>
+                    </div>
+                    <div class="col-sm-6">                       
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>"><button type="button" class="h5a-btn btn btn-primary btn-sm">Trở về</button></a>&nbsp;
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" id="btFm" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     $error=$flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $error;
+
+                     $info=$flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $info;
+
+                     $default=$flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $default;
+
+                     $success=$flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     echo $success;                     
+                    if($error||$success||$info||$default)
+                    {
+                        echo '
+                        <script type="text/javascript">
+                            setTimeout(function(){
+                                document.getElementById("btFm").click();
+                            },5000);
+                        </script>';                        
+                    }
+                ?>                
+            </div>
+            <?php   
+            if($doiTacs){
+                $formFile->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'xuat-hang-bang-file')));
+                $formFile->setAttribute('role','form');
+                $formFile->setAttribute('name','frmImport');
+                $formFile->prepare();
+                echo $this->form()->openTag($formFile);
+                $file=$formFile->get('file');                                        
+                echo $this->formElement($file);
+
+                echo '<input type="hidden" id="idNhaCungCap" name="idNhaCungCap">';
+                echo '<input type="hidden" id="fileName" name="fileName" value="'.$fileName.'">';                
+                echo $this->form()->closeTag();         
+            ?>
+                <div class="row">
+                    <table border="1" width="81%">
+                        <thead>
+                            <th></th>
+                            <th>STT</th>
+                            <th>Tên khách hàng</th>
+                            <th>Email</th>
+                            <th>Địa chỉ</th>
+                            <th>Điện thoại</th>
+                            <th>Kênh phân phối</th>
+                        </thead>
+                        <tbody>
+                        <?php
+                        $stt=0;
+                        foreach ($doiTacs as $doiTac) {
+                        ?>
+                            <tr>
+                                <td><input type="radio" name="chonKhachHang" class="chonKhachHang" value="<?php echo $doiTac->getIdDoiTac(); ?>"></td>
+                                <td><?php echo ++$stt; ?></td>
+                                <td><?php echo $doiTac->getHoTen(); ?></td>
+                                <td><?php echo $doiTac->getEmail(); ?></td>
+                                <td><?php echo $doiTac->getDiaChi(); ?></td>
+                                <td><?php echo $doiTac->getDiDong(); ?></td>
+                                <td><?php echo $doiTac->getIdKenhPhanPhoi()->getTermId()->getName(); ?></td>
+                            </tr>
+                        <?php
+                        }
+                        ?>
+                        </tbody>
+                    </table>
+                </div>
+                <br>
+                <div class="row">
+                    
+                    <div class="col-sm-12">                       
+                        <div class="pull-right">
+                            <div class="btn-group ">                                
+                                <button type="button" class="h5a-btn btn btn-primary btn-sm" style="margin-right:195px;" id="btnTieptuc" disabled="true">Tiếp tục</button>&nbsp;
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+            <?php                                   
+            }
+    
+
+            if($danhSachLoi)
+            {
+            ?>
+                <div class="row">
+                    <h3>DANH SÁCH CÁC MÃ SẢN PHẨM KHÔNG THỂ IMPORT</h3>
+                    <table border="1" width="81%">
+                        <thead>
+                            <th>STT</th>
+                            <th>Mã sản phẩm</th>
+                            <th>Tên khách hàng</th>
+                            <th>Số lượng</th>
+                            <th>giá</th>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $i=0;
+                            foreach ($danhSachLoi as $loi) {?>
+                                <tr>
+                                    <td><?php echo ++$i; ?></td>
+                                    <td><?php echo $loi['maSanPham']; ?></td>
+                                    <td><?php echo $loi['khachHang']; ?></td>
+                                    <td><?php echo $loi['soLuong']; ?></td>
+                                    <td><?php echo $loi['gia']; ?></td>
+                                </tr>           
+                            <?php }?>
+                        </tbody>
+                    </table> 
+
+                </div>
+            <?php
+            }            
+            ?>
+                
+            
+        </div>                
+    </div>
+</div>
+
+<?php
+    echo $this->form()->closeTag();
+?>   
+    <!-- FormatNumber -->
+    <script src="<?php echo $this->basePath();?>/js/formatnumber.js"></script>
+
+    <!-- convernumbertostring -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.chonKhachHang').on('click',function(){
+                var idNhaCungCap=$(this).val();
+                $('#idNhaCungCap').val(idNhaCungCap);
+                $('#btnTieptuc').prop('disabled',false);
+            });
+            $('#btnTieptuc').on('click',function(){
+                $('#frmImport').submit();
+            });
+        });
+    </script>
+
