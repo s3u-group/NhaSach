@@ -32,6 +32,7 @@ echo $this->form()->closeTag();
 <style type="text/css">
     #san-pham-search-result{ cursor:pointer;}
     #search-result{cursor:pointer;}
+    #ma-vach-search-result{cursor:pointer;}
     @media print {        
         .table{width: 790px; font-size: 13px; margin-top: -60px}
         .tb{width: 97%;}
@@ -46,7 +47,69 @@ echo $this->form()->closeTag();
     
 </style>
 <!-- In -->
-<div  class="tbIn" hidden="true">
+<div class="tbIn" hidden="true" id="divInKhachHangLe" width="420px" style="margin-top:10px;">
+    <table class="table">
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td style="width:100%; text-align:left; font-size:11px; padding:0px">
+                NHÀ SÁCH VINH QUANG
+            </td>
+        </tr>
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td style="width:100%; text-align:left; font-size:11px; padding:0px">
+                45A Phạm Ngũ Lão, Phường 1, TP. Trà Vinh
+            </td>
+        </tr>
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td style="width:100%; text-align:left; font-size:11px; padding:0px">
+                ĐT: 0989.221.428
+            </td>
+        </tr>
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td style="width:100%; text-align:left; font-size:13px; padding:0px">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>PHIẾU XUẤT HÀNG</b>
+            </td>
+        </tr>
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td style="width:100%; text-align:left; font-size:11px; padding:0px">
+                NGÀY: <?php echo date('d/m/Y'); ?>
+            </td>
+        </tr>
+        <tr style="text-align: -moz-center; border-style:hidden">
+            <td style="width:100%; text-align:left; font-size:11px; padding:0px">
+                BÁN LẺ
+            </td>
+        </tr>
+    </table>
+    <table style="width:100%; padding:0px; margin-top:-20px; font-size:11px;" id="tbInKhachHangLe" border="1">
+       <thead>
+            <tr>
+                <th style="padding:0px; text-align:center;">STT</th>
+                <th style="padding:0px; text-align:center;">Tên hàng</th>
+                <th style="padding:0px; text-align:center;">Đơn vị tính</th>
+                <th style="padding:0px; text-align:center;">Số lượng</th>
+                <th style="padding:0px; text-align:center;">Đơn giá</th>
+                <th style="padding:0px; text-align:center;">Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+    <table width="100%" style="font-size:11px;">
+        <tr>
+            <td colspan="5">Tổng số tiền thanh toán: </td><td style="text-align:right;"><div id="tongSoTienthanhToan"></div></td>
+        </tr>
+        <tr>
+            <td colspan="6"><b>Tổng số tiền thanh toán bằng chữ:</b> <i id="tongSoTienThanhToanBangChu"></i> </td>
+        </tr>
+        <tr>
+            <td clospan="2">NGƯỜI SOẠN HÀNG</td>
+            <td clospan="2">KÉ TOÁN</td>
+            <td clospan="2" style="text-align:center;">KIỂM TRA</td>
+        </tr>
+    </table>
+</div>
+<div  class="tbIn" hidden="true" id="divInKhachHang">
     <table class="table">
         <tr style="text-align: -moz-center; border-style:hidden">
             <td>
@@ -396,7 +459,8 @@ echo $this->form()->closeTag();
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>"><button type="button" class="btn h5a-btn btn-danger full"  onclick="return xacNhanHuy()"><i class="fa fa-times"></i> Hủy đơn hàng</button></a>
                 </div>
                 <div class="col-sm-3 pull-right">
-                    <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button>
+                    <!-- <button type="submit" class="btn h5a-btn btn-primary full" onclick="return inDonHangFunction();"><i class="fa fa-print"></i> In đơn hàng</button> -->
+                    <button type="submit" class="btn h5a-btn btn-primary full" id="btnInDonHang"><i class="fa fa-print"></i> In đơn hàng</button>
                 </div>
             </div>
         </div>
@@ -463,7 +527,7 @@ echo $this->form()->closeTag();
 
             if(idKhachhang==''||tenKhachHang==''||diaChi==''||idSanPham==''||tenHang==''||donViTinh==''||soLuong==''||giaXuat==''||tonKho==''||idKhachhang==null||tenKhachHang==null||diaChi==null||idSanPham==null||tenHang==null||donViTinh==null||soLuong==null||giaXuat==null||tonKho==null)
             {
-                alert('Vui lòng điền đầy đủ thông tin');
+                //alert('Vui lòng điền đầy đủ thông tin');
                 return false;
             }
             if(parseInt(tonKho)<parseInt(soLuong)||parseInt(soLuong)==0||parseInt(tonKho)==0)
@@ -875,41 +939,179 @@ echo $this->form()->closeTag();
             }                
         }
 
+        inDonHangBanLeFunction=function()
+        {
+
+            var soDong = $('#tbXuatHang > tbody > tr').length; 
+            if(soDong==0)
+            {
+                alert('Xin lỗi bạn chưa nhập sản phẩm...');
+                return false;
+            }
+            else
+            {
+                var soLuong=new Array();
+                var donGia=new Array();                
+                var maSanPham=new Array();
+                var thanhTien=new Array();
+                var i=1;
+                var j=1;
+                var k=1;
+                var sL=0;
+                var gX=0;
+                var maSP='';
+                var tongTien=0;
+
+                var sD = $('#tbInKhachHangLe > tbody > tr').length;
+                var temp = '<tr class="price">';                
+                $("#tbXuatHang tbody tr").each(function()
+                {
+                    var timSoLuong=$(this).find(".soLuong");
+                    var timGiaXuat=$(this).find(".giaXuat");
+                    var timMaSanPham=$(this).find(".maSanPham");
+                    timSoLuong.each(function(){                        
+                        sL=parseInt($(this).html().replace(/ /g,''));                        
+                    });
+                    timGiaXuat.each(function(){
+                        gX=parseInt($(this).html().replace(/ /g,''));                        
+                    });
+                    //alert(sL+' '+gX);
+                    timMaSanPham.each(function(){                        
+                        maSP=$(this).html();                        
+                    });
+                    soLuong[k]=sL;
+                    donGia[k]=gX;
+                    thanhTien[k]=sL*gX;
+                    maSanPham[k]=maSP;
+                    //alert(maSanPham[k].toString());
+                    k++;
+                });
+                //------------------------------------------------
+                $("#tbXuatHang tbody tr td").each(function()
+                {
+                    var t=$(this).html();
+                    var c= parseInt(i%5);
+                    if(c==1)
+                    {
+                        temp = temp +'<td style="text-align: center;">'+j+'</td>';
+                    }                   
+                    if(c!=0)                    
+                    {
+                        if(c==2||c==3||c==4)
+                        {                            
+                             if(c==2)
+                             {
+                                temp= temp+
+                                '<td style="text-align: right;">'+$(this).html()+'</td>';
+                             }
+                             if(c==3)
+                             {
+                                temp= temp+
+                                '<td style="text-align: right; white-space:nowrap;">'+addPeriod(soLuong[j])+'</td>';
+                             }
+                             if(c==4)
+                             {
+                                temp= temp+
+                                '<td style="text-align: right; white-space:nowrap;">'+addPeriod(donGia[j])+'</td>';
+                             }                             
+                        }
+                        else
+                        {
+                            temp= temp+
+                             '<td>'+$(this).html()+'</td>';
+                        }
+
+                        if(c==1)
+                        {
+                            /*temp=temp+
+                            '<td style="text-align: right;">'+maSanPham[j]+'</td>';*/
+                        }
+                        if(c==2)
+                        {
+                            /*temp=temp+'<td></td>';*/
+                        }                            
+                        if(c==4)
+                        {
+                            temp=temp+'<td style="text-align: right; white-space:nowrap;"><span class="thanhTien">'+addPeriod(thanhTien[j])+'</span</td>';
+                            tongTien=tongTien+parseInt(thanhTien[j]);
+                        }
+                    }
+                    if(c==0)
+                    {
+                        temp=temp+'</tr>';                        
+                        j++;                        
+                    }                    
+                    i++;
+                });
+
+                temp=temp+'<tr><td style="text-align: center;" colspan="5"><b>TỔNG</b></td><td style="text-align: right; white-space:nowrap;"><b>'+addPeriod(tongTien)+'</b></td></tr>';
+                //------------------------------------------------
+                temp = temp.replace(/__index__/g, sD);                    
+                $('#tbInKhachHangLe tbody').append(temp);
+                var soTienBangChu=docso(tongTien);                                
+                $('#tongSoTien').text(soTienBangChu);
+                var tkh=$('#tenKhachHang').val();
+                var dc=$('#diaChi').val();
+                $('.nguoiGiaoHang').text(tkh);
+                $('.diaChiBoPhan').text(dc);
+                $('#tongSoTienthanhToan').text(addPeriod(tongTien));
+                $('#tongSoTienThanhToanBangChu').text(docso(tongTien));
+
+                window.print();                
+                document.getElementById('formXuatHang').submit();
+                return true;
+            }                
+        }
+
     </script>
     <script>
         $(document).ready(function(){
-          $(document).on('click', '.btnHuy', function(){
-            $(this).closest('tr').remove();
-            return false;
-          });
-          $('#banLe').on('change',function(){
-            if($(this).prop('checked')){
-                var idKhachHangBanLe=$('#banLe').val();
-                var idKenhPhanPhoi=$('#kpp').val();
-                $('#idKhachhang').val(idKhachHangBanLe);
-                $('#tenKhachHang').val(<?php echo '"'.$banLe->getHoTen().'"'; ?>);
-                $('#diaChiKhachHang').val(<?php echo '"'.$banLe->getDiaChi().'"'; ?>);
+            $(document).on('click', '.btnHuy', function(){
+                $(this).closest('tr').remove();
+                return false;
+            });
+            $('#banLe').on('change',function(){
+                if($(this).prop('checked')){
+                    var idKhachHangBanLe=$('#banLe').val();
+                    var idKenhPhanPhoi=$('#kpp').val();
+                    $('#idKhachhang').val(idKhachHangBanLe);
+                    $('#tenKhachHang').val(<?php echo '"'.$banLe->getHoTen().'"'; ?>);
+                    $('#diaChiKhachHang').val(<?php echo '"'.$banLe->getDiaChi().'"'; ?>);
 
-                $('#kenhPhanPhoi').val(idKenhPhanPhoi);
-                $('#tenKhachHang').prop('disabled',true);
-                $('#diaChiKhachHang').prop('disabled',true); 
+                    $('#kenhPhanPhoi').val(idKenhPhanPhoi);
+                    $('#tenKhachHang').prop('disabled',true);
+                    $('#diaChiKhachHang').prop('disabled',true); 
 
-                $('#maHang').prop('disabled',false);
-                $('#tenHang').prop('disabled',false);
-                $('#maVach').prop('disabled',false);
-                $('#soLuong').prop('disabled',false);
-                $('#giaXuat').prop('disabled',false);
+                    $('#maHang').prop('disabled',false);
+                    $('#tenHang').prop('disabled',false);
+                    $('#maVach').prop('disabled',false);
+                    $('#soLuong').prop('disabled',false);
+                    $('#giaXuat').prop('disabled',false);
 
 
-            }
-            else{
-                $('#idKhachhang').val('');
-                $('#tenKhachHang').val('');
-                $('#diaChiKhachHang').val('');
-                $('#tenKhachHang').prop('disabled',false);
-                $('#diaChiKhachHang').prop('disabled',false);  
-            }
-          });
+                }
+                else{
+                    $('#idKhachhang').val('');
+                    $('#tenKhachHang').val('');
+                    $('#diaChiKhachHang').val('');
+                    $('#tenKhachHang').prop('disabled',false);
+                    $('#diaChiKhachHang').prop('disabled',false);  
+                }
+            });
+            
+            $('#btnInDonHang').on('click',function(){
+                if($('#banLe').prop('checked')){ //nếu là khách hàng lẻ thì bỏ class của div khách hàng
+
+                    $('#divInKhachHang').removeClass('tbIn');
+                    $('#divInKhachHangLe').addClass('tbIn');
+                    inDonHangBanLeFunction();
+                }
+                else{ //nếu là khách hàng thì remove bỏ class của khách hàng lẻ
+                    $('#divInKhachHangLe').removeClass('tbIn');
+                    $('#divInKhachHang').addClass('tbIn');
+                    inDonHangFunction();
+                }
+            })            
         });
     </script>
 

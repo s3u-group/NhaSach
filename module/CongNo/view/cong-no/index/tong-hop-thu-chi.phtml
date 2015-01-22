@@ -156,7 +156,7 @@
                                             <?php echo $phieuThu->getNgayThanhToan()->format('d/m/Y'); ?>
                                         </td>
                                         <td style="white-space:nowrap;"><?php echo $phieuThu->getMaPhieuthu(); ?></td>
-                                        <td><?php echo $phieuThu->getLyDo(); ?></td>
+                                        <td><?php echo $phieuThu->getLyDo().' - '.$phieuThu->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></td>
                                         <td style="text-align:right;">
                                         <?php 
                                             echo number_format($phieuThu->getSoTien(),'0','',' ');
@@ -179,7 +179,7 @@
                                             <?php echo $phieuChi->getNgayThanhToan()->format('d/m/Y'); ?>
                                         </td>
                                         <td style="white-space:nowrap;"><?php echo $phieuChi->getMaPhieuChi(); ?></td>
-                                        <td><?php echo $phieuChi->getLyDo(); ?></td>
+                                        <td><?php echo $phieuChi->getLyDo().' - '.$phieuChi->getIdCongNo()->getIdDoiTac()->getHoTen(); ?></td>
                                         <td></td>
                                         <td style="text-align:right;">
                                         <?php 
@@ -193,9 +193,9 @@
                             }
                             ?>
                             <tr>
-                                <td><b>Tổng tiền tăng giảm</b></td>
                                 <td></td>
                                 <td></td>
+                                <td style="text-align:center;"><b>Tổng tiền tăng giảm</b></td>
                                 <td style="text-align:right; white-space:nowrap;">
                                     <b>
                                         <?php echo number_format($tongTienThu,'0','',' '); ?>
@@ -227,7 +227,9 @@
     <!-- DataTables JavaScript -->
     <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
 
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+     <!-- conver number to string vietnam -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
     <script>
     $(document).ready(function() {
         $('.dataTables-example').dataTable({
