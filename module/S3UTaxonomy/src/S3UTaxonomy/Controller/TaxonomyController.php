@@ -33,6 +33,7 @@
  	public function taxonomyIndexAction()
  	{
     $tax=$this->params()->fromRoute('tax');
+    $this->layout('layout/giao-dien');
       
     if($tax==null)
     {
@@ -63,6 +64,7 @@
     public function taxonomyAddAction()
     {
         $tax=$this->params()->fromRoute('tax');
+        $this->layout('layout/giao-dien');
         //die(var_dump($tax));
         if($tax==null)
         {

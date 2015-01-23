@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 21, 2015 at 03:36 AM
+-- Generation Time: Jan 23, 2015 at 07:22 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -227,7 +227,7 @@ CREATE TABLE IF NOT EXISTS `phieu_chi` (
   `id_user_nv` int(11) NOT NULL,
   `id_cong_no` int(11) NOT NULL,
   `ly_do` longtext,
-  `so_tien` float NOT NULL,
+  `so_tien` bigint(20) NOT NULL,
   `ngay_thanh_toan` date NOT NULL,
   `kho` int(11) DEFAULT NULL,
   PRIMARY KEY (`id_phieu_chi`),
@@ -392,7 +392,7 @@ CREATE TABLE IF NOT EXISTS `zf_term` (
   `slug` varchar(200) DEFAULT NULL,
   `term_group` bigint(10) DEFAULT NULL,
   PRIMARY KEY (`term_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=55 ;
 
 --
 -- Dumping data for table `zf_term`
@@ -423,7 +423,8 @@ INSERT INTO `zf_term` (`term_id`, `name`, `slug`, `term_group`) VALUES
 (50, 'Cuá»‘n', 'cuon', 0),
 (51, 'KhÃ´ng hoáº¡t Ä‘á»™ng', 'khong-hoat-dong', 0),
 (52, 'ChÆ°a xÃ¡c Ä‘á»‹nh Ä‘Æ¡n vá»‹ tÃ­nh', 'chua-xac-dinh-don-vi-tinh', 0),
-(53, 'CHÆ¯A XÃC Äá»ŠNH LOáº I Sáº¢N PHáº¨M', 'chua-xac-dinh-loai-san-pham', 0);
+(53, 'CHÆ¯A XÃC Äá»ŠNH LOáº I Sáº¢N PHáº¨M', 'chua-xac-dinh-loai-san-pham', 0),
+(54, 'Quyá»ƒn', 'quyen', 0);
 
 -- --------------------------------------------------------
 
@@ -441,7 +442,7 @@ CREATE TABLE IF NOT EXISTS `zf_term_taxonomy` (
   PRIMARY KEY (`term_taxonomy_id`),
   KEY `term_id` (`term_id`),
   KEY `parent` (`parent`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
 
 --
 -- Dumping data for table `zf_term_taxonomy`
@@ -472,7 +473,8 @@ INSERT INTO `zf_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `desc
 (46, 46, 'doi-tac', 'NhÃ  cung cáº¥p', 44, NULL),
 (50, 50, 'don-vi-tinh', 'Cuá»‘n sÃ¡ch', 1, NULL),
 (51, 52, 'don-vi-tinh', 'CÃ³ nhiá»u sáº£n pháº©m lÃºc thÃªm vÃ o khÃ´ng nháº­p Ä‘Æ¡n vá»‹ tÃ­nh', 1, NULL),
-(52, 53, 'danh-muc-hang-hoa', 'CÃ³ nhá»¯ng sáº£n pháº©m lÃºc thÃªm vÃ o khÃ´ng nháº­p loáº¡i sáº£n pháº©m', 8, NULL);
+(52, 53, 'danh-muc-hang-hoa', 'CÃ³ nhá»¯ng sáº£n pháº©m lÃºc thÃªm vÃ o khÃ´ng nháº­p loáº¡i sáº£n pháº©m', 8, NULL),
+(53, 54, 'don-vi-tinh', 'Quyá»ƒn', 1, NULL);
 
 --
 -- Constraints for dumped tables

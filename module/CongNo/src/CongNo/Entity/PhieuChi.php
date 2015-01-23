@@ -48,7 +48,7 @@
 		private $lyDo;
 
 		/**
-		* @ORM\Column(name="so_tien",type="float")
+		* @ORM\Column(name="so_tien",type="text")
 		*/
 		private $soTien;
 

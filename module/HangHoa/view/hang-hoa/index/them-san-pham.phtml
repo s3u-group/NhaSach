@@ -51,7 +51,34 @@
                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
                 <a href="<?php echo $this->url('hang_hoa');?>">/ Hàng hóa</a>
                  / Thêm sản phẩm /
-            </span>            
+            </span> 
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>                            
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Bảng giá
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
+                        <i class="glyphicon glyphicon-align-justify"></i> Danh sách hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
+                        <i class="glyphicon glyphicon-import"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
+                        <i class="glyphicon glyphicon-export"></i> Xuất hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'doi-tra-hang'));?>">
+                        <i class="glyphicon glyphicon-transfer"></i> Đổi trả hàng
+                    </a>
+                </li>
+            </ul>           
         </div>
     </div>
     <div class="col-md-10" role="main">
@@ -228,7 +255,8 @@
                         <tr>
                             <td>Hình ảnh</td>
                             <td>
-                                <?php                                    $hinhAnh=$sanPham->get('hinhAnh');
+                                <?php 
+                                    $hinhAnh=$sanPham->get('hinhAnh');
                                     $hinhAnh->setAttribute('class','h5a-btn btn btn-primary');
                                     echo $this->formElement($hinhAnh);
                                 ?>

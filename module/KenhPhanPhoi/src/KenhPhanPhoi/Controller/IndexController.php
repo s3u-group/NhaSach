@@ -185,7 +185,7 @@ use DateTimeZone;
           $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
      
           $doiTac->setNgayDangKy($datetime);
-          $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.kho='.$idKho.' and kh.email=\''.$doiTac->getEmail().'\'');
+          $query = $entityManager->createQuery('SELECT kh FROM HangHoa\Entity\DoiTac kh WHERE kh.loaiDoiTac=45 and kh.kho='.$idKho.' and kh.diDong=\''.$doiTac->getDiDong().'\'');
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
           {
@@ -261,7 +261,7 @@ use DateTimeZone;
         {
           $datetime = new DateTime(null, new DateTimeZone('Asia/Ho_Chi_Minh')); 
      
-          $query = $entityManager->createQuery('SELECT ncc FROM HangHoa\Entity\DoiTac ncc WHERE ncc.kho='.$idKho.' and ncc.hoTen=\''.$doiTac->getHoTen().'\'');
+          $query = $entityManager->createQuery('SELECT ncc FROM HangHoa\Entity\DoiTac ncc WHERE ncc.loaiDoiTac=46 and ncc.kho='.$idKho.' and ncc.hoTen=\''.$doiTac->getHoTen().'\'');
           $ktDoiTac = $query->getResult(); // array of CmsArticle objects  
           if($ktDoiTac)
           {

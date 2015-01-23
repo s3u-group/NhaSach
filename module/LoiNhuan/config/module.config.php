@@ -10,7 +10,7 @@ return array(
             'loi_nhuan' => array(
                 'type'    => 'literal', 
                 'options' => array(
-                    'route'    => '/loi-nhuan',
+                    'route'    => '/ban-hang',
                     'defaults' => array(
                        '__NAMESPACE__'=>'LoiNhuan\Controller',
                         'controller' => 'Index',

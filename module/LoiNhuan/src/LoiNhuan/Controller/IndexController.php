@@ -407,9 +407,15 @@ use DateTimeZone;
 	    {
 	    	$query=$entityManager->createQuery('SELECT hd FROM HangHoa\Entity\HoaDon hd WHERE hd.kho='.$idKho.' and hd.ngayXuat = \''.trim($thoiGian).'\'');
 	    }
-	    
+
+	    $taxonomyFunction=$this->TaxonomyFunction();
+    	$kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
 	    $hoaDons=$query->getResult();
-	   	return array('hoaDons'=>$hoaDons);
+	   	return array(
+	   		'hoaDons'=>$hoaDons,
+	   		'kenhPhanPhois'=>$kenhPhanPhois,
+	   	);
 
 	}
 
@@ -451,7 +457,13 @@ use DateTimeZone;
     	
     	$hoaDons=$query->getResult();
 
-	   	return array('hoaDons'=>$hoaDons);
+    	$taxonomyFunction=$this->TaxonomyFunction();
+    	$kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+	   	return array(
+	   		'hoaDons'=>$hoaDons,
+	   		'kenhPhanPhois'=>$kenhPhanPhois,
+	   	);
 
 	}  
 
@@ -533,8 +545,14 @@ use DateTimeZone;
 	    }
 	    
 	    $hoaDons=$query->getResult();
-	   	return array('hoaDons'=>$hoaDons);
 
+	    $taxonomyFunction=$this->TaxonomyFunction();
+    	$kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+	   	return array(
+	   		'hoaDons'=>$hoaDons,
+	   		'kenhPhanPhois'=>$kenhPhanPhois,
+	   	);
 	}
 
 	public function chiTietDoanhThuNamAction()
@@ -572,7 +590,14 @@ use DateTimeZone;
 	    }
 	    
 	    $hoaDons=$query->getResult();
-	   	return array('hoaDons'=>$hoaDons);
+	    
+	   	$taxonomyFunction=$this->TaxonomyFunction();
+    	$kenhPhanPhois=$taxonomyFunction->getListChildTaxonomy('kenh-phan-phoi');// đưa vào taxonomy dạng slug
+
+	   	return array(
+	   		'hoaDons'=>$hoaDons,
+	   		'kenhPhanPhois'=>$kenhPhanPhois,
+	   	);
 
 	}
 

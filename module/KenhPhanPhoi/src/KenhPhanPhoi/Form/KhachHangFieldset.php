@@ -53,11 +53,7 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
 
           $this->add(array(
              'name' => 'email',
-             'type' => 'Email',  
-             'attributes'=>array(
-                'required'=>'required',
-             ),           
-             
+             'type' => 'Email', 
          ));
 
          $this->add(array(
@@ -74,7 +70,8 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
          'type' => 'Text',
          'options' => array(
              'label' => 'Điện thoại cố định',             
-         ),         
+         ),     
+
         ));
 
          $this->add(array(
@@ -82,7 +79,10 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
          'type' => 'Text',
          'options' => array(
              'label' => 'Điện thoại di động',             
-         ),         
+         ),    
+         'attributes'=>array(
+                'required'=>'required',
+         ),       
         ));
 
 
@@ -132,22 +132,14 @@ class KhachHangFieldset extends Fieldset implements InputFilterProviderInterface
              ),
          ));
 
-          /*$this->add(array(
-             'name' => 'loaiDoiTac',
-             'type' => 'date',
-             'options' => array( 
-
-              ),
-             'attributes'=>array(
-                'Hidden'=>'true',
-             ),
-         ));*/
     }
 
     public function getInputFilterSpecification()
     {
         return array(
-          
+            'email'=>array(
+                'required'=>false,
+            ),
         );
     }
 }

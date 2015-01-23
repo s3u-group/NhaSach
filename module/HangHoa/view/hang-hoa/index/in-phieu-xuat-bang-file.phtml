@@ -29,19 +29,29 @@ $y=$hoaDon->getNgayXuat()->format('Y');
                  / Đơn hàng /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">
-                <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'index'));?>">
-                        <i class="fa fa-flag-checkered"></i> Doanh thu
+                <li>                            
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Bảng giá
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'don-hang'));?>">
-                        <i class="fa fa-cubes"></i> Phiếu xuất
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
+                        <i class="glyphicon glyphicon-align-justify"></i> Danh sách hàng
                     </a>
                 </li>
                 <li>
-                    <a href="<?php echo $this->url('loi_nhuan/crud',array('action'=>'phieu-nhap'));?>">
-                        <i class="fa fa-tasks"></i> Phiếu nhập
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
+                        <i class="glyphicon glyphicon-import"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
+                        <i class="glyphicon glyphicon-export"></i> Xuất hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'doi-tra-hang'));?>">
+                        <i class="glyphicon glyphicon-transfer"></i> Đổi trả hàng
                     </a>
                 </li>
             </ul>

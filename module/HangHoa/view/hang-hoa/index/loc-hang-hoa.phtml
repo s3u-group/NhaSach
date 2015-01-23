@@ -39,14 +39,23 @@
                     </a>
                 </li>
                 <li>
-                    <!-- <a href="nhapHang.html"> -->
-                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>"> 
-                        <i class="fa fa-download"></i> Nhập hàng
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
+                        <i class="glyphicon glyphicon-align-justify"></i> Danh sách hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
+                        <i class="glyphicon glyphicon-import"></i> Nhập hàng
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
-                        <i class="fa fa-upload"></i> Xuất hàng
+                        <i class="glyphicon glyphicon-export"></i> Xuất hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'doi-tra-hang'));?>">
+                        <i class="glyphicon glyphicon-transfer"></i> Đổi trả hàng
                     </a>
                 </li>
             </ul>

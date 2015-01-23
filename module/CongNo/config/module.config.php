@@ -10,7 +10,7 @@ return array(
             'cong_no' => array(
                 'type'    => 'literal', 
                 'options' => array(
-                    'route'    => '/cong-no',                     
+                    'route'    => '/thanh-toan',                     
                     'defaults' => array(
                        '__NAMESPACE__'=>'CongNo\Controller',
                         'controller' => 'Index',

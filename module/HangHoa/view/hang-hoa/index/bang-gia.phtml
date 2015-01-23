@@ -11,21 +11,29 @@
                  / Bảng giá /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>                            
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Bảng giá
+                    </a>
+                </li>
                 <li>
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
-                        <i class="fa fa-cubes"></i> Danh sách hàng
+                        <i class="glyphicon glyphicon-align-justify"></i> Danh sách hàng
                     </a>
                 </li>
                 <li>
-                 
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
-                        <i class="fa fa-download"></i> Nhập hàng
+                        <i class="glyphicon glyphicon-import"></i> Nhập hàng
                     </a>
                 </li>
                 <li>
-                    <!-- <a href="xuatHang.html"> -->
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
-                        <i class="fa fa-upload"></i> Xuất hàng
+                        <i class="glyphicon glyphicon-export"></i> Xuất hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'doi-tra-hang'));?>">
+                        <i class="glyphicon glyphicon-transfer"></i> Đổi trả hàng
                     </a>
                 </li>
             </ul>
@@ -61,7 +69,9 @@
                                     $file->setAttribute('onchange','return hamSubmit();');       
                                     echo $this->formElement($file);
                                 ?>
-                                <button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" >Import</button>
+                                <!-- Nếu cần import bảng giá thì gắn sự kiện ở phía dưới vào button import -->
+                                <!-- onclick="return Import();" -->
+                                <button type="button" class="h5a-btn btn btn-default btn-sm" >Import</button>
                                 <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'export-bang-gia')); ?>"><button type="button" class="h5a-btn btn btn-default btn-sm">Export</button></a>
                                 <?php
                                     echo $this->form()->closeTag();
@@ -164,7 +174,7 @@
                                             {
                                                 if($kenhPhanPhoi['cap']>0)
                                                 {
-                                                    echo '<td>';
+                                                    echo '<td style="white-space:nowrap;">';
                                                         $giaXuat=$this->InGiaXuat($sanPham->getIdSanPham(), $kenhPhanPhoi['termTaxonomyId']);
                                                         if($sanPham->getGiaNhap()==0)
                                                         {

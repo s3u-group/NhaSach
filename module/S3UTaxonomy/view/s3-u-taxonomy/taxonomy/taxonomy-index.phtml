@@ -12,71 +12,126 @@
       return false;
     }
 </SCRIPT>
-<?php
- foreach ($termTaxonomys as $termTaxonomy)
- {
-    if(!$termTaxonomy->getParent())
-    {
-        $ten=$termTaxonomy->getTermId()->getName();
-        $tax=$termTaxonomy->getTermId()->getSlug();
 
-    }
- }
+<div class="row">
+    <div class="col-md-2">
+       <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                 / Hàng hóa /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+                        
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-7">
+                        <?php
+                         foreach ($termTaxonomys as $termTaxonomy)
+                         {
+                            if(!$termTaxonomy->getParent())
+                            {
+                                $ten=$termTaxonomy->getTermId()->getName();
+                                $tax=$termTaxonomy->getTermId()->getSlug();
 
- $title = 'Quản lý Taxonomy '.$ten;
- $this->headTitle($title); 
- ?> 
- <h1><?php echo $this->escapeHtml($title); ?></h1> 
- <a href="<?php echo $this->url('s3u_taxonomy');?>">Quay lại</a>
- <?php
- $t=$termTaxonomys[0]->getTaxonomy();
- //var_dump($t);
- //die(var_dump($termTaxonomys));
- ?>
- <p>        
-     <a href="<?php echo $this->url('taxonomy/childTaxonomy/crudChildTaxonomy', array('tax'=>$t,'action'=>'taxonomyAdd'));?>">Thêm Taxonomy con</a>
- </p>
-<form method="post">
- <table class="table">
- <tr>
-     
-     
-     <th>Term</th>
-     <th>Slug</th>
-     <th>Description</th>     
-     <th>Sửa</th>
-     <th>Xóa</th>
- </tr> 
+                            }
+                         }
 
-<?php  foreach ($termTaxonomys as $termTaxonomy):
-            if($termTaxonomy->getParent())
-            {
-?>
- <tr>
-     
-     <td>
-     	<?php echo str_repeat("&#8212;&#8212;&#8212;&#8212; ", $termTaxonomy->getCap()).$this->escapeHtml($termTaxonomy->getTermId()->getName());?>
-     </td>
-     <td>
-        <?php echo $this->escapeHtml($termTaxonomy->getTermId()->getSlug());?>
-     </td>
-     <td>
-     	<?php echo $this->escapeHtml($termTaxonomy->getDescription());?>
-     </td>
-     
-     <td>
-         <a href="<?php echo $this->url('taxonomy/childTaxonomy/crudChildTaxonomy',
-             array('tax'=>$tax, 'action'=>'taxonomyEdit', 'id' => $termTaxonomy->getTermTaxonomyId()));?>">Sửa</a>         
-     </td>   
-     <td>
-         
-         <a href="<?php echo $this->url('taxonomy/childTaxonomy/crudChildTaxonomy',
-             array('tax'=>$tax, 'action'=>'taxonomyDelete','id'=>$termTaxonomy->getTermTaxonomyId()));?>" onclick="return confirmAction()">Xóa</a>
-     </td>    
- </tr>
- <?php 
-        }
-    endforeach;
- ?> 
- </table>
-</form>
+                         $title = 'Quản lý '.$ten;
+                         $this->headTitle($title); 
+                         ?> 
+                         <h1><?php echo $this->escapeHtml($title); ?></h1> 
+                    </div>
+                    <div class="col-sm-5">                       
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                                <button type="button" class="h5a-btn btn btn-primary btn-sm">Trở về</button>&nbsp;
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+                             
+            </div>
+           
+            <div class="row">
+                 <!-- <a href="<?php //echo $this->url('s3u_taxonomy');?>">Quay lại</a> -->
+                 <?php
+                 $t=$termTaxonomys[0]->getTaxonomy();
+                 //var_dump($t);
+                 //die(var_dump($termTaxonomys));
+                 ?>
+                 <p>        
+                     <a href="<?php echo $this->url('taxonomy/childTaxonomy/crudChildTaxonomy', array('tax'=>$t,'action'=>'taxonomyAdd'));?>">Thêm Taxonomy con</a>
+                 </p>
+                <form method="post">
+                 <table class="table">
+                 <tr>
+                     
+                     
+                     <th>Term</th>
+                     <th>Slug</th>
+                     <th>Description</th>     
+                     <th>Sửa</th>
+                     <th>Xóa</th>
+                 </tr> 
+
+                <?php  foreach ($termTaxonomys as $termTaxonomy):
+                            if($termTaxonomy->getParent())
+                            {
+                ?>
+                 <tr>
+                     
+                     <td>
+                        <?php echo str_repeat("&#8212;&#8212;&#8212;&#8212; ", $termTaxonomy->getCap()).$this->escapeHtml($termTaxonomy->getTermId()->getName());?>
+                     </td>
+                     <td>
+                        <?php echo $this->escapeHtml($termTaxonomy->getTermId()->getSlug());?>
+                     </td>
+                     <td>
+                        <?php echo $this->escapeHtml($termTaxonomy->getDescription());?>
+                     </td>
+                     
+                     <td>
+                         <a href="<?php echo $this->url('taxonomy/childTaxonomy/crudChildTaxonomy',
+                             array('tax'=>$tax, 'action'=>'taxonomyEdit', 'id' => $termTaxonomy->getTermTaxonomyId()));?>">Sửa</a>         
+                     </td>   
+                     <td>
+                         
+                         <a href="<?php echo $this->url('taxonomy/childTaxonomy/crudChildTaxonomy',
+                             array('tax'=>$tax, 'action'=>'taxonomyDelete','id'=>$termTaxonomy->getTermTaxonomyId()));?>" onclick="return confirmAction()">Xóa</a>
+                     </td>    
+                 </tr>
+                 <?php 
+                        }
+                    endforeach;
+                 ?> 
+                 </table>
+                </form>
+            </div>
+        </div>                
+    </div>
+</div>
+<!-- FormatNumber -->
+    <script src="<?php echo $this->basePath();?>/js/formatnumber.js"></script>
+
+    <!-- convernumbertostring -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>

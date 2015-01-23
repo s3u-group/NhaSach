@@ -258,19 +258,29 @@ echo $this->form()->closeTag();
                  / Xuất hàng /
             </span>
             <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>                            
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Bảng giá
+                    </a>
+                </li>
                 <li>
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
-                        <i class="fa fa-cubes"></i> Danh sách hàng
+                        <i class="glyphicon glyphicon-align-justify"></i> Danh sách hàng
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
-                        <i class="fa fa-download"></i> Nhập hàng
+                        <i class="glyphicon glyphicon-import"></i> Nhập hàng
                     </a>
                 </li>
                 <li>
                     <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
-                        <i class="fa fa-upload"></i> Xuất hàng
+                        <i class="glyphicon glyphicon-export"></i> Xuất hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'doi-tra-hang'));?>">
+                        <i class="glyphicon glyphicon-transfer"></i> Đổi trả hàng
                     </a>
                 </li>
             </ul>
@@ -618,7 +628,7 @@ echo $this->form()->closeTag();
                                 'z-index': 100 // đặt search-result lên layout ngoài nhất
                             });
                             $.each(data, function(key, val){
-                                $('#search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span><span class="hide">'+val.diaChiKhachHang+'</span><span class="hide">'+val.kenhPhanPhoi+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
+                                $('#search-result').append('<div class="list-group-item"><span class="hide">'+val.idKhachHang+'</span><span>'+val.tenKhachHang+'</span><span class="hide">'+val.diaChiKhachHang+'</span><span class="hide">'+val.kenhPhanPhoi+'</span><span>. Di động: '+val.soDienThoaiKhachHang+'</span></div>'); // thêm một dòng vào search result, mỗi một dòng là 1 khách hàng
                             })
                         });
                     }
@@ -922,7 +932,7 @@ echo $this->form()->closeTag();
                     i++;
                 });
 
-                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right; white-space:nowrap;">'+addPeriod(tongTien)+'</td></tr>';
+                temp=temp+'<tr><td></td><td style="text-align: center;"><b>TỔNG</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right; white-space:nowrap;"><b>'+addPeriod(tongTien)+'</b></td></tr>';
                 //------------------------------------------------
                 temp = temp.replace(/__index__/g, sD);                    
                 $('#tbSanPham tbody').append(temp);

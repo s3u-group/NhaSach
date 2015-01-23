@@ -194,8 +194,8 @@
 ?>
 
 <?php
-     $this->headTitle('Nhập hàng');
-     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'nhap-hang')));
+     $this->headTitle('Đổi trả hàng');
+     $form->setAttribute('action', $this->url('hang_hoa/crud', array('action' => 'doi-tra-hang')));
      $form->setAttribute('role','form');
      $form->setAttribute('id','formNhapHang');                 
      $form->setAttribute('class','form-horizontal');     
@@ -256,7 +256,7 @@
             <div class="page-header">
                 <div class="row">
                     <div class="col-sm-6">
-                        <h1>Nhập hàng</h1>
+                        <h1>Đổi trả hàng</h1>
                     </div>
                     <div class="col-sm-6">
                         <div class="pull-right">
@@ -268,7 +268,7 @@
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
-                            <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm" onclick="return Import();" style="margin-right:60px;">Import</button></a>
+                            <a href="#"><button type="button" class="h5a-btn btn btn-default btn-sm" style="margin-right:60px;">Import</button></a>
 
                             
                         </div>
@@ -309,6 +309,21 @@
             
             <div class="col-sm-6">
                 <div class="form-group">
+                    <label class="col-sm-4 right" for="form-field-1">Tên khách hàng</label>
+                    <div class="col-sm-7">
+                        <?php
+                            $form->get('nhaCungCap')->setAttribute('placeHolder','Tên khách hàng đổi trả');
+                            echo $this->formElement($form->get('nhaCungCap'));
+                        ?>
+                    </div>
+                    <div id="nha-cung-cap-search-result"></div>
+                </div>
+                
+
+                
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
                     <label class="col-sm-4 right" for="form-field-1">Mã sản phẩm</label>
                     <div class="col-sm-7">
                         <?php
@@ -335,18 +350,6 @@
                         ?>
                     </div>
                 </div>
-
-                <div class="form-group">
-                    <label class="col-sm-4 right" for="form-field-1">Nhà cung cấp</label>
-                    <div class="col-sm-7">
-                        <?php
-                            echo $this->formElement($form->get('nhaCungCap'));
-                        ?>
-                    </div>
-                    <div id="nha-cung-cap-search-result"></div>
-                </div>
-            </div>
-            <div class="col-sm-6">
                 <div class="form-group">
                     <label class="col-sm-4 right" for="form-field-3">Số lượng</label>
                     <div class="col-sm-7">                                    
@@ -355,20 +358,19 @@
                         ?>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group"  hidden="true">
                     <label class="col-sm-4 right" for="form-field-4"></label>
                     <div class="col-sm-7"> 
                          <?php
                             $loaiGia=$form->get('loaiGia');
                             $loaiGia->setAttribute('id','loaiGia');
-                            $loaiGia->setAttribute('onChange','return kiemTracheckbox();');
+                            $loaiGia->setAttribute('hidden',true);
                             echo $this->formElement($loaiGia);                                               
-                        ?>                                   
-                       <!--  <input type="checkbox" value="0" onChange="return kiemTracheckbox();" name="loaiChiecKhau" id="loaiChiecKhau"> -->
+                        ?>
                         Sản phẩm thuộc loại có giá bìa
                     </div>
                 </div>
-                <div class="form-group" id="trGiaNhap">
+                <div class="form-group" hidden="true">
                     <label class="col-sm-4 right" for="form-field-4">Giá nhập</label>
                     <div class="col-sm-7">                                    
                         <?php
@@ -379,7 +381,7 @@
                         ?>
                     </div>
                 </div>
-                <div class="form-group" id="trChiecKhau" hidden="true">
+                <div class="form-group" hidden="true">
                     <label class="col-sm-4 right" for="form-field-4">Chiếc khấu (%)</label>
                     <div class="col-sm-7">                                    
                         <?php
@@ -388,12 +390,13 @@
                             $form->get('chiecKhau')->setAttribute('type','number');
                             $form->get('chiecKhau')->setAttribute('min','0');
                             $form->get('chiecKhau')->setAttribute('id','chiecKhau');
+                            //$form->get('chiecKhau')->setAttribute('disabled',true);
                             $form->get('chiecKhau')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('chiecKhau'));
                         ?>
                     </div>
                 </div>
-                <div class="form-group" id="trGiaBia" hidden="true">
+                <div class="form-group" hidden="true">
                     <label class="col-sm-4 right" for="form-field-4">Giá bìa</label>
                     <div class="col-sm-7">                                    
                         <?php
@@ -401,6 +404,7 @@
                             $form->get('giaBia')->setAttribute('id','giaBia');
                             $form->get('giaBia')->setAttribute('type','number');
                             $form->get('giaBia')->setAttribute('min','0');
+                            //$form->get('giaBia')->setAttribute('disabled',true);
                             $form->get('giaBia')->setAttribute('class','h5a-input form-control input-sm');
                             echo $this->formElement($form->get('giaBia'));
                         ?>
@@ -419,12 +423,10 @@
 <div class="h5a-container">
     <div class="row">
         <div class="col-md-2">
-        </div>
-        <h2 hidden="true" class="in">CHI TIẾT PHIẾU NHẬP</h2>
-        
+        </div>        
         
         <div class="col-md-10">
-            <h1>Danh sách nhập</h1>
+            <h3>Danh sách các mặt hàng đổi trả</h3>
             <div class="box">
                 <table id="tbNhapHang" class="invoice pricelist bottom20">
                     <thead>
@@ -585,7 +587,7 @@
                         $('#ma-hang-search-result').css({
                             position:'absolute',
                             top:pos.top + 35,
-                            left:pos.left+177,
+                            left:pos.left+182,
                             'z-index': 100 // đặt search-result lên layout ngoài nhất
                         });
 
@@ -623,15 +625,12 @@
             {
                 $("#loaiGia").prop("checked", true);
                 $("#loaiGia").val(1);
-                kiemTracheckbox();
             }
             else
             {
                 $("#loaiGia").prop("checked", false);
                 $("#loaiGia").val(0);
-                kiemTracheckbox();
             }
-            
             $('#ma-vach-search-result').empty();
             $('#ma-hang-search-result').empty();
         });
@@ -704,13 +703,11 @@
             {
                 $("#loaiGia").prop("checked", true);
                 $("#loaiGia").val(1);
-                kiemTracheckbox();
             }
             else
             {
                 $("#loaiGia").prop("checked", false);
                 $("#loaiGia").val(0);
-                kiemTracheckbox();
             }
             
             $('#ma-vach-search-result').empty();
@@ -732,7 +729,7 @@
             }
 
             xhr1 = $.ajax({
-                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-nha-cung-cap')); ?>',
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-khach-hang-doi-tra')); ?>',
                 type:'POST',
                 dataType:'json',
                 data:{
@@ -747,13 +744,13 @@
                         var pos = $('#nhaCungCap').position(); //lấy tọa độ của ô mã sản phẩm
                         $('#nha-cung-cap-search-result').css({
                             position:'absolute',
-                            top:pos.top + 145,
+                            top:pos.top + 30,
                             left:pos.left+182,
                             'z-index': 100 // đặt search-result lên layout ngoài nhất
                         });
 
                         $.each(data, function(key, val){
-                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span><span class="hide">'+val.diaChi+'</span></div>');
+                            $('#nha-cung-cap-search-result').append('<div class="list-group-item"><span class="hide">'+val.idDoiTac+'</span><span>'+val.hoTen+'</span><span class="hide">'+val.diaChi+'</span><span>. Di động: '+val.diDong+'</span></div>');
                         })
                     });
                 }
@@ -906,7 +903,7 @@
                     i++;
                 });
 
-                temp=temp+'<tr><td></td><td style="text-align: center;">TỔNG</td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right; white-space:nowrap;">'+addPeriod(tongTien)+'</td></tr>';
+                temp=temp+'<tr><td></td><td style="text-align: center;"><b>TỔNG</b></td><td></td><td></td><td></td><td></td><td></td><td style="text-align: right; white-space:nowrap;"><b>'+addPeriod(tongTien)+'</b></td></tr>';
                 //------------------------------------------------
                 temp = temp.replace(/__index__/g, sD);                    
                 $('#tbSanPham tbody').append(temp);

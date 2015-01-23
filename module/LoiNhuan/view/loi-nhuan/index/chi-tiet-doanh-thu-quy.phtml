@@ -47,6 +47,17 @@
                     <li role="presentation" class="active">
                         <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
                     </li>
+                    <?php 
+                    foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+                        if($kenhPhanPhoi['cap']>0)
+                        { ?>
+                            <li role="presentation">
+                                <a href="#<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>" role="tab" data-toggle="tab"><?php echo $kenhPhanPhoi['termId']['name']; ?></a>
+                            </li>
+                        <?php 
+                        }
+                    }
+                    ?>
                 </ul>
                 <div class="tab-content">
                     <div role="tabpanel" class="tab-pane active" id="home">
@@ -94,7 +105,61 @@
                                 </table>
                             </div>
                         </div>
-                    </div>                            
+                    </div>
+                    <?php
+                    foreach ($kenhPhanPhois as $kenhPhanPhoi) {
+                        if($kenhPhanPhoi['cap']>0)
+                        { ?>                                    
+                            <div role="tabpanel" class="tab-pane" id="<?php echo $kenhPhanPhoi['termTaxonomyId']; ?>">
+                                
+                                    <table class="dataTables-example">
+                                        <thead>
+                                            <tr>
+                                                <th>Mã đơn hàng</th>
+                                                <th>Khách hàng</th>
+                                                <th>Doanh thu</th>
+                                                <th>Lợi nhuận</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        foreach ($hoaDons as $hoaDon) {
+                                            if($kenhPhanPhoi['termTaxonomyId']==$hoaDon->getIdDoiTac()->getIdKenhPhanPhoi()->getTermTaxonomyId())
+                                            { ?>   
+                                                <tr>
+                                                    <td>
+                                                        <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-don-hang','id'=>$hoaDon->getIdHoaDon())); ?>">#<?php echo $hoaDon->getMaHoaDon(); ?>
+                                                        </a>
+                                                    </td>
+                                                    <td>
+                                                        <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-khach-hang','id'=>$hoaDon->getIdDoiTac()->getIdDoiTac())); ?>">
+                                                            <?php echo $hoaDon->getIdDoiTac()->getHoTen(); ?>
+                                                        </a>
+                                                    </td>
+                                                    <?php
+                                                        $doanhThu=0; $von=0; $loiNhuan=0;
+                                                        foreach ($hoaDon->getCtHoaDons() as $ctHoaDon) {
+                                                            $doanhThu+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
+                                                            $von+=(float)$ctHoaDon->getGiaNhap()*(float)$ctHoaDon->getSoLuong();
+                                                        }
+                                                        $loiNhuan=$doanhThu-$von;
+                                                    ?>
+                                                    
+                                                    <td><?php echo number_format($doanhThu,'0','',' '); ?></td>
+                                                    <td><?php  echo number_format($loiNhuan,'0','',' '); ?></td>
+                                                </tr>
+                                        <?php
+                                            }
+                                        }
+                                        ?>  
+                                        </tbody>
+                                    </table>
+                                </p>
+                            </div>
+                        <?php 
+                        }
+                    }
+                    ?>                             
                 </div>
             </div>
         </div>

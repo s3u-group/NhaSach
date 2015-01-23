@@ -1,25 +1,142 @@
-<?php $this->headTitle('Hàng hóa');?>
-<div align="center">
-	<h3>DANH SÁCH CÁC MÃ SẢN PHẨM KHÔNG THỂ IMPORT</h3>
-	<table>
-		<?php
-		$i=0;
-		foreach ($listMaSanPham as $list) {?>
-			<tr>
-				<td><?php echo ++$i; ?>.</td>
-				<td><?php echo $list; ?></td>
-			</tr>			
-		<?php }?>
-	</table>		
-</div>
-<div class="page-footer">
-    <div class="row bottom20">
-        <div class="col-sm-7 col-sm-offset-3">
-            <div class="col-sm-5 col-sm-offset-3">
-                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>"><button type="button" class="btn h5a-btn btn-primary full">Trở về</button></a>
-            </div>
+<div class="row">
+    <div class="col-md-2">
+       <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                 / Hàng hóa /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">
+                <li>                            
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                                 
+                        <i class="fa fa-list-alt"></i> Bảng giá
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>">
+                        <i class="glyphicon glyphicon-align-justify"></i> Danh sách hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'nhap-hang'));?>">
+                        <i class="glyphicon glyphicon-import"></i> Nhập hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'xuat-hang'));?>">
+                        <i class="glyphicon glyphicon-export"></i> Xuất hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'doi-tra-hang'));?>">
+                        <i class="glyphicon glyphicon-transfer"></i> Đổi trả hàng
+                    </a>
+                </li>            
+            </ul>
         </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Lỗi tạo sản phẩm</h1>
+                    </div>
+                    <div class="col-sm-6">                       
+                        <div class="pull-right">
+                            <div class="btn-group ">
+                                <button id="btPrev" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button id="btNext" type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'hang-hoa'));?>"><button type="button" class="h5a-btn btn btn-primary btn-sm">Trở về</button></a>&nbsp;
+                            </div>                                
+                        </div>
+                    </div>
+                </div>
+                <?php
+                    $flash=$this->flashMessenger();
+                    $flash->setMessageOpenFormat('<div%s>
+                     <button type="button" id="btFm" class="close" data-dismiss="alert" aria-hidden="true">
+                         &times;
+                     </button>
+                     <ul><li>')
+                     ->setMessageSeparatorString('</li><li>')
+                     ->setMessageCloseString('</li></ul></div>');
+
+                     $error=$flash->render('error',   array('alert', 'alert-dismissable', 'alert-danger'));
+                     echo $error;
+
+                     $info=$flash->render('info',    array('alert', 'alert-dismissable', 'alert-info'));
+                     echo $info;
+
+                     $default=$flash->render('default', array('alert', 'alert-dismissable', 'alert-warning'));
+                     echo $default;
+
+                     $success=$flash->render('success', array('alert', 'alert-dismissable', 'alert-success'));
+                     echo $success;                     
+                    if($error||$success||$info||$default)
+                    {
+                        echo '
+                        <script type="text/javascript">
+                            setTimeout(function(){
+                                document.getElementById("btFm").click();
+                            },5000);
+                        </script>';                        
+                    }
+                ?>                
+            </div>
+           
+            <div class="row">
+                <table border="1" width="81%">
+                    <thead>
+                        <th>STT</th>
+                        <th>Mã sản phẩm</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Đơn vị tính</th>
+                        <th>Giá</th>
+                        <th>Loại sản phẩm</th>
+                        
+                    </thead>
+                    <tbody>
+                    <?php
+                    $stt=0;
+                    foreach ($lois as $loi) {
+                    	$stt++;
+                    ?>
+                        <tr>
+                        	<td><?php echo $stt; ?></td>
+                        	<td><?php echo $loi['maSanPham']; ?></td>
+                        	<td><?php echo $loi['tenSanPham']; ?></td>
+                        	<td><?php echo $loi['donViTinh']; ?></td>
+                        	<td><?php echo $loi['gia']; ?></td>
+                        	<td><?php echo $loi['loaiSanPham']; ?></td>
+                        </tr>
+                    <?php
+                    }
+                    ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>                
     </div>
 </div>
 
+    <!-- FormatNumber -->
+    <script src="<?php echo $this->basePath();?>/js/formatnumber.js"></script>
 
+    <!-- convernumbertostring -->
+    <script src="<?php echo $this->basePath();?>/js/convernumbertostring.js"></script>
+
+    <!-- jQuery -->
+    <script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    

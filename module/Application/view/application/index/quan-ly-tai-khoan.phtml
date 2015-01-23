@@ -1,0 +1,123 @@
+<?php
+    $this->headTitle('Quản lý tài khoản');
+?>
+
+<div class="row">
+    <div class="col-md-2">
+        <div class="h5a-sidebar affix">
+            <span class="breadcrumb row">
+                <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">/ Kho</a>
+                 / Hàng hóa /
+            </span>
+            <ul class="nav h5a-sidenav nav-list accordion">                        
+                <li>
+                    <a href="<?php echo $this->url('application/default',array('controller'=>'Index','action'=>'quan-ly-tai-khoan')); ?>">
+                         Quản lý tài khoản
+                    </a>
+                </li> 
+                <li>
+                    <a href="<?php echo $this->url('zfcuser/register',array('action'=>'register')); ?>">
+                         Tạo tài khoản
+                    </a>
+                </li>  
+            </ul>
+        </div>
+    </div>
+    <div class="col-md-10" role="main">
+        <div class="h5a-docs-section">
+            <div class="page-header">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>QUẢN LÝ TÀI KHOẢN</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="pull-right">                                    
+                            <div class="btn-group ">
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-left"></i>
+                                </button>                                    
+                                <button type="button" class="h5a-btn btn btn-default btn-sm">
+                                    <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <ul class="nav nav-tabs" role="tablist" id="myTab">
+                    <li role="presentation" class="active">
+                        <a href="#home" role="tab" data-toggle="tab">Tất cả</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="home">
+                        <div class="container">
+                            <div class="row">
+                                <table id="tatCa" class="dataTables">
+                                    <thead>
+                                        <th><input type="checkbox"/></th>
+                                        <th>Họ và tên</th>
+                                        <th>Email</th>
+                                        <th>Địa chỉ</th>
+                                        <th>Thuộc chi nhánh</th>
+                                        <th style="text-align:center;">Reset mật khẩu</th>
+                                    </thead>
+                                    <tbody>  
+                                    <?php
+                                    foreach ($listUsers as $user) {
+                                    ?>
+                                        
+                                        <tr>
+                                            <td><input type="checkbox"/></td>
+                                            <td><?php echo $user->getHoTen(); ?></td>
+                                            <td><?php echo $user->getEmail(); ?></td>
+                                            <td><?php echo $user->getDiaChi(); ?></td>
+                                            <td>
+                                                <?php echo $this->GetTenKho($user->getKho())->getTenKho(); ?>
+                                            </td>
+                                            <td style="text-align:center;">
+                                                <a href="<?php echo $this->url('application/default',array('controller'=>'index','action'=>'reset-password','id'=>$user->getId())); ?>">
+                                                    <i class="glyphicon glyphicon-lock"></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>                                             
+                                                                                            
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                       
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+<!-- jQuery -->
+<script src="<?php echo $this->basePath();?>/js/jquery.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/bootstrap.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="<?php echo $this->basePath();?>/js/plugins/dataTables/jquery.dataTables.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('.dataTables').dataTable({
+            "pagingType": "simple",
+            "bPaginate": true,
+            "bLengthChange": true,
+            "bFilter": true,
+            "bInfo": true,
+            "bAutoWidth": true
+        });
+    });
+</script>
