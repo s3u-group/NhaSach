@@ -1,0 +1,34 @@
+<!-- loader -->
+<div id="tai-len" class="ui dimmer">
+	<div class="ui indeterminate text small loader">
+	  	Đang chuẩn bị...
+	</div>
+</div>
+<div id="tai-xuong" class="ui dimmer">
+	<div class="ui text small loader">
+	  	Đang xử lý...
+	</div>
+</div>
+<!-- notification -->
+<div id="luuThanhCong">Lưu thành công</div>
+<div id="xoaThanhCong">Đã xóa thành công</div>
+<div id="loi">Đã xảy ra lỗi</div>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#luuThanhCong").jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "success"
+        });
+
+		$("#xoaThanhCong").jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "info"
+        });
+
+		$("#loi").jqxNotification({
+            width: 250, position: "top-right", opacity: 0.9,
+            autoOpen: false, animationOpenDelay: 800, autoClose: true, autoCloseDelay: 3000, template: "error"
+        });
+	});
+</script>

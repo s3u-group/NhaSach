@@ -1,0 +1,17 @@
+<?php $container = $this->navigation()->breadcrumbs()  ?>
+<?php $navigation = $container->getContainer() ?>
+<div class="ui breadcrumb">
+	<?php $active = $container->findActive($navigation) ?>
+    <?php foreach($this->pages as $page): ?>
+        <?php if( ! $page->isActive()): ?>
+            <a href="<?php echo $page->getHref() ?>" class="section"><?php echo $page->getLabel() ?></a>
+            <i class="right chevron icon divider"></i>
+        <?php else: ?>
+        	<div class="active section">
+        		<?php if($container->getLinkLast()): ?><a href="<?php echo $page->getHref() ?>"><?php endif ?>
+                <?php echo $page->getLabel() ?>
+                <?php if($container->getLinkLast()): ?><a href="<?php echo $page->getHref() ?>"><?php endif ?>
+        	</div>
+        <?php endif ?>
+    <?php endforeach ?>
+</div>

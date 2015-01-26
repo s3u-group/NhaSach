@@ -1,0 +1,43 @@
+<!-- <div class="ui vertical menu main blue"> -->
+<?php foreach($this->container as $page): ?>
+    <?php if(!$page->isVisible() || !$this->navigation()->accept($page)) continue; ?>
+    <?php $hasChildren = $page->hasPages(); ?>
+    <?php if(!$hasChildren): 
+        if($page->getLabel()=='Chi nhánh') 
+        {
+            if($this->zfcUserIdentity()&&$this->zfcUserIdentity()->getId()==1){
+            ?>
+                <li class="<?php if($page->isActive()) echo 'active' ?>">
+                    <a href="<?php echo $page->getHref() ?>" >
+                        <?php echo $page->get('icon'); ?>
+                        <?php echo $page->getLabel(); ?>
+                    </a>
+                </li>
+        <?php
+            }            
+        }
+        else{ ?>
+            <li class="<?php if($page->isActive()) echo 'active' ?>">
+                <a href="<?php echo $page->getHref() ?>" >
+                    <?php echo $page->get('icon'); ?>
+                    <?php echo $page->getLabel(); ?>
+                </a>
+            </li>
+    <?php
+        }
+    ?>
+    
+    <?php else: ?>
+        <li>
+            <?php echo $page->get('icon'); ?>
+            <?php echo $page->getLabel(); ?>
+        </li>
+        <?php foreach ($page->getPages() as $child): ?>
+            <?php if(!$child->isVisible() || !$this->navigation()->accept($child)) continue; ?>
+            <a href="<?php echo $child->getHref(); ?>"  class="item <?php if($child->isActive()) echo 'red active' ?>">
+                <?php echo $child->getLabel(); ?>
+            </a>
+       <?php endforeach; ?>
+    <?php endif; ?>
+<?php endforeach; ?>
+<!-- </div> -->

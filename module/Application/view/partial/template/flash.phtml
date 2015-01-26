@@ -1,0 +1,38 @@
+<?php
+    $flash = $this->flashMessenger();
+    $flash->setMessageOpenFormat('<div%s>
+        <i class="close icon"></i>
+        <div class="header">
+            Thành công!
+        </div>
+        <ul class="list"><li>')
+        ->setMessageSeparatorString('</li><li>')
+        ->setMessageCloseString('</li></ul></div>');
+
+    //echo $flash->render('error',   array('ui', 'error', 'message'));
+    //echo $flash->render('info',    array('ui', 'info', 'message'));
+    //echo $flash->render('default', array('ui', 'message'));
+    echo $flash->render('success', array('ui', 'success', 'message'));
+    ?>
+
+    <?php
+    $flash = $this->flashMessenger();
+    $flash->setMessageOpenFormat('<div%s>
+        <i class="close icon"></i>
+        <div class="header">
+            Lỗi!
+        </div>
+        <ul class="list"><li>')
+        ->setMessageSeparatorString('</li><li>')
+        ->setMessageCloseString('</li></ul></div>');
+
+    echo $flash->render('error',   array('ui', 'error', 'message'));
+    ?>
+
+<script type="text/javascript">
+    window.setTimeout(function() {
+        $(".message").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+        });
+    }, 2000);
+</script>
