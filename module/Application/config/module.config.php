@@ -60,6 +60,9 @@ return array(
         'aliases' => array(
             'translator' => 'MvcTranslator',
         ),        
+        'factories' => array(
+            'main' => 'Application\Navigation\Service\MainNavigationFactory'
+        )
     ),
     'translator' => array(
         'locale' => 'en_US',
@@ -93,7 +96,9 @@ return array(
             'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'menu/default'            => __DIR__ . '/../view/partial/menu/default.phtml',
             'layout/giaodien'        => __DIR__ . '/../view/layout/giao-dien.phtml',
+
         ),
         'template_path_stack' => array(
             __DIR__ . '/../view',
@@ -210,6 +215,61 @@ return array(
               
             ),
         ),
+    ),
+
+    'navigation' => array(
+        'main' => array(
+            array(
+                'label' => 'Hàng hóa',
+                'route' => 'hang_hoa/crud',
+                'params'=>array(
+                    'action'=>'bang-gia',
+                ),
+                'icon' => '<i class="glyphicon glyphicon-qrcode"></i>',                
+            ),
+            array(
+                'label' => 'Kênh phân phối',
+                'route' => 'kenh_phan_phoi/crud',
+                'params'=>array(
+                    'action'=>'index',
+                ),
+                'icon' => '<i class="glyphicon glyphicon-retweet"></i>',
+            ),
+            array(
+                'label' => 'Chính sách bán hàng',
+                'route' => 'kho/crud',
+                'params'=>array(
+                    'action'=>'chinh-sach-ban-hang',
+                ),
+                'icon' => '<b style="font-size:16px;">%</b>',
+            ),
+            array(
+                'label' => 'Thanh toán',
+                'route' => 'cong_no/crud',
+                'params'=>array(
+                    'action'=>'index',
+                ),
+                'icon' => '<i class="glyphicon glyphicon-usd"></i>',
+            ),
+
+            array(
+                'label' => 'Bán hàng',
+                'route' => 'loi_nhuan/crud',
+                'params'=>array(
+                    'action'=>'index',
+                ),
+                'icon' => '<i class="glyphicon glyphicon-shopping-cart"></i>',
+            ),
+            array(
+                'label' => 'Chi nhánh',
+                'route' => 'kho/crud',
+                'params'=>array(
+                    'action'=>'index',
+                ),
+                'icon' => '<i class="fa fa-share-alt"></i>',
+            ),
+        ),
+
     ),
    
 );

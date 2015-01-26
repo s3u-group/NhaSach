@@ -9,7 +9,11 @@
     <meta name="author" content="">
     
     <?php echo $this->headTitle();?>
-
+<style type="text/css">
+    /*.navbar-collapse{background-color: darkviolet;}
+    .navbar-collapse ul li a{color: white;}
+    .navbar-collapse ul li:hover a{background: white; color:darkviolet;}*/
+</style>
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo $this->basePath();?>/css/bootstrap.min.css" rel="stylesheet">
 
@@ -48,49 +52,50 @@
 
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li>                        
-                        <a href="<?php echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                        
-                            <i style="color:black;" class="glyphicon glyphicon-qrcode"></i>
+                    <?php $this->navigation('main')->menu()->setPartial('menu/default'); ?>
+                    <?php echo $this->navigation('main')->menu(); ?>
+                    <!-- <li>                        
+                        <a href="<?php //echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                        
+                            <i class="glyphicon glyphicon-qrcode"></i>
                             Hàng hóa
                         </a>
                     </li>
                     <li>                        
-                        <a href="<?php echo $this->url('kenh_phan_phoi');?>">
-                            <i style="color:black;" class="glyphicon glyphicon-retweet"></i>
+                        <a href="<?php //echo $this->url('kenh_phan_phoi');?>">
+                            <i class="glyphicon glyphicon-retweet"></i>
                             Kênh phân phối
                         </a>
                     </li>
                     <li>                        
-                        <a href="<?php echo $this->url('kho/crud',array('action'=>'chinh-sach-ban-hang'));?>">
-                            <b style="font-size:16px; color:black;">%</b>
+                        <a href="<?php //echo $this->url('kho/crud',array('action'=>'chinh-sach-ban-hang'));?>">
+                            <b style="font-size:16px;">%</b>
                             Chính sách bán hàng
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo $this->url('cong_no');?>">
-                            <i class="glyphicon glyphicon-usd" style="color:black;"></i>
+                        <a href="<?php //echo $this->url('cong_no');?>">
+                            <i class="glyphicon glyphicon-usd"></i>
                             Thanh toán
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo $this->url('loi_nhuan');?>">
-                            <i style="color:black;" class="glyphicon glyphicon-shopping-cart"></i>
-                           <!-- Lợi nhuận -->
+                        <a href="<?php //echo $this->url('loi_nhuan');?>">
+                            <i class="glyphicon glyphicon-shopping-cart"></i>
                            Bán hàng
                         </a>
-                    </li>
+                    </li> -->
                     <?php 
-                        if($this->zfcUserIdentity()&&$this->zfcUserIdentity()->getId()==1) 
-                        { 
+                        /*if($this->zfcUserIdentity()&&$this->zfcUserIdentity()->getId()==1) 
+                        { */
                     ?>
-                            <li>
-                                <a href="<?php echo $this->url('kho');?>">
-                                    <i style="color:black;" class="fa fa-share-alt"></i>
+                            <!-- <li>
+                                <a href="<?php //echo $this->url('kho');?>">
+                                    <i class="fa fa-share-alt"></i>
                                    Chi nhánh
                                 </a>
-                            </li>
+                            </li> -->
                     <?php
-                        }
+                        /*}*/
                     ?>
                     <?php
                     if($this->zfcUserIdentity())
@@ -99,8 +104,8 @@
                     ?>
                         <li title="Bạn đang ở chi nhánh <?php echo $kho->getTenKho(); ?>">
                             <a href="#">
-                                <i style="color:black;" class="fa fa-hand-o-right"></i>
-                               <b style="color:#c95b5b;">
+                                <i class="fa fa-hand-o-right"></i>
+                               <b>
                                     <?php 
                                         
                                         echo $kho->getTenKho();
@@ -125,7 +130,7 @@
                                     $soDonHanQuaHan=count($responses['response']);
                                     if($soDonHanQuaHan>0){ ?>
                                         <i class="fa fa-bell shake"  style="color:red;"></i> 
-                                        <span class="badge"  style="background-color:red;">
+                                        <span class="badge">
                                     <?php    
                                     }
                                     else{ ?>
