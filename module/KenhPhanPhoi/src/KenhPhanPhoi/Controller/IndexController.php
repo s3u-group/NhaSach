@@ -33,12 +33,6 @@ use DateTimeZone;
   
   public function getEntityManager()
   {
-    // kiểm tra đăng nhập
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
-
      if(!$this->entityManager)
      {
       $this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');

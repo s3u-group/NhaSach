@@ -26,10 +26,6 @@
   
   public function getEntityManager()
   {
-     if(!$this->zfcUserAuthentication()->hasIdentity())
-     {
-       return $this->redirect()->toRoute('application');
-     }
      if(!$this->entityManager)
      {
       $this->entityManager=$this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
