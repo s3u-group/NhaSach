@@ -42,7 +42,7 @@ class IndexController extends AbstractActionController
       // kiểm tra đăng nhập
       if($this->zfcUserAuthentication()->hasIdentity())
       {
-        return $this->redirect()->toRoute('hang_hoa');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
       }
       return new ViewModel();
     }

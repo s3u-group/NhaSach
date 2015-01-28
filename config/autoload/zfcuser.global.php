@@ -156,7 +156,7 @@ $settings = array(
      * Accepted values: A valid route name within your application
      *
      */
-    'login_redirect_route' => 'hang_hoa',
+    'login_redirect_route' => 'application',
 
     /**
      * Logout Redirect Route

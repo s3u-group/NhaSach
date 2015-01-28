@@ -40,4 +40,22 @@
        <?php endforeach; ?>
     <?php endif; ?>
 <?php endforeach; ?>
-<!-- </div> -->
+<?php
+if($this->zfcUserIdentity())
+{ 
+     $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho());
+?>
+    <li title="Bạn đang ở chi nhánh <?php echo $kho->getTenKho(); ?>">
+        <a href="#">
+            <i class="fa fa-hand-o-right"></i>
+           <b>
+                <?php 
+                    
+                    echo $kho->getTenKho();
+                ?>
+            </b>
+        </a>
+    </li>
+<?php
+}
+?>

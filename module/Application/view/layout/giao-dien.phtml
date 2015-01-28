@@ -53,70 +53,7 @@
             <div class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <?php $this->navigation('main')->menu()->setPartial('menu/default'); ?>
-                    <?php echo $this->navigation('main')->menu(); ?>
-                    <!-- <li>                        
-                        <a href="<?php //echo $this->url('hang_hoa/crud',array('action'=>'bang-gia'));?>">                        
-                            <i class="glyphicon glyphicon-qrcode"></i>
-                            Hàng hóa
-                        </a>
-                    </li>
-                    <li>                        
-                        <a href="<?php //echo $this->url('kenh_phan_phoi');?>">
-                            <i class="glyphicon glyphicon-retweet"></i>
-                            Kênh phân phối
-                        </a>
-                    </li>
-                    <li>                        
-                        <a href="<?php //echo $this->url('kho/crud',array('action'=>'chinh-sach-ban-hang'));?>">
-                            <b style="font-size:16px;">%</b>
-                            Chính sách bán hàng
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php //echo $this->url('cong_no');?>">
-                            <i class="glyphicon glyphicon-usd"></i>
-                            Thanh toán
-                        </a>
-                    </li>
-                    <li>
-                        <a href="<?php //echo $this->url('loi_nhuan');?>">
-                            <i class="glyphicon glyphicon-shopping-cart"></i>
-                           Bán hàng
-                        </a>
-                    </li> -->
-                    <?php 
-                        /*if($this->zfcUserIdentity()&&$this->zfcUserIdentity()->getId()==1) 
-                        { */
-                    ?>
-                            <!-- <li>
-                                <a href="<?php //echo $this->url('kho');?>">
-                                    <i class="fa fa-share-alt"></i>
-                                   Chi nhánh
-                                </a>
-                            </li> -->
-                    <?php
-                        /*}*/
-                    ?>
-                    <?php
-                    if($this->zfcUserIdentity())
-                    { 
-                         $kho=$this->GetTenKho($this->zfcUserIdentity()->getKho());
-                    ?>
-                        <li title="Bạn đang ở chi nhánh <?php echo $kho->getTenKho(); ?>">
-                            <a href="#">
-                                <i class="fa fa-hand-o-right"></i>
-                               <b>
-                                    <?php 
-                                        
-                                        echo $kho->getTenKho();
-                                    ?>
-                                </b>
-                            </a>
-                        </li>
-                    <?php
-                    }
-                    ?>
-                    
+                    <?php echo $this->navigation('main')->menu(); ?> 
                 </ul>
 
                 <ul class="nav navbar-nav navbar-right">
@@ -139,8 +76,6 @@
                                     <?php
                                     }
                                     echo $soDonHanQuaHan;
-
-
                                 }
                                 else
                                 { ?>
