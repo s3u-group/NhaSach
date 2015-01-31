@@ -1,5 +1,10 @@
+ <style type="text/css">
+    #notifications{
+         width: 215px; 
+         margin-left: 20px;
+    }
+</style>
 <?php echo $this->headTitle('Công nợ'); ?>
-
     <div class="row">
         <div class="col-md-2">
             <div class="h5a-sidebar affix">
@@ -12,24 +17,37 @@
                     
                    <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'index'));?>">
-                            <!-- <i class="glyphicon glyphicon-open"></i> --> Khách hàng
+                            Khách hàng
                         </a>
                     </li> 
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'cong-no-nha-cung-cap'));?>" title="Công nợ nhà cung cấp">
-                            <!-- <i class="glyphicon glyphicon-save"></i> --> Nhà cung cấp
+                            Nhà cung cấp
                         </a>
                     </li> 
                     <li>
                         <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-thu'));?>" title="Công nợ nhà cung cấp">
-                           <!--  <i class="glyphicon glyphicon-save"></i> --> Phiếu thu
+                           Phiếu thu
                         </a>
                     </li> 
-                    <li>
-                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
-                            <!-- <i class="glyphicon glyphicon-save"></i> --> Phiếu chi
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            Phiếu chi
                         </a>
-                    </li>    
+                         <ul class="dropdown-menu" id="notifications">   
+                            <li>
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-nha-cung-cap')); ?>">Lập phiếu chi Nhà cung cấp
+                                </a>
+                                
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>">Lập phiếu chi Khách hàng
+                                </a>
+                                
+                            </li>
+                        </ul>
+                    </li> 
                 </ul>
             </div>
         </div>

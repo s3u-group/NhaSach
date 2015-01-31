@@ -2,6 +2,10 @@
     table tr td{
         padding: 0px;
     }
+    #notifications{
+         width: 215px; 
+         margin-left: 20px;
+    }
 </style>
 
 <div class="khongin">
@@ -29,11 +33,24 @@
                             Phiếu thu
                         </a>
                     </li> 
-                    <li>
-                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi'));?>" title="Công nợ nhà cung cấp">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             Phiếu chi
                         </a>
-                    </li>                  
+                         <ul class="dropdown-menu" id="notifications">   
+                            <li>
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-nha-cung-cap')); ?>">Lập phiếu chi nhà cung cấp
+                                </a>
+                                
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="<?php echo $this->url('cong_no/crud',array('action'=>'lap-phieu-chi-khach-hang')); ?>">Lập phiếu chi khách hàng
+                                </a>
+                                
+                            </li>
+                        </ul>
+                    </li>                 
                 </ul>
             </div>
         </div>
