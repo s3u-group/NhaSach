@@ -2,10 +2,10 @@
 -- version 4.1.14
 -- http://www.phpmyadmin.net
 --
--- Client :  127.0.0.1
--- Généré le :  Jeu 15 Janvier 2015 à 09:06
--- Version du serveur :  5.6.17
--- Version de PHP :  5.5.12
+-- Host: 127.0.0.1
+-- Generation Time: Jan 31, 2015 at 08:39 AM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,13 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Base de données :  `nha_sach`
+-- Database: `nha_sach`
 --
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `barcode`
+-- Table structure for table `barcode`
 --
 
 CREATE TABLE IF NOT EXISTS `barcode` (
@@ -32,10 +32,10 @@ CREATE TABLE IF NOT EXISTS `barcode` (
   `length` int(11) DEFAULT NULL,
   `state` int(11) NOT NULL,
   PRIMARY KEY (`id_barcode`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=12 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 --
--- Contenu de la table `barcode`
+-- Dumping data for table `barcode`
 --
 
 INSERT INTO `barcode` (`id_barcode`, `ten_barcode`, `length`, `state`) VALUES
@@ -49,7 +49,7 @@ INSERT INTO `barcode` (`id_barcode`, `ten_barcode`, `length`, `state`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `chiet_khau`
+-- Table structure for table `chiet_khau`
 --
 
 CREATE TABLE IF NOT EXISTS `chiet_khau` (
@@ -62,7 +62,7 @@ CREATE TABLE IF NOT EXISTS `chiet_khau` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 --
--- Contenu de la table `chiet_khau`
+-- Dumping data for table `chiet_khau`
 --
 
 INSERT INTO `chiet_khau` (`id_chiet_khau`, `id_kho`, `id_kenh_phan_phoi`, `chiet_khau`, `status`) VALUES
@@ -75,7 +75,7 @@ INSERT INTO `chiet_khau` (`id_chiet_khau`, `id_kho`, `id_kenh_phan_phoi`, `chiet
 -- --------------------------------------------------------
 
 --
--- Structure de la table `cong_no`
+-- Table structure for table `cong_no`
 --
 
 CREATE TABLE IF NOT EXISTS `cong_no` (
@@ -87,12 +87,12 @@ CREATE TABLE IF NOT EXISTS `cong_no` (
   `du_no` float NOT NULL,
   PRIMARY KEY (`id_cong_no`),
   KEY `fk_cong_no_doi_tac` (`id_doi_tac`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=45 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ct_hoa_don`
+-- Table structure for table `ct_hoa_don`
 --
 
 CREATE TABLE IF NOT EXISTS `ct_hoa_don` (
@@ -105,12 +105,12 @@ CREATE TABLE IF NOT EXISTS `ct_hoa_don` (
   PRIMARY KEY (`id_ct_hoa_don`),
   KEY `fk_cthoadon_hoadon` (`id_hoa_don`),
   KEY `fk_cthoadon_sanpham` (`id_san_pham`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `ct_phieu_nhap`
+-- Table structure for table `ct_phieu_nhap`
 --
 
 CREATE TABLE IF NOT EXISTS `ct_phieu_nhap` (
@@ -122,12 +122,12 @@ CREATE TABLE IF NOT EXISTS `ct_phieu_nhap` (
   PRIMARY KEY (`id_ct_phieu_nhap`),
   KEY `fk_ctphieunhap_sanpham` (`id_san_pham`),
   KEY `fk_ctphieunhap_phieunhap` (`id_phieu_nhap`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `doi_tac`
+-- Table structure for table `doi_tac`
 --
 
 CREATE TABLE IF NOT EXISTS `doi_tac` (
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS `doi_tac` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=29 ;
 
 --
--- Contenu de la table `doi_tac`
+-- Dumping data for table `doi_tac`
 --
 
 INSERT INTO `doi_tac` (`id_doi_tac`, `ho_ten`, `dia_chi`, `email`, `mo_ta`, `dien_thoai_co_dinh`, `di_dong`, `hinh_anh`, `website`, `twitter`, `loai_doi_tac`, `id_kenh_phan_phoi`, `ngay_dang_ky`, `kho`) VALUES
@@ -167,7 +167,7 @@ INSERT INTO `doi_tac` (`id_doi_tac`, `ho_ten`, `dia_chi`, `email`, `mo_ta`, `die
 -- --------------------------------------------------------
 
 --
--- Structure de la table `gia_xuat`
+-- Table structure for table `gia_xuat`
 --
 
 CREATE TABLE IF NOT EXISTS `gia_xuat` (
@@ -179,12 +179,12 @@ CREATE TABLE IF NOT EXISTS `gia_xuat` (
   PRIMARY KEY (`id_gia_xuat`),
   KEY `fk_giaxuat_sanpham` (`id_san_pham`),
   KEY `fk_gia_xuat_term_taxonomy` (`id_kenh_phan_phoi`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=81 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `hoa_don`
+-- Table structure for table `hoa_don`
 --
 
 CREATE TABLE IF NOT EXISTS `hoa_don` (
@@ -199,12 +199,12 @@ CREATE TABLE IF NOT EXISTS `hoa_don` (
   KEY `fk_hoadon_doitac` (`id_doi_tac`),
   KEY `fk_hoadon_user` (`id_user_nv`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=19 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `kho`
+-- Table structure for table `kho`
 --
 
 CREATE TABLE IF NOT EXISTS `kho` (
@@ -215,7 +215,7 @@ CREATE TABLE IF NOT EXISTS `kho` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
--- Contenu de la table `kho`
+-- Dumping data for table `kho`
 --
 
 INSERT INTO `kho` (`id_kho`, `ten_kho`, `dia_chi_kho`) VALUES
@@ -224,7 +224,7 @@ INSERT INTO `kho` (`id_kho`, `ten_kho`, `dia_chi_kho`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `phieu_chi`
+-- Table structure for table `phieu_chi`
 --
 
 CREATE TABLE IF NOT EXISTS `phieu_chi` (
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS `phieu_chi` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `phieu_nhap`
+-- Table structure for table `phieu_nhap`
 --
 
 CREATE TABLE IF NOT EXISTS `phieu_nhap` (
@@ -260,12 +260,12 @@ CREATE TABLE IF NOT EXISTS `phieu_nhap` (
   KEY `fk_phieunhap_user` (`id_user_nv`),
   KEY `fk_phieunhap_doitac` (`id_doi_tac`),
   KEY `kho` (`kho`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=27 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=28 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `phieu_thu`
+-- Table structure for table `phieu_thu`
 --
 
 CREATE TABLE IF NOT EXISTS `phieu_thu` (
@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `phieu_thu` (
 -- --------------------------------------------------------
 
 --
--- Structure de la table `san_pham`
+-- Table structure for table `san_pham`
 --
 
 CREATE TABLE IF NOT EXISTS `san_pham` (
@@ -311,12 +311,12 @@ CREATE TABLE IF NOT EXISTS `san_pham` (
   KEY `fk_sanpham_zftermtaxonomy` (`id_loai`),
   KEY `kho` (`kho`),
   KEY `ma_san_pham` (`ma_san_pham`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=57 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=69 ;
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user`
+-- Table structure for table `user`
 --
 
 CREATE TABLE IF NOT EXISTS `user` (
@@ -338,17 +338,16 @@ CREATE TABLE IF NOT EXISTS `user` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `user`
+-- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`user_id`, `username`, `email`, `display_name`, `password`, `state`, `ho_ten`, `dia_chi`, `mo_ta`, `dien_thoai_co_dinh`, `di_dong`, `twitter`, `kho`) VALUES
-(1, NULL, 'Admin@gmail.com', 'Supper Admin', '$2y$14$aWfC3y6PqYUyG6Ll2XSlg.ZJzPMMxUgUFax4etfzeENZsg2Mo3L6S', 0, 'Supper Admin', 'TrÃ  Vinh', 'Quáº£n lÃ½ website NhÃ  SÃ¡ch', '', '', '', 1),
-(2, NULL, 'phanvanthanh@gmail.com', 'Phan Van Thanh', '$2y$14$aWfC3y6PqYUyG6Ll2XSlg.ZJzPMMxUgUFax4etfzeENZsg2Mo3L6S', 0, 'Supper Admin', 'TrÃ  Vinh', 'Quáº£n lÃ½ website NhÃ  SÃ¡ch', '', '', '', 1);
+(1, NULL, 'Admin@gmail.com', 'Supper Admin', '$2y$14$aWfC3y6PqYUyG6Ll2XSlg.ZJzPMMxUgUFax4etfzeENZsg2Mo3L6S', 0, 'Supper Admin', 'TrÃ  Vinh', 'Quáº£n lÃ½ website NhÃ  SÃ¡ch', '', '', '', 1);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user_role`
+-- Table structure for table `user_role`
 --
 
 CREATE TABLE IF NOT EXISTS `user_role` (
@@ -360,7 +359,7 @@ CREATE TABLE IF NOT EXISTS `user_role` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
 
 --
--- Contenu de la table `user_role`
+-- Dumping data for table `user_role`
 --
 
 INSERT INTO `user_role` (`id`, `roleId`, `is_default`, `parent_id`) VALUES
@@ -370,7 +369,7 @@ INSERT INTO `user_role` (`id`, `roleId`, `is_default`, `parent_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `user_role_linker`
+-- Table structure for table `user_role_linker`
 --
 
 CREATE TABLE IF NOT EXISTS `user_role_linker` (
@@ -381,17 +380,16 @@ CREATE TABLE IF NOT EXISTS `user_role_linker` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Contenu de la table `user_role_linker`
+-- Dumping data for table `user_role_linker`
 --
 
 INSERT INTO `user_role_linker` (`user_id`, `role_id`) VALUES
-(1, 2),
-(2, 2);
+(1, 2);
 
 -- --------------------------------------------------------
 
 --
--- Structure de la table `zf_term`
+-- Table structure for table `zf_term`
 --
 
 CREATE TABLE IF NOT EXISTS `zf_term` (
@@ -400,10 +398,10 @@ CREATE TABLE IF NOT EXISTS `zf_term` (
   `slug` varchar(200) DEFAULT NULL,
   `term_group` bigint(10) DEFAULT NULL,
   PRIMARY KEY (`term_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=52 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=54 ;
 
 --
--- Contenu de la table `zf_term`
+-- Dumping data for table `zf_term`
 --
 
 INSERT INTO `zf_term` (`term_id`, `name`, `slug`, `term_group`) VALUES
@@ -436,7 +434,7 @@ INSERT INTO `zf_term` (`term_id`, `name`, `slug`, `term_group`) VALUES
 -- --------------------------------------------------------
 
 --
--- Structure de la table `zf_term_taxonomy`
+-- Table structure for table `zf_term_taxonomy`
 --
 
 CREATE TABLE IF NOT EXISTS `zf_term_taxonomy` (
@@ -452,7 +450,7 @@ CREATE TABLE IF NOT EXISTS `zf_term_taxonomy` (
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=53 ;
 
 --
--- Contenu de la table `zf_term_taxonomy`
+-- Dumping data for table `zf_term_taxonomy`
 --
 
 INSERT INTO `zf_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `description`, `parent`, `count`) VALUES
@@ -483,79 +481,79 @@ INSERT INTO `zf_term_taxonomy` (`term_taxonomy_id`, `term_id`, `taxonomy`, `desc
 (52, 53, 'danh-muc-hang-hoa', 'CÃ³ nhá»¯ng sáº£n pháº©m lÃºc thÃªm vÃ o khÃ´ng nháº­p loáº¡i sáº£n pháº©m', 8, NULL);
 
 --
--- Contraintes pour les tables exportées
+-- Constraints for dumped tables
 --
 
 --
--- Contraintes pour la table `cong_no`
+-- Constraints for table `cong_no`
 --
 ALTER TABLE `cong_no`
   ADD CONSTRAINT `fk_cong_no_doi_tac` FOREIGN KEY (`id_doi_tac`) REFERENCES `doi_tac` (`id_doi_tac`);
 
 --
--- Contraintes pour la table `ct_hoa_don`
+-- Constraints for table `ct_hoa_don`
 --
 ALTER TABLE `ct_hoa_don`
   ADD CONSTRAINT `fk_cthoadon_hoadon` FOREIGN KEY (`id_hoa_don`) REFERENCES `hoa_don` (`id_hoa_don`),
   ADD CONSTRAINT `fk_cthoadon_sanpham` FOREIGN KEY (`id_san_pham`) REFERENCES `san_pham` (`id_san_pham`);
 
 --
--- Contraintes pour la table `ct_phieu_nhap`
+-- Constraints for table `ct_phieu_nhap`
 --
 ALTER TABLE `ct_phieu_nhap`
   ADD CONSTRAINT `fk_ctphieunhap_phieunhap` FOREIGN KEY (`id_phieu_nhap`) REFERENCES `phieu_nhap` (`id_phieu_nhap`),
   ADD CONSTRAINT `fk_ctphieunhap_sanpham` FOREIGN KEY (`id_san_pham`) REFERENCES `san_pham` (`id_san_pham`);
 
 --
--- Contraintes pour la table `doi_tac`
+-- Constraints for table `doi_tac`
 --
 ALTER TABLE `doi_tac`
   ADD CONSTRAINT `fk_doitac_zf_term_taxonomy` FOREIGN KEY (`loai_doi_tac`) REFERENCES `zf_term_taxonomy` (`term_taxonomy_id`);
 
 --
--- Contraintes pour la table `gia_xuat`
+-- Constraints for table `gia_xuat`
 --
 ALTER TABLE `gia_xuat`
   ADD CONSTRAINT `fk_giaxuat_sanpham` FOREIGN KEY (`id_san_pham`) REFERENCES `san_pham` (`id_san_pham`),
   ADD CONSTRAINT `fk_gia_xuat_term_taxonomy` FOREIGN KEY (`id_kenh_phan_phoi`) REFERENCES `zf_term_taxonomy` (`term_taxonomy_id`);
 
 --
--- Contraintes pour la table `hoa_don`
+-- Constraints for table `hoa_don`
 --
 ALTER TABLE `hoa_don`
   ADD CONSTRAINT `fk_hoadon_doitac` FOREIGN KEY (`id_doi_tac`) REFERENCES `doi_tac` (`id_doi_tac`),
   ADD CONSTRAINT `fk_hoadon_user` FOREIGN KEY (`id_user_nv`) REFERENCES `user` (`user_id`);
 
 --
--- Contraintes pour la table `phieu_chi`
+-- Constraints for table `phieu_chi`
 --
 ALTER TABLE `phieu_chi`
   ADD CONSTRAINT `fk_phieuchi_congno` FOREIGN KEY (`id_cong_no`) REFERENCES `cong_no` (`id_cong_no`),
   ADD CONSTRAINT `fk_phieuchi_user` FOREIGN KEY (`id_user_nv`) REFERENCES `user` (`user_id`);
 
 --
--- Contraintes pour la table `phieu_nhap`
+-- Constraints for table `phieu_nhap`
 --
 ALTER TABLE `phieu_nhap`
   ADD CONSTRAINT `fk_phieunhap_doitac` FOREIGN KEY (`id_doi_tac`) REFERENCES `doi_tac` (`id_doi_tac`),
   ADD CONSTRAINT `fk_phieunhap_user` FOREIGN KEY (`id_user_nv`) REFERENCES `user` (`user_id`);
 
 --
--- Contraintes pour la table `phieu_thu`
+-- Constraints for table `phieu_thu`
 --
 ALTER TABLE `phieu_thu`
   ADD CONSTRAINT `fk_phieuthu_congno` FOREIGN KEY (`id_cong_no`) REFERENCES `cong_no` (`id_cong_no`),
   ADD CONSTRAINT `fk_phieuthu_user` FOREIGN KEY (`id_user_nv`) REFERENCES `user` (`user_id`);
 
 --
--- Contraintes pour la table `san_pham`
+-- Constraints for table `san_pham`
 --
 ALTER TABLE `san_pham`
   ADD CONSTRAINT `fk_sanpham_termtaxonomy` FOREIGN KEY (`id_don_vi_tinh`) REFERENCES `zf_term_taxonomy` (`term_taxonomy_id`),
   ADD CONSTRAINT `fk_sanpham_zftermtaxonomy` FOREIGN KEY (`id_loai`) REFERENCES `zf_term_taxonomy` (`term_taxonomy_id`);
 
 --
--- Contraintes pour la table `zf_term_taxonomy`
+-- Constraints for table `zf_term_taxonomy`
 --
 ALTER TABLE `zf_term_taxonomy`
   ADD CONSTRAINT `zf_term_taxonomy_ibfk_1` FOREIGN KEY (`term_id`) REFERENCES `zf_term` (`term_id`),
