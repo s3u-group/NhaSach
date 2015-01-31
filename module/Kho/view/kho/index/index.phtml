@@ -36,7 +36,7 @@
                                     <i class="fa fa-chevron-right"></i>
                                 </button>
                             </div>
-                            <a  href="<?php echo $this->url('kho/crud',array('action'=>'themKhoCon'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
+                            <a  href="<?php echo $this->url('kho/crud',array('action'=>'them-kho-con'));?>" type="button" class="h5a-btn btn btn-primary btn-sm">Thêm mới</a>
                         </div>
                     </div>
                 </div>
@@ -86,9 +86,9 @@
                                                         echo '<i class="glyphicon glyphicon-lock"></i>';
                                                     }
                                                 ?>
-                                                    <a href="<?php echo $this->url('kho/crud',array('action'=>'xemKho','id'=>$kho->getIdKho())); ?>"><?php echo $kho->getTenKho(); ?></a></td>
+                                                    <a href="<?php echo $this->url('kho/crud',array('action'=>'xem-kho','id'=>$kho->getIdKho())); ?>"><?php echo $kho->getTenKho(); ?></a></td>
                                         		<td><?php echo $kho->getDiaChiKho(); ?></td>
-                                                <td><a href="<?php echo $this->url('kho/crud',array('action'=>'suaChiNhanh','id'=>$kho->getIdKho())); ?>"><i class="glyphicon glyphicon-pencil"></i></a></td>
+                                                <td><a href="<?php echo $this->url('kho/crud',array('action'=>'sua-chi-nhanh','id'=>$kho->getIdKho())); ?>"><i class="glyphicon glyphicon-pencil"></i></a></td>
                                             </tr>
                                     	<?php
                                     	}

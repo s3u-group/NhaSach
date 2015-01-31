@@ -301,7 +301,7 @@ use DateTimeZone;
           $entityManager->persist($phieuThu);
           $entityManager->flush();
           $this->flashMessenger()->addSuccessMessage('Thanh toán thành công!');
-          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$id));
+          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$id));
         }
         else{
             $this->flashMessenger()->addErrorMessage('Thanh toán thất bại!');
@@ -1201,12 +1201,12 @@ use DateTimeZone;
           $entityManager->persist($phieuChi);
           $entityManager->flush();
           $this->flashMessenger()->addSuccessMessage('Xuất phiếu chi thành công');
-          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$idDoiTac));
+          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$idDoiTac));
         }
         else
         {
           $this->flashMessenger()->addErrorMessage('Xuất phiếu chi thất bại');
-          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chiTietCongNoKhachHang','id'=>$idDoiTac));
+          return $this->redirect()->toRoute('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$idDoiTac));
         }
 
       }

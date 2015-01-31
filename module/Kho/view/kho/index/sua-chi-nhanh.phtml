@@ -1,7 +1,7 @@
 <?php
  $this->headTitle('Thêm kho');
 
- $form->setAttribute('action', $this->url('kho/crud', array('action' => 'suaChiNhanh','id'=>$kho->getIdKho())));
+ $form->setAttribute('action', $this->url('kho/crud', array('action' => 'sua-chi-nhanh','id'=>$kho->getIdKho())));
  $form->setAttribute('role','form');
  $form->prepare();
  echo $this->form()->openTag($form);

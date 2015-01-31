@@ -187,7 +187,7 @@
      $form->setAttribute('class','form-horizontal');
      $form->prepare();
      echo $this->form()->openTag($form);
-     echo $this->formHidden($form->get('idSanPham'));
+     echo $this->formHidden($form->get('idSanPham'));     
      echo $this->formHidden($form->get('donViTinh'));
      echo $this->formHidden($form->get('idNhaCungCap'));
      echo $this->formHidden($form->get('phieu-nhap')->get('idPhieuNhap'));
@@ -528,7 +528,7 @@
             }
 
            xhr = $.ajax({
-                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'searchSanPham')); ?>',
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-san-pham')); ?>',
                 type:'POST',
                 dataType:'json',
                 data:{
@@ -691,7 +691,7 @@
             }
 
             xhr1 = $.ajax({
-                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'searchNhaCungCap')); ?>',
+                url:'<?php echo $this->url('hang_hoa/crud', array('action'=>'search-nha-cung-cap')); ?>',
                 type:'POST',
                 dataType:'json',
                 data:{
