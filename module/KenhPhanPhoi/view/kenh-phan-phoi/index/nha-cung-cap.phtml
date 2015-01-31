@@ -113,10 +113,10 @@
                                                             echo '<a href="'.$this->url('kenh_phan_phoi/crud',array('action'=>'chi-tiet-nha-cung-cap','id'=>$doiTac->getIdDoiTac())).'">'.$doiTac->getHoTen().'</a>';
                                                         echo '</td>';                                                            
                                                         echo '<td>'.$doiTac->getDiDong().'</td>';
-                                                        echo '<td>'.$doiTac->getDiaChi().'</td>';
-                                                        echo '<td>'.$soHoaDon.'</td>';
-                                                        echo '<td>';
-                                                            echo $array['noCuoiKi'];
+                                                        echo '<td>'.$doiTac->getDiaChi().'</td>';                                                        
+                                                        echo '<td>'.number_format($soHoaDon,'0','',' ').'</td>';
+                                                        echo '<td>';                                                        
+                                                            echo number_format($array['noCuoiKi'],'0','',' ');
                                                         echo '</td>';
                                                     echo '</tr>  ';
                                                 }
@@ -128,7 +128,7 @@
                                             <td style="text-align:center;"></td>
                                             <td style="text-align:center;"></td>
                                             <td style="text-align:center;"><b>Tổng nợ: </b></td>
-                                            <td><b><?php echo $tongNo; $tongNo=0; ?></b></td>
+                                            <td><b><?php echo number_format($tongNo,'0','',' '); $tongNo=0; ?></b></td>
                                         </tr>                                                     
                                     </tbody>
                                 </table>

@@ -156,7 +156,7 @@
                                             }
                                             else
                                             {
-                                                echo $sanPham->getGiaNhap();
+                                                echo number_format($sanPham->getGiaNhap(),'0','',' ');
                                             }
                                             echo '</td>';
 
@@ -172,7 +172,7 @@
                                                         }
                                                         else
                                                         {
-                                                            echo $giaXuat;
+                                                            echo number_format($giaXuat,'0','',' ');
                                                         }
 
                                                     echo '</td>';                                                           

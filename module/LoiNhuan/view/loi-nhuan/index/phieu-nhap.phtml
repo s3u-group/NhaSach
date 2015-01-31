@@ -110,7 +110,7 @@
                                                 foreach ($phieuNhap->getCtPhieuNhaps() as $ctPhieuNhap) {
                                                     $tongTien+=(float)$ctPhieuNhap->getGiaNhap()*(float)$ctPhieuNhap->getSoLuong();
                                                 }
-                                                echo $tongTien;
+                                                echo number_format($tongTien,'0','',' ');
                                             ?>
                                             </td>
                                         </tr>

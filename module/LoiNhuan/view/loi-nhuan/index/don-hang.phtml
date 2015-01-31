@@ -121,7 +121,7 @@
                                                 foreach ($donHang->getCtHoaDons() as $ctHoaDon) {
                                                     $tongTien+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
                                                 }
-                                                echo $tongTien;
+                                                echo number_format($tongTien,'0','',' ');
                                             ?>
                                             </td>
                                         </tr>
@@ -189,7 +189,7 @@
                                                         foreach ($donHang->getCtHoaDons() as $ctHoaDon) {
                                                             $tongTien+=(float)$ctHoaDon->getGia()*(float)$ctHoaDon->getSoLuong();
                                                         }
-                                                        echo $tongTien;
+                                                        echo number_format($tongTien,'0','',' ');
                                                     ?>
                                                     </td>
                                                 </tr>
