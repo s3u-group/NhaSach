@@ -8,10 +8,10 @@ return array(
         'DoctrineModule',
         'DoctrineORMModule',
         'ZfcBase',
+        'ZfcUser',
         'ZfcUserDoctrineORM',
         'BjyAuthorize',
         'BaconStringUtils',
-        'ZfcUser',
         'Application',        
         'S3UTaxonomy',
         'HangHoa',
@@ -19,7 +19,7 @@ return array(
         'CongNo',
         'LoiNhuan',
         'Kho',
-        'Barcode',        
+        'Barcode',
     ),
 
     // These are various options for the listeners attached to the ModuleManager
