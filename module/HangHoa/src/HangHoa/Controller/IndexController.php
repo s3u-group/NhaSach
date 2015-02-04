@@ -43,7 +43,7 @@
 
  class IndexController extends AbstractActionController
  {
- 	private $entityManager;
+  private $entityManager;
   
   public function getEntityManager()
   {
@@ -55,15 +55,15 @@
      return $this->entityManager;
   }
   
- 	public function indexAction()
- 	{
+  public function indexAction()
+  {
     // kiểm tra đăng nhập
       if(!$this->zfcUserAuthentication()->hasIdentity())
       {
         return $this->redirect()->toRoute('application');
       }
       $this->layout('layout/giaodien');
- 	}
+  }
   
 
   public function hangHoaAction() 
@@ -1110,6 +1110,7 @@
         $taxonomyLoai=$this->TaxonomyFunction();
         $kenhPhanPhois=$taxonomyLoai->getListChildTaxonomy('kenh-phan-phoi');
         $currentSheet=0;
+        
         foreach ($objLoad->getWorksheetIterator() as $worksheet) {
           $currentSheet++;          
           $worksheetTitle     = $worksheet->getTitle();
@@ -1143,7 +1144,7 @@
               { 
                 // kiểm tra đơn vị tính và loại sản phẩm
                 $kiemTraDonViTinh=$this->getDonViTinh($donViTinh);
-                $idLoai=$this->getLoai($entityManager, $currentSheet);
+                $idLoai=$this->getLoaiBangSheetName($worksheetTitle);
                 /**
                  * @var
                  * nếu chưa có đơn vị tính trong cơ sở dữ liệu
@@ -1304,7 +1305,7 @@
                     $sanPham->setMaSanPham($maSanPham);
                     $sanPham->setTenSanPham($tenSanPham);
                     
-                    $idLoai=$this->getLoai($entityManager, $currentSheet);
+                    //$idLoai=$this->getLoai($entityManager, $currentSheet);
                     $sanPham->setIdLoai($idLoai);
 
                     $dVT=$this->getDonViTinh($donViTinh);
@@ -1439,7 +1440,24 @@
     }
   }
 
+  public function getLoaiBangSheetName($sheetName){
+    $entityManager=$this->getEntityManager();
+    $query=$entityManager->createQuery('SELECT zft FROM S3UTaxonomy\Entity\ZfTermTaxonomy zft JOIN zft.termId t WHERE t.name LIKE :termName and zft.taxonomy= :danhMucHangHoa');
+    $query->setParameter('termName','%'.$sheetName.'%');
+    $query->setParameter('danhMucHangHoa','danh-muc-hang-hoa');
+    $loaiHang=$query->getResult();
+    if($loaiHang){
+      $loaiHang=$loaiHang[0];
+    } 
+    else{
+      // loại này không tồn tại
+      $loaiHang=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(52);
+    }
+    return $loaiHang;
+  }
+
   public function getLoai($entityManager, $currentSheet){
+
     if($currentSheet==1)
     {
       $idLoai=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(9);
@@ -1462,6 +1480,7 @@
     }
     if($currentSheet>5)
     {
+      // loại này không tồn tại
       $idLoai=$entityManager->getRepository('S3UTaxonomy\Entity\ZfTermTaxonomy')->find(52);
     }
     return $idLoai;
@@ -2403,7 +2422,6 @@
 
   public function xoaSanPhamAction()
   {
-
     // kiểm tra đăng nhập
       if(!$this->zfcUserAuthentication()->hasIdentity())
       {
@@ -2413,28 +2431,47 @@
       // id đối tác
       $id = (int) $this->params()->fromRoute('id', 0);
       if (!$id) {
-          return $this->redirect()->toRoute('hang_hoa/crud');
+        $this->flashMessenger()->addErrorMessage('Xin lỗi, hệ thống không tìm thấy sản phẩm cần xóa!');
+        return $this->redirect()->toRoute('hang_hoa/crud');
       }  
       $this->layout('layout/giaodien');
       $entityManager=$this->getEntityManager();
-
-
       $sanPham=$entityManager->getRepository('HangHoa\Entity\SanPham')->find($id);
       if($sanPham->getKho()!=$idKho)
       {
+        $this->flashMessenger()->addErrorMessage('Xin lỗi, hệ thống không tìm thấy sản phẩm cần xóa!');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
       }
-      if($sanPham->getHinhAnh()!='photo_default.png')
-      {        
-        /*$mask =__ROOT_PATH__.'/public/img/'.$sanPham->getHinhAnh();
-        array_map( "unlink", glob( $mask ));*/
-      }      
-      if(!$sanPham)
-      {
+
+      $query=$entityManager->createQuery('SELECT ctpn FROM HangHoa\Entity\CTPhieuNhap ctpn WHERE ctpn.idSanPham=:idSanPham');
+      $query->setParameter('idSanPham',$id);
+      $phieuNhaps=$query->getResult();
+      if(!$phieuNhaps){ // nếu chưa tồn tại thì xóa
+        // nếu có hình ảnh sản phẩm thì xóa hình ảnh
+        if($sanPham->getHinhAnh()!='photo_default.png'&&$sanPham->getHinhAnh()!=''&&$sanPham->getHinhAnh()!=null)
+        {        
+          $mask =__ROOT_PATH__.'/public/img/'.$sanPham->getHinhAnh();
+          array_map( "unlink", glob( $mask ));
+        }   
+        // xóa giá xuất của sản phẩm
+        $query=$entityManager->createQuery('SELECT gx FROM HangHoa\Entity\GiaXuat gx WHERE gx.idSanPham=:idSanPham and gx.kho=:idKho');
+        $query->setParameter('idSanPham',$id);
+        $query->setParameter('idKho',$idKho);
+        $giaXuats=$query->getResult();
+        foreach ($giaXuats as $giaXuat) {
+          $entityManager->remove($giaXuat);
+          $entityManager->flush();
+        }
+        // xóa sản phẩm
+        $entityManager->remove($sanPham);  
+        $entityManager->flush();
+        $this->flashMessenger()->addSuccessMessage('Sản phảm đã được xóa thành công!');
         return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
       }
-      //$entityManager->remove($sanPham);      
-      //$entityManager->flush();      
+      else{ //ngược lại đã tồn tại không được xóa
+        $this->flashMessenger()->addErrorMessage('Không thể xóa sản phẩm này vì sản phẩm '.$sanPham->getTenSanPham().' đã được sử dụng!');
+        return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
+      }  
       return $this->redirect()->toRoute('hang_hoa/crud',array('action'=>'hang-hoa'));
   }
   

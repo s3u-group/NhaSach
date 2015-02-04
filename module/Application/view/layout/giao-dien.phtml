@@ -9,11 +9,25 @@
     <meta name="author" content="">
     
     <?php echo $this->headTitle();?>
-<style type="text/css">
-    /*.navbar-collapse{background-color: darkviolet;}
-    .navbar-collapse ul li a{color: white;}
-    .navbar-collapse ul li:hover a{background: white; color:darkviolet;}*/
-</style>
+    <style type="text/css">
+        .navbar-collapse{background-color: darkviolet;}/* font-size: 16px;*/
+        .navbar-collapse ul li a{color: white;}
+        .navbar-collapse ul li:hover a{background: white; color:darkviolet;}
+
+        .nav.navbar-nav.navbar-right li ul{background-color: darkviolet;}
+        .nav.navbar-nav.navbar-right li ul li a{background:darkviolet;}
+        .nav.navbar-nav.navbar-right li ul li a:hover{background:white; color:darkviolet;}
+        .dropdown.open:hover a{color: white;}
+
+        .nav.h5a-sidenav.nav-list.accordion{background-color: darkviolet;}
+        .nav.h5a-sidenav.nav-list.accordion li a{color: white;}
+        .nav.h5a-sidenav.nav-list.accordion li:hover a{color: darkviolet; background-color: white;}
+        .dropdown-menu li{color: white;}
+        .dropdown-menu li p{color: white;}
+        #notifications li:hover p{color: darkviolet;}
+        #notifications li:hover{background-color: darkviolet;}
+
+    </style>
     <!-- Bootstrap Core CSS -->
     <link href="<?php echo $this->basePath();?>/css/bootstrap.min.css" rel="stylesheet">
 
@@ -45,9 +59,9 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="<?php echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">
-                    <img alt="Brand" src="<?php echo $this->basePath();?>/img/brand.png">
-                </a>
+                <!-- <a class="navbar-brand" href="<?php //echo $this->url('hang_hoa/crud',array('action'=>'index'));?>">
+                    <img alt="Brand" style="height: 50px; width: 50px;margin-top: -3px;margin-left: 1px;" src="<?php //echo $this->basePath();?>/img/brand.png">
+                </a> -->
             </div>
 
             <div class="collapse navbar-collapse">
@@ -55,82 +69,61 @@
                     <?php $this->navigation('main')->menu()->setPartial('menu/default'); ?>
                     <?php echo $this->navigation('main')->menu(); ?> 
                 </ul>
-
+                <?php
+                    $soDonHanQuaHan=0;
+                    if($this->zfcUserIdentity())
+                    {
+                        $responses=$this->GetCongNoQuaHan($this->zfcUserIdentity()->getKho());                                    
+                        if($responses){
+                            $soDonHanQuaHan=count($responses['response']);
+                        }
+                    }
+                ?>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
+                    <li class="dropdown" <?php if($soDonHanQuaHan>0){ echo 'style="background-color:white;"'; } ?> >
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            
-                                <?php
-                                if($this->zfcUserIdentity())
-                                {
-                                    $responses=$this->GetCongNoQuaHan($this->zfcUserIdentity()->getKho());
-                                    $soDonHanQuaHan=count($responses['response']);
-                                    if($soDonHanQuaHan>0){ ?>
-                                        <i class="fa fa-bell shake"  style="color:red;"></i> 
-                                        <span class="badge">
-                                    <?php    
-                                    }
-                                    else{ ?>
-                                        <i class="fa fa-bell shake"></i> 
-                                        <span class="badge">
-                                    <?php
-                                    }
-                                    echo $soDonHanQuaHan;
-                                }
-                                else
-                                { ?>
-                                    <i class="fa fa-bell shake"></i> 
-                                    <span class="badge">
-                                        0
-                                <?php
-                                }
-                                ?>
+                            <i class="fa fa-bell shake" <?php if($soDonHanQuaHan>0){ echo 'style="color:red;"'; } ?>></i> 
+                            <span class="badge" <?php if($soDonHanQuaHan>0){ echo 'style="background-color:red;"'; } ?> >  
+                                <?php echo $soDonHanQuaHan; ?>
                             </span>
                         </a>
-                                                
-                        
-                            <?php
-                            if($this->zfcUserIdentity())
-                            { ?>
-                                <ul class="dropdown-menu" id="notifications">   
+                        <?php                       
+                        if($this->zfcUserIdentity())
+                        { ?>
+                            <ul class="dropdown-menu" id="notifications">   
                                 <li class="dropdown-header">
                                     <i class="fa fa-bell"></i> Thông báo
                                 </li>
-                            <?php
-
-                                if($soDonHanQuaHan>0)
-                                { 
-                                    
-                                    foreach ($responses['response'] as $response) {
-                                    ?>
-                                        <li>
-                                            <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$response['idDoiTac'])); ?>">
-                                                <i class="image fa fa-flag"></i>
-                                                <p><i class="fa fa-clock-o"></i> 
-                                                    <small><b><?php echo $response['hoTenDoiTac']; ?></b>.</small>
-                                                    <br><small>Số ngày quá hạn: <b style="color:red"><?php echo $response['soNgayQuaHan']; ?></b>.
-                                                    <br></small>Tổng tiền chưa thanh toán: <b style="color:red"><?php echo $response['noCuoiKi']; ?></b></p>
-                                            </a>
-                                        </li>
-                                    <?php                                    
-                                    }
-                                
-                                }
-                                else
-                                {
+                        <?php
+                            if($soDonHanQuaHan>0)
+                            {                                 
+                                foreach ($responses['response'] as $response) {
                                 ?>
+                                    <li class="divider"></li>
                                     <li>
-                                        <p>You have no notifications.</p>
+                                        <a href="<?php echo $this->url('cong_no/crud',array('action'=>'chi-tiet-cong-no-khach-hang','id'=>$response['idDoiTac'])); ?>">
+                                            <i class="image fa fa-flag"></i>
+                                            <p><i class="fa fa-clock-o"></i> 
+                                                <small><b><?php echo $response['hoTenDoiTac']; ?></b>.</small>
+                                                <br><small>Số ngày quá hạn: <b style="color:red"><?php echo $response['soNgayQuaHan']; ?></b>.
+                                                <br></small>Tổng tiền chưa thanh toán: <b style="color:red"><?php echo $response['noCuoiKi']; ?></b></p>
+                                        </a>
                                     </li>
-                                <?php
-                                }
-                                echo '</ul>';
+                                <?php                                    
+                                }                            
                             }
                             else
                             {
-                                echo '<ul></ul>';
-                            }
                             ?>
+                                <li>
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;You have no notifications.
+                                </li>
+                            <?php
+                            } ?>
+                            </ul>
+                            <?php
+                        }                        
+                        ?>
                         
                     </li>                    
                     <li class="dropdown">
@@ -150,39 +143,40 @@
                         </a>                            
                         <?php if($this->zfcUserIdentity()){ ?>
                         <ul class="dropdown-menu">      
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Quick Adds</li>
                             <li>
                                 <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'them-khach-hang')); ?>"><i class="glyphicon glyphicon-plus"></i> Thêm khách hàng</a>
                             </li>
+                            <li class="divider"></li>
                             <li>
                                 <a href="<?php echo $this->url('kenh_phan_phoi/crud',array('action'=>'them-nha-cung-cap')); ?>"><i class="glyphicon glyphicon-plus"></i> Thêm nhà cung cấp</a>
                             </li>
+                            <li class="divider"></li>
                             <li>
                                 <a href="<?php echo $this->url('taxonomy/childTaxonomy', array('tax'=>'don-vi-tinh'));?>">Đơn vị tính</a>
                             </li>
+                            <li class="divider"></li>
                             <li>
                                 <a href="<?php echo $this->url('taxonomy/childTaxonomy', array('tax'=>'danh-muc-hang-hoa'));?>">Loại hàng</a>
                             </li>
                             <?php if((int)$this->zfcUserIdentity()->getId()==1) { ?>
+                                <li class="divider"></li>
                                 <li>
                                     <a href="<?php echo $this->url('zfcuser/register',array('action'=>'register')); ?>"><i class="fa fa-user"></i> Tạo tài khoản</a>
                                 </li>
+                                <li class="divider"></li>
                                 <li>
                                     <a href="<?php echo $this->url('application/default',array('controller'=>'Index','action'=>'quan-ly-tai-khoan')); ?>"><i class="glyphicon glyphicon-align-justify"></i> Quản lý tài khoản</a>
                                 </li>
+                                <li class="divider"></li>
+                                <li>                            
+                                    <a href="<?php echo $this->url('barcode/crud',array('action'=>'index'));?>">
+                                        <i class="glyphicon glyphicon-wrench"></i> Cài đặt mã vạch
+                                    </a>
+                                </li>
                             <?php } ?>
                             <li class="divider"></li>
-                            <li class="dropdown-header">Settings</li>
-                            <?php if((int)$this->zfcUserIdentity()->getId()==1) { ?>
-                            <li>                            
-                                <a href="<?php echo $this->url('barcode/crud',array('action'=>'index'));?>">
-                                    <i class="glyphicon glyphicon-wrench"></i> Cài đặt mã vạch
-                                </a>
-                            </li>
-                            <?php } ?>
                             <li>
-                                <a href="<?php echo $this->url('application/default',array('controller'=>'Index','action'=>'logout'));?>"><i style="color:red;" class="glyphicon glyphicon-off"></i> Log out</a>
+                                <a href="<?php echo $this->url('application/default',array('controller'=>'Index','action'=>'logout'));?>"><i class="glyphicon glyphicon-off"></i> Log out</a>
                             </li>
                         </ul>
                         <?php } ?>
