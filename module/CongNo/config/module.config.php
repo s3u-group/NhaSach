@@ -40,6 +40,19 @@ return array(
 		),        
 	),    
 
+    'view_helpers'=>array(
+        'factories'=>array(
+            
+            'get_cong_no_qua_han' => function($sm){
+                $entityManager=$sm->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+                $getCongNoQuaHanHelper=new \CongNo\View\Helper\GetCongNoQuaHan();
+                $getCongNoQuaHanHelper->setEntityManager($entityManager);
+                return $getCongNoQuaHanHelper;
+            },
+        ), 
+        
+    ),   
+
 	'doctrine' => array(
         'driver' => array(
             'cong_no_annotation_driver' => array(

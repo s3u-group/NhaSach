@@ -1137,7 +1137,6 @@
                                   ->getStyle('A4:E4')->getFont()->setBold(true);
     $objPHPExcel->getActiveSheet()->getStyle('A4:E4')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);
 
-    
     if($this->getRequest()->getPost()['coLocSanPham'])
     {
       if($this->getRequest()->getPost()['idSanPham'])
